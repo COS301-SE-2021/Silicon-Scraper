@@ -1,16 +1,67 @@
-# silicon_scraper
+<h1 align="center"> Silicon Scraper </h1> <br>
+<p align="center"> 
+	<img alt="Silicon Scraper logo" src="#">
+</p>
+<h2 align="center"> Bug Busters </h2>
 
-A new Flutter application.
+## Code quality 
+<!--Still need to add/edit badges-->
+[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues)
+[![GitHub issues-closed](https://img.shields.io/github/issues-closed/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/issues?q=is%3Aissue+is%3Aclosed)
 
-## Getting Started
+## Contents 
+- [Introduction](#introduction)
+- [Live System](#live-system)
+- [Demo 1](#demo-1)
+- [Project Management Tools](#project-management-tools)
+- [Team Members](#team-members)
+- [Branching Strategy](#branching-strategy)
 
-This project is a starting point for a Flutter application.
+## Introduction
+Silicon Scraper is mobile application that scrapes the web and various online stores for a specific GPU/CPU according to a users search specifics.
+_ADD MORE TO INTRODUCTION_ 
 
-A few resources to get you started if this is your first Flutter project:
+## Live System
+- [Mobile Application](#mobile-app)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Demo 1
+- [Bug Busters Inc-Demo 1](#demo1-video)
+- [SRS document](#srs-document)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Project Management Tools
+- [Discord (Communication tools)](https://discord.gg/xpsn3YRn)
+- [Github Project Board](https://github.com/COS301-SE-2021/Silicon-Scraper/projects/1)
+
+## Team Members
+This is Bug Busters Inc. We are a team of 6, immensly talented individuals. _ADD MORE TO DESCRIPTION OF TEAM_
+
+**Louis van As**\
+_Team Leader_
+- [LinkedIn](#link)
+> Short description
+
+**Mpendulo Sibeko**
+- [LinkedIn](#link)
+> Short description
+
+**Thato Jadezwani**
+- [LinkedIn](#link)
+> Short description
+
+**Thato (Lesedi) Motoma**
+- [LinkedIn](https://www.linkedin.com/in/thato-lesedi-motoma-69311b1b1/)
+> Short description
+
+**Tanatswa Dendere**
+- [LinkedIn](#link)
+> Short description
+
+**Vincent Besse**
+- [LinkedIn](#link)
+> Short description
+
+## Branching Strategy
+master(build)
+</br>&nbsp;&nbsp;&nbsp;&nbsp; -develop(build)
+</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Module-develop(build)
+</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-feature-module-name
