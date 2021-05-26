@@ -7,7 +7,8 @@
 ## Code quality 
 <!--Still need to add/edit badges-->
 [![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub issues-closed](https://img.shields.io/github/issues-closed/Naereen/StrapDown.js.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/Naereen/StrapDown.js.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/pulls)
 
 ## Contents 
 - [Introduction](#introduction)
@@ -18,8 +19,13 @@
 - [Branching Strategy](#branching-strategy)
 
 ## Introduction
-Silicon Scraper is mobile application that scrapes the web and various online stores for a specific GPU/CPU according to a users search specifics.
-_ADD MORE TO INTRODUCTION_ 
+
+**Silicon Scraper is system that scrapes online retailers for specific information regarding GPU's and CPU's. <br>
+The information is then made available to the user via a mobile app where the user can search for a product and <br>
+add it to a watch list to be notified of any changes in price or availability etc.***
+
+
+
 
 ## Live System
 - [Mobile Application](#mobile-app)
@@ -61,10 +67,9 @@ _Team Leader_
 > Short description
 
 ## Branching Strategy
-master (build)
-</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− develop (build)
-</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− module−develop (build)
-</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− feature-module−name
+-master (build)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-develop (build)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-feature-module−name 
+<br>
