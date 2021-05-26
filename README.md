@@ -61,7 +61,10 @@ _Team Leader_
 > Short description
 
 ## Branching Strategy
-master(build)
-</br>&nbsp;&nbsp;&nbsp;&nbsp; -develop(build)
-</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -Module-develop(build)
-</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-feature-module-name
+master (build)
+</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− develop (build)
+</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− module−develop (build)
+</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− feature-module−name
