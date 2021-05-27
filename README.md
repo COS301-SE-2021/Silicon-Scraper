@@ -6,13 +6,13 @@
 
 ## Code quality 
 <!--Still need to add/edit badges-->
-[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/Naereen/StrapDown.js.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues?q=is%3Aissue+is%3Aclosed)
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/Naereen/StrapDown.js.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/pulls)
+[![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2021/Silicon-Scraper)](https://img.shields.io/github/issues/COS301-SE-2021/Silicon-Scraper?style=for-the-badge)
+[![GitHub issues-closed](https://img.shields.io/github/issues-closed/COS301-SE-2021/Silicon-Scraper)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/COS301-SE-2021/Silicon-Scraper)](https://github.com/COS301-SE-2021/Silicon-Scraper/pulls)
+[![Coverage Status](https://coveralls.io/repos/github/COS301-SE-2021/Silicon-Scraper/badge.svg?branch=master&style=for-the-badge)](https://coveralls.io/github/COS301-SE-2021/Silicon-Scraper?branch=master)
 
 ## Contents 
 - [Introduction](#introduction)
-- [Live System](#live-system)
 - [Demo 1](#demo-1)
 - [Project Management Tools](#project-management-tools)
 - [Team Members](#team-members)
@@ -20,15 +20,10 @@
 
 ## Introduction
 
-**Silicon Scraper is system that scrapes online retailers for specific information regarding GPU's and CPU's. <br>
-The information is then made available to the user via a mobile app where the user can search for a product and <br>
-add it to a watch list to be notified of any changes in price or availability etc.***
+**Silicon Scraper is system that scrapes online retailers for specific information regarding GPUs and CPUs.
+<br>The information is then made available to the user via a mobile app where the user can search for a product and <br>
+add it to a watch list to be notified of any changes in price or availability etc.**
 
-
-
-
-## Live System
-- [Mobile Application](#mobile-app)
 
 ## Demo 1
 - [Bug Busters Inc-Demo 1](#demo1-video)
