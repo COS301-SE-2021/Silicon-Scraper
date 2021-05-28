@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'file:///C:/Users/louis/AndroidStudioProjects/silicon_scraper/lib/classes/product.dart';
+import 'package:silicon_scraper/classes/product.dart';
 
 
 void main()
