@@ -42,7 +42,7 @@ _Team Leader_
 > Short description
 
 **Mpendulo Sibeko**
-- [LinkedIn](#link)
+- [LinkedIn](https://www.linkedin.com/in/mpendulo-s-aa4b53106/)
 > Short description
 
 **Thato Jadezwani**
