@@ -6,23 +6,24 @@
 
 ## Code quality 
 <!--Still need to add/edit badges-->
-[![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2021/Silicon-Scraper.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/COS301-SE-2021/Silicon-Scraper.svg)](https://GitHub.com/COS301-SE-2021/Silicon-Scraper/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2021/Silicon-Scraper)](https://img.shields.io/github/issues/COS301-SE-2021/Silicon-Scraper?style=for-the-badge)
+[![GitHub issues-closed](https://img.shields.io/github/issues-closed/COS301-SE-2021/Silicon-Scraper)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/COS301-SE-2021/Silicon-Scraper)](https://github.com/COS301-SE-2021/Silicon-Scraper/pulls)
+[![Coverage Status](https://coveralls.io/repos/github/COS301-SE-2021/Silicon-Scraper/badge.svg?branch=master&style=for-the-badge)](https://coveralls.io/github/COS301-SE-2021/Silicon-Scraper?branch=master)
 
 ## Contents 
 - [Introduction](#introduction)
-- [Live System](#live-system)
 - [Demo 1](#demo-1)
 - [Project Management Tools](#project-management-tools)
 - [Team Members](#team-members)
 - [Branching Strategy](#branching-strategy)
 
 ## Introduction
-Silicon Scraper is mobile application that scrapes the web and various online stores for a specific GPU/CPU according to a users search specifics.
-_ADD MORE TO INTRODUCTION_ 
 
-## Live System
-- [Mobile Application](#mobile-app)
+**Silicon Scraper is system that scrapes online retailers for specific information regarding GPUs and CPUs.
+<br>The information is then made available to the user via a mobile app where the user can search for a product and <br>
+add it to a watch list to be notified of any changes in price or availability etc.**
+
 
 ## Demo 1
 - [Bug Busters Inc-Demo 1](#demo1-video)
@@ -41,7 +42,7 @@ _Team Leader_
 > Short description
 
 **Mpendulo Sibeko**
-- [LinkedIn](#link)
+- [LinkedIn](https://www.linkedin.com/in/mpendulo-s-aa4b53106/)
 > Short description
 
 **Thato Jadezwani**
@@ -61,10 +62,9 @@ _Team Leader_
 > Short description
 
 ## Branching Strategy
-master (build)
-</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− develop (build)
-</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− module−develop (build)
-</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− feature-module−name
+-master (build)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-develop (build)
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-feature-module−name 
+<br>
