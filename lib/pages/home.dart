@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/widgets/productWidget.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -21,7 +22,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  product item=new product("Gigabyte GeForce RTX 3090 GAMING OC 24GB GDDR6X Gaming Graphics Card","",43999.0,"evetech","0496 Cuda Core / 3‎84-bit Memory Interface / Boost Clock : 1755MHz / WINDFORCE 3X Cooling System / Protection Metal Back Plate / NVIDIA Ampere Streaming Multiprocessors / SC-G3090-GO + FREE DELIVERY !","https://www.evetech.co.za/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card/best-deal/10547.aspx","https://www.evetech.co.za/repository/ProductImages/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card-330px-v1.jpg","outofstock");
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -50,32 +51,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ProductWidget()
-          ],
-        ),
+        child: ListView(
+        children: [
+          ProductWidget(item: item,),
+        ],
+          ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
