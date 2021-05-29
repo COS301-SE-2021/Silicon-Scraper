@@ -41,6 +41,27 @@ class product
       this.stockAvailability=availability.notSpecified;
     }
   }
+
+  String getAvailability()
+  {
+    if(this.stockAvailability==availability.available)
+      {
+        return "available";
+      }
+    else if(this.stockAvailability==availability.limitedStock)
+    {
+      return "limited stock";
+    }
+    else if(this.stockAvailability==availability.outOfStock)
+    {
+      return "out of stock";
+    }
+    else if(this.stockAvailability==availability.notSpecified)
+    {
+      return "not specified";
+    }
+    return "not specified";
+  }
 }
 
 enum availability
