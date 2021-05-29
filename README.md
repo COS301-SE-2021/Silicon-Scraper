@@ -6,8 +6,8 @@
 
 ## Code quality 
 <!--Still need to add/edit badges-->
-[![GitHub issues](https://img.shields.io/github/issues/Naereen/StrapDown.js.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues)
-[![GitHub issues-closed](https://img.shields.io/github/issues-closed/Naereen/StrapDown.js.svg)](https://GitHub.com/Naereen/StrapDown.js/issues?q=is%3Aissue+is%3Aclosed)
+[![GitHub issues](https://img.shields.io/github/issues/COS301-SE-2021/Silicon-Scraper.svg)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues)
+[![GitHub issues-closed](https://img.shields.io/github/issues-closed/COS301-SE-2021/Silicon-Scraper.svg)](https://GitHub.com/COS301-SE-2021/Silicon-Scraper/issues?q=is%3Aissue+is%3Aclosed)
 
 ## Contents 
 - [Introduction](#introduction)
