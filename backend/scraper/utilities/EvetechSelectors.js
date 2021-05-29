@@ -1,7 +1,7 @@
 /*This class contains getters for Evetech css selectors */ 
 
 module.exports.getTitleSelector= ((index) => {
-    const titles = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl0"
+    const titles = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
     return titles+pad(index)+"_lblName";
 })
 
@@ -10,7 +10,7 @@ module.exports.getTableSelector = (() => {return "#ctl00_ContentPlaceHolder1_Com
 module.exports.getRowSelector = (() => {return "tbody tr"})
 
 module.exports.getLinkSelector = ((index) => {
-    const link = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl0"
+    const link = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
     return link + pad(index) + "_HyperLink2"
 })
 
@@ -22,7 +22,7 @@ module.exports.getAvailabilitySelector = ((index) => {
 })
 
 module.exports.getImageSelector = ((index) => {
-    const imageUrl = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl0"
+    const imageUrl = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
     return imageUrl+pad(index)+"_img_pro";
 })
 
