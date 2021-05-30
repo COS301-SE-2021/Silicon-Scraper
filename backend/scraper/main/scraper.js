@@ -50,7 +50,7 @@ function concatUrl(urlRES){
 
 //this function trims the price string
 function trimPrice(price){
-    let priceW = price.split(' ')[0];
+    let priceW = price.split('\n')[0];
 
     return priceW
 }
