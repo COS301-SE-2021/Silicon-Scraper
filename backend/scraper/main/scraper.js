@@ -19,17 +19,12 @@ async function scrapeSilon(){
 
         $(row).each((k, col)=>{
 
-            //console.log(b, $(col).find(EvetechSelector.getImageSelector(b)))
-            // $(col).find(EvetechSelector.getImageSelector(b)).children().each((i,image) => {
-            //     console.log($(image).attr('src'))
-            // })
-
             products.push({
-                image: $(col).find(EvetechSelector.getImageSelector(b)).attr('src'),
+                image: concatUrl($(col).find(EvetechSelector.getImageSelector(b)).attr('src')),
                 title: $(col).find(EvetechSelector.getTitleSelector(b)).text().trim(),
                 price: trimPrice($(col).find(EvetechSelector.getPriceSelector()).text().trim()),
                 availability: $(col).find(EvetechSelector.getAvailabilitySelector(b)).text().trim(),
-                link: $(col).find(EvetechSelector.getLinkSelector(b)).attr('href'),
+                link: concatUrl($(col).find(EvetechSelector.getLinkSelector(b)).attr('href')),
                 retailer:"Evetech"
             })
             
@@ -45,16 +40,20 @@ async function scrapeSilon(){
 
 }
 
+//This function concatinates the base url to the given url
+function concatUrl(urlRES){
+    let base = urlRES.split('../')[1]
+    base = url.getEveTecUrl()+base;
+    return base;
+}
 
+
+//this function trims the price string
 function trimPrice(price){
     let priceW = price.split(' ')[0];
 
     return priceW
 }
-
-
-
-
 
 
 
