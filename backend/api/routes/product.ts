@@ -20,11 +20,40 @@ routes.get('/getProducts', (req, res) => {
 });
 
 routes.get('/getProductByID', (req, res) => {
-    res.json();
+    let query = req.query.id;
+    console.log(query);
+    let product: Product = {
+        id: 0,
+        brand: "",
+        model: "",
+        retailer: "",
+        price: 0,
+        description: "",
+        img: "",
+        url: "",
+        availability: 0
+    };
+    mockData.forEach((x) => {
+        if(x.id == parseInt(query.toString())) {
+            product = x;
+        }
+    })
+    res.json(product);
 });
 
 routes.get('/search', (req, res) => {
-    res.json();
+    let query = req.query.key;
+    let products: Product[] = [];
+
+    mockData.forEach((x) => {
+        if(x.brand.toLowerCase() === (query.toString().toLowerCase())) {
+            products.push(x);
+        } 
+        else if(x.model.toLowerCase().includes(query.toString().toLowerCase())) {
+            products.push(x);
+        }
+    })
+    res.json(products);
 });
 
 export default routes;
