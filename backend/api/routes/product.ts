@@ -2,7 +2,7 @@ import {Router} from 'express';
 import mockData from '../mocks/productMocks.js';
 const routes = Router();
 
-interface Product {
+export interface Product {
     id: number,
     brand: string,
     model: string,
