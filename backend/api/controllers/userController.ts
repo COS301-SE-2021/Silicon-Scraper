@@ -1,7 +1,10 @@
-import {UserService} from "../service/userService";
+import {UserService} from "../service/userService.js";
 const userService = new UserService();
 
-exports.addToWatchlist = (req, res) => {
-    userService.addToWatchList(req);
-    res.send("Product has been added to user's watch list");
+export class UserController {
+
+    addToWatchlist(req, res) {
+        userService.addToWatchList(req);
+        res.send("Product has been added to user's watch list");
+    }
 }

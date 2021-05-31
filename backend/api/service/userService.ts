@@ -1,5 +1,7 @@
 import {Product} from "../routes/product";
 
+//TO DO: Insert this data into a database
+
 export class UserService {
 
     private products: Product[] = []
