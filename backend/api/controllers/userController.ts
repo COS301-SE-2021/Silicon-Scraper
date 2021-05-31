@@ -1,3 +1,7 @@
+import {UserService} from "../service/userService";
+const userService = new UserService();
+
 exports.addToWatchlist = (req, res) => {
-    res.send("Not implemented");
+    userService.addToWatchList(req);
+    res.send("Product has been added to user's watch list");
 }
