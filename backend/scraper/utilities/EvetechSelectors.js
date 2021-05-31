@@ -5,7 +5,7 @@ module.exports.getTitleSelector= ((index) => {
     return titles+pad(index)+"_lblName";
 })
 
-module.exports.getTableSelector = (() => {return "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products"})
+module.exports.getTableSelector = () => {return "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products"}
 
 module.exports.getRowSelector = (() => {return "tbody tr"})
 
