@@ -1,30 +1,21 @@
 import {Router} from 'express';
+import mockData from '../mocks/productMocks.js';
 const routes = Router();
 
 interface Product {
-    brand: String,
-    model: String,
-    retailer: String,
-    price: Number,
-    description: String,
-    img: String,
-    url: String,
-    availability: Number
+    id: number,
+    brand: string,
+    model: string,
+    retailer: string,
+    price: number,
+    description: string,
+    img: string,
+    url: string,
+    availability: number
 }
 
 routes.get('/getProducts', (req, res) => {
-    let products: Product[] = [
-        {
-            brand: "String",
-            model: "String",
-            retailer: "String",
-            price: 0,
-            description: "String",
-            img: "String",
-            url: "String",
-            availability: 0
-        }
-    ];
+    let products: Product[] = mockData;
     res.json(products);
 });
 

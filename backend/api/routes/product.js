@@ -1,18 +1,8 @@
 import { Router } from 'express';
+import mockData from '../mocks/productMocks.js';
 const routes = Router();
 routes.get('/getProducts', (req, res) => {
-    let products = [
-        {
-            brand: "String",
-            model: "String",
-            retailer: "String",
-            price: 0,
-            description: "String",
-            img: "String",
-            url: "String",
-            availability: 0
-        }
-    ];
+    let products = mockData;
     res.json(products);
 });
 routes.get('/getProductByID', (req, res) => {
