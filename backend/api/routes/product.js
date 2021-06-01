@@ -1,13 +1,15 @@
-import { Router } from 'express';
-import mockData from '../mocks/productMocks.js';
-const routes = Router();
-routes.get('/getProducts', (req, res) => {
+const express = require('express');
+const mockData = require('../mocks/productMocks');
+
+const router =  express.Router();
+
+router.get('/getProducts', (req, res) => {
     let products = mockData;
     res.json(products);
 });
-routes.get('/getProductByID', (req, res) => {
+
+router.get('/getProductByID', (req, res) => {
     let query = req.query.id;
-    console.log(query);
     let product = {
         id: 0,
         brand: "",
@@ -26,7 +28,8 @@ routes.get('/getProductByID', (req, res) => {
     });
     res.json(product);
 });
-routes.get('/search', (req, res) => {
+
+router.get('/search', (req, res) => {
     let query = req.query.key;
     let products = [];
     mockData.forEach((x) => {
@@ -39,4 +42,5 @@ routes.get('/search', (req, res) => {
     });
     res.json(products);
 });
-export default routes;
+
+module.exports = router;

@@ -2,7 +2,7 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "dependencies": {
     "@types/express": "^4.17.12",
     "@types/node": "^15.6.1",
@@ -60,10 +60,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "tsc && node ./app.js",
+    "start": "node ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC"

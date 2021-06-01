@@ -110,4 +110,5 @@ const mockData = [
         availability: 0
     },
 ];
-export default mockData;
+
+module.exports = mockData;
