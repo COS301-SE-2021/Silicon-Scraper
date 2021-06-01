@@ -45,9 +45,11 @@ const scrapeSilon = async (webToScrape) =>{
  * @param $
  */
 const addToProducts = (data, index, $) =>{
+    let title = titleParser($(data).find(EvetechSelector.getTitleSelector(index)).text().trim())
     products.push({
         image: concatUrl($(data).find(EvetechSelector.getImageSelector(index)).attr('src')),
-        title: $(data).find(EvetechSelector.getTitleSelector(index)).text().trim(),
+        brand: title.brand,
+        model: title.model,
         price: trimPrice($(data).find(EvetechSelector.getPriceSelector()).text().trim()),
         availability: $(data).find(EvetechSelector.getAvailabilitySelector(index)).text().trim(),
         link: concatUrl($(data).find(EvetechSelector.getLinkSelector(index)).attr('href')),
@@ -71,10 +73,33 @@ const concatUrl = (urlRES) =>{
 /**
  * This function cleans out the spaces and tabs from the innerHtml and returns the price ad is
  * @param price
- * @returns {string}
+ * @returns {number}
  */
  const trimPrice = (price) =>{
-     return price.split('\n')[0]
+    return parseFloat(price.split('\n')[0].split('R')[1].replace(",","."));
+}
+
+/**
+ * get the name , model and brand from the title
+ * @return {object}
+ */
+
+const titleParser = (title) =>{
+    let detailedTitle = title.split(' ')
+    let model = ''
+    for (let i = 1; i < detailedTitle.length - 1; i++) {
+        if(i == 1){
+            model = detailedTitle[i]
+        }else{
+            model = model+" "+detailedTitle[i]
+        }
+
+    }
+    let detailedTitleObj = {
+        'brand' : detailedTitle[0],
+        'model' : model
+    }
+    return detailedTitleObj
 }
 
 /**
@@ -88,9 +113,7 @@ module.exports.scrape = async () => {
     return products;
 }
 
-// scrape().then((data) => {
-//     console.log(data)
-// } )
+
 
 
 
