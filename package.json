@@ -23,5 +23,9 @@
   "homepage": "https://github.com/COS301-SE-2021/Silicon-Scraper#readme",
   "devDependencies": {
     "jest": "^27.0.3"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.9"
   }
 }

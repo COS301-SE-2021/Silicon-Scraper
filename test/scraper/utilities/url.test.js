@@ -1,6 +1,6 @@
 const url = require("../../../backend/scraper/utilities/url");
 
-describe("url()", () => {
+describe("urlTest()", () => {
     const urls = [
         url.getEveTecCpuUrl(),
         url.getEveTecGpuUrl(),

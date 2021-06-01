@@ -1,4 +1,3 @@
-const request = require("request");
 const cheerio = require("cheerio");
 const axios = require("axios");
 
@@ -61,6 +60,6 @@ scrapeSilon().then(() => {
     console.log("running scraper");
 })
 
-
+module.exports = scrapeSilon;
 
 
