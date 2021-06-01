@@ -115,9 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
 =======
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/pages/home.dart';
+import 'package:silicon_scraper/services/getProducts.dart';
 
 void main() {
   runApp(MyApp());
+  getProducts();
 }
 
 class MyApp extends StatelessWidget {
@@ -136,9 +138,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+//        primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Silicon Scraper',),
     );
   }
 }

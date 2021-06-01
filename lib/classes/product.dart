@@ -10,7 +10,7 @@ class product
   final String description;
 
   final String url;
-  final String photo;
+  final String photo; //url
   availability stockAvailability;
 
   product(this.name, this.model, this.price, this.retailer, this.description,
@@ -40,6 +40,27 @@ class product
     {
       this.stockAvailability=availability.notSpecified;
     }
+  }
+
+  String getAvailability()
+  {
+    if(this.stockAvailability==availability.available)
+      {
+        return "available";
+      }
+    else if(this.stockAvailability==availability.limitedStock)
+    {
+      return "limited stock";
+    }
+    else if(this.stockAvailability==availability.outOfStock)
+    {
+      return "out of stock";
+    }
+    else if(this.stockAvailability==availability.notSpecified)
+    {
+      return "not specified";
+    }
+    return "not specified";
   }
 }
 
