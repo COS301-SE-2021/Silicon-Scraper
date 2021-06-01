@@ -21,7 +21,6 @@ routes.get('/getProducts', (req, res) => {
 
 routes.get('/getProductByID', (req, res) => {
     let query = req.query.id;
-    console.log(query);
     let product: Product = {
         id: 0,
         brand: "",
