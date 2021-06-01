@@ -1,7 +1,7 @@
 // ignore: camel_case_types
 class product
 {
-  final String name;
+  final String brand;
   final String model;
   final double price;
 
@@ -13,7 +13,7 @@ class product
   final String photo; //url
   availability stockAvailability;
 
-  product(this.name, this.model, this.price, this.retailer, this.description,
+  product(this.brand, this.model, this.price, this.retailer, this.description,
       this.url, this.photo,String sAvailability)
   {
     if(sAvailability==null)

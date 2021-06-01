@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/classes/product.dart';
 
@@ -16,47 +15,50 @@ class ProductWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      child:Row(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height/5,
-            child: Image.network('${item.photo}',),
-          ),
-          SizedBox(width: 30,),
-          Column(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width/2 ,
-                  child: Text("${item.name}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),)
-              ),
-               Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                    
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(left: 0,right:  55,top: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("${item.retailer}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),textAlign: TextAlign.left,),
-                          getAvailabilityText(),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                        Text("R${item.price}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.green)),
-                                ],
-                      ),
-                    )
-                  ],
+      child:InkWell(
+        onTap: (){},
+        child: Row(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height/5,
+              child: Image.network('${item.photo}',),
+            ),
+            SizedBox(width: 30,),
+            Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width/2 ,
+                    child: Text("${item.brand}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),)
                 ),
-              ],
-          )
-        ],
+                 Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 0,right:  55,top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("${item.retailer}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),textAlign: TextAlign.left,),
+                            getAvailabilityText(),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                          Text("R${item.price}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.green)),
+                                  ],
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+            )
+          ],
+        ),
       ),
 
     );

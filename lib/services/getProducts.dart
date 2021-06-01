@@ -10,7 +10,7 @@ List<product> addProducts(var json)
     for(int i=0;i<json["products"].length;i++)
     {
       print(json["products"][i]);
-      String name=json["products"][i]['name'];
+      String name=json["products"][i]['brand'];
       String model=json["products"][i]['model'];
       double price=json["products"][i]['price'];
       String retailer=json["products"][i]['retailer'];

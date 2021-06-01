@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "name":"MSI GeForce RTX 3090" ,
+      "brand":"MSI GeForce RTX 3090" ,
       "model":"SUPRIM X 24GB GDDR6X Graphics Card" ,
       "price": 45999.0,
       "retailer": "evetech",
@@ -11,7 +11,7 @@
       "availability": "outofstock"
     },
     {
-      "name":"ASUS ROG Strix GeForce RTX 3090" ,
+      "brand":"ASUS ROG Strix GeForce RTX 3090" ,
       "model":"OC 24GB White GDDR6X Gaming Graphics Card " ,
       "price": 45999.0,
       "retailer": "evetech",
@@ -21,7 +21,7 @@
       "availability": "outofstock"
     },
     {
-      "name": "MSI GeForce RTX 3090 Gaming X TRIO",
+      "brand": "MSI GeForce RTX 3090 Gaming X TRIO",
       "model": "Gaming X TRIO 24GB GDDR6X Graphics Card",
       "price": 44999.0,
       "retailer": "evetech",
@@ -31,7 +31,7 @@
       "availability":"outofstock"
     },
     {
-      "name":"Gigabyte GeForce RTX 3090 GAMING" ,
+      "brand":"Gigabyte GeForce RTX 3090 GAMING" ,
       "model": "OC 24GB GDDR6X Gaming Graphics Card",
       "price":43999.0 ,
       "retailer": "evetech",
@@ -41,7 +41,7 @@
       "availability": "available"
     },
     {
-      "name":"NVIDIA Quadro RTX 5000" ,
+      "brand":"NVIDIA Quadro RTX 5000" ,
       "model":"16GB GDDR6 3072 Cuda Core Workstation Graphics Card" ,
       "price":39999.0 ,
       "retailer": "evetech",
@@ -51,7 +51,7 @@
       "availability": "out of stock"
     },
     {
-      "name":"Gigabyte Radeon RX 6900" ,
+      "brand":"Gigabyte Radeon RX 6900" ,
       "model": "XT GAMING OC 16GB GDDR6 Gaming Graphics Card",
       "price": 34999.0,
       "retailer": "evetech",
@@ -61,7 +61,7 @@
       "availability": "available"
     },
     {
-      "name": "ASUS TUF Gaming GeForce RTX 3060",
+      "brand": "ASUS TUF Gaming GeForce RTX 3060",
       "model": "OC 12GB GDDR6 Graphics Card",
       "price": 13499.0,
       "retailer":"evetech" ,
