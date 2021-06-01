@@ -7,7 +7,7 @@ module.exports.getTitleSelector= ((index) => {
 
 module.exports.getTableSelector = () => {return "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products"}
 
-module.exports.getRowSelector = (() => {return "tbody tr"})
+module.exports.getRowSelector = () => {return "tbody tr"}
 
 module.exports.getLinkSelector = ((index) => {
     const link = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
