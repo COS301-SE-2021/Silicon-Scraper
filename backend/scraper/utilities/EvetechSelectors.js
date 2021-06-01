@@ -1,6 +1,6 @@
 /*This class contains getters for Evetech css selectors */ 
 
-module.exports.getTitleSelector= ((index) => {
+module.exports.getTitleSelector = ((index) => {
     const titles = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
     return titles+pad(index)+"_lblName";
 })

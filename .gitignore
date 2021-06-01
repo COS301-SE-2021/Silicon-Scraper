@@ -84,6 +84,9 @@ app.*.map.json
 .pub/
 /build/
 
+#database
+backend/.env
+
 # API related
 node_modules/
 
