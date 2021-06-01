@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:silicon_scraper/classes/product.dart';
 import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 
 List<product> addProducts(var json)
