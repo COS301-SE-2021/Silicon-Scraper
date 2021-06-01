@@ -10,7 +10,7 @@ class product
   final String description;
 
   final String url;
-  final String photo;
+  final String photo; //url
   availability stockAvailability;
 
   product(this.name, this.model, this.price, this.retailer, this.description,

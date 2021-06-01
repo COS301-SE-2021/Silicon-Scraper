@@ -35,6 +35,8 @@ dev_dependencies:
   #Mockito for mobile.mocks
   mockito: 
   test: ^1.16.5
+  #for mocking json
+  dio: ^3.0.9
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -46,6 +48,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - test/mobile/mocks/json/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

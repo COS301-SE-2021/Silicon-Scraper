@@ -34,22 +34,21 @@ class ProductWidget extends StatelessWidget {
                     
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 0,right:  55),
+                      margin: EdgeInsets.only(left: 0,right:  55,top: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-
-                          Text("${item.model}"),
                           Text("${item.retailer}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),textAlign: TextAlign.left,),
-                          Text(item.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,)),
+                          getAvailabilityText(),
                         ],
                       ),
                     ),
                     Container(
+                      margin: EdgeInsets.only(top: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                        Text("R${item.price}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,)),
+                        Text("R${item.price}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.green)),
                                 ],
                       ),
                     )
@@ -62,15 +61,22 @@ class ProductWidget extends StatelessWidget {
 
     );
 
-//    Card(
-//      elevation: 60.0,
-//      shape: RoundedRectangleBorder(
-//        side: BorderSide(color: Colors.white70, width: 1),
-//        borderRadius: BorderRadius.circular(10),
-//      ),
-//      margin: EdgeInsets.fromLTRB(20.0,10,20,10),
-//
-//    ),
+  }
+
+  Widget getAvailabilityText()
+  {
+    if(item.stockAvailability==availability.available)
+      {
+        return Text(item.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.green));
+      }
+    else if(item.stockAvailability==availability.notSpecified)
+      {
+        return Text(item.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.grey));
+      }
+    else if(item.stockAvailability==availability.outOfStock||item.stockAvailability==availability.limitedStock)
+    {
+      return Text(item.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.red));
+    }
   }
 }
 
