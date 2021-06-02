@@ -5,6 +5,11 @@ const fs = require("fs")
 
 
 
+test("Takes unfilterd price and trims it to fit to a double criteria" , () => {
+    expect(scraper.trimPrice("R44,499/n/t/t/t/t/t/t/")).toBe(44499)
+})
+
+
 //Mock title
 let title = "ASUS ROG Strix RTX 3090 OC 24GB"
 let exp = ["ASUS", "ROG Strix RTX 3090 OC 24GB"]
