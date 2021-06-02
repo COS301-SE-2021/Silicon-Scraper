@@ -13,6 +13,6 @@
     "cheerio": "^1.0.0-rc.9"
   },
   "devDependencies": {
-    "jest": "^27.0.2"
+    "jest": "^27.0.3"
   }
 }
