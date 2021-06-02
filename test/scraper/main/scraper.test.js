@@ -24,7 +24,7 @@ describe("scraperTest()", () => {
         expect(products).not.toBeNull();
         expect(mockAxios.get).toHaveBeenCalledTimes(2);
         expect(mockAxios.get).toHaveBeenNthCalledWith(1,'https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx')
-        expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx' )
+        expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx')
         expect(selectors.getAvailabilitySelector).toBeTruthy()
 
     })
@@ -39,8 +39,11 @@ describe("scraperTest()", () => {
             link: "link",
             retailer: "retailer"
         };
+
+
+
         
-        mockAxios.get.mockResolvedValueOnce(data)(() => Promise.resolve(data));
+        mockAxios.get.mockResolvedValueOnce( data )(() => Promise.resolve(data));
         expect(scrape.scrape()).resolves.toEqual(data);
     
     })

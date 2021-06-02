@@ -131,6 +131,8 @@ const scrape = async () => {
     return products;
 }
 
+module.exports = {scrape}
+
 // scrape().then(res => {
 //     console.log(res)
 // })
