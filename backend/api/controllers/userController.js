@@ -19,15 +19,15 @@ const login_user = (req, res) => {
     const password = req.body.password;
 
     res.status(200).json({jwt: "jwt"});
-}
+};
 
 const delete_user = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     res.status(200);
-}
+};
 
-const addToWatchlist = (req, res) => {
+const add_to_watchlist = (req, res) => {
 
     const product = {
         "id": 1,
@@ -46,5 +46,8 @@ const addToWatchlist = (req, res) => {
 };
 
 module.exports = {
+    register_user,
+    login_user,
+    delete_user,
     addToWatchlist
 };
