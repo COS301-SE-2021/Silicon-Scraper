@@ -24,15 +24,14 @@ const scrapeSilon = async (webToScrape) =>{
     const $ = await cheerio.load(html.data);
 
     let b = 0;
-
     $(EvetechSelector.getTableSelector()).find(EvetechSelector.getRowSelector()).children().each((i, row) => {
         $(row).each((k, col)=>{
-
+            
             addToProducts(col, b++, $);
-
+         
         })
     })
-
+    
    return products;
 
 }
@@ -111,16 +110,3 @@ module.exports.scrape = async () => {
     }
     return products;
 }
-
-
-
-
-
-
-
-
-
-
-module.exports = scrapeSilon;
-
-
