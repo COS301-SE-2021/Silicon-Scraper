@@ -5,6 +5,7 @@ const axios = require("axios");
 let url = require("../utilities/url.js");
 let EvetechSelector = require("../utilities/EvetechSelectors");
 let products = [];
+let today = new Date()
 
 /**
  *This is an array of urls to scrape
@@ -65,7 +66,14 @@ const addToProducts = (data, index, $) =>{
         price: trimPrice($(data).find(EvetechSelector.getPriceSelector()).text().trim()),
         availability: $(data).find(EvetechSelector.getAvailabilitySelector(index)).text().trim(),
         link: concatUrl($(data).find(EvetechSelector.getLinkSelector(index)).attr('href')),
-        retailer:"Evetech"
+        retailer:"Evetech",
+        detail:{ productDetails : [
+            {
+                datetime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+                price: trimPrice($(data).find(EvetechSelector.getPriceSelector()).text().trim()),
+                availability: $(data).find(EvetechSelector.getAvailabilitySelector(index)).text().trim()
+            }
+        ]}
     })
 }
 
