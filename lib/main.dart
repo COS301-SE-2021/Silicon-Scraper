@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/pages/mainNavigator.dart';
+import 'package:silicon_scraper/services/getProducts.dart';
 
 void main() {
   runApp(MyApp());
-//  getProducts();
 }
 
 class MyApp extends StatelessWidget {

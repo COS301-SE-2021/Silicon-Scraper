@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/classes/product.dart';
-import 'package:silicon_scraper/widgets/productWidget.dart';
+import 'package:silicon_scraper/services/getProducts.dart';
 
 class Explore extends StatefulWidget {
 
@@ -19,8 +18,7 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  Product item=new Product("Gigabyte GeForce RTX 3090 ","GAMING OC 24GB GDDR6X Gaming Graphics Card",43999.0,"evetech","0496 Cuda Core / 3‎84-bit Memory Interface / Boost Clock : 1755MHz / WINDFORCE 3X Cooling System / Protection Metal Back Plate / NVIDIA Ampere Streaming Multiprocessors / SC-G3090-GO + FREE DELIVERY !","https://www.evetech.co.za/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card/best-deal/10547.aspx","https://www.evetech.co.za/repository/ProductImages/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card-330px-v1.jpg","available");
-
+  var items=getProducts();
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -37,16 +35,23 @@ class _ExploreState extends State<Explore> {
 //        backgroundColor:Color(0xff0E3854) ,
       backgroundColor: Colors.red[800],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: ListView(
-        children: [
-          ProductWidget(item: item,),
-//        ProductDetailWidget(item)
-        ],
-          ),
-      ),
+      body: Container(
+        child: FutureBuilder(
+            future: getProducts(),
+          builder: (BuildContext context,AsyncSnapshot snapshot){
+              if(snapshot.connectionState==ConnectionState.none)
+                {
+                  return Text("no data to display");
+                }
+              else if(snapshot.data!=null){
+                return ProductListView(context, snapshot.data);
+              }
+              else{
+                return Text("waiting for data");
+              }
+          },
+        ),
+      )
        // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
