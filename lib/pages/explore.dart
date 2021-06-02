@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/classes/product.dart';
+import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/widgets/productWidget.dart';
 
 class Explore extends StatefulWidget {
@@ -37,16 +38,10 @@ class _ExploreState extends State<Explore> {
 //        backgroundColor:Color(0xff0E3854) ,
       backgroundColor: Colors.red[800],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: ListView(
-        children: [
-          ProductWidget(item: item,),
-//        ProductDetailWidget(item)
-        ],
-          ),
-      ),
+      body: FutureBuilder(
+
+
+      )
        // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

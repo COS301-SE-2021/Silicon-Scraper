@@ -8,7 +8,6 @@ import 'package:silicon_scraper/widgets/productWidget.dart';
 
 List<Product> addProducts(var json)
 {
-  json.then((){
     List<Product> items=[];
     print(json.length);
     for(int i=0;i<json["products"].length;i++)
@@ -26,13 +25,12 @@ List<Product> addProducts(var json)
     }
 
     return items;
-  });
 }
 
 Future<String>_loadFromAsset() async {
   return await rootBundle.loadString("test/mobile/mocks/json/products.json");
 }
-Future parseJson() async {
+Future<dynamic> parseJson() async {
   String jsonString = await _loadFromAsset();
   final jsonResponse = jsonDecode(jsonString);
   return jsonResponse;
@@ -41,11 +39,8 @@ Future parseJson() async {
 Future<List<Product>> getProducts() async
 {
   var json= await parseJson();
-  var then = json.then(() async {
-    return addProducts(json);
-  });
+  return addProducts(json);
 
-  return then;
 }
 
 ListView ProductListView(BuildContext context,List<Product> items)
