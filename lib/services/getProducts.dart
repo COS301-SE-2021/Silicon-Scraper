@@ -1,16 +1,20 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:silicon_scraper/classes/product.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:silicon_scraper/widgets/productWidget.dart';
 
-List<product> addProducts(var json)
+List<Product> addProducts(var json)
 {
   json.then((){
-    List<product> items=[];
+    List<Product> items=[];
     print(json.length);
     for(int i=0;i<json["products"].length;i++)
     {
       print(json["products"][i]);
-      String name=json["products"][i]['name'];
+      String name=json["products"][i]['brand'];
       String model=json["products"][i]['model'];
       double price=json["products"][i]['price'];
       String retailer=json["products"][i]['retailer'];
@@ -18,7 +22,7 @@ List<product> addProducts(var json)
       String url=json["products"][i]['url'];
       String photo=json["products"][i]['image'];
       String sAvailability=json["products"][i]['availability'];
-      items.add(new product(name, model, price, retailer, description, url, photo, sAvailability));
+      items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability));
     }
 
     return items;
@@ -34,15 +38,25 @@ Future parseJson() async {
   return jsonResponse;
 }
 
-Future<List<product>> getProducts() async
+Future<List<Product>> getProducts() async
 {
   var json= await parseJson();
-  var then = json.then((){
+  var then = json.then(() async {
     return addProducts(json);
   });
 
   return then;
 }
 
+ListView ProductListView(BuildContext context,List<Product> items)
+{
+  return ListView.builder(
+    itemCount:items.length ,
+      itemBuilder: (_,index){
+        return
+            ProductWidget(item:items[index]);
+      }
+  );
 
+}
 

@@ -1,7 +1,9 @@
 // ignore: camel_case_types
-class product
+import 'package:flutter/material.dart';
+
+class Product
 {
-  final String name;
+  final String brand;
   final String model;
   final double price;
 
@@ -13,7 +15,7 @@ class product
   final String photo; //url
   availability stockAvailability;
 
-  product(this.name, this.model, this.price, this.retailer, this.description,
+  Product(this.brand, this.model, this.price, this.retailer, this.description,
       this.url, this.photo,String sAvailability)
   {
     if(sAvailability==null)
@@ -61,6 +63,23 @@ class product
       return "not specified";
     }
     return "not specified";
+  }
+
+  Widget getAvailabilityText()
+  {
+    if(this.stockAvailability==availability.available)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.green));
+    }
+    else if(this.stockAvailability==availability.notSpecified)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.grey));
+    }
+    else if(this.stockAvailability==availability.outOfStock||this.stockAvailability==availability.limitedStock)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.red));
+    }
+    return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,));
   }
 }
 
