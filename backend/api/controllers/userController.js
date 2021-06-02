@@ -2,7 +2,14 @@ const products = [];
 const users = [];
 
 const register = (req, res) => {
-    users
+    const username = req.body.username;
+    const password = req.body.password;
+    const user = {
+        id: users.length + 1,
+        username,
+        password
+    };
+    users.push(user);
 }
 
 const addToWatchlist = (req, res) => {
