@@ -59,7 +59,23 @@ result = [ {
     ]
 
 
-
+/**
+ * This function reads contents of the mock html page, and calls the getWebData to scrape that page
+ * and compares the given data to the expected out
+ * param {string} Takes in a string url to the mock html
+ * return {void}
+ */
+fs.readFile(eve.getEveTechMockUrl(), 'utf8' , (err, data) => {
+    if (err) {
+        console.error(err)
+        return
+    }
+    scraper.getWebData(data).then((products) => {
+        test('Making a request to a mock html , and comparing it to the given expected output: ', () => {
+            expect(products).resolves.toBe(result)
+        })
+    })
+})
 
 
 //Mock url
