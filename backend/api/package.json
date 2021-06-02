@@ -2,7 +2,7 @@
   "name": "silicon-scraper-api",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "dependencies": {
     "accepts": "^1.3.7",
     "array-flatten": "^1.1.1",
@@ -28,6 +28,7 @@
     "iconv-lite": "^0.4.24",
     "inherits": "^2.0.3",
     "ipaddr.js": "^1.9.1",
+    "jest": "^27.0.3",
     "media-typer": "^0.3.0",
     "merge-descriptors": "^1.0.1",
     "methods": "^1.1.2",
@@ -51,6 +52,7 @@
     "serve-static": "^1.14.1",
     "setprototypeof": "^1.1.1",
     "statuses": "^1.5.0",
+    "supertest": "^6.1.3",
     "toidentifier": "^1.0.0",
     "type-is": "^1.6.18",
     "unpipe": "^1.0.0",
@@ -59,8 +61,14 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "test": "jest",
+    "start": "node index.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "author": "",
   "license": "ISC"
