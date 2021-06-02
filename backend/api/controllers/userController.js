@@ -49,5 +49,5 @@ module.exports = {
     register_user,
     login_user,
     delete_user,
-    addToWatchlist
+    add_to_watchlist
 };
