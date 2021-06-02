@@ -6,10 +6,10 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/widgets/productWidget.dart';
 
-List<product> addProducts(var json)
+List<Product> addProducts(var json)
 {
   json.then((){
-    List<product> items=[];
+    List<Product> items=[];
     print(json.length);
     for(int i=0;i<json["products"].length;i++)
     {
@@ -22,7 +22,7 @@ List<product> addProducts(var json)
       String url=json["products"][i]['url'];
       String photo=json["products"][i]['image'];
       String sAvailability=json["products"][i]['availability'];
-      items.add(new product(name, model, price, retailer, description, url, photo, sAvailability));
+      items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability));
     }
 
     return items;
@@ -38,7 +38,7 @@ Future parseJson() async {
   return jsonResponse;
 }
 
-Future<List<product>> getProducts() async
+Future<List<Product>> getProducts() async
 {
   var json= await parseJson();
   var then = json.then(() async {
@@ -48,7 +48,7 @@ Future<List<product>> getProducts() async
   return then;
 }
 
-ListView ProductListView(BuildContext context,List<product> items)
+ListView ProductListView(BuildContext context,List<Product> items)
 {
   return ListView.builder(
     itemCount:items.length ,

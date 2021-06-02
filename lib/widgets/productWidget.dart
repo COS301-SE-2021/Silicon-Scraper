@@ -3,7 +3,7 @@ import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/widgets/productDetailWidget.dart';
 
 class ProductWidget extends StatelessWidget {
-  final product item;
+  final Product item;
 
   const ProductWidget({Key key, this.item}) : super(key: key);
   @override

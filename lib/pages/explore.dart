@@ -19,7 +19,7 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  product item=new product("Gigabyte GeForce RTX 3090 ","GAMING OC 24GB GDDR6X Gaming Graphics Card",43999.0,"evetech","0496 Cuda Core / 3‎84-bit Memory Interface / Boost Clock : 1755MHz / WINDFORCE 3X Cooling System / Protection Metal Back Plate / NVIDIA Ampere Streaming Multiprocessors / SC-G3090-GO + FREE DELIVERY !","https://www.evetech.co.za/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card/best-deal/10547.aspx","https://www.evetech.co.za/repository/ProductImages/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card-330px-v1.jpg","available");
+  Product item=new Product("Gigabyte GeForce RTX 3090 ","GAMING OC 24GB GDDR6X Gaming Graphics Card",43999.0,"evetech","0496 Cuda Core / 3‎84-bit Memory Interface / Boost Clock : 1755MHz / WINDFORCE 3X Cooling System / Protection Metal Back Plate / NVIDIA Ampere Streaming Multiprocessors / SC-G3090-GO + FREE DELIVERY !","https://www.evetech.co.za/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card/best-deal/10547.aspx","https://www.evetech.co.za/repository/ProductImages/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card-330px-v1.jpg","available");
 
   @override
   Widget build(BuildContext context) {

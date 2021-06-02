@@ -25,7 +25,7 @@ class MainNavigator extends StatefulWidget {
 }
 
 class _MainNavigatorState extends State<MainNavigator> {
-  int Pageindex=1;
+  int pageIndex=1;
   List<Widget> pageList=<Widget>[
     SearchPage(),
     WatchList(),
@@ -40,12 +40,12 @@ class _MainNavigatorState extends State<MainNavigator> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      body: pageList[Pageindex],
+      body: pageList[pageIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: Pageindex,
+        currentIndex: pageIndex,
         onTap: (value){
           setState(() {
-            Pageindex=value;
+            pageIndex=value;
           });
         },
         backgroundColor: Colors.grey[100],

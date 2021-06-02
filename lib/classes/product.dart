@@ -1,7 +1,7 @@
 // ignore: camel_case_types
 import 'package:flutter/material.dart';
 
-class product
+class Product
 {
   final String brand;
   final String model;
@@ -15,7 +15,7 @@ class product
   final String photo; //url
   availability stockAvailability;
 
-  product(this.brand, this.model, this.price, this.retailer, this.description,
+  Product(this.brand, this.model, this.price, this.retailer, this.description,
       this.url, this.photo,String sAvailability)
   {
     if(sAvailability==null)
@@ -79,6 +79,7 @@ class product
     {
       return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.red));
     }
+    return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,));
   }
 }
 

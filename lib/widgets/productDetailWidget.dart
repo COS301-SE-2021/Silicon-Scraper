@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:silicon_scraper/classes/product.dart';
 
 class ProductDetailWidget extends StatefulWidget {
-  product item;
+  Product item;
   ProductDetailWidget(this.item);
 
   get photo => item.photo;
