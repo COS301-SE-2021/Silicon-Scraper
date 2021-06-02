@@ -1,7 +1,7 @@
 const products = [];
 const users = [];
 
-const register = (req, res) => {
+const register_user = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
@@ -14,11 +14,17 @@ const register = (req, res) => {
     res.status(201);
 };
 
-const login = (req, res) => {
+const login_user = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
     res.status(200).json({jwt: "jwt"});
+}
+
+const delete_user = (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    res.status(200);
 }
 
 const addToWatchlist = (req, res) => {
