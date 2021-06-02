@@ -10,17 +10,7 @@ router.get('/getProducts', (req, res) => {
 
 router.get('/getProductByID', (req, res) => {
     let query = req.query.id;
-    let product = {
-        id: 0,
-        brand: "",
-        model: "",
-        retailer: "",
-        price: 0,
-        description: "",
-        img: "",
-        url: "",
-        availability: 0
-    };
+    let product = {};
     mockData.forEach((x) => {
         if (x.id == parseInt(query.toString())) {
             product = x;
