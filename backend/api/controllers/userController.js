@@ -45,9 +45,14 @@ const add_to_watchlist = (req, res) => {
     res.send("Product has been added to user's watch list");
 };
 
+const remove_from_watchlist = (req, res) => {
+    res.status(200);
+};
+
 module.exports = {
     register_user,
     login_user,
     delete_user,
-    add_to_watchlist
+    add_to_watchlist,
+    remove_from_watchlist
 };
