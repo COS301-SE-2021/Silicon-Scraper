@@ -1,0 +1,1 @@
+/*This class contains getters for Pc Link css selectors */ 
