@@ -2,14 +2,19 @@
   "name": "scraper",
   "version": "1.0.0",
   "description": "A web-scraper for the silicon-scraper project",
-  "main": "scraper.js",
+  "main": "scraperDbOp.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Bug-Busters-inc",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.9",
-    "request": "^2.88.2"
+    "dotenv": "^10.0.0",
+    "env": "^0.0.2",
+    "pg": "^8.6.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
   }
 }
