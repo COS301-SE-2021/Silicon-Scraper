@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/classes/product.dart';
+import 'package:silicon_scraper/widgets/productDetailWidget.dart';
 
 class ProductWidget extends StatelessWidget {
   final product item;
@@ -12,15 +13,17 @@ class ProductWidget extends StatelessWidget {
       elevation: 60.0,
         shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.white70, width: 1),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.only(topRight: Radius.circular(10),bottomRight: Radius.circular(10) ),
       ),
       margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
       child:InkWell(
-        onTap: (){},
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> ProductDetailWidget(item)));
+        },
         child: Row(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height/5,
+              height: MediaQuery.of(context).size.height/6,
               child: Image.network('${item.photo}',),
             ),
             SizedBox(width: 30,),
@@ -40,7 +43,7 @@ class ProductWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("${item.retailer}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),textAlign: TextAlign.left,),
-                            getAvailabilityText(),
+                            item.getAvailabilityText(),
                           ],
                         ),
                       ),
@@ -65,20 +68,6 @@ class ProductWidget extends StatelessWidget {
 
   }
 
-  Widget getAvailabilityText()
-  {
-    if(item.stockAvailability==availability.available)
-      {
-        return Text(item.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.green));
-      }
-    else if(item.stockAvailability==availability.notSpecified)
-      {
-        return Text(item.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.grey));
-      }
-    else if(item.stockAvailability==availability.outOfStock||item.stockAvailability==availability.limitedStock)
-    {
-      return Text(item.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.red));
-    }
-  }
+
 }
 

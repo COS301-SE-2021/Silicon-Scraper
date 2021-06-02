@@ -1,4 +1,6 @@
 // ignore: camel_case_types
+import 'package:flutter/material.dart';
+
 class product
 {
   final String brand;
@@ -61,6 +63,22 @@ class product
       return "not specified";
     }
     return "not specified";
+  }
+
+  Widget getAvailabilityText()
+  {
+    if(this.stockAvailability==availability.available)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.green));
+    }
+    else if(this.stockAvailability==availability.notSpecified)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.grey));
+    }
+    else if(this.stockAvailability==availability.outOfStock||this.stockAvailability==availability.limitedStock)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.red));
+    }
   }
 }
 

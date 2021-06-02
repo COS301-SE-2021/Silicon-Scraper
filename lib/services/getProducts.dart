@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:silicon_scraper/classes/product.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:silicon_scraper/widgets/productWidget.dart';
 
 List<product> addProducts(var json)
 {
@@ -37,12 +41,22 @@ Future parseJson() async {
 Future<List<product>> getProducts() async
 {
   var json= await parseJson();
-  var then = json.then((){
+  var then = json.then(() async {
     return addProducts(json);
   });
 
   return then;
 }
 
+ListView ProductListView(BuildContext context,List<product> items)
+{
+  return ListView.builder(
+    itemCount:items.length ,
+      itemBuilder: (_,index){
+        return
+            ProductWidget(item:items[index]);
+      }
+  );
 
+}
 

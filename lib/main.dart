@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/pages/home.dart';
-import 'package:silicon_scraper/services/getProducts.dart';
+import 'package:silicon_scraper/pages/mainNavigator.dart';
 
 void main() {
   runApp(MyApp());
-  getProducts();
+//  getProducts();
 }
 
 class MyApp extends StatelessWidget {
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
 //        primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'Silicon Scraper',),
+      home: MainNavigator(),
     );
   }
 }
