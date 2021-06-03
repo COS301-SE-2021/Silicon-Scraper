@@ -1,6 +1,6 @@
 <h1 align="center"> Silicon Scraper </h1> <br>
 <p align="center"> 
-	<img alt="Epi-Use logo" src="https://www.epiuse.com/wp-content/uploads/2018/10/Full-Logo.png">
+	<img alt="Epi-Use labs logo" src="https://www.epiuse.com/wp-content/uploads/2018/10/Full-Logo.png">
 </p>
 <h2 align="center"> Bug Busters </h2>
 
