@@ -24,10 +24,19 @@ describe("scraperTest()", () => {
         expect(products).not.toBeNull();
         expect(mockAxios.get).toHaveBeenCalledTimes(2);
         expect(mockAxios.get).toHaveBeenNthCalledWith(1,'https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx')
-        expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx' )
-        expect(selectors.getAvailabilitySelector).toBeTruthy()
+        expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx')
+        expect(selectors.getTableSelector).toHaveBeenCalled()
 
     })
+
+    
+    test.skip("Takes in a title and returns an array of the brand and the model", () => {
+        let title = "ASUS ROG Strix RTX 3090 OC 24GB"
+        let exp2 = ["ASUS", "ROG Strix RTX 3090 OC 24GB"]
+
+        expect(scrape.titleParser(title)).toBe(exp2)
+    })
+
 
     test.skip("fetches data successfully", async () =>{
         const data = {
@@ -39,8 +48,8 @@ describe("scraperTest()", () => {
             link: "link",
             retailer: "retailer"
         };
-        
-        mockAxios.get.mockResolvedValueOnce(data)(() => Promise.resolve(data));
+
+        mockAxios.get.mockResolvedValueOnce( data )(() => Promise.resolve(data));
         expect(scrape.scrape()).resolves.toEqual(data);
     
     })
