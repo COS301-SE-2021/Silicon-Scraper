@@ -6,7 +6,7 @@
 
 ## Project Description
 
-**Silicon Scraper is system that scrapes online retailers for specific information regarding GPUs and CPUs.
+** Silicon Scraper is system that scrapes online retailers for specific information regarding GPUs and CPUs.
 <br>The information is then made available to the user via a mobile app where the user can search for a product and <br>
 add it to a watch list to be notified of any changes in price or availability etc. One of the more notable features is the ability for the user to request a prediction of price and availability for a product **
 
@@ -38,13 +38,15 @@ This is Bug Busters Inc. meet our team:
 
 **Louis van As**\
 _Team Leader_
-- [LinkedIn](https://www.linkedin.com/in/louis-van-as-27ab8820b)
+<img src="https://images.chesscomfiles.com/uploads/user/56455518.215cf0b1.jpeg" width="250" height="250">- [LinkedIn](https://www.linkedin.com/in/louis-van-as-27ab8820b)
+- [Github](https://github.com/LOUISVA2000)
 > I am a final year Information & Knowledge Systems (IT and enterprise elective) student at the University of Pretoria. My most notable interests include
-> Automation, Iot ,App development ,Fishing ,Chess and Theology. I am ambitious and have a tendency to take on tasks whithout knowing what I'm getting myself into
+> Automation, Iot ,App development ,Fishing ,Chess and Theology. I am ambitious and have a tendency to take on tasks without knowing what I'm getting myself into
 > but I'm always proud at the end.  
 
 **Mpendulo Sibeko**
 - [LinkedIn](https://www.linkedin.com/in/mpendulo-s-aa4b53106/)
+- [Github](#link)
 > Short description
 
 **Thato Jadezwani**
@@ -53,6 +55,7 @@ _Team Leader_
 
 **Thato (Lesedi) Motoma**
 - [LinkedIn](https://www.linkedin.com/in/thato-lesedi-motoma-69311b1b1/)
+- [Github](#link)
 > Short description
 
 **Tanatswa Dendere**\
@@ -63,6 +66,7 @@ _Team Leader_
 
 **Vincent Besse**
 - [LinkedIn](#link)
+- [Github]()
 > Short description
 
 ## Branching Strategy
