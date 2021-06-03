@@ -54,8 +54,8 @@ _Team Leader_
 > Short description
 
 **Tanatswa Dendere**
-- [LinkedIn](#link)
-> Short description
+- [LinkedIn](www.linkedin.com/in/tanatswadendere)
+> I am most passionate about innovation. I like to be a part of finding new ideas and creating new methods of doing things efficiently. And in my spare time I enjoy writing short stories.
 
 **Vincent Besse**
 - [LinkedIn](#link)
