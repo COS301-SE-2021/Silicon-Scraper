@@ -37,6 +37,8 @@ dev_dependencies:
   test: ^1.16.5
   #for opening links
   url_launcher: ^5.7.5
+  #for testing with network images
+  image_test_utils: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
