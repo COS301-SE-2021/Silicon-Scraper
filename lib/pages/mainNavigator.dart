@@ -28,7 +28,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   int pageIndex=1;
   List<Widget> pageList=<Widget>[
     SearchPage(),
-    WatchList(),
+//    WatchList(),
     Explore(),
   ];
   @override
@@ -52,7 +52,7 @@ class _MainNavigatorState extends State<MainNavigator> {
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.search),label: "Search"),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark,color: Colors.yellow[800],),label: "Watch List"),
+//          BottomNavigationBarItem(icon: Icon(Icons.bookmark,color: Colors.yellow[800],),label: "Watch List"),
           BottomNavigationBarItem(icon: Icon(Icons.explore,color: Colors.green[600],),label: "explore"),
         ],
       ),
