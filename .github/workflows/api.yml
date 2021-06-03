@@ -3,7 +3,8 @@ name: API CI
 on: 
   push:
     branches: [master,develop,feature-api]
-  pull-request: [master,develop]
+  pull-request: 
+    branches: [master,develop]
 
 jobs:
   build:
