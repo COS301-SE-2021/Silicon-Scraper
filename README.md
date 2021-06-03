@@ -53,7 +53,7 @@ _Team Leader_
 - [LinkedIn](https://www.linkedin.com/in/thato-lesedi-motoma-69311b1b1/)
 > Short description
 
-**Tanatswa Dendere**
+**Tanatswa Dendere**\
 <img src="https://bit.ly/2SUdylW" alt="Tanatswa Dendere" width="250" height="250">
 - [LinkedIn](www.linkedin.com/in/tanatswadendere)
 - [Github](https://github.com/tanadendere)
