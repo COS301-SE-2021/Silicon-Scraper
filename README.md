@@ -54,6 +54,7 @@ _Team Leader_
 > Short description
 
 **Tanatswa Dendere**
+![Tanatswa Dendere](https://bit.ly/2SUdylW)
 - [LinkedIn](www.linkedin.com/in/tanatswadendere)
 - [Github](https://github.com/tanadendere)
 > I am most passionate about innovation. I like to be a part of finding new ideas and creating new methods of doing things efficiently. And in my spare time I enjoy writing short stories.
