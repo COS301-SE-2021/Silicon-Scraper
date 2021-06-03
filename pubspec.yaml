@@ -35,8 +35,8 @@ dev_dependencies:
   #Mockito for mobile.mocks
   mockito: 
   test: ^1.16.5
-  #for mocking json
-  dio: ^3.0.9
+  #for opening links
+  url_launcher: ^5.7.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
