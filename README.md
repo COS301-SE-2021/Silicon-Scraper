@@ -37,7 +37,7 @@ add it to a watch list to be notified of any changes in price or availability et
 This is Bug Busters Inc. meet our team:
 
 **Louis van As**\
-_Team Leader_
+_Team Leader_\
 <img src="https://images.chesscomfiles.com/uploads/user/56455518.215cf0b1.jpeg" width="250" height="250">- [LinkedIn](https://www.linkedin.com/in/louis-van-as-27ab8820b)
 - [Github](https://github.com/LOUISVA2000)
 > I am a final year Information & Knowledge Systems (IT and enterprise elective) student at the University of Pretoria. My most notable interests include
