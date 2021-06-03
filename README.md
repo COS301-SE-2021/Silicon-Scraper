@@ -16,7 +16,7 @@ add it to a watch list to be notified of any changes in price or availability et
 [![GitHub issues-closed](https://img.shields.io/github/issues-closed/COS301-SE-2021/Silicon-Scraper)](https://github.com/COS301-SE-2021/Silicon-Scraper/issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/COS301-SE-2021/Silicon-Scraper)](https://github.com/COS301-SE-2021/Silicon-Scraper/pulls)
 [![GitHub Flutter Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Dart?label=Flutter%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Dart?label=Flutter%20Build)
-[![GitHub API Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=Flutter%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=Flutter%20Build)
+[![GitHub API Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=API%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=API%20Build)
 [![Coverage Status](https://coveralls.io/repos/github/COS301-SE-2021/Silicon-Scraper/badge.svg?branch=master&style=for-the-badge)](https://coveralls.io/github/COS301-SE-2021/Silicon-Scraper?branch=master)
 
 ## Contents 
