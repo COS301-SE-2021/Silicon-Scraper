@@ -1,4 +1,4 @@
-<h1 align="center"> Bug Busters </h1> <br>
+<h1 align="center"> Bug Busters Inc.</h1> <br>
 <p align="center"> 
 	<img alt="Epi-Use labs logo" src="https://www.epiuse.com/wp-content/uploads/2018/10/Full-Logo.png">
 </p>
@@ -38,7 +38,8 @@ This is Bug Busters Inc. meet our team:
 
 **Louis van As**\
 _Team Leader_\
-<img src="https://images.chesscomfiles.com/uploads/user/56455518.215cf0b1.jpeg" width="250" height="250">- [LinkedIn](https://www.linkedin.com/in/louis-van-as-27ab8820b)
+<img src="https://images.chesscomfiles.com/uploads/user/56455518.215cf0b1.jpeg" width="250" height="250">
+- [LinkedIn](https://www.linkedin.com/in/louis-van-as-27ab8820b)
 - [Github](https://github.com/LOUISVA2000)
 > I am a final year Information & Knowledge Systems (IT and enterprise elective) student at the University of Pretoria. My most notable interests include
 > Automation, Iot ,App development ,Fishing ,Chess and Theology. I am ambitious and have a tendency to take on tasks without knowing what I'm getting myself into
