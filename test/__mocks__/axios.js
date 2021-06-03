@@ -1,16 +1,9 @@
-const eve = require("../scraper/Mocks/mockUrl.js")
+const eve = require("../__mocks__/mockUrl.js")
 const scraper = require("../../backend/scraper/main/scraper.js")
 const fs = require("fs")
 
-let d = ""
+let d = eve.getEveTechMockUrl()
 
-fs.readFile(eve.getEveTechMockUrl(), 'utf8' , (err, data) => {
-    if (err) {
-        console.error(err)
-        return
-    }
-    d = data;
-})
 
 module.exports = {
     get: jest.fn(() => Promise.resolve({data: {
