@@ -29,15 +29,6 @@ describe("scraperTest()", () => {
 
     })
 
-    
-    test.skip("Takes in a title and returns an array of the brand and the model", () => {
-        let title = "ASUS ROG Strix RTX 3090 OC 24GB"
-        let exp2 = ["ASUS", "ROG Strix RTX 3090 OC 24GB"]
-
-        expect(scrape.titleParser(title)).toBe(exp2)
-    })
-
-
     test.skip("fetches data successfully", async () =>{
         const data = {
             image: "image",
