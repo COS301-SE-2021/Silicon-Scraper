@@ -1,6 +1,6 @@
 <h1 align="center"> Silicon Scraper </h1> <br>
 <p align="center"> 
-	<img alt="Silicon Scraper logo" src="#">
+	<img alt="Epi-Use labs logo" src="https://www.epiuse.com/wp-content/uploads/2018/10/Full-Logo.png">
 </p>
 <h2 align="center"> Bug Busters </h2>
 
@@ -53,9 +53,11 @@ _Team Leader_
 - [LinkedIn](https://www.linkedin.com/in/thato-lesedi-motoma-69311b1b1/)
 > Short description
 
-**Tanatswa Dendere**
-- [LinkedIn](#link)
-> Short description
+**Tanatswa Dendere**\
+<img src="https://bit.ly/2SUdylW" alt="Tanatswa Dendere" width="250" height="250">
+- [LinkedIn](www.linkedin.com/in/tanatswadendere)
+- [Github](https://github.com/tanadendere)
+> I am most passionate about innovation. I like to be a part of finding new ideas and creating new methods of doing things efficiently. And in my spare time I enjoy writing short stories.
 
 **Vincent Besse**
 - [LinkedIn](#link)
