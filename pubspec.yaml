@@ -21,7 +21,6 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  material_floating_search_bar: ^0.3.4
   flutter:
     sdk: flutter
 
@@ -38,6 +37,8 @@ dev_dependencies:
   test: ^1.16.5
   #for mocking json
   dio: ^4.0.0
+  # for search bar
+  material_floating_search_bar: ^0.3.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
