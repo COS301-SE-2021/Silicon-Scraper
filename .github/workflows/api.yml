@@ -13,10 +13,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: Setup and run api tests
         uses: actions/setup-node@v1
         with:
           node-version: '14.x'
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test 
+        working-directory: ./backend/api
+      - run: |
+          npm ci
+          npm run build --if-present
+          npm test 
