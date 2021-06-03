@@ -41,13 +41,13 @@ class _ExploreState extends State<Explore> {
           builder: (BuildContext context,AsyncSnapshot snapshot){
               if(snapshot.connectionState==ConnectionState.none)
                 {
-                  return Text("no data to display");
+                  return Center(child: CircularProgressIndicator());
                 }
               else if(snapshot.data!=null){
                 return ProductListView(context, snapshot.data);
               }
               else{
-                return Text("waiting for data");
+                return Center(child: CircularProgressIndicator());
               }
           },
         ),

@@ -43,7 +43,7 @@ class ProductWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("${item.retailer}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),textAlign: TextAlign.left,),
-                            item.getAvailabilityText(),
+                            item.getAvailabilityText(15,TextAlign.center),
                           ],
                         ),
                       ),

@@ -65,21 +65,21 @@ class Product
     return "not specified";
   }
 
-  Widget getAvailabilityText()
+  Widget getAvailabilityText(double size,TextAlign align)
   {
     if(this.stockAvailability==availability.available)
     {
-      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.green));
+      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.green),textAlign: align,);
     }
     else if(this.stockAvailability==availability.notSpecified)
     {
-      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.grey));
+      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.grey),textAlign: align);
     }
     else if(this.stockAvailability==availability.outOfStock||this.stockAvailability==availability.limitedStock)
     {
-      return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,color: Colors.red));
+      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.red),textAlign: align);
     }
-    return Text(this.getAvailability(),style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,));
+    return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,),textAlign: align);
   }
 }
 

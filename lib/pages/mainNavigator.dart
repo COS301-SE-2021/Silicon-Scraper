@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/pages/searchPage.dart';
-import 'package:silicon_scraper/pages/watchList.dart';
 
 import 'explore.dart';
 
