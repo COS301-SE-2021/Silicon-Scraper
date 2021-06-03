@@ -17,8 +17,8 @@ add it to a watch list to be notified of any changes in price or availability et
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/COS301-SE-2021/Silicon-Scraper)](https://github.com/COS301-SE-2021/Silicon-Scraper/pulls)
 [![GitHub Flutter Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Dart?label=Flutter%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Dart?label=Flutter%20Build)
 [![GitHub API Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=API%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=API%20Build)
+[![GitHub Scraper Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Node.js%20CI?label=Scraper)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Node.js%20CI?label=Scraper)
 [![Coverage Status](https://coveralls.io/repos/github/COS301-SE-2021/Silicon-Scraper/badge.svg?branch=master&style=for-the-badge)](https://coveralls.io/github/COS301-SE-2021/Silicon-Scraper?branch=master)
-
 ## Contents 
 - [Demo 1](#demo-1)
 - [Project Management Tools](#project-management-tools)
