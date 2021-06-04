@@ -1,6 +1,7 @@
 const scrape = require('../../../backend/scraper/main/scraper');
 const mockAxios = require('axios')
 const selectors = require('../../../backend/scraper/utilities/EvetechSelectors')
+const eve = require("../../__mocks__/mockUrl")
 
 jest.mock('../../../backend/scraper/utilities/EvetechSelectors', () => ({
     getAvailabilitySelector: jest.fn().mockImplementation(() => {return 'availabilty_selector'}),
@@ -9,7 +10,7 @@ jest.mock('../../../backend/scraper/utilities/EvetechSelectors', () => ({
     getTableSelector: jest.fn().mockImplementation(() => {return "table_selector"}),
     getRowSelector: jest.fn().mockImplementation(() => {return "row_selector"}),
     getTitleSelector: jest.fn().mockImplementation(() => {return "title_selector"}),
-    getPriceSelection: jest.fn().mockImplementation(() => "price_selection")
+    getPriceSelector: jest.fn().mockImplementation(() => "price_selection")
 }
 )) 
 
@@ -19,18 +20,32 @@ describe("scraperTest()", () => {
         jest.clearAllMocks();
       });
 
+    const index = 0;
+    const select = [
+        selectors.getAvailabilitySelector,
+        selectors.getLinkSelector(index),
+        selectors.getImageSelector(index),
+        selectors.getTitleSelector(index),
+        selectors.getTableSelector(),
+        selectors.getPriceSelector(),
+        selectors.getRowSelector()
+    ]
+    
     test('Should return array of products', async () =>{
         const products = await scrape.scrape();
-        expect(products).not.toBeNull();
+
         expect(mockAxios.get).toHaveBeenCalledTimes(2);
         expect(mockAxios.get).toHaveBeenNthCalledWith(1,'https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx')
         expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx')
-        expect(selectors.getAvailabilitySelector).toBeTruthy()
-
+        expect(selectors.getTableSelector).toHaveBeenCalled();
+        select.forEach(element => {
+            expect(element).toBeTruthy();
+        });
+        expect(products).not.toBeNull();
     })
 
-    test.skip("fetches data successfully", async () =>{
-        const data = {
+    test("fetches data successfully", async () =>{
+        const expected = {
             image: "image",
             brand: "brand",
             model: "model",
@@ -40,11 +55,11 @@ describe("scraperTest()", () => {
             retailer: "retailer"
         };
 
+        const data = eve.getEveTechMockUrl();
 
-
-        
         mockAxios.get.mockResolvedValueOnce( data )(() => Promise.resolve(data));
-        expect(scrape.scrape()).resolves.toEqual(data);
+        const product = await scrape.scrape();
+        expect(product).toEqual(expect.arrayContaining([]));
     
     })
 })

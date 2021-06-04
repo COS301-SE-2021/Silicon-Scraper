@@ -189,6 +189,7 @@ const getEveTechMockUrl =  () => {
         "    </tbody></table>";
 }
 
+
 module.exports = {
     getEveTechMockUrl
 }

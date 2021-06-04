@@ -4,14 +4,10 @@ const fs = require("fs")
 
 let d = eve.getEveTechMockUrl()
 
-
 module.exports = {
-    get: jest.fn(() => Promise.resolve({data: {
-            d
-        }})),
+    get: jest.fn(() => Promise.resolve({data: d})),
     create: jest.fn(function () {
         return this;
     })
 
 };
-
