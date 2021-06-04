@@ -46,7 +46,7 @@ ListView ProductListView(BuildContext context,List<Product> items)
     itemCount:items.length ,
       itemBuilder: (_,index){
         return
-            ProductWidget(item:items[index]);
+            ProductWidget( item:items[index]);
       }
   );
 }

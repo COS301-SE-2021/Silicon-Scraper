@@ -27,10 +27,10 @@ class SearchingPage extends State<Search> {
   static const historyLength = 5;
 
   List<String> _searchHistory = [
-    'filter 1',
-    'filter 2',
-    'filter 3',
-    'filter 4',
+    'history 1',
+    'history 2',
+    'history 3',
+    'history 4',
   ];
 
   List<String> filteredSearchHistory; //filter the search history according to what is typed
@@ -246,7 +246,7 @@ class SearchResultsListView extends StatelessWidget {
           return ListView(
               children: List.generate(
                 items.length,
-                    (index) => ProductWidget(item: items[index],),
+                    (index) => ProductWidget(item:items[index],),
                 ),
               //ProductWidget(items[]);
           );
