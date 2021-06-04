@@ -42,7 +42,7 @@ dev_dependencies:
   #for search bar
   material_floating_search_bar: ^0.3.4
 
-#  network_image_mock: 1.1.0
+  network_image_mock: 1.1.0
 
 
 # For information on the generic Dart part of this file, see the

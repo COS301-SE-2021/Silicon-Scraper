@@ -4,7 +4,7 @@ import 'package:silicon_scraper/widgets/productDetailWidget.dart';
 
 class ProductWidget extends StatelessWidget {
   final Product item;
-  const ProductWidget(data, {Key key, this.item}) : super(key: key);
+  const ProductWidget({Key key, this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context)

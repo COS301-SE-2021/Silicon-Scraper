@@ -246,7 +246,7 @@ class SearchResultsListView extends StatelessWidget {
           return ListView(
               children: List.generate(
                 items.length,
-                    (index) => ProductWidget(items[index],),
+                    (index) => ProductWidget(item:items[index],),
                 ),
               //ProductWidget(items[]);
           );
