@@ -46,9 +46,12 @@ _Team Leader_\
 > but I'm always proud at the end.  
 
 **Mpendulo Sibeko**
+![image](https://user-images.githubusercontent.com/68823746/120770199-32636e80-c51e-11eb-892c-1a8efbca3f54.png)
 - [LinkedIn](https://www.linkedin.com/in/mpendulo-s-aa4b53106/)
-- [Github](#link)
-> Short description
+- [Github](https://github.com/MkSibeko)
+> I am a final year computer science student (with a minor in data science) at the University of Pretoria. I enjoy developing ML related applications in pyhton.
+> I aspire to be a catalyst for the growth of the tech community in africa. I enjoy reading up on social science related matters and binging on Tech-YouTube as well as anime
+
 
 **Thato Jadezwani**
 - [LinkedIn](#link)
