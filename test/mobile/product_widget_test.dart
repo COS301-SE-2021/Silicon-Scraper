@@ -4,7 +4,7 @@ import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/widgets/productWidget.dart';
 import 'mocks/productMock.dart';
 import 'mocks/json/productsjson.dart';
-import 'package:network_image_mock/network_image_mock.dart';
+//import 'package:network_image_mock/network_image_mock.dart';
 
 
 
