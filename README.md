@@ -66,9 +66,9 @@ _Team Leader_\
 > I am most passionate about innovation. I like to be a part of finding new ideas and creating new methods of doing things efficiently. And in my spare time I enjoy writing short stories.
 
 **Vincent Besse**
-- [LinkedIn](#link)
-- [Github]()
-> Short description
+- [LinkedIn](https://www.linkedin.com/in/vincent-besse-87063b210/)
+- [Github](https://github.com/v24Zer0)
+> I am a final year Computer Science student. My interests include game development, web and app development, and cloud technologies. I am very ambitious and enjoying taking on complex projects and learning new things. My hobbies include playing video games, watching anime and film, and cooking. 
 
 ## Branching Strategy
 -master (build)
