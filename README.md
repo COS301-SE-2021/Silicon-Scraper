@@ -45,7 +45,7 @@ _Team Leader_\
 > Automation, Iot ,App development ,Fishing ,Chess and Theology. I am ambitious and have a tendency to take on tasks without knowing what I'm getting myself into
 > but I'm always proud at the end.  
 
-**Mpendulo Sibeko**
+**Mpendulo Sibeko**\
 <img src="https://user-images.githubusercontent.com/68823746/120770199-32636e80-c51e-11eb-892c-1a8efbca3f54.png" width="250" height="250">
 - [LinkedIn](https://www.linkedin.com/in/mpendulo-s-aa4b53106/)
 - [Github](https://github.com/MkSibeko)
