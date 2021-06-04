@@ -26,8 +26,8 @@ add it to a watch list to be notified of any changes in price or availability et
 - [Branching Strategy](#branching-strategy)
 
 ## Demo 1
-- [Bug Busters Inc-Demo 1](#demo1-video)
-- [SRS document](#srs-document)
+- [Bug Busters Inc-Demo 1](https://drive.google.com/file/d/1BzEwC8Sf2_5Gp3KvHEA-UuNh6RIt4tN7/view?usp=sharing)
+- [SRS document](https://drive.google.com/file/d/19dqh565O4LM0uwT4G8P8wQwiJxE7A-iE/view?usp=sharing)
 
 ## Project Management Tools
 - [Discord (Communication tools)](https://discord.gg/xpsn3YRn)
