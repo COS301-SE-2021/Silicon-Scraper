@@ -70,11 +70,12 @@
 //         console.error(err)
 //         return
 //     }
-//     scraper.getWebData(data).then((products) => {
-//         jest.test('Making a request to a mock html , and comparing it to the given expected output: ', () => {
-//             expect(products).resolves.toBe(result)
-//         })
-//     })
+//     console.log(data)
+//     // scraper.getWebData(data).then((products) => {
+//     //     jest.test('Making a request to a mock html , and comparing it to the given expected output: ', () => {
+//     //         expect(products).resolves.toBe(result)
+//     //     })
+//     // })
 // })
 //
 //

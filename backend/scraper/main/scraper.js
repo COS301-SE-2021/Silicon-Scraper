@@ -84,9 +84,14 @@ const addToProducts = (data, index, $) =>{
  */
 const concatUrl = (urlRES) =>{
 
-    let base = urlRES.split('../')[1]
-    base = url.getEveTecUrl() + base;
-    return base;
+    if(urlRES !== undefined) {
+        let base = urlRES.split('../')[1]
+        base = url.getEveTecUrl() + base;
+        return base;
+    }else{
+        return url.getEveTecUrl()
+    }
+
 
 }
 
@@ -98,7 +103,12 @@ module.exports = {concatUrl}
  * @returns {number}
  */
  const trimPrice = (price) =>{
-    return parseFloat(price.split('\n')[0].split('R')[1].replace(",",""));
+
+    let price_ = price.split('\n')[0].split('R')[1];
+    if(price_ !== undefined ){
+        return parseFloat(price.split('\n')[0].split('R')[1].replace(",", ""));
+    }else{
+        return price_}
 }
 
 module.exports = {trimPrice}
@@ -133,6 +143,7 @@ module.exports = {titleParser}
  * @returns {array} array Of product objects
  */
 const scrape = async () => {
+
     for(let i = 0; i < eveTech.length; i++){
         await scrapeSilon(eveTech[i]);
     }
@@ -141,9 +152,9 @@ const scrape = async () => {
 
 module.exports = {scrape}
 
-// scrape().then(res => {
-//     console.log(res)
-// })
+scrape().then(res => {
+    console.log(res)
+})
 
 
 
