@@ -42,8 +42,8 @@ _Team Leader_
 > Short description
 
 **Mpendulo Sibeko**
-- [LinkedIn](#link)
-> Short description
+- [LinkedIn](https://www.linkedin.com/in/mpendulo-s-aa4b53106/)
+> I aspire to be a catalyst for the growth of the tech community in africa. I enjoy reading up on social science related matters and binging on Tech-YouTube as well as anime
 
 **Thato Jadezwani**
 - [LinkedIn](#link)
