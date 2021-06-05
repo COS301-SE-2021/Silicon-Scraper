@@ -1,5 +1,18 @@
 const { mockUserDB, mockUserWatchlist } = require('../../mocks/userMocks.js');
 
+const configs = require('../../../config.js');
+const {Client} = require('pg');
+
+const client = new Client({
+    user: configs.user,
+    host: configs.host,
+    database: configs.name,
+    password: configs.pw,
+    port: configs.port
+});
+
+client.connect();
+
 const register = (username, password) => {
     if (typeof username != "string" || typeof password != "string")
         throw new TypeError("Invalid parameter type");
