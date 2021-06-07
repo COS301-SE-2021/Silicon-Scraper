@@ -36,7 +36,7 @@ const register = (request) => {
     })
 };
 
-const login = (username, password) => {
+const login = (request) => {
     
 }
 

@@ -6,7 +6,7 @@ router.post('/', async (req, res) => {
     const response = await userService.register(req.body);
     if (response == undefined)
         return res.status(400).json({message: "Properties were missing"})
-    return res.status(response.statusCode).json(response.response);
+    return res.status(response.statusCode).json(response);
 });
 
 
