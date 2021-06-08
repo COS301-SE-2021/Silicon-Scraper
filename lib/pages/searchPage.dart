@@ -1,281 +1,202 @@
 import 'package:flutter/material.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:silicon_scraper/classes/product.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:silicon_scraper/widgets/productWidget.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 
 class SearchPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Search',
-      home: Search(),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text("Search"),
+          //color: Colors.black,
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              color: Colors.black,
+              onPressed: () async {
+                showSearch(context: context, delegate: ProductSearch());
+              },
+            )
+          ],
+          backgroundColor: Colors.white,
+        ),
+        body: Container(
+          color: Colors.white,
+          margin: const EdgeInsets.all(15.0),
+          child: Center(
+              child: RichText(
+            text: TextSpan(
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+              children: [
+                TextSpan(text: 'Click '),
+                WidgetSpan(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 5.0),
+                    child: Icon(Icons.search),
+                  ),
+                ),
+                TextSpan(text: 'to search for product name or brand...'),
+              ],
+            ),
+          )),
+        ),
+      );
 }
 
-class Search extends StatefulWidget {
+class ProductSearch extends SearchDelegate<String> {
   @override
-  SearchingPage createState() => SearchingPage();
-}
-
-class SearchingPage extends State<Search> {
-  static const historyLength = 5;
-
-  List<String> _searchHistory = [
-    'history 1',
-    'history 2',
-    'history 3',
-    'history 4',
-  ];
-
-  List<String> filteredSearchHistory; //filter the search history according to what is typed
-
-  String selectedTerm;
-
-  List<String> filterSearchTerms({
-    @required String filter,
-  }) {
-    if (filter != null && filter.isNotEmpty) {
-      return _searchHistory.reversed
-          .where((term) => term.startsWith(filter))
-          .toList();
-    } else {
-      return _searchHistory.reversed.toList();
-    }
-  }
-
-  void addSearchTerm(String term) {
-
-    //put duplicated search term first
-    if (_searchHistory.contains(term)) {
-      putSearchTermFirst(term);
-      return;
-    }
-
-    _searchHistory.add(term);
-    if (_searchHistory.length > historyLength) {
-      //Least recently used
-      _searchHistory.removeRange(0, _searchHistory.length - historyLength);
-    }
-
-    //update filtered search history
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
-
-  void deleteSearchTerm(String term) {
-    _searchHistory.removeWhere((t) => t == term);
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
-
-  void putSearchTermFirst(String term) {
-    deleteSearchTerm(term);
-    addSearchTerm(term);
-  }
-
-  FloatingSearchBarController controller;
+  List<Widget> buildActions(BuildContext context) => [
+        IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            if (query.isEmpty) {
+              close(context, null);
+            } else {
+              query = '';
+              showSuggestions(context);
+            }
+          },
+        )
+      ];
 
   @override
-  void initState() {
-    super.initState();
-    controller = FloatingSearchBarController();
-    filteredSearchHistory = filterSearchTerms(filter: null);
-  }
+  Widget buildLeading(BuildContext context) => IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () => close(context, null),
+      );
 
   @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FloatingSearchBar(
-        controller: controller,
-        body: FloatingSearchBarScrollNotifier(
-          child: SearchResultsListView(
-            searchTerm: selectedTerm,
-          ),
-        ),
-        transition: CircularFloatingSearchBarTransition(),
-        physics: BouncingScrollPhysics(),
-        title: Text(
-          selectedTerm ?? 'Search Products',
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        hint: 'Search...',
-        actions: [
-          FloatingSearchBarAction.searchToClear(),
-        ],
-        onQueryChanged: (query) {
-          setState(() {
-            filteredSearchHistory = filterSearchTerms(filter: query);
-          });
-        },
-        onSubmitted: (query) {
-          setState(() {
-            addSearchTerm(query);
-            selectedTerm = query;
-          });
-          controller.close();
-        },
-        builder: (context, transition) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Material(
-              color: Colors.white,
-              elevation: 4,
-              child: Builder(
-                builder: (context) {
-                  if (filteredSearchHistory.isEmpty &&
-                      controller.query.isEmpty) {
-                    return Container(
-                      height: 56,
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Type to search for a product...',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                    );
-                  } else if (filteredSearchHistory.isEmpty) {
-                    return ListTile(
-                      title: Text(controller.query),
-                      leading: const Icon(Icons.search),
-                      onTap: () {
-                        setState(() {
-                          addSearchTerm(controller.query);
-                          selectedTerm = controller.query;
-                        });
-                        controller.close();
-                      },
-                    );
-                  } else {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: filteredSearchHistory
-                          .map(
-                            (term) => ListTile(
-                          title: Text(
-                            term,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          leading: const Icon(Icons.history),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.clear),
-                            onPressed: () {
-                              setState(() {
-                                deleteSearchTerm(term);
-                              });
-                            },
-                          ),
-                          onTap: () {
-                            setState(() {
-                              putSearchTermFirst(term);
-                              selectedTerm = term;
-                            });
-                            controller.close();
-                          },
-                        ),
-                      )
-                          .toList(),
-                    );
+  Widget buildResults(BuildContext context) => FutureBuilder<List<Product>>(
+        future: getProducts(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+            default:
+              if (snapshot.hasError) {
+                return Container(
+                  color: Colors.white,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Something went wrong!',
+                    style: TextStyle(fontSize: 28, color: Colors.black),
+                  ),
+                );
+              } else {
+                List<Product> unProcessedProducts = snapshot.data;
+                List<Product> products = [];
+                for (int i = 0; i < unProcessedProducts.length; i++) {
+                  if (unProcessedProducts.elementAt(i).brand.compareTo(query) ==
+                          0 ||
+                      unProcessedProducts.elementAt(i).model.compareTo(query) ==
+                          0) {
+                    products.add(unProcessedProducts.elementAt(i));
                   }
-                },
+                }
+                return buildResultSuccess(context, products);
+              }
+          }
+        },
+      );
+
+  @override
+  Widget buildSuggestions(BuildContext context) => Container(
+        color: Colors.black,
+        child: FutureBuilder<List<Product>>(
+          future: getProducts(),
+          builder: (context, snapshot) {
+            if (query.isEmpty) return buildNoSuggestions();
+
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasError || snapshot.data.isEmpty) {
+                  return buildNoSuggestions();
+                } else {
+                  List<Product> unProcessedProducts = snapshot.data;
+                  List<String> productBrandOrModel = [];
+                  for (int i = 0; i < unProcessedProducts.length; i++) {
+                    if (unProcessedProducts
+                        .elementAt(i)
+                        .brand
+                        .contains(query)) {
+                      productBrandOrModel
+                          .add(unProcessedProducts.elementAt(i).brand);
+                    } else if (unProcessedProducts
+                        .elementAt(i)
+                        .model
+                        .contains(query)) {
+                      productBrandOrModel
+                          .add(unProcessedProducts.elementAt(i).model);
+                    }
+                  }
+
+                  return buildSuggestionsSuccess(productBrandOrModel);
+                }
+            }
+          },
+        ),
+      );
+
+  Widget buildNoSuggestions() => Center(
+        child: Text(
+          'No suggestions!',
+          style: TextStyle(fontSize: 28, color: Colors.white),
+        ),
+      );
+
+  Widget buildSuggestionsSuccess(List<String> suggestions) => ListView.builder(
+        itemCount: suggestions.length,
+        itemBuilder: (context, index) {
+          final suggestion = suggestions[index];
+          final queryText = suggestion.substring(0, query.length);
+          final remainingText = suggestion.substring(query.length);
+
+          return ListTile(
+            tileColor: Colors.white,
+            onTap: () {
+              query = suggestion;
+              showResults(context);
+            },
+            title: RichText(
+              text: TextSpan(
+                text: queryText,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+                children: [
+                  TextSpan(
+                    text: remainingText,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-
-class SearchResultsListView extends StatelessWidget {
-  final String searchTerm;
-
-  const SearchResultsListView({
-    Key key,
-    @required this.searchTerm,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    if (searchTerm == null) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.search,
-              size: 64,
-            ),
-          ],
-        ),
       );
-    }
 
-    final fsb = FloatingSearchBar.of(context);
-
-    FutureBuilder(
-      future: getProducts(),
-      builder: (BuildContext context,AsyncSnapshot snapshot){
-        if(snapshot.connectionState==ConnectionState.none)
-        {
-          return Text("no data to display");
-        }
-        else if(snapshot.data!=null){
-
-          //final List<Product> items = snapshot.data;
-          List<Product> items=[];
-          while(snapshot.hasData){
-            if (snapshot.data.contains(searchTerm)){
-              items.add(snapshot.data);
-            }
-          }
-
-          return ListView(
-              children: List.generate(
-                items.length,
-                    (index) => ProductWidget(item:items[index],),
-                ),
-              //ProductWidget(items[]);
-          );
-        }
-        else{
-          return Text("waiting for data");
-        }
-      },
-    );
-
-  }
+  Widget buildResultSuccess(BuildContext context, List<Product> products) =>
+      Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF3279e2), Colors.white],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: ProductListView(context, products));
 }
-
-
-
-
-
-
-
-
-
-// ListView ProductListView(BuildContext context,List<Product> items)
-// {
-//   return ListView.builder(
-//       itemCount:items.length ,
-//       itemBuilder: (_,index){
-//         return
-//           ProductWidget(item:items[index]);
-//       }
-//   );
-//
-// }
