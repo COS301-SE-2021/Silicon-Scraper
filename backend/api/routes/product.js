@@ -8,11 +8,11 @@ router.get('/getProducts', (req, res) => {
     res.json(products);
 });
 
-router.get('/getProductByID', (req, res) => {
-    let query = req.query.id;
+router.get('/getProductByID/:id', (req, res) => {
+    let id = req.params.id;
     let product = {};
     mockData.forEach((x) => {
-        if (x.id == parseInt(query.toString())) {
+        if (x.id == parseInt(id.toString())) {
             product = x;
         }
     });
