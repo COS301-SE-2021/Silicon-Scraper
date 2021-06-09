@@ -3,10 +3,13 @@ const router =  express.Router();
 const userService = require('../services/userService.js');
 
 router.post('/', async (req, res) => {
-    const response = await userService.register(req.body);
-    if (response == undefined)
-        return res.status(400).json({message: "Properties were missing"})
-    return res.status(response.statusCode).json(response);
+    return userService.register(req.body)
+    .then(response => {
+        return res.status(response.statusCode).json(response);
+    })
+    .catch(error => {
+        return res.status(error.statusCode).json(error);
+    });
 });
 
 

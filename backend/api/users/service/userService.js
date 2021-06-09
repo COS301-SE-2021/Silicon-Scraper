@@ -3,6 +3,8 @@ const { mockUserDB, mockUserWatchlist } = require('../../mocks/userMocks.js');
 const configs = require('../../../config.js');
 const {Client} = require('pg');
 const uuidv4 = require('uuid');
+const bcrypt = require('bcrypt');
+const { response } = require('express');
 
 const client = new Client({
     user: configs.user,
@@ -14,30 +16,78 @@ const client = new Client({
 
 client.connect();
 
+/**
+ * 
+ * @param {} request 
+ * @returns 
+ */
+
 const register = (request) => {
-    if (!('username' in request) || !('password' in request)) {
+    return new Promise((resolve, reject) => {
+        
+        if (!('username' in request) || !('password' in request)) {
+            reject({
+                message: "Properties are missing",
+                statusCode: 400
+            });
+            return;
+        }
+
+        const id = uuidv4();
+        let errorResponse = {
+            message: "An error occurred",
+            status: 500
+        };
+        bcrypt.hash(request.password, 20)
+        .then(hash => {
+            const query = `INSERT INTO Users(id,  username, password) VALUES ('${id}', '${request.username}', '${hash}')`;
+            return client.query(query)
+            .then(response => {
+                resolve({
+                    message: "User succeffully registered",
+                    statusCode: 201
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                reject(errorResponse);
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            reject(errorResponse);
+        });
+    });
+};
+
+const login = (request) => {
+    return new Promise((resolve, reject) => {
+        if (!('username' in request) || !('password' in request)) {
+            reject({
+                message: "Properties are missing",
+                statusCode: 400
+            });
+            return;
+        }
+    });
+} ;
+
+const holder = () => {
+    if (!('username' in request) || ('password' in request)) {
         return undefined;
     }
-    const id = uuidv4();
-    const query = `INSERT INTO Users(id, username, password) VALUES ('${id}', '${request.username}', '${request.password}')`;
+    const query = `SELECT * FROM Users WHERE username='${request.username}'`;
     return client.query(query)
     .then(response => {
-        return {
-            message: "User successfully registered",
-            statusCode: 201
-        }
+        console.log(response.row[0]);
     })
     .catch(err => {
         console.log(err);
         return {
-            message: "An error occurred",
-            statusCode: 500
+            statusCode: 500,
+            message: "An error occurred"
         }
     })
-};
-
-const login = (request) => {
-    
 }
 
 const deleteUser = (username, password) => {
