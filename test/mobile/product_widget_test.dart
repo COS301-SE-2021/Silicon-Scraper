@@ -1,37 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:network_image_mock/network_image_mock.dart';
 import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/widgets/productWidget.dart';
-import 'mocks/productMock.dart';
 import 'mocks/json/productsjson.dart';
-//import 'package:network_image_mock/network_image_mock.dart';
-
 
 
 void main() {
-//  group(" ", () {
-//    testWidgets("test for correct text in widget", (WidgetTester tester) async {
-//      var data = JSONData();
-////      data[0].photo=null;
-//      Widget makeTestableWidget() => MaterialApp( home:ProductWidget(data[0]));
-//      await tester.pumpWidget(
-//        makeTestableWidget()
-//      );
-//
-//      final titleFinder = find.text('T');
-//      final messageFinder = find.text('M');
+  var data = JSONData();
+  Product item=new Product(data['products'][0]['brand'], data["products"][0]['model'], data["products"][0]['price'], data["products"][0]['retailer'], data["products"][0]['description'], data["products"][0]['url'], data["products"][0]['image'], data["products"][0]['availability']);
+  group("test Product widget", () {
+    testWidgets(
+      'should properly mock Image.network and not crash',
+          (WidgetTester tester) async {
+        mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+      },
+    );
+
+    testWidgets("finds brand text on widget", (WidgetTester tester) async {
+      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+      final titleFinder = find.text(data['products'][0]['brand']);
+      expect(titleFinder, findsOneWidget);
+    });
+//  todo  model not added yet
+//    testWidgets("find model text on widget", (WidgetTester tester) async {
+//      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+//      final titleFinder = find.text(data['products'][0]['model']);
+//      expect(titleFinder, findsOneWidget);
 //    });
-//    testWidgets("test for correct text in widget", (WidgetTester tester) async {
-//
-//
-//    });
-//    testWidgets("test for correct text in widget", (WidgetTester tester) async {
-//
-//
-//    });
-//    testWidgets("test for correct text in widget", (WidgetTester tester) async {
-//
-//
-//    });
-//  });
+  testWidgets("finds retailer text on widget", (WidgetTester tester) async {
+   await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+    final titleFinder = find.text(data['products'][0]['retailer']);
+    expect(titleFinder, findsOneWidget);
+  });
+  testWidgets("finds availability text on widget", (WidgetTester tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+    final titleFinder = find.text(item.getAvailability());
+    expect(titleFinder, findsOneWidget);
+  });
+  testWidgets("finds price text on widget", (WidgetTester tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+    final titleFinder = find.text('R'+data['products'][0]['price'].toString());
+    expect(titleFinder, findsOneWidget);
+  });
+
+  testWidgets("test on tap returns ProductDetail widget", (WidgetTester tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+    await tester.tap(find.byType(InkWell));
+
+    // Rebuild the widget after the state has changed.
+    await tester.pumpAndSettle();
+    final text=find.text('Product detail');
+    expect(text, findsOneWidget);
+  });
+  });
 }
