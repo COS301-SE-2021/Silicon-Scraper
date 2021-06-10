@@ -1,10 +1,11 @@
 const express = require('express');
 const router =  express.Router();
-const userService = require('../service/userService.js')();
+const UserService = require('../service/userService.js');
+const userService = new UserService(null);
 const jwtUtil = require('../../utilities/jwtUtil.js');
 
 router.post('/', async (req, res) => {
-    return userService.register(req.body)
+    return await userService.register(req.body)
     .then(response => {
         return res.status(response.statusCode).json(response);
     })

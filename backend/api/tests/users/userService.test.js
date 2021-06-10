@@ -1,6 +1,12 @@
-const request = require('supertest');
-const { response } = require('../app');
-const userService = require('../../users/service/userService.js');
+const query = jest.fn();
+
+const database = {
+    query
+}
+
+const UserService = require('../../users/service/userService.js');
+const userService = new UserService(database);
+
 
 describe('register', () => {
 
@@ -11,13 +17,14 @@ describe('register', () => {
         };
         
         userService.register(request)
-        .then(response => {
-            expect(response.statusCode).toEqual(201);
+        .then(res => {
+
         })
-        .catch(error => {
-            expect(response.statusCode).toEqual(201);
+        .catch(err => {
+
         });
+
+        expect(query.mock.calls.length).toBe(1);
     });
     
 });
-

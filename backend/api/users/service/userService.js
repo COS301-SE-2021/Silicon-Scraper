@@ -1,8 +1,7 @@
 const configs = require('../../../config.js');
 const {Client} = require('pg');
-const uuidv4 = require('uuid');
+const {v4 : uuidv4} = require('uuid');
 const bcrypt = require('bcrypt');
-const { response } = require('express');
 
 const client = new Client({
     user: configs.user,
@@ -12,7 +11,6 @@ const client = new Client({
     port: configs.port
 });
 
-client.connect();
 
 /**
  * 
@@ -23,32 +21,46 @@ client.connect();
 
 module.exports = class UserService {
 
-    constructor() {
-        this.database = client;
-    }
-
     constructor(database) {
+        if (!database) {
+            client.connect();
+            this.database = client;
+            return;
+        }
+        console.info("I am here");
         this.database = database;
     }
 
-    register(request) {
+    async register(request) {
+        console.info("within request");
+
         return new Promise((resolve, reject) => {
-        
+            console.info("inside promise");
+
             if (!('username' in request) || !('password' in request)) {
+                console.warn("Rejected request");
                 reject({
                     message: "Properties are missing",
                     statusCode: 400
                 });
                 return;
             }
+            console.info("after if");
     
             const id = uuidv4();
+
+            console.info("after id");
+
             let errorResponse = {
                 message: "An error occurred",
                 status: 500
             };
-            bcrypt.hash(request.password, 20)
+
+            console.info("after uuid: " + id);
+
+            bcrypt.hash(request.password, 15)
             .then(hash => {
+                console.info("hash: " + hash);
                 const query = `INSERT INTO Users(id,  username, password) VALUES ('${id}', '${request.username}', '${hash}')`;
                 return this.database.query(query)
                 .then(response => {
