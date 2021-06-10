@@ -1,5 +1,5 @@
 const eve = require("../__mocks__/mockUrl.js")
-const scraper = require("../../backend/scraper/main/scraper.js")
+const scraper = require("@main/scraper.ts")
 const fs = require("fs")
 
 let d = eve.getEveTechMockUrl()

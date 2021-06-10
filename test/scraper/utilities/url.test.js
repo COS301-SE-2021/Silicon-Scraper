@@ -1,4 +1,4 @@
-const url = require("../../../backend/scraper/utilities/url");
+const url = require("@utilities/url");
 
 describe("urlTest()", () => {
     const urls = [

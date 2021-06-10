@@ -1,6 +1,6 @@
-const scrape = require('../../../backend/scraper/main/scraper');
+const scrape = require('@main/scraper');
 const mockAxios = require('axios')
-const selectors = require('../../../backend/scraper/utilities/EvetechSelectors')
+const selectors = require('@utilities/EvetechSelectors')
 const eve = require("../../__mocks__/mockUrl")
 
 jest.mock('../../../backend/scraper/utilities/EvetechSelectors', () => ({

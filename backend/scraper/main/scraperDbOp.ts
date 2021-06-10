@@ -1,6 +1,6 @@
 const { Client, sql, Pool } = require('pg')
 const env = require('../../config.js')
-const scraper = require("../main/scraper.js");
+const scraper = require("./scraper.ts");
 const pgp = require('pg-promise')({
     /* initialization options */
     capSQL: true // capitalize all generated SQL
@@ -21,7 +21,7 @@ const db = pgp(
 const cs = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','detail' ], {table:'products'})
 
 const getProducts =  async () => {
-    await scraper.scrape().then((products) => {
+    await scraper.scrape().then((products: any) => {
         insert(products).then(p => {
             console.log(p)
         })
@@ -29,17 +29,26 @@ const getProducts =  async () => {
 
 }
 
-const insert = async (products) => {
+const insert = async (products: any) => {
     const query = pgp.helpers.insert(products, cs)
-    try{
-        await db.none(query).then( (err) => {
+    await db.none(query).then( (err: any) => {
+        if(err){
+            console.log(err)
+        }else{
+            console.log(200, " ok")
+        }
 
-            console.log("none")
-        })
+    })
 
-    }catch(error){
-        console.log(error)
-    }
+    // try{
+    //     await db.none(query).then( () => {
+    //
+    //         console.log("none")
+    //     })
+    //
+    // }catch(error){
+    //     console.log(error)
+    // }
 }
 
 getProducts().then(r => {

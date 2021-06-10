@@ -1,4 +1,4 @@
-const selectors = require("../../../backend/scraper/utilities/EvetechSelectors");
+const selectors = require("@utilities/EvetechSelectors");
 
 describe("EvetechSelectors()", () =>{
     let index = 3;

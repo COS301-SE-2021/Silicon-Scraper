@@ -1,5 +1,5 @@
 // const eve = require("../scraper/Mocks/mockUrl.js")
-// const scraper = require("../../backend/scraper/main/scraper.js")
+// const scraper = require("../../backend/scraper/main/scraper.ts")
 // const fs = require("fs")
 //
 // result = [ {
