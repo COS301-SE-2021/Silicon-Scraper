@@ -119,25 +119,7 @@ class ProductSearch extends SearchDelegate<String> {
                 if (snapshot.hasError || snapshot.data.isEmpty) {
                   return buildNoSuggestions();
                 } else {
-                  List<Product> unProcessedProducts = snapshot.data;
-                  List<String> productBrandOrModel = [];
-                  for (int i = 0; i < unProcessedProducts.length; i++) {
-                    if (unProcessedProducts
-                        .elementAt(i)
-                        .brand
-                        .toLowerCase()
-                        .contains(query.toLowerCase())) {
-                      productBrandOrModel
-                          .add(unProcessedProducts.elementAt(i).brand);
-                    } else if (unProcessedProducts
-                        .elementAt(i)
-                        .model
-                        .toLowerCase()
-                        .contains(query.toLowerCase())) {
-                      productBrandOrModel
-                          .add(unProcessedProducts.elementAt(i).model);
-                    }
-                  }
+                  List<String> productBrandOrModel = getSuggestions(snapshot.data, query);
                   if (productBrandOrModel.isEmpty) {
                     return buildNoSuggestions();
                   }

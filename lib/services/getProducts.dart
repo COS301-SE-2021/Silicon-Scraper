@@ -67,3 +67,17 @@ List<Product> getResults(List<Product> unProcessedProducts, String query){
   return products;
 }
 
+List<String> getSuggestions(List<Product> unProcessedProducts, String query) {
+  List<String> productBrandOrModel = [];
+  for (int i = 0; i < unProcessedProducts.length; i++) {
+    if (containsIgnoreCase(unProcessedProducts.elementAt(i).brand, query)) {
+      productBrandOrModel
+          .add(unProcessedProducts.elementAt(i).brand);
+    } else if (containsIgnoreCase(unProcessedProducts.elementAt(i).model, query)) {
+      productBrandOrModel
+          .add(unProcessedProducts.elementAt(i).model);
+    }
+  }
+  return productBrandOrModel;
+}
+
