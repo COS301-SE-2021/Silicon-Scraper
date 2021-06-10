@@ -9,7 +9,7 @@ describe('token test', () => {
     const response = {
         status: jest.fn()
     }
-    let next = jest.fn()
+    const next = jest.fn()
 
     beforeEach(() => {
         response.status = jest.fn()
