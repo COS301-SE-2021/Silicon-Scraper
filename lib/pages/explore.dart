@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
+//import 'package:silicon_scraper/pages/searchPage.dart'; //add search functionality
 
 class Explore extends StatefulWidget {
 
@@ -33,6 +34,17 @@ class _ExploreState extends State<Explore> {
         // the App.build method, and use it to set our appbar title.
         title: Center(child: Text("Explore",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)),
 //        backgroundColor:Color(0xff0E3854) ,
+
+      //add search functionality
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(Icons.search),
+      //       color: Colors.black,
+      //       onPressed: () async {
+      //         showSearch(context: context, delegate: ProductSearch());
+      //       },
+      //     )
+      //   ],
       backgroundColor: Colors.red[800],
       ),
       body: Container(
