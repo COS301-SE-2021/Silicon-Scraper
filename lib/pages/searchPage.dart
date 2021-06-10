@@ -9,7 +9,6 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text("Search"),
-          //color: Colors.black,
           centerTitle: true,
           actions: [
             IconButton(
@@ -20,7 +19,7 @@ class SearchPage extends StatelessWidget {
               },
             )
           ],
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.red,
         ),
         body: Container(
           color: Colors.white,
@@ -93,10 +92,8 @@ class ProductSearch extends SearchDelegate<String> {
                 List<Product> unProcessedProducts = snapshot.data;
                 List<Product> products = [];
                 for (int i = 0; i < unProcessedProducts.length; i++) {
-                  if (unProcessedProducts.elementAt(i).brand.compareTo(query) ==
-                          0 ||
-                      unProcessedProducts.elementAt(i).model.compareTo(query) ==
-                          0) {
+                  if (unProcessedProducts.elementAt(i).brand.toLowerCase().contains(query.toLowerCase())||
+                      unProcessedProducts.elementAt(i).model.toLowerCase().contains(query.toLowerCase())) {
                     products.add(unProcessedProducts.elementAt(i));
                   }
                 }
@@ -126,14 +123,14 @@ class ProductSearch extends SearchDelegate<String> {
                   for (int i = 0; i < unProcessedProducts.length; i++) {
                     if (unProcessedProducts
                         .elementAt(i)
-                        .brand
-                        .contains(query)) {
+                        .brand.toLowerCase()
+                        .contains(query.toLowerCase())) {
                       productBrandOrModel
                           .add(unProcessedProducts.elementAt(i).brand);
                     } else if (unProcessedProducts
                         .elementAt(i)
-                        .model
-                        .contains(query)) {
+                        .model.toLowerCase()
+                        .contains(query.toLowerCase())) {
                       productBrandOrModel
                           .add(unProcessedProducts.elementAt(i).model);
                     }
