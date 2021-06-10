@@ -1,6 +1,7 @@
 const express = require('express');
 const router =  express.Router();
-const userService = require('../services/userService.js');
+const userService = require('../service/userService.js')();
+const jwtUtil = require('../../utilities/jwtUtil.js');
 
 router.post('/', async (req, res) => {
     return userService.register(req.body)
@@ -18,17 +19,17 @@ router.post('/login', (req, res) => {
 });
 
 
-router.delete('/', (req, res) => {
+router.delete('/', jwtUtil.verifyToken, (req, res) => {
     res.status(501);
 });
 
 
-router.post('/watchlist', (req, res) => {
+router.post('/watchlist', jwtUtil.verifyToken, (req, res) => {
     res.status(501);
 });
 
 
-router.delete('/watchlist', (req, res) => {
+router.delete('/watchlist', jwtUtil.verifyToken, (req, res) => {
     res.status(501);
 });
 
