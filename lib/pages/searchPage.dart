@@ -105,7 +105,7 @@ class ProductSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) => Container(
-        color: Colors.black,
+        color: Colors.white,
         child: FutureBuilder<List<Product>>(
           future: getProducts(),
           builder: (context, snapshot) {
@@ -135,7 +135,9 @@ class ProductSearch extends SearchDelegate<String> {
                           .add(unProcessedProducts.elementAt(i).model);
                     }
                   }
-
+                  if (productBrandOrModel.isEmpty){
+                    return buildNoSuggestions();
+                  }
                   return buildSuggestionsSuccess(productBrandOrModel);
                 }
             }
@@ -144,9 +146,9 @@ class ProductSearch extends SearchDelegate<String> {
       );
 
   Widget buildNoSuggestions() => Center(
-        child: Text(
-          'No suggestions!',
-          style: TextStyle(fontSize: 28, color: Colors.white),
+    child: Text(
+          'No suggestions',
+          style: TextStyle(fontSize: 28, color: Colors.black),
         ),
       );
 
@@ -167,7 +169,7 @@ class ProductSearch extends SearchDelegate<String> {
               text: TextSpan(
                 text: queryText,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -175,7 +177,7 @@ class ProductSearch extends SearchDelegate<String> {
                   TextSpan(
                     text: remainingText,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: 18,
                     ),
                   ),
@@ -189,11 +191,7 @@ class ProductSearch extends SearchDelegate<String> {
   Widget buildResultSuccess(BuildContext context, List<Product> products) =>
       Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF3279e2), Colors.white],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+            color: Colors.white,
           ),
           child: ProductListView(context, products));
 }
