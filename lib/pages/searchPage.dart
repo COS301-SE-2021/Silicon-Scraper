@@ -8,8 +8,12 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text("Search"),
-          centerTitle: true,
+          title: Center(
+              child: Text(
+            "Search",
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+          )),
           actions: [
             IconButton(
               icon: Icon(Icons.search),
@@ -19,7 +23,7 @@ class SearchPage extends StatelessWidget {
               },
             )
           ],
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.red[800],
         ),
         body: Container(
           color: Colors.white,
@@ -92,10 +96,22 @@ class ProductSearch extends SearchDelegate<String> {
                 List<Product> unProcessedProducts = snapshot.data;
                 List<Product> products = [];
                 for (int i = 0; i < unProcessedProducts.length; i++) {
-                  if (unProcessedProducts.elementAt(i).brand.toLowerCase().contains(query.toLowerCase())||
-                      unProcessedProducts.elementAt(i).model.toLowerCase().contains(query.toLowerCase())) {
+                  if (unProcessedProducts
+                          .elementAt(i)
+                          .brand
+                          .toLowerCase()
+                          .contains(query.toLowerCase()) ||
+                      unProcessedProducts
+                          .elementAt(i)
+                          .model
+                          .toLowerCase()
+                          .contains(query.toLowerCase())) {
                     products.add(unProcessedProducts.elementAt(i));
                   }
+                }
+
+                if (products.isEmpty) {
+                  return buildNoResults();
                 }
                 return buildResultSuccess(context, products);
               }
@@ -123,19 +139,21 @@ class ProductSearch extends SearchDelegate<String> {
                   for (int i = 0; i < unProcessedProducts.length; i++) {
                     if (unProcessedProducts
                         .elementAt(i)
-                        .brand.toLowerCase()
+                        .brand
+                        .toLowerCase()
                         .contains(query.toLowerCase())) {
                       productBrandOrModel
                           .add(unProcessedProducts.elementAt(i).brand);
                     } else if (unProcessedProducts
                         .elementAt(i)
-                        .model.toLowerCase()
+                        .model
+                        .toLowerCase()
                         .contains(query.toLowerCase())) {
                       productBrandOrModel
                           .add(unProcessedProducts.elementAt(i).model);
                     }
                   }
-                  if (productBrandOrModel.isEmpty){
+                  if (productBrandOrModel.isEmpty) {
                     return buildNoSuggestions();
                   }
                   return buildSuggestionsSuccess(productBrandOrModel);
@@ -146,7 +164,7 @@ class ProductSearch extends SearchDelegate<String> {
       );
 
   Widget buildNoSuggestions() => Center(
-    child: Text(
+        child: Text(
           'No suggestions',
           style: TextStyle(fontSize: 28, color: Colors.black),
         ),
@@ -186,6 +204,32 @@ class ProductSearch extends SearchDelegate<String> {
             ),
           );
         },
+      );
+
+  Widget buildNoResults() => Center(
+        child: Padding(
+          padding: EdgeInsets.all(25),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+              children: [
+                TextSpan(text: 'Couldn\'t find "' + query + '". \n\n'),
+                TextSpan(
+                    text:
+                        'Check your spelling or try searching with a different keyword.',
+                    style: TextStyle(
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20)),
+              ],
+            ),
+          ),
+        ),
       );
 
   Widget buildResultSuccess(BuildContext context, List<Product> products) =>
