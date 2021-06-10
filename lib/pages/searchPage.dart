@@ -93,23 +93,8 @@ class ProductSearch extends SearchDelegate<String> {
                   ),
                 );
               } else {
-                List<Product> unProcessedProducts = snapshot.data;
-                List<Product> products = [];
-                for (int i = 0; i < unProcessedProducts.length; i++) {
-                  if (unProcessedProducts
-                          .elementAt(i)
-                          .brand
-                          .toLowerCase()
-                          .contains(query.toLowerCase()) ||
-                      unProcessedProducts
-                          .elementAt(i)
-                          .model
-                          .toLowerCase()
-                          .contains(query.toLowerCase())) {
-                    products.add(unProcessedProducts.elementAt(i));
-                  }
-                }
-
+                // get results from the query (after user presses enter/ clicks on a suggestion)
+                List<Product> products = getResults(snapshot.data, query);
                 if (products.isEmpty) {
                   return buildNoResults();
                 }
@@ -181,6 +166,7 @@ class ProductSearch extends SearchDelegate<String> {
             tileColor: Colors.white,
             onTap: () {
               query = suggestion;
+              // user clicks on suggestion this calls buildresults
               showResults(context);
             },
             title: RichText(
