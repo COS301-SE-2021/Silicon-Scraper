@@ -1,7 +1,7 @@
 const express = require('express');
 const router =  express.Router();
 const UserService = require('../service/userService.js');
-const userService = new UserService(null);
+const userService = new UserService();
 const jwtUtil = require('../../utilities/jwtUtil.js');
 const { response } = require('express');
 
