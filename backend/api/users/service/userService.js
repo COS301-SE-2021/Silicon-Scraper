@@ -52,10 +52,28 @@ module.exports = class UserService {
 
 
     login = async(request) => {
-        if (!('username' in request)) {
+        if (!('username' in request) || !('password' in request)) {
             return {
                 statusCode: 400
             }
+        }
+        let user = await this.userRepo.getUser(request.username);
+        if (!user) {
+            return {
+                statusCode: 200,
+                message: "Invalid login credentials"
+            }
+        }
+        const passwordHash = await this.passwordEncoder.encode(request.password);
+        if (user.password != passwordHash) {
+            return {
+                statusCode: 200,
+                message: "Invalid login credentials"
+            }
+        }
+        return {
+            statusCode: 200,
+            token: jwtUtil.generateToken(user)
         }
     }
 
