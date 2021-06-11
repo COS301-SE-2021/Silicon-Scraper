@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/classes/product.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class ProductDetailWidget extends StatefulWidget {
-  Product item;
+
+  final Product item;
   ProductDetailWidget(this.item);
 
   get photo => item.photo;
@@ -11,13 +15,25 @@ class ProductDetailWidget extends StatefulWidget {
 
   get price => item.price;
 
-  get Availabilitytext => item.getAvailabilityText();
+  get Availabilitytext => item.getAvailabilityText(20,TextAlign.left);
+
+  get brand => item.brand;
+
+  get model => item.model;
+
+  get desctiption => item.description;
+
+  get url => item.url;
+
 
   @override
-  _ProductDetailWidgetState createState() => _ProductDetailWidgetState();
+  _ProductDetailWidgetState createState() => _ProductDetailWidgetState(item);
 }
 
 class _ProductDetailWidgetState extends State<ProductDetailWidget> {
+
+    Product item;
+  _ProductDetailWidgetState(this.item);
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +48,12 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
       body:Container(
         width:MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height/0.5,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: ListView(
+//          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Container(
+              child: Text("${widget.brand}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+            ),
             Container(
 //              color: Colors.grey,
               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -42,32 +61,52 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
               width: MediaQuery.of(context).size.width,
               child: Image.network('${widget.photo}',),
             ),
+            SizedBox(height: 20,),
+            Container(
+              child: Text("${widget.model}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+            ),
+            SizedBox(height: 10,),
+            Container(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Text("${widget.desctiption}",style: TextStyle(fontWeight: FontWeight.bold,),textAlign: TextAlign.center),
+            ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                   width: MediaQuery.of(context).size.width/2,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("R${widget.price}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.green)),
-                      Text("${widget.retailer}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),textAlign: TextAlign.left,),
+                      Text("Retailer: ${widget.retailer}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,),textAlign: TextAlign.left,),
+                      widget.Availabilitytext,
                     ],
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
                   width: MediaQuery.of(context).size.width/2,
                   child: Column(
                     children: [
-                      Text("R${widget.price}",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: Colors.green)),
-                      Text("${widget.retailer}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold,),textAlign: TextAlign.left,),
+                      Text("R${widget.price}",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.green)),
                     ],
                   ),
                 ),
               ],
             ),
-            ElevatedButton(onPressed: (){},  child:Icon(Icons.bookmark_outline_rounded,))
           ],
         )
       ),
+//      bottomSheet: ,
+      persistentFooterButtons: [ElevatedButton(onPressed: (){},  child:Icon(Icons.bookmark_outline_rounded,))
+        ,ElevatedButton(child: Icon(Icons.web),
+          onPressed: ()async{
+            var url = widget.url;
+            return await launch(url);
+
+            },)
+      ],
     );
   }
 }
