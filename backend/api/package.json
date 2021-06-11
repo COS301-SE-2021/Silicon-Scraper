@@ -30,6 +30,7 @@
     "inherits": "^2.0.3",
     "ipaddr.js": "^1.9.1",
     "jest": "^27.0.3",
+    "jsonwebtoken": "^8.5.1",
     "media-typer": "^0.3.0",
     "merge-descriptors": "^1.0.1",
     "methods": "^1.1.2",

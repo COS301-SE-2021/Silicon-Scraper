@@ -1,4 +1,5 @@
-require('dotenv').config('/.env')
+const dotenv = require('dotenv');
+dotenv.config();
 
 const configs = {
     port : process.env.DB_PORT,
@@ -8,4 +9,4 @@ const configs = {
     user : process.env.DB_USER
 }
 
-module.exports = configs
+module.exports = configs;

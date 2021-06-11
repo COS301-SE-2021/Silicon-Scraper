@@ -1,4 +1,4 @@
-const configs = require('../../../config.js');
+const configs = require('../../config');
 const {Client} = require('pg');
 const {v4 : uuidv4} = require('uuid');
 
