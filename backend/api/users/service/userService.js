@@ -32,7 +32,7 @@ module.exports = class UserService {
                 message: "Username already taken"
             }
         }
-        const passwordHash = await this.passwordEncoder.encode(request.password);
+        const passwordHash = await this.passwordEncoder.encode(request.password)
         let result = await this.userRepository.addUser(request.username, passwordHash);
         user = {
             username: request.username,

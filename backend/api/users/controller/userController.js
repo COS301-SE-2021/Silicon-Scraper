@@ -3,7 +3,6 @@ const router =  express.Router();
 const UserService = require('../service/userService.js');
 const userService = new UserService();
 const jwtUtil = require('../../utilities/jwtUtil.js');
-const { response } = require('express');
 
 router.post('/', async (req, res) => {
     await userService.register(req.body)

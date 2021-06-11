@@ -7,6 +7,6 @@ const app = express();
 app.use(express.json());
 
 app.use('/products', productRoutes);
-app.use('/users', userController);
+//app.use('/users', userController);
 
 module.exports = app;   // for testing

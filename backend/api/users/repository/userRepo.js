@@ -12,8 +12,8 @@ const db = new Client({
 
 module.exports = class UserRepo {
 
-    constructor(dbase = db) {
-        if (dbase == db)
+    constructor(dbase = db, production = false) {
+        if (dbase == db && production == true)
             db.connect()
         this.db = dbase;
     } 
