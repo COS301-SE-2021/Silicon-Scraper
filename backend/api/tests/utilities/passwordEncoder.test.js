@@ -1,6 +1,6 @@
 const passwordEncoder = require('../../utilities/passwordEncoder.js');
 
-describe('password encoding', () => {
+describe('password encoding test', () => {
 
     it('successful encoding of a non-null password', async() => {
 

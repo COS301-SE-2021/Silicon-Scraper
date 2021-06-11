@@ -12,10 +12,9 @@ const db = new Client({
 
 module.exports = class UserRepo {
 
-    constructor(dbConn = db) {
-        // if (dbConn == db)
-        //     db.connect();
-        this.db = dbConn;
+    constructor() {
+        this.db = db;
+        this.db.connect();
     } 
 
     addUser = async (username, password) => {
