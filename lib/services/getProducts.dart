@@ -51,3 +51,33 @@ ListView ProductListView(BuildContext context,List<Product> items)
   );
 }
 
+bool containsIgnoreCase(String modelOrBrand, String query) {
+  return modelOrBrand.toLowerCase().contains(query.toLowerCase());
+}
+
+List<Product> getResults(List<Product> unProcessedProducts, String query){
+
+  List<Product> products = [];
+  for (int i = 0; i < unProcessedProducts.length; i++) {
+    if (containsIgnoreCase(unProcessedProducts.elementAt(i).brand, query) ||
+        containsIgnoreCase(unProcessedProducts.elementAt(i).model, query)) {
+      products.add(unProcessedProducts.elementAt(i));
+    }
+  }
+  return products;
+}
+
+List<String> getSuggestions(List<Product> unProcessedProducts, String query) {
+  List<String> productBrandOrModel = [];
+  for (int i = 0; i < unProcessedProducts.length; i++) {
+    if (containsIgnoreCase(unProcessedProducts.elementAt(i).brand, query)) {
+      productBrandOrModel
+          .add(unProcessedProducts.elementAt(i).brand);
+    } else if (containsIgnoreCase(unProcessedProducts.elementAt(i).model, query)) {
+      productBrandOrModel
+          .add(unProcessedProducts.elementAt(i).model);
+    }
+  }
+  return productBrandOrModel;
+}
+

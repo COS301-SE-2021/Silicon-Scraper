@@ -36,13 +36,13 @@ dev_dependencies:
   mockito: 
   test: ^1.16.5
   #for opening links
-  url_launcher: ^5.7.5
+  url_launcher: ^6.0.6
   #for testing with network images
-#  image_test_utils:
+#  image_test_utils: ^1.0.0
   #for search bar
   material_floating_search_bar: ^0.3.4
 
-  network_image_mock:
+  network_image_mock: ^2.0.1
 
 
 # For information on the generic Dart part of this file, see the
@@ -57,7 +57,6 @@ flutter:
   uses-material-design: true
   assets:
     - test/mobile/mocks/json/
-    - test/mobile/mocks/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
