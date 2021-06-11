@@ -5,12 +5,12 @@ const userService = new UserService(null);
 const jwtUtil = require('../../utilities/jwtUtil.js');
 
 router.post('/', async (req, res) => {
-    return await userService.register(req.body)
+    await userService.register(req.body)
     .then(response => {
-        return res.status(response.statusCode).json(response);
+        res.status(response.statusCode).json(response);
     })
     .catch(error => {
-        return res.status(error.statusCode).json(error);
+        res.status(error.statusCode).json(error);
     });
 });
 

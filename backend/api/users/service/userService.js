@@ -1,16 +1,8 @@
-const configs = require('../../../config.js');
-const {Client} = require('pg');
-const {v4 : uuidv4} = require('uuid');
-const bcrypt = require('bcrypt');
+const UserRepo = require('../repository/userRepo.js')
+const userRepo = new UserRepo()
 
-const client = new Client({
-    user: configs.user,
-    host: configs.host,
-    database: configs.name,
-    password: configs.pw,
-    port: configs.port
-});
-
+const passwordEncoder = require('../../utilities/passwordEncoder.js')
+const jwtUtil = require('../../utilities/jwtUtil.js')
 
 /**
  * 
@@ -21,76 +13,50 @@ const client = new Client({
 
 module.exports = class UserService {
 
-    constructor(database) {
-        if (!database) {
-            client.connect();
-            this.database = client;
-            return;
+    constructor(userRepo, passwordEncoder) {
+        this.userRepo = userRepo
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    register = async(request) => {
+
+        if (!('username' in request) || !('password' in request)) {
+            return {
+                statusCode: 400,
+            }
         }
-        console.info("I am here");
-        this.database = database;
+        let user = await this.userRepo.getUser(request.username);
+        if (user) {
+            return {
+                statusCode: 200,
+                message: "Username already taken"
+            }
+        }
+        const passwordHash = await this.passwordEncoder.encode(request.password);
+        let result = await this.userRepo.addUser(request.username, passwordHash);
+        user = {
+            username: request.username,
+            password: passwordHash
+        }
+        if (result == true) {
+            return {
+                statusCode: 201,
+                token: jwtUtil.generateToken(user)
+            }
+        }
+        return {
+            statusCode: 500
+        }
+
     }
 
-    async register(request) {
-        console.info("within request");
 
-        return new Promise((resolve, reject) => {
-            console.info("inside promise");
-
-            if (!('username' in request) || !('password' in request)) {
-                console.warn("Rejected request");
-                reject({
-                    message: "Properties are missing",
-                    statusCode: 400
-                });
-                return;
+    login = async(request) => {
+        if (!('username' in request)) {
+            return {
+                statusCode: 400
             }
-            console.info("after if");
-    
-            const id = uuidv4();
-
-            console.info("after id");
-
-            let errorResponse = {
-                message: "An error occurred",
-                status: 500
-            };
-
-            console.info("after uuid: " + id);
-
-            bcrypt.hash(request.password, 15)
-            .then(hash => {
-                console.info("hash: " + hash);
-                const query = `INSERT INTO Users(id,  username, password) VALUES ('${id}', '${request.username}', '${hash}')`;
-                return this.database.query(query)
-                .then(response => {
-                    resolve({
-                        message: "User succeffully registered",
-                        statusCode: 201
-                    });
-                })
-                .catch(err => {
-                    console.log(err);
-                    reject(errorResponse);
-                });
-            })
-            .catch(err => {
-                console.log(err);
-                reject(errorResponse);
-            });
-        });
-    }
-
-    login(request) {
-        return new Promise((resolve, reject) => {
-            if (!('username' in request) || !('password' in request)) {
-                reject({
-                    message: "Properties are missing",
-                    statusCode: 400
-                });
-                return;
-            }
-        });
+        }
     }
 
     deleteUser(request) {

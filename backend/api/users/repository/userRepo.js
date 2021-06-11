@@ -13,26 +13,29 @@ const db = new Client({
 module.exports = class UserRepo {
 
     constructor(dbConn = db) {
-        if (dbConn == db)
-            db.connect();
+        // if (dbConn == db)
+        //     db.connect();
         this.db = dbConn;
     } 
 
     addUser = async (username, password) => {
         const id = uuidv4();
         const query = "INSERT INTO Users(id, username, password) VALUES (?, ?, ?)";
+        let result = null;
         await this.db.query(query, [id, username, password])
         .then(res => {
-            return true;
+            result = true;
         })
         .catch(err => {
-            return false;
+            result = false;
         });
+        
+        return result
     }
     
     getUser = async (username) => {
         const query = "SELECT * FROM Users WHERE username = ?";
-        await this.db.query(query, [username])
+        return await this.db.query(query, [username])
         .then(user => {
             return user;
         })

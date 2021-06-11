@@ -64,7 +64,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "jest tests/utilities/jwtUtil.test.js",
+    "test": "jest tests/users/userService.test.js",
     "start": "node index.js"
   },
   "jest": {
