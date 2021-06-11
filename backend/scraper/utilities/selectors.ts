@@ -100,7 +100,7 @@ class PclinkSelectors extends Selectors {
 
 }
 
-class DreamwareTechSelectors extends Selectors {
+class DreamwareSelectors extends Selectors {
     constructor(ret:string) {
         super(ret);
     }
@@ -136,8 +136,8 @@ class DreamwareTechSelectors extends Selectors {
 
 let evetechSelector: Selectors = new EvetechSelectors("Evetech")
 let pclinkSelector: Selectors = new PclinkSelectors("Pclink")
-let dreamwaretechSelector: Selectors = new DreamwareTechSelectors("DreamwareTech")
-let selectorsArray: Selectors[] = [evetechSelector, pclinkSelector,dreamwaretechSelector ]
+let dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
+let selectorsArray: Selectors[] = [evetechSelector, pclinkSelector,dreamwareSelector ]
 
 module.exports = {
     selectorsArray

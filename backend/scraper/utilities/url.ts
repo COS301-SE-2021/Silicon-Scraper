@@ -22,18 +22,18 @@ module.exports.getPcLinkCpuUrl = () =>{
     return ""
 }
 
-module.exports.getDreamwareTechUrl = () =>{
+module.exports.getDreamwareUrl = () =>{
     return "";
 }
 
-module.exports.getDreamwareTechGpuUrl = () =>{
+module.exports.getDreamwareGpuUrl = () =>{
     const urls = ["https://www.dreamwaretech.co.za/c/graphics-cards-gpus/nvidia-graphics-cards/",
     "https://www.dreamwaretech.co.za/c/graphics-cards-gpus/amd-graphics-cards/",
     "https://www.dreamwaretech.co.za/c/graphics-cards-gpus/workstation-cards/"]
     return "";
 }
 
-module.exports.getDreamwareTechCpuUrl = () =>{
+module.exports.getDreamwareCpuUrl = () =>{
     const urls = ["https://www.dreamwaretech.co.za/c/computer-components/processors-cpus/intel-processors/",
     "https://www.dreamwaretech.co.za/c/computer-components/processors-cpus/amd-processors/"]
     return "";
