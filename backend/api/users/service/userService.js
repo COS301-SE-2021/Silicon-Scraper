@@ -13,9 +13,9 @@ const jwtUtil = require('../../utilities/jwtUtil.js')
 
 module.exports = class UserService {
 
-    constructor(userRepo, passwordEncoder) {
-        this.userRepo = userRepo
-        this.passwordEncoder = passwordEncoder;
+    constructor(userRepository = userRepo, passwordEncod = passwordEncoder) {
+        this.userRepository = userRepository
+        this.passwordEncoder = passwordEncod;
     }
 
     register = async(request) => {
@@ -25,7 +25,7 @@ module.exports = class UserService {
                 statusCode: 400,
             }
         }
-        let user = await this.userRepo.getUser(request.username);
+        let user = await this.userRepository.getUser(request.username);
         if (user) {
             return {
                 statusCode: 200,
@@ -33,7 +33,7 @@ module.exports = class UserService {
             }
         }
         const passwordHash = await this.passwordEncoder.encode(request.password);
-        let result = await this.userRepo.addUser(request.username, passwordHash);
+        let result = await this.userRepository.addUser(request.username, passwordHash);
         user = {
             username: request.username,
             password: passwordHash
@@ -57,7 +57,7 @@ module.exports = class UserService {
                 statusCode: 400
             }
         }
-        let user = await this.userRepo.getUser(request.username);
+        let user = await this.userRepository.getUser(request.username);
         if (!user) {
             return {
                 statusCode: 200,
