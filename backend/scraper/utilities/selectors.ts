@@ -67,75 +67,77 @@ class PclinkSelectors extends Selectors {
     constructor(ret:string) {
         super(ret);
     }
-
+    
+    //says Add To cart when available and Out of stock when not 
     getAvailabilitySelector(index?: number):any {
-        return undefined;
+        return ".button-container span";
     }
 
     getImageSelector(index?: number):any {
-        return undefined;
+        return '.abt-single-image > img';
     }
 
     getLinkSelector(index?: number):any {
-        return undefined;
+        return ".abt-single-image";
     }
 
     getPriceSelector():any {
-        return undefined;
+        return ".ty-price > bdi";
     }
 
     getTitleSelector(index?: number):any {
-        return undefined;
+        return ".product-title";
     }
 
-    getTableSelector = () => {
-        return undefined;
+    getTableSelector = () => { //not a table - its a div - iterate through its children to get each component. Also, page number changes
+        return "#product_list_page1";
     }
 
+    // not a row - for each of the chlidren of the above div, find item with this class first - if this is not present, its the incorrect child 
     getRowSelector(): any {
-        return undefined;
+        return ".ty-grid-list__item";
     }
 
 }
 
-class RebalgamingSelectors extends Selectors {
+class DreamwareTechSelectors extends Selectors {
     constructor(ret:string) {
         super(ret);
     }
 
-    getAvailabilitySelector(index?: number):any {
-        return undefined;
+    getAvailabilitySelector(index?: number):any {//Says I Stock with Supplier when in stock 
+        return ".prod-availability";
     }
 
     getImageSelector(index?: number):any {
-        return undefined;
+        return ".product-image img";
     }
 
     getLinkSelector(index?: number):any {
-        return undefined;
+        return ".product-image > a";
     }
 
-    getPriceSelector():any {
-        return undefined;
+    getPriceSelector():any {// returns "from R300".
+        return ".product-price";
     }
 
     getTitleSelector(index?: number):any {
-        return undefined;
+        return ".product-box-name";
     }
 
-    getTableSelector = () => {
-        return undefined;
+    getTableSelector = () => {// not a table - its a div - iterate through each child 
+        return "container > row products";
     }
 
-    getRowSelector(): any {
-        return undefined;
+    getRowSelector(): any {//not a row but the class each child of the above div needs to be a part of - this is because after every couple of children, theres a child thats not a product
+        return ".col-md-4";
     }
 }
 
 let evetechSelector: Selectors = new EvetechSelectors("Evetech")
 let pclinkSelector: Selectors = new PclinkSelectors("Pclink")
-let rebalgamingSelector: Selectors = new RebalgamingSelectors("Rebalgaming")
-let selectorsArray: Selectors[] = [evetechSelector, pclinkSelector,rebalgamingSelector  ]
+let dreamwaretechSelector: Selectors = new DreamwareTechSelectors("DreamwareTech")
+let selectorsArray: Selectors[] = [evetechSelector, pclinkSelector,dreamwaretechSelector ]
 
 module.exports = {
     selectorsArray

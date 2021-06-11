@@ -18,8 +18,8 @@ let urls = [
      url.getEveTecCpuUrl(),
      url.getPcLinkGpuUrl(),
      url.getPcLinkCpuUrl(),
-     url.getRebalGamingGpuUrl(),
-     url.getRebalGamingCpuUrl(),
+     url.getDreamwareTechGpuUrl(),
+     url.getDreamwareTechCpuUrl(),
 ]
 
 /**
