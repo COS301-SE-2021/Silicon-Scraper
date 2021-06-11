@@ -1,32 +1,47 @@
 const configs = require('../../../config');
-const {Client} = require('pg');
+const {Pool} = require('pg');
 const {v4 : uuidv4} = require('uuid');
+const { config } = require('dotenv');
+const pgp = require('pg-promise')({
+    capSQL: true
+})
 
-const db = new Client({
-    user: configs.user,
+const client = {
     host: configs.host,
+    user: configs.user,
     database: configs.name,
     password: configs.pw,
     port: configs.port
-});
+}
+
+const db = pgp(
+    client
+)
+
+const cs = new pgp.helpers.ColumnSet(['id', 'username', 'hash'], {table: 'users'})
 
 module.exports = class UserRepo {
 
-    constructor(dbase = db, production = false) {
-        if (dbase == db && production == true)
-            db.connect()
+    constructor(dbase = db) {
         this.db = dbase;
     } 
 
     addUser = async (username, password) => {
+        console.log(configs)
+    
         const id = uuidv4();
-        const query = "INSERT INTO Users(id, username, password) VALUES (?, ?, ?)";
         let result = null;
-        await this.db.query(query, [id, username, password])
+        const user = {
+            id: id,
+            username: username,
+            hash: password
+        };
+        const query = pgp.helpers.insert(user, cs);
+        await db.none(query)
         .then(res => {
             result = true;
         })
-        .catch(err => {
+        .catch(err =>  {
             result = false;
         });
         
@@ -34,14 +49,12 @@ module.exports = class UserRepo {
     }
     
     getUser = async (username) => {
-        const query = "SELECT * FROM Users WHERE username = ?";
-        return await this.db.query(query, [username])
-        .then(user => {
-            return user;
-        })
-        .catch(err => {
-            return null;
-        });
+        const user = {
+            username: username
+        }
+        const query = pgp.as.format("WHERE username = $1", [username]);
+        const u = await db.any("SELECT * FROM users $1:raw", query)
+        return u;
     }
 }
 

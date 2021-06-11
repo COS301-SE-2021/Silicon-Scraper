@@ -26,7 +26,7 @@ module.exports = class UserService {
             }
         }
         let user = await this.userRepository.getUser(request.username);
-        if (user) {
+        if (user.length == 0) {
             return {
                 statusCode: 200,
                 message: "Username already taken"
@@ -34,11 +34,11 @@ module.exports = class UserService {
         }
         const passwordHash = await this.passwordEncoder.encode(request.password)
         let result = await this.userRepository.addUser(request.username, passwordHash);
-        user = {
-            username: request.username,
-            password: passwordHash
-        }
         if (result == true) {
+            user = {
+                username: request.username,
+                password: passwordHash
+            }
             return {
                 statusCode: 201,
                 token: jwtUtil.generateToken(user)
@@ -58,7 +58,7 @@ module.exports = class UserService {
             }
         }
         let user = await this.userRepository.getUser(request.username);
-        if (!user) {
+        if (user.length == 0) {
             return {
                 statusCode: 200,
                 message: "Invalid login credentials"
