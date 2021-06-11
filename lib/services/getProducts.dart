@@ -81,3 +81,15 @@ List<String> getSuggestions(List<Product> unProcessedProducts, String query) {
   return productBrandOrModel;
 }
 
+void openAvailabilityFilter(){
+
+}
+
+void openRetailerFilter(){
+
+}
+
+void openPriceFilter(){
+
+}
+
