@@ -61,6 +61,10 @@ class EvetechSelectors extends Selectors {
 
     getRowSelector = () => {return "tbody tr"}
 
+    getBaseUrl() : string {
+        return "https://www.evetech.co.za/"
+    }
+
 }
 
 class PclinkSelectors extends Selectors {
@@ -69,9 +73,9 @@ class PclinkSelectors extends Selectors {
     }
     
     //says Add To cart when available and Out of stock when not 
-    getAvailabilitySelector(index?: number):any {
+    getAvailabilitySelector = ((index?: number) => {
         return ".button-container span";
-    }
+    })
 
     getImageSelector(index?: number):any {
         return '.abt-single-image > img';
@@ -98,6 +102,9 @@ class PclinkSelectors extends Selectors {
         return ".ty-grid-list__item";
     }
 
+    getBaseUrl() : string {
+        return "https://pclinkshop.co.za/"
+    }
 }
 
 class DreamwareSelectors extends Selectors {
@@ -126,11 +133,15 @@ class DreamwareSelectors extends Selectors {
     }
 
     getTableSelector = () => {// not a table - its a div - iterate through each child 
-        return "container > row products";
+        return "body > div.categories-content > div > div > div.col-md-9 > div > div";
     }
 
     getRowSelector(): any {//not a row but the class each child of the above div needs to be a part of - this is because after every couple of children, theres a child thats not a product
         return ".col-md-4";
+    }
+
+    getBaseUrl() : string {
+        return "https://www.dreamwaretech.co.za/"
     }
 }
 

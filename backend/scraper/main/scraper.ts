@@ -1,5 +1,4 @@
 import {Selectors} from "../utilities/selectors";
-
 const cheerio = require("cheerio");
 const axios = require("axios");
 
@@ -19,17 +18,19 @@ let urls = [
      url.getPcLinkGpuUrl(),
      url.getPcLinkCpuUrl(),
      url.getDreamwareGpuUrl(),
-     url.getDreamwareCpuUrl(),
+     url.getDreamwareCpuUrl()
 ]
 
 /**
  *
  * @param webToScrape url to
+ * @param selector
  * @returns {array} An array of products
  */
-const scrapeSilon = async (webToScrape: any, selector: Selectors) =>{
+const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string) =>{
     const html = await axios.get(webToScrape);
-    return getWebData(html.data, selector)
+    //console.log(html.data)
+    return getWebData(html.data, selector, baseUrl)
 }
 /**
  *
@@ -37,55 +38,49 @@ const scrapeSilon = async (webToScrape: any, selector: Selectors) =>{
  * @param html
  */
 
-const getWebData = async (html: any, selector: Selectors) => {
+const getWebData = async (html: any, selector: Selectors, baseUrl: string) => {
 
-    const $ = await cheerio.load(html);
-     let b = 0;
+        const $ = await cheerio.load(html);
+        let b = 0;
 
+        //Number of pages = number of times a request is going to happen at a specific site
 
-    //Number of pages = number of times a request is going to happen at a specific site
-
-    if (selector.getTableSelector() !== undefined) {
+       // console.log($(selector.getTableSelector()).find(selector.getRowSelector()))
 
         $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
 
             $(row).each((k: any, col: any) => {
 
-                addToProducts(b++, $, selector, col);
+                addToProducts(b++, $, selector, baseUrl, col);
+                return
 
             })
+
         })
 
-        console.log(selector, " using a table" )
-    } else {
-        //get the list
-        //el in that list
-            //addToProducts(b++, $, selectors);
 
-        console.log(selector, " not using a table")
-    }
-    return products;
+        return products;
 }
 
 module.exports = {getWebData}
 /**
- *
  *
  * @param data
  * @param index
  * @param $
  * @param selector
  */
-const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, data?: any) =>{
+const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , data?: any) =>{
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
 
+    console.log($(data).find(selector.getImageSelector(index)).attr('src'))
     products.push({
-        image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src')),
+        image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src'), baseUrl),
         brand: title.brand,
         model: title.model,
         price: trimPrice($(data).find(selector.getPriceSelector()).text().trim()),
         availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim(),
-        link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href')),
+        link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href'), baseUrl),
         retailer: selector.retailer,
         detail:{ productDetails : [
             {
@@ -95,6 +90,7 @@ const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Select
             }
         ]}
     })
+
 }
 
 /**
@@ -102,12 +98,24 @@ const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Select
  * @param urlRES
  * @returns {string}
  */
-const concatUrl = (urlRES: string | undefined) =>{
+const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
 
     if(urlRES !== undefined) {
         let base = urlRES.split('../')[1]
-        base = url.getEveTecUrl() + base;
-        return base;
+
+
+        if(base !== undefined) {
+            base = baseUrl + base;
+            return base
+        }else {
+            let base1 = urlRES.split('/p/')[1]
+            if(base1 !== undefined) {
+                base1 = baseUrl + "/p/" + base1
+                return base1
+            }
+        }
+
+        return urlRES;
     }else{
         return url.getEveTecUrl()
     }
@@ -164,12 +172,22 @@ module.exports = {titleParser}
  */
 const scrape = async () => {
 
-    for (const selector of selectors) {
-        for (const url of urls) {
-            await scrapeSilon(url, selector);
-            break;
-        }
-    }
+    // for (const selector of selectors) {
+    //     for (const url of urls) {
+    //         for(const url_ of url) {
+    //             await scrapeSilon(url_, selector, selector.getBaseUrl());
+    //         }
+    //     }
+    // }
+
+    //Testing pclink scraping
+    //await scrapeSilon(urls[2][0], selectors[1], selectors[1].getBaseUrl());
+
+    //Testing dreamwaretech
+
+    //console.log(selectors[2])
+
+    await scrapeSilon(urls[3][0], selectors[1], selectors[1].getBaseUrl());
     return products;
 }
 
@@ -179,7 +197,7 @@ scrape().then(res => {
     console.log(res)
 })
 
-
+//Clink link and get the description
 
 
 
