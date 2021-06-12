@@ -28,7 +28,7 @@ let urls = [
  * @returns {array} An array of products
  */
 const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string) =>{
-    const html = await axios.get(webToScrape);
+    const html = await axios.get("https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/?count=12&paged=");
     //console.log(html.data)
     return getWebData(html.data, selector, baseUrl)
 }
@@ -45,18 +45,18 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string) => {
 
         //Number of pages = number of times a request is going to happen at a specific site
 
-       // console.log($(selector.getTableSelector()).find(selector.getRowSelector()))
 
-        $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
 
-            $(row).each((k: any, col: any) => {
-
-                addToProducts(b++, $, selector, baseUrl, col);
-                return
-
-            })
-
-        })
+        // $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
+        //
+        //     $(row).each((k: any, col: any) => {
+        //
+        //         addToProducts(b++, $, selector, baseUrl, col);
+        //         return
+        //
+        //     })
+        //
+        // })
 
 
         return products;

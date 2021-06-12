@@ -67,7 +67,7 @@ class EvetechSelectors extends Selectors {
 
 }
 
-class PclinkSelectors extends Selectors {
+class AmpTekSelectors extends Selectors {
     constructor(ret:string) {
         super(ret);
     }
@@ -94,12 +94,12 @@ class PclinkSelectors extends Selectors {
     }
 
     getTableSelector = () => { //not a table - its a div - iterate through its children to get each component. Also, page number changes
-        return "#product_list_page1";
+        return "#content > div.archive-products";
     }
 
     // not a row - for each of the chlidren of the above div, find item with this class first - if this is not present, its the incorrect child 
     getRowSelector(): any {
-        return ".ty-grid-list__item";
+        return "ul";
     }
 
     getBaseUrl() : string {
@@ -146,9 +146,9 @@ class DreamwareSelectors extends Selectors {
 }
 
 let evetechSelector: Selectors = new EvetechSelectors("Evetech")
-let pclinkSelector: Selectors = new PclinkSelectors("Pclink")
+let amptekSelector: Selectors = new AmpTekSelectors("Amptek")
 let dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
-let selectorsArray: Selectors[] = [evetechSelector, pclinkSelector,dreamwareSelector ]
+let selectorsArray: Selectors[] = [evetechSelector, amptekSelector,dreamwareSelector ]
 
 module.exports = {
     selectorsArray
