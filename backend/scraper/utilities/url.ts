@@ -11,17 +11,18 @@ module.exports.getEveTecCpuUrl=  () => {
 }
 
 module.exports.getAmpTekUrl = () =>{
-    return "https://pclinkshop.co.za/";
+    return "https://amptek.co.za/";
 }
 
 module.exports.getAmpTekGpuUrl = () =>{
-    return ["https://pclinkshop.co.za/components/graphics-card-en/graphics-card/"]
+    return ["https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/?count=36&paged=",
+        "https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/page/2/?count=36"
+    ]
 }
 
 module.exports.getAmpTekCpuUrl = () =>{
-    return ["https://pclinkshop.co.za/components/cpu-processors/processors-amd/",
-        "https://pclinkshop.co.za/components/cpu-processors/processors-intel/",
-        "https://pclinkshop.co.za/components/cpu-processors/processors-exon/"
+    return ["https://amptek.co.za/product-category/hardware/computer-components/cpus-processors/?count=36&paged=",
+        "https://amptek.co.za/product-category/hardware/computer-components/cpus-processors/page/2/?count=36",
     ]
 }
 

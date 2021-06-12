@@ -28,7 +28,7 @@ let urls = [
  * @returns {array} An array of products
  */
 const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string) =>{
-    const html = await axios.get("https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/?count=12&paged=");
+    const html = await axios.get(webToScrape);
     //console.log(html.data)
     return getWebData(html.data, selector, baseUrl)
 }
