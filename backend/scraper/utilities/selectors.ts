@@ -74,23 +74,23 @@ class AmpTekSelectors extends Selectors {
     
     //says Add To cart when available and Out of stock when not 
     getAvailabilitySelector = ((index?: number) => {
-        return ".button-container span";
+        return ".add-links-wrap > div > a";
     })
 
     getImageSelector(index?: number):any {
-        return '.abt-single-image > img';
+        return '.product-image > a > div > img.wp-post-image';
     }
 
     getLinkSelector(index?: number):any {
-        return ".abt-single-image";
+        return ".product-image > a ";
     }
 
     getPriceSelector():any {
-        return ".ty-price > bdi";
+        return ".price > span > bdi";
     }
 
     getTitleSelector(index?: number):any {
-        return ".product-title";
+        return ".product-loop-title > h3";
     }
 
     getTableSelector = () => { //not a table - its a div - iterate through its children to get each component. Also, page number changes
@@ -103,7 +103,7 @@ class AmpTekSelectors extends Selectors {
     }
 
     getBaseUrl() : string {
-        return "https://pclinkshop.co.za/"
+        return "https://amptek.co.za/"
     }
 }
 

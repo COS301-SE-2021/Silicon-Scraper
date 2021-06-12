@@ -10,15 +10,15 @@ module.exports.getEveTecCpuUrl=  () => {
     return ["https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx"];
 }
 
-module.exports.getPcLinkUrl = () =>{
+module.exports.getAmpTekUrl = () =>{
     return "https://pclinkshop.co.za/";
 }
 
-module.exports.getPcLinkGpuUrl = () =>{
+module.exports.getAmpTekGpuUrl = () =>{
     return ["https://pclinkshop.co.za/components/graphics-card-en/graphics-card/"]
 }
 
-module.exports.getPcLinkCpuUrl = () =>{
+module.exports.getAmpTekCpuUrl = () =>{
     return ["https://pclinkshop.co.za/components/cpu-processors/processors-amd/",
         "https://pclinkshop.co.za/components/cpu-processors/processors-intel/",
         "https://pclinkshop.co.za/components/cpu-processors/processors-exon/"

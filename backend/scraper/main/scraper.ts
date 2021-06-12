@@ -15,8 +15,8 @@ let today = new Date()
 let urls = [
      url.getEveTecGpuUrl(),
      url.getEveTecCpuUrl(),
-     url.getPcLinkGpuUrl(),
-     url.getPcLinkCpuUrl(),
+     url.getAmpTekGpuUrl(),
+     url.getAmpTekCpuUrl(),
      url.getDreamwareGpuUrl(),
      url.getDreamwareCpuUrl()
 ]
@@ -47,16 +47,16 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string) => {
 
 
 
-        // $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
-        //
-        //     $(row).each((k: any, col: any) => {
-        //
-        //         addToProducts(b++, $, selector, baseUrl, col);
-        //         return
-        //
-        //     })
-        //
-        // })
+        $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
+
+            $(row).each((k: any, col: any) => {
+
+                addToProducts(b++, $, selector, baseUrl, col);
+                return
+
+            })
+
+        })
 
 
         return products;
