@@ -52,7 +52,7 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string) => {
             $(row).each((k: any, col: any) => {
 
                 addToProducts(b++, $, selector, baseUrl, col);
-                return
+
 
             })
 
@@ -72,13 +72,16 @@ module.exports = {getWebData}
  */
 const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , data?: any) =>{
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
+    let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())
 
-    console.log($(data).find(selector.getImageSelector(index)).attr('src'))
+    if(price === undefined)
+        return
+
     products.push({
         image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src'), baseUrl),
         brand: title.brand,
         model: title.model,
-        price: trimPrice($(data).find(selector.getPriceSelector()).text().trim()),
+        price: price,
         availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim(),
         link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href'), baseUrl),
         retailer: selector.retailer,
@@ -172,22 +175,14 @@ module.exports = {titleParser}
  */
 const scrape = async () => {
 
-    // for (const selector of selectors) {
-    //     for (const url of urls) {
-    //         for(const url_ of url) {
-    //             await scrapeSilon(url_, selector, selector.getBaseUrl());
-    //         }
-    //     }
-    // }
+    for (const selector of selectors) {
+        for (const url of urls) {
+            for(const url_ of url) {
+                await scrapeSilon(url_, selector, selector.getBaseUrl());
+            }
+        }
+    }
 
-    //Testing pclink scraping
-    //await scrapeSilon(urls[2][0], selectors[1], selectors[1].getBaseUrl());
-
-    //Testing dreamwaretech
-
-    //console.log(selectors[2])
-
-    await scrapeSilon(urls[3][0], selectors[1], selectors[1].getBaseUrl());
     return products;
 }
 
