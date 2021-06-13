@@ -189,7 +189,7 @@ const scrape = async () => {
 module.exports = {scrape}
 
 scrape().then(res => {
-    console.log(res)
+    console.log(res.length)
 })
 
 //Clink link and get the description
