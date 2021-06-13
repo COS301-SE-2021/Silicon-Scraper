@@ -1,16 +1,15 @@
-    import {selectorsArray} from "../../src/utilities/selectors";
+//import * as selectorsArray from "../../src/utilities/selectors";
+let selectors = require("../../src/utilities/selectors.ts").selectorsArray;
 
 describe("EvetechSelectors()", () =>{
     let index = 3;
-    let expected: string;
-    
-    expected ="_ctl"+((index<10?'0':'')+index);
+    let expected = "_ctl"+((index<10?'0':'')+index);
 
     const select = [
-        selectorsArray[0].getAvailabilitySelector(index),
-        selectorsArray[0].getLinkSelector(index),
-        selectorsArray[0].getImageSelector(index),
-        selectorsArray[0].getTitleSelector(index)
+        selectors[0].getAvailabilitySelector(index),
+        selectors[0].getLinkSelector(index),
+        selectors[0].getImageSelector(index),
+        selectors[0].getTitleSelector(index)
     ]
 
     test('Return string containing index', () => {

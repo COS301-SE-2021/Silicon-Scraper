@@ -1,9 +1,13 @@
-const scrape = require('@main/scraper');
-const mockAxios = require('axios')
-import {selectorsArray} from '../../src/utilities/selectors';
+import { Selectors, selectorsArray } from "../../src/utilities/selectors";
+
+const scrape = require('../../src/main/scraper');
+const mockAxios = require('axios');
+//let selector = require("../../src/utilities/selectors.ts");
 const eve = require("../../__mocks__/mockUrl")
 
-jest.mock('../../../backend/scraper/utilities/EvetechSelectors', () => ({
+
+
+jest.mock('../../src/utilities/selectors', () => ({
     getAvailabilitySelector: jest.fn().mockImplementation(() => {return 'availabilty_selector'}),
     getLinkSelector: jest.fn().mockImplementation(() => "link_selector"),
     getImageSelector: jest.fn().mockImplementation(() => {return "image_selector"}),
@@ -23,16 +27,17 @@ describe("scraperTest()", () => {
     const index = 0;
     const select = [
         selectorsArray[0].getAvailabilitySelector(),
-        selectorsArray[0].getLinkSelector(index),
-        selectorsArray[0].getImageSelector(index),
-        selectorsArray[0].getTitleSelector(index),
-        selectorsArray[0].getTableSelector(),
-        selectorsArray[0].getPriceSelector(),
-        selectorsArray[0].getRowSelector()
+    //    elector[1].getAvailabilitySelector(),
+    //    selector.selectorsArray[0].getLinkSelector(index),
+    //    selector.selectorsArray[0].getImageSelector(index),
+    //    selector.selectorsArray[0].getTitleSelector(index),
+    //    selector.selectorsArray[0].getTableSelector(),
+    //    selector.selectorsArray[0].getPriceSelector(),
+    //    selector.selectorsArray[0].getRowSelector()
     ]
     
     test('Should return array of products', async () =>{
-        const products = await scrape.scrape();
+       const products = await scrape.scrape();
 
         expect(mockAxios.get).toHaveBeenCalledTimes(2);
         expect(mockAxios.get).toHaveBeenNthCalledWith(1,'https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx')
@@ -41,7 +46,7 @@ describe("scraperTest()", () => {
         select.forEach(element => {
             expect(element).toBeTruthy();
         });
-        expect(products).not.toBeNull();
+       expect(products).not.toBeNull();
     })
 
     test("fetches data successfully", async () =>{

@@ -1,12 +1,14 @@
-const url = require("@utilities/url");
+const url = require("../../src/utilities/url");
 
 describe("urlTest()", () => {
     const urls = [
         url.getEveTecCpuUrl(),
         url.getEveTecGpuUrl(),
         url.getEveTecUrl(),
-        url.getPcLinkShopCpuUrl(),
-        url.getWootWareGpuUrl()
+        url.getAmpTekGpuUrl(),
+        url.getAmpTekCpuUrl(),
+        url.getDreamwareGpuUrl(),
+        url.getDreamwareCpuUrl()
     ]
 
     test('Should not return an empty string', () => {

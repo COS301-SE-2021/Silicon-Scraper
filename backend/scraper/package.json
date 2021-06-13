@@ -10,8 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.14.5",
+    "@babel/preset-env": "^7.14.5",
+    "@babel/preset-typescript": "^7.14.5",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.2",
     "awesome-typescript-loader": "^5.2.1",
+    "babel-jest": "^27.0.2",
     "cheerio": "^1.0.0-rc.9",
     "source-map-loader": "^3.0.0"
   },

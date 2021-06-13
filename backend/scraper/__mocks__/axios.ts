@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const eve = require("../__mocks__/mockUrl.js")
+const eve = require("./mockUrl")
 //import scraper from "@main/scraper.ts"
 const fs = require("fs")
 
