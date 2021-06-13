@@ -37,6 +37,8 @@ coverage/
 #database
 backend/.env
 
+#typescript
+backend/scraper/dist/
 # API related
 node_modules/
 

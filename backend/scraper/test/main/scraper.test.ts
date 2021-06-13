@@ -1,6 +1,6 @@
 const scrape = require('@main/scraper');
 const mockAxios = require('axios')
-const selectors = require('@utilities/EvetechSelectors')
+import {selectorsArray} from '../../src/utilities/selectors';
 const eve = require("../../__mocks__/mockUrl")
 
 jest.mock('../../../backend/scraper/utilities/EvetechSelectors', () => ({
@@ -22,13 +22,13 @@ describe("scraperTest()", () => {
 
     const index = 0;
     const select = [
-        selectors.getAvailabilitySelector,
-        selectors.getLinkSelector(index),
-        selectors.getImageSelector(index),
-        selectors.getTitleSelector(index),
-        selectors.getTableSelector(),
-        selectors.getPriceSelector(),
-        selectors.getRowSelector()
+        selectorsArray[0].getAvailabilitySelector(),
+        selectorsArray[0].getLinkSelector(index),
+        selectorsArray[0].getImageSelector(index),
+        selectorsArray[0].getTitleSelector(index),
+        selectorsArray[0].getTableSelector(),
+        selectorsArray[0].getPriceSelector(),
+        selectorsArray[0].getRowSelector()
     ]
     
     test('Should return array of products', async () =>{
@@ -37,7 +37,7 @@ describe("scraperTest()", () => {
         expect(mockAxios.get).toHaveBeenCalledTimes(2);
         expect(mockAxios.get).toHaveBeenNthCalledWith(1,'https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx')
         expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx')
-        expect(selectors.getTableSelector).toHaveBeenCalled();
+        expect(selectorsArray[0].getTableSelector).toHaveBeenCalled();
         select.forEach(element => {
             expect(element).toBeTruthy();
         });

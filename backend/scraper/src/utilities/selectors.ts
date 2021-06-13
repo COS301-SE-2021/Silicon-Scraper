@@ -145,10 +145,10 @@ class DreamwareSelectors extends Selectors {
     }
 }
 
-let evetechSelector: Selectors = new EvetechSelectors("Evetech")
-let amptekSelector: Selectors = new AmpTekSelectors("Amptek")
-let dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
-let selectorsArray: Selectors[] = [evetechSelector, amptekSelector,dreamwareSelector ]
+const evetechSelector: Selectors = new EvetechSelectors("Evetech")
+const amptekSelector: Selectors = new AmpTekSelectors("Amptek")
+const dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
+export const selectorsArray: Selectors[] = [evetechSelector, amptekSelector,dreamwareSelector ]
 
 module.exports = {
     selectorsArray

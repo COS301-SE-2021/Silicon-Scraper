@@ -10,12 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^26.0.23",
     "awesome-typescript-loader": "^5.2.1",
     "cheerio": "^1.0.0-rc.9",
     "source-map-loader": "^3.0.0"
   },
   "devDependencies": {
-    "jest": "^27.0.3",
+    "jest": "^27.0.4",
+    "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
     "typescript": "^3.9.9"
   }
