@@ -39,16 +39,6 @@ const insert = async (products: any) => {
         }
 
     })
-
-    // try{
-    //     await db.none(query).then( () => {
-    //
-    //         console.log("none")
-    //     })
-    //
-    // }catch(error){
-    //     console.log(error)
-    // }
 }
 
 getProducts().then(r => {
