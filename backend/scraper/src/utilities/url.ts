@@ -15,15 +15,21 @@ module.exports.getAmpTekUrl = () =>{
 }
 
 module.exports.getAmpTekGpuUrl = () =>{
-    return ["https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/?count=36&paged=",
-        "https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/page/2/?count=36"
-    ]
+    return {
+        "urls":["https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/?count=36&paged=",
+        "https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/page/2/?count=36"],
+
+        "type":"gpu"
+    }
 }
 
 module.exports.getAmpTekCpuUrl = () =>{
-    return ["https://amptek.co.za/product-category/hardware/computer-components/cpus-processors/?count=36&paged=",
-        "https://amptek.co.za/product-category/hardware/computer-components/cpus-processors/page/2/?count=36",
-    ]
+    return{
+        "urls":["https://amptek.co.za/product-category/hardware/computer-components/cpus-processors/?count=36&paged=",
+            "https://amptek.co.za/product-category/hardware/computer-components/cpus-processors/page/2/?count=36"],
+
+        "type":"cpu"
+    }
 }
 
 module.exports.getDreamwareUrl = () =>{
@@ -31,10 +37,12 @@ module.exports.getDreamwareUrl = () =>{
 }
 
 module.exports.getDreamwareGpuUrl = () =>{
-    return ["https://www.dreamwaretech.co.za/c/graphics-cards-gpus/nvidia-graphics-cards/",
+    return {
+        "urls":["https://www.dreamwaretech.co.za/c/graphics-cards-gpus/nvidia-graphics-cards/",
     "https://www.dreamwaretech.co.za/c/graphics-cards-gpus/amd-graphics-cards/",
-    "https://www.dreamwaretech.co.za/c/graphics-cards-gpus/workstation-cards/"]
-
+    "https://www.dreamwaretech.co.za/c/graphics-cards-gpus/workstation-cards/"],
+        "type":"gpu"
+    }
 }
 
 module.exports.getDreamwareCpuUrl = () =>{

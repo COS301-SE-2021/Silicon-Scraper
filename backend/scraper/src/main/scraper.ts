@@ -1,10 +1,15 @@
 import {Selectors} from "../utilities/selectors";
+import {Product} from "../utilities/productsModel";
 const cheerio = require("cheerio");
 const axios = require("axios");
 
 let url = require("../utilities/url.ts");
 let selectors = require("../utilities/selectors.ts").selectorsArray;
-let products: { image: any; brand: any; model: string; price: any; availability: any; link: any; retailer: string; detail: { productDetails: { datetime: string; price: any; availability: any; }[]; }; }[] = [];
+let array : Product[] = [];
+let products = {
+    "gpu": array,
+    "cpu": array
+};
 let today = new Date()
 
 
@@ -20,17 +25,16 @@ let urls = [
      url.getDreamwareGpuUrl(),
      url.getDreamwareCpuUrl()
 ]
-
+let jk = 0;
 /**
  *
  * @param webToScrape url to
  * @param selector
  * @returns {array} An array of products
  */
-const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string) =>{
+const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
     const html = await axios.get(webToScrape);
-    //console.log(html.data)
-    return getWebData(html.data, selector, baseUrl)
+    return getWebData(html.data, selector, baseUrl, type)
 }
 /**
  *
@@ -38,26 +42,17 @@ const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: strin
  * @param html
  */
 
-const getWebData = async (html: any, selector: Selectors, baseUrl: string) => {
+const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:string) => {
 
         const $ = await cheerio.load(html);
         let b = 0;
 
         //Number of pages = number of times a request is going to happen at a specific site
-
-
-
         $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
-
             $(row).each((k: any, col: any) => {
-
-                addToProducts(b++, $, selector, baseUrl, col);
-
-
+                addToProducts(b++, $, selector, baseUrl, type, col);
             })
-
         })
-
 
         return products;
 }
@@ -70,14 +65,15 @@ module.exports = {getWebData}
  * @param $
  * @param selector
  */
-const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , data?: any) =>{
+const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string, data?: any) =>{
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
     let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())
 
     if(price === undefined)
         return
 
-    products.push({
+
+    products.gpu.push({
         image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src'), baseUrl),
         brand: title.brand,
         model: title.model,
@@ -178,7 +174,7 @@ const scrape = async () => {
     for (const selector of selectors) {
         for (const url of urls) {
             for(const url_ of url) {
-                await scrapeSilon(url_, selector, selector.getBaseUrl());
+                //await scrapeSilon(url_, selector, selector.getBaseUrl(), );
             }
         }
     }
@@ -189,7 +185,7 @@ const scrape = async () => {
 module.exports = {scrape}
 
 scrape().then(res => {
-    console.log(res.length)
+    console.log(res.gpu)
 })
 
 //Clink link and get the description
