@@ -28,6 +28,13 @@ const pad = ((num: number) => {
     return (num<10? '0':'') + num;
 })
 
+// const isIndexValid = ((index: any) => {
+//     if(index < 0){
+//         throw new Error("Error: index invalid");
+//     }else return true;
+    
+// })
+
 class EvetechSelectors extends Selectors {
 
     constructor(ret:string) {
@@ -149,7 +156,3 @@ const evetechSelector: Selectors = new EvetechSelectors("Evetech")
 const amptekSelector: Selectors = new AmpTekSelectors("Amptek")
 const dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
 export const selectorsArray: Selectors[] = [evetechSelector, amptekSelector,dreamwareSelector ]
-
-module.exports = {
-    selectorsArray
-}
