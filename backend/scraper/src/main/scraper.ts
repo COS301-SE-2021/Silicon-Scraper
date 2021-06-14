@@ -66,6 +66,7 @@ module.exports = {getWebData}
  * @param selector
  */
 const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string, data?: any) =>{
+
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
     let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())
 
@@ -73,7 +74,7 @@ const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Select
         return
 
 
-    products.gpu.push({
+    let productsArray = {
         image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src'), baseUrl),
         brand: title.brand,
         model: title.model,
@@ -81,14 +82,22 @@ const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Select
         availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim(),
         link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href'), baseUrl),
         retailer: selector.retailer,
-        detail:{ productDetails : [
-            {
-                datetime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
-                price: trimPrice($(data).find(selector.getPriceSelector()).text().trim()),
-                availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim()
-            }
-        ]}
-    })
+        detail: {
+            productDetails: [
+                {
+                    datetime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+                    price: trimPrice($(data).find(selector.getPriceSelector()).text().trim()),
+                    availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim()
+                }
+            ]
+        }
+    }
+
+    if(type == "gpu") {
+        products.gpu.push(productsArray)
+    }else if(type == "cpu"){
+        products.cpu.push(productsArray)
+    }
 
 }
 
@@ -173,8 +182,8 @@ const scrape = async () => {
 
     for (const selector of selectors) {
         for (const url of urls) {
-            for(const url_ of url) {
-                //await scrapeSilon(url_, selector, selector.getBaseUrl(), );
+            for(const url_ of url.urls) {
+                await scrapeSilon(url_, selector, selector.getBaseUrl(), url.type);
             }
         }
     }

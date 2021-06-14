@@ -3,11 +3,17 @@ module.exports.getEveTecUrl =  () => {
 }
 
 module.exports.getEveTecGpuUrl=  () => {
-    return ["https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx"];
+    return  {
+        "urls":["https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx"],
+        "type":"gpu"
+        };
 }
 
 module.exports.getEveTecCpuUrl=  () => {
-    return ["https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx"];
+    return {
+        "urls":["https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx"],
+         "type":"cpu"
+    };
 }
 
 module.exports.getAmpTekUrl = () =>{
@@ -41,12 +47,17 @@ module.exports.getDreamwareGpuUrl = () =>{
         "urls":["https://www.dreamwaretech.co.za/c/graphics-cards-gpus/nvidia-graphics-cards/",
     "https://www.dreamwaretech.co.za/c/graphics-cards-gpus/amd-graphics-cards/",
     "https://www.dreamwaretech.co.za/c/graphics-cards-gpus/workstation-cards/"],
+
         "type":"gpu"
     }
 }
 
 module.exports.getDreamwareCpuUrl = () =>{
-    return ["https://www.dreamwaretech.co.za/c/computer-components/processors-cpus/intel-processors/",
-    "https://www.dreamwaretech.co.za/c/computer-components/processors-cpus/amd-processors/"]
+    return {
+        "urls":["https://www.dreamwaretech.co.za/c/computer-components/processors-cpus/intel-processors/",
+    "https://www.dreamwaretech.co.za/c/computer-components/processors-cpus/amd-processors/"],
+
+        "type":"cpu"
+    }
 
 }
