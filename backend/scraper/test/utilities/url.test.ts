@@ -8,7 +8,10 @@ describe("urlTest()", () => {
         url.getAmpTekGpuUrl(),
         url.getAmpTekCpuUrl(),
         url.getDreamwareGpuUrl(),
-        url.getDreamwareCpuUrl()
+        url.getDreamwareCpuUrl(),
+        url.getEveTecUrl(),
+        url.getAmpTekUrl(),
+        url.getDreamwareUrl()
     ]
 
     test('Should not return an empty string', () => {
