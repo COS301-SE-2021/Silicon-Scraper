@@ -8,19 +8,26 @@ class WatchListService
 
   WatchListService()
   {
-    setItems();
+//    setItems();
   }
   void setItems()async
   {
     items=await getProducts();
+    print("setItems");
   }
-  void addItem()
+  void addItem(Product p)
   {
-
+    if(!items.contains(p))
+      {
+        items.add(p);
+      }
   }
-  void removeItem()
+  void removeItem(Product p)
   {
-
+    if(items.contains(p))
+    {
+      items.remove(p);
+    }
   }
 
   Future<List<Product>> getProductlist()
@@ -35,7 +42,7 @@ class WatchListSingleton extends WatchListService
   static WatchListSingleton _instance;
 
   WatchListSingleton._internal(){
-    setItems();
+//    setItems();
     print("new singleton");
   }
 
