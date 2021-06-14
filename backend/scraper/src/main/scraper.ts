@@ -38,7 +38,7 @@ const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: strin
  * @param html
  */
 
-const getWebData = async (html: any, selector: Selectors, baseUrl: string) => {
+export const getWebData = async (html: any, selector: Selectors, baseUrl: string) => {
 
         const $ = await cheerio.load(html);
         let b = 0;
@@ -62,7 +62,7 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string) => {
         return products;
 }
 
-module.exports = {getWebData}
+//module.exports = {getWebData}
 /**
  *
  * @param data
@@ -101,7 +101,7 @@ const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Select
  * @param urlRES
  * @returns {string}
  */
-const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
+export const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
 
     if(urlRES !== undefined) {
         let base = urlRES.split('../')[1]
@@ -125,14 +125,14 @@ const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
 
 }
 
-module.exports = {concatUrl}
+//module.exports = {concatUrl}
 
 /**
  * This function cleans out the spaces and tabs from the innerHtml and returns the price ad is
  * @param price
  * @returns {number}
  */
- const trimPrice = (price: string) =>{
+ export const trimPrice = (price: string) =>{
 
     let price_ = price.split('\n')[0].split('R')[1];
     if(price_ !== undefined ){
@@ -142,14 +142,14 @@ module.exports = {concatUrl}
     }
 }
 
-module.exports = {trimPrice}
+//module.exports = {trimPrice}
 
 /**
  * get the name , model and brand from the title
  * @return {object}
  */
 
-const titleParser = (title: string) =>{
+export const titleParser = (title: string) =>{
     let detailedTitle = title.split(' ')
     let model = ''
     for (let i = 1; i < detailedTitle.length - 1; i++) {
@@ -167,13 +167,13 @@ const titleParser = (title: string) =>{
     return detailedTitleObj
 }
 
-module.exports = {titleParser}
+//module.exports = titleParser;
 
 /**
  * This function loops through the url array and calls the scrape function
  * @returns {array} array Of product objects
  */
-const scrape = async () => {
+export const scrape = async () => {
 
     for (const selector of selectors) {
         for (const url of urls) {
@@ -186,7 +186,7 @@ const scrape = async () => {
     return products;
 }
 
-module.exports = {scrape}
+//module.exports = {scrape}
 
 scrape().then(res => {
     console.log(res.length)

@@ -1,4 +1,4 @@
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 
 const eve = require("./mockUrl")
 //import scraper from "@main/scraper.ts"
@@ -10,7 +10,7 @@ let d = eve.getEveTechMockUrl()
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-export const mockedResponse: AxiosResponse = {
+export const mockedResponse = {
     data: d,
     status: 200,
     statusText: "OK",
