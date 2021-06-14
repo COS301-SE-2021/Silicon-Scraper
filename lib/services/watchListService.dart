@@ -17,14 +17,31 @@ class WatchListService
   }
   void addItem(Product p)
   {
-    if(!items.contains(p))
+    bool contains=false;
+    for(Product e in items)
+      {
+        if(e == p)
+          {
+            contains=true;
+          }
+      }
+
+    if(!contains)
       {
         items.add(p);
       }
   }
   void removeItem(Product p)
   {
-    if(items.contains(p))
+    bool contains=false;
+    for(var e in items)
+    {
+      if(e == p)
+      {
+        contains=true;
+      }
+    }
+    if(contains)
     {
       items.remove(p);
     }
