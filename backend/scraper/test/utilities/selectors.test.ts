@@ -35,7 +35,7 @@ describe("selectorsTest()", () =>{
         });
 
         test.skip("Should throw an error if index invalid", () => {
-            expect(evetech)
+            expect(evetech).toThrow();
         })
     })
 

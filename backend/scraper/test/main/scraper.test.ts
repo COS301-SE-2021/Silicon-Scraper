@@ -1,10 +1,12 @@
 
+import axios from "axios";
 import { selectorsArray } from "../../src/utilities/selectors";
-
+import { mockedResponse } from "../../__mocks__/axios";
 const scrape = require('../../src/main/scraper');
-const mockAxios = require('axios');
+//const mockAxios = require('axios');
 const eve = require("../../__mocks__/mockUrl")
 
+const mockAxios = axios as jest.Mocked<typeof axios>;
 
 // jest.mock('../../src/utilities/selectors', () => ({
 //     getAvailabilitySelector: jest.fn().mockImplementation(() => {return 'availabilty_selector'}),
@@ -37,7 +39,7 @@ describe("scraperTest()", () => {
     
     test.skip('Should return array of products', async () =>{
        const products = await scrape.scrape();
-
+        mockAxios.get.mockResolvedValueOnce(mockedResponse);
         expect(mockAxios.get).toHaveBeenCalledTimes(2);
         expect(mockAxios.get).toHaveBeenNthCalledWith(1,'https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx')
         expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx')
@@ -59,9 +61,9 @@ describe("scraperTest()", () => {
             retailer: "retailer"
         };
 
-        const data = eve.getEveTechMockUrl();
+        //const data = eve.getEveTechMockUrl();
 
-        mockAxios.get.mockResolvedValueOnce( data )(() => Promise.resolve(data));
+       // mockAxios.get.mockResolvedValueOnce( data )(() => Promise.resolve(data));
         const product = await scrape.scrape();
         expect(product).toEqual(expect.arrayContaining([]));
     
