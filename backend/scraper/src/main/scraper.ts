@@ -5,10 +5,11 @@ const axios = require("axios");
 
 let url = require("../utilities/url.ts");
 let selectors = require("../utilities/selectors.ts").selectorsArray;
-let array : Product[] = [];
+let array1 : Product[] = [];
+let array2 : Product[] = [];
 let products = {
-    "gpu": array,
-    "cpu": array
+    "gpu": array1,
+    "cpu": array2
 };
 let today = new Date()
 
@@ -93,11 +94,16 @@ const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Select
         }
     }
 
-    if(type == "gpu") {
+
+    if(type === "gpu") {
+
         products.gpu.push(productsArray)
-    }else if(type == "cpu"){
+    }else if(type === "cpu"){
+
         products.cpu.push(productsArray)
     }
+
+
 
 }
 
@@ -183,7 +189,9 @@ const scrape = async () => {
     for (const selector of selectors) {
         for (const url of urls) {
             for(const url_ of url.urls) {
+
                 await scrapeSilon(url_, selector, selector.getBaseUrl(), url.type);
+
             }
         }
     }
@@ -194,7 +202,7 @@ const scrape = async () => {
 module.exports = {scrape}
 
 scrape().then(res => {
-    console.log(res.gpu)
+    console.log(res)
 })
 
 //Clink link and get the description
