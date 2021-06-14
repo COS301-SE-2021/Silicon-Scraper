@@ -66,7 +66,7 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:
  * @param $
  * @param selector
  */
-const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string, data?: any) =>{
+export const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string, data?: any) =>{
 
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
     let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())
