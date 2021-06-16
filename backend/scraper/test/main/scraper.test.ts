@@ -3,18 +3,18 @@ import * as scraper  from "../../src/main/scraper";
 import { selectorsArray } from "../../src/utilities/selectors";
 //const scrape = require('../../src/main/scraper');
 
-const eve = require("../../__mocks__/mockUrl")
-jest.mock('axios');
-const mockAxios = axios as jest.Mocked<typeof axios>;
+// const eve = require("../../__mocks__/mockUrl")
+// jest.mock('axios');
+// const mockAxios = axios as jest.Mocked<typeof axios>;
 
-let d = eve.getEveTechMockUrl()
-export const mockedResponse = {
-    data: d,
-    status: 200,
-    statusText: "OK",
-    headers: {},
-    config: {},
-}
+// let d = eve.getEveTechMockUrl()
+// export const mockedResponse = {
+//     data: d,
+//     status: 200,
+//     statusText: "OK",
+//     headers: {},
+//     config: {},
+// }
 // jest.mock('../../src/utilities/selectors', () => ({
 //     getAvailabilitySelector: jest.fn().mockImplementation(() => {return 'availabilty_selector'}),
 //     getLinkSelector: jest.fn().mockImplementation(() => "link_selector"),
@@ -69,7 +69,7 @@ describe("scraperTest()", () => {
     })
     
     test.skip('Should return array of products', async () =>{
-        const products = await scraper.scrape();
+        //const products = await scraper.scrape();
         // mockAxios.get.mockResolvedValueOnce(mockedResponse);
         // expect(mockAxios.get).toHaveBeenCalledTimes(2);
         // expect(mockAxios.get).toHaveBeenNthCalledWith(1,'https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx')

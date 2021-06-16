@@ -35,7 +35,7 @@
 coverage/
 
 #database
-backend/.env
+.env
 
 #typescript
 backend/scraper/dist/
