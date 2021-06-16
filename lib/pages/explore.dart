@@ -19,7 +19,6 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  var items=getProducts();
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done

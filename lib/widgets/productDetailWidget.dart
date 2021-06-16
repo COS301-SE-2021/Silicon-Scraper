@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/classes/product.dart';
+import 'package:silicon_scraper/services/watchListService.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -32,6 +33,7 @@ class ProductDetailWidget extends StatefulWidget {
 
 class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
+  WatchListSingleton watch= WatchListSingleton.getState();
     Product item;
   _ProductDetailWidgetState(this.item);
 
@@ -99,7 +101,11 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
         )
       ),
 //      bottomSheet: ,
-      persistentFooterButtons: [ElevatedButton(onPressed: (){},  child:Icon(Icons.bookmark_outline_rounded,))
+      persistentFooterButtons: [ElevatedButton(onPressed: (){
+        setState(() {
+          watch.addItem(item);
+        });
+      },  child:Icon(Icons.bookmark_outline_rounded,color: Colors.white,))
         ,ElevatedButton(child: Icon(Icons.web),
           onPressed: ()async{
             var url = widget.url;
