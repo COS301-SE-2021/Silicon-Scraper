@@ -38,7 +38,9 @@ describe("scraperTest()", () => {
         trimedPrice = scraper.trimPrice("from R 50000");
       });
     
-     
+    afterAll(done => {
+        done();
+    })
     const index = 0;
     const select = [
         selectorsArray[0].getAvailabilitySelector(),

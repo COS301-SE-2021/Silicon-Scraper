@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start" : "",
-    "test": "jest"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
