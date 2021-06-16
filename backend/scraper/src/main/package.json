@@ -2,9 +2,11 @@
   "name": "scraper",
   "version": "1.0.0",
   "description": "A web-scraper for the silicon-scraper project",
-  "main": "scraperDbOp.js",
+  "main": "scraperDbOp.ts",
   "scripts": {
-    "test": "jest"
+    "start": "ts-node scraper.ts",
+    "test": "jest",
+    "build": "tsc"
   },
   "author": "Bug-Busters-inc",
   "license": "ISC",
@@ -17,5 +19,9 @@
     "pg-promise": "^10.10.2",
     "request": "^2.88.2",
     "request-promise": "^4.2.6"
+  },
+  "devDependencies": {
+    "ts-node": "^10.0.0",
+    "typescript": "^3.9.9"
   }
 }
