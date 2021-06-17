@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/services/getProducts.dart';
+import 'package:silicon_scraper/services/watchListService.dart';
 
 class WatchList extends StatefulWidget {
   @override
@@ -6,6 +8,7 @@ class WatchList extends StatefulWidget {
 }
 
 class _WatchListState extends State<WatchList> {
+  WatchListSingleton watch= WatchListSingleton.getState();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +20,23 @@ class _WatchListState extends State<WatchList> {
         backgroundColor: Colors.red[800],
       ),
       body: Container(
-
+      child: FutureBuilder(
+      future: watch.getProductlist(),
+      builder: (BuildContext context,AsyncSnapshot snapshot){
+        if(snapshot.connectionState==ConnectionState.none)
+        {
+        return Center(child: CircularProgressIndicator());
+        }
+        else if(snapshot.data!=null)
+        {
+        return ProductListView(context, snapshot.data);
+        }
+        else
+        {
+        return Center(child: CircularProgressIndicator());
+        }
+    },
+      ),
       ),
     );
   }
