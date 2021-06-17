@@ -26,9 +26,17 @@ const cs_ = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image
 
 const getProducts =  async () => {
     await scraper.scrape().then((products: any) => {
+
+        //if  db empty
         insert(products).then(p => {
             console.log(p)
         })
+
+        //else
+        updateProducts().then(p => {
+            console.log(p)
+        })
+
     })
 
 }
@@ -59,29 +67,48 @@ getProducts().then(r => {
  * @param type
  * @returns []
  */
-
-const queryProducts = async (type:string)=>{
-    await db.any(`SELECT * FROM $1`,type)
-
+const queryProducts = async (type:string, products:Product[])=>{
+    await db.any(`SELECT * FROM $1`,type).then( (result:any)=>{
+         updateProducts(result, products)
+    })
 }
 
 
 /**
+ *this function updades
+ *
+ *
+ */
+
+
+
+
+/**
+ * The function get all products from the data base given a product type
  * This function will take in a list of products, query the database and compare the incoming data with
  * the data queried, if any changes are found the database will be updated
  *
  * @returns void
  * @param products
  */
-const updateProducts = async (products:Product[]) => {
+const updateProducts = async (results:any, products:Product[])=>{
+    for( const rkey in results) {
+        for (const pkey in products) {
+            if (products[pkey].model === results[rkey].model && products[pkey].brand === results[rkey].brand && products[pkey].retailer === results[rkey].retailer) {
+                if(!(products[pkey].availability === results[rkey].availability)){
 
+                }
+
+            }
+        }
+    }
 }
 
 
 
 /**
- *if the timestamp of an item
- *that has been unavailable for over 3 months we would remove that item from the data base
+ * if the timestamp of an item
+ * that has been unavailable for over 3 months we would remove that item from the data base
  *
  * @param Product
  * @returns void
