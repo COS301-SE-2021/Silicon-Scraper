@@ -11,8 +11,8 @@ let products = {
     "gpu": array1,
     "cpu": array2
 };
-let today = new Date()
 
+let today = new Date()
 
 /**
  *This is an array of urls to scrape
