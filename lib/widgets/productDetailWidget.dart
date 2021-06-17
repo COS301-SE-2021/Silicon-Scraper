@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ProductDetailWidget extends StatefulWidget {
 
+
   final Product item;
   ProductDetailWidget(this.item);
 
@@ -26,6 +27,8 @@ class ProductDetailWidget extends StatefulWidget {
 
   get url => item.url;
 
+  get theItem => item;
+
 
   @override
   _ProductDetailWidgetState createState() => _ProductDetailWidgetState(item);
@@ -34,8 +37,15 @@ class ProductDetailWidget extends StatefulWidget {
 class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
   WatchListSingleton watch= WatchListSingleton.getState();
-    Product item;
+  Product item;
   _ProductDetailWidgetState(this.item);
+  bool inWatch;
+
+  @override
+  void initState() {
+    inWatch=watch.findItem(item);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +113,16 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 //      bottomSheet: ,
       persistentFooterButtons: [ElevatedButton(onPressed: (){
         setState(() {
-          watch.addItem(item);
+          if(!inWatch)
+            {
+              watch.addItem(item);
+              inWatch=true;
+            }
+          else if(inWatch)
+          {
+            watch.removeItem(item);
+            inWatch=false;
+          }
         });
       },  child:Icon(Icons.bookmark_outline_rounded,color: Colors.white,))
         ,ElevatedButton(child: Icon(Icons.web),

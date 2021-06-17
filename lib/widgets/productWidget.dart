@@ -6,7 +6,6 @@ class ProductWidget extends StatelessWidget {
   final Product item;
   const ProductWidget({Key key, this.item}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context)
   {
@@ -33,10 +32,7 @@ class ProductWidget extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width / 2,
+                      width: MediaQuery.of(context).size.width / 2,
                       child: Text("${item.brand}", style: TextStyle(
                         fontSize: 15, fontWeight: FontWeight.bold,),)
                   ),
@@ -45,7 +41,7 @@ class ProductWidget extends StatelessWidget {
 
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 0, right: 55, top: 10),
+                        margin: EdgeInsets.only(left: 0, right: 20, top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
