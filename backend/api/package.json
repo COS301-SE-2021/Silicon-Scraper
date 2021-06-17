@@ -66,8 +66,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "jest api/tests/users/dummy.test.js",
-    "start": "node index.js"
+    "test": "jest tests/users/userRepo.test.js",
+    "start": "nodemon index.js"
   },
   "jest": {
     "testEnvironment": "node",

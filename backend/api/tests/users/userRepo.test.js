@@ -14,13 +14,13 @@ describe('User repository test', () => {
 
     it('inserting a user into a database', async() => {
 
-        await userRepo.addUser(username, password);
+        let response = await userRepo.addUser(username, password);
         expect(db.query.mock.calls.length).toBe(1);
     })
 
     it('getting a user from a database', async() => {
 
-        await userRepo.getUser(username);
+        let response = await userRepo.getUser(username);
         expect(db.query.mock.calls.length).toBe(1);
     })
 })
