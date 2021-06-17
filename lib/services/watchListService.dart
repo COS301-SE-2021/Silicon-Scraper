@@ -60,7 +60,7 @@ class WatchListSingleton extends WatchListService
 
   WatchListSingleton._internal(){
 //    setItems();
-    print("new singleton");
+//    print("new singleton");
   }
 
   static WatchListSingleton getState()
