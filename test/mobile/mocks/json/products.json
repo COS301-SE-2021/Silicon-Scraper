@@ -1,5 +1,4 @@
-{
-  "products": [
+[
     {
       "brand":"MSI GeForce RTX 3090" ,
       "model":"SUPRIM X 24GB GDDR6X Graphics Card" ,
@@ -71,4 +70,3 @@
       "availability":"notspecified"
     }
   ]
-}

@@ -12,9 +12,7 @@ void main()
       expect(list.length, 7);
     });
     test("testing add service with mock data list size should be 0",(){
-      var data={
-        "products": []
-      };
+      List data=[];
       var list=addProducts(data);
       expect(list.length, 0);
     });
