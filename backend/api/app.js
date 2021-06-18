@@ -9,5 +9,11 @@ app.use(express.json());
 app.use('/products', productRoutes);
 app.use('/users', userController);
 app.use('/watchlist', watchlistController)
+app.use((req, res, next) => {
+    res.json({
+        status: 404,
+        error: "Not found",
+    });
+});
 
 module.exports = app;   // for testing

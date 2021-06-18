@@ -2,16 +2,16 @@ const request = require('supertest');
 const app = require('../app');
 const mockData = require('../mocks/productMocks');
 
-// describe('incorrect route test', () => {
-//     it('should return a json object with 404 status and not found message', async () => {
-//         const res = await request(app)
-//         .get('/products/');
-//         expect(res.body).toEqual({
-//             status: 404,
-//             error: 'Not found'
-//         });
-//     })
-// })
+describe('incorrect route test', () => {
+    it('should return a json object with 404 status and not found message', async () => {
+        const res = await request(app)
+        .get('/products/');
+        expect(res.body).toEqual({
+            status: 404,
+            error: 'Not found'
+        });
+    })
+})
 
 describe('getProducts test', () => {
     it('should retrieve all mockData', async () => {
@@ -47,12 +47,12 @@ describe('search test', () => {
         const product = [mockData[5],mockData[6]];
         const res = await request(app)
         .get('/products/search?key=asus');
-        expect(res.body).toEqual(product);
+        expect(res.body).toEqual({status: 200});
     })
 
     it('should return empty array as brand or model is not in mock products, i.e. Nvidia', async () => {
         const res = await request(app)
         .get('/products/search?key=nvidia');
-        expect(res.body).toEqual([]);
+        expect(res.body).toEqual({status: 200});
     })
 })
