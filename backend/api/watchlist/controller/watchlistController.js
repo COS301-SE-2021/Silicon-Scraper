@@ -1,9 +1,10 @@
 const router = require('express').Router();
-const { request } = require('express');
-const watchlistService = require('../service/watchlistService');
+const watchlistService = require('../service/watchlistService')()
+const InvalidRequestError = require('../../errors/InvallidRequest.error');
+const jwtUtil = require('../../utilities/jwtUtil')
 
-router.post('/', async(req, res) => {
-    await watchlistService.addProduct(req.body)
+router.post('/', jwtUtil.verifyToken, async(req, res) => {
+    await watchlistService.addProduct(req.body, req.user)
     .then(response => {
         res.status(201)
         .json({
@@ -19,7 +20,7 @@ router.post('/', async(req, res) => {
         }
         else {
             res.status(500)
-            errorMessage = "An error occurred"
+            errorMessage = "Failed"
         }
 
         res.json({
@@ -29,19 +30,15 @@ router.post('/', async(req, res) => {
     })
 })
 
-router.get('/:uid', async(req, res) => {
-    let request = {
-        userID: request.params.uid
-    }
-    const result = await watchlistService.getWatchlist(request)
-    .then(res => {
+router.get('/', jwtUtil.verifyToken, async(req, res) => {
+    const result = await watchlistService.getWatchlist(req.user)
+    .then(resp => {
         res.status(200)
-        .json({
-            result
-        })
+        .json(resp)
         .send()
     })
     .catch(err => {
+        console.log(err)
         res.status(500)
         .json({
             message: "An error occurred"
@@ -49,6 +46,9 @@ router.get('/:uid', async(req, res) => {
     })
 })
 
-router.delete('/', async(req, res) => {
-    res.status(501)
+router.delete('/',  jwtUtil.verifyToken, async(req, res) => {
+    console.log(req.user)
+    res.status(200).send()
 })
+
+module.exports = router;

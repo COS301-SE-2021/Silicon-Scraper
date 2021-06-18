@@ -27,9 +27,10 @@ module.exports = (userRepository = userRepo, passwordEncod = passwordEncoder, jw
             throw new RegisterError("Invalid username");
         const passwordHash = await passwordEncod.encode(request.password);
         let result = await userRepository.addUser(request.username, passwordHash);
-        if (result == false)
+        if (result == null)
             throw new Error()
         user = {
+            id: result,
             username: request.username,
             password: passwordHash
         }

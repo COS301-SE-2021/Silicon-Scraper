@@ -45,16 +45,14 @@ module.exports = (dbase = db) => {
             hash: password
         };
         const query = pgp.helpers.insert(user, cs);
-        let result = await dbase.none(query)
+        return await dbase.none(query)
         .then(res => {
-            return true;
+            return id;
         })
         .catch(err => {
             console.error(err);
-            return false;
+            return null;
         })
-
-        return result;
     }
     
     /**

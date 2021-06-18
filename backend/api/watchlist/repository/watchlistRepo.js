@@ -38,11 +38,13 @@ module.exports = (dbase = db) => {
      */
 
     const addCPUToWatchlist = async(userID, cpuID) => {
+        console.log(userID + " " + cpuID)
         const cs = new pgp.helpers.ColumnSet(['user_id', 'product_id'], {table: 'watchlist_cpu'})
         const list = {
             user_id: userID,
             product_id: cpuID
         }
+        console.log(list)
         const query = pgp.helpers.insert(list, cs)
         return await dbase.none(query)
         .then(res => {
@@ -66,6 +68,7 @@ module.exports = (dbase = db) => {
      */
 
     const addGPUToWatchlist = async(userID, gpuID) => {
+        console.log(userID + " " + gpuID)
         const cs = new pgp.helpers.ColumnSet(['user_id', 'product_id'], {table: 'watchlist_gpu'})
         const list = {
             user_id: userID,
@@ -74,7 +77,7 @@ module.exports = (dbase = db) => {
         const query = pgp.helpers.insert(list, cs)
         return await dbase.none(query)
         .then(res => {
-            return false;
+            return true;
         })
         .catch(err => {
             return false;
@@ -91,7 +94,7 @@ module.exports = (dbase = db) => {
 
     const getWatchlist = async(userID) => {
         const where = pgp.as.format('WHERE user_id = $1', userID);
-        const cpuList = await dbase.manyOrNone("SELECT * FROM users $1:raw", where)
+        const cpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, availability, retailer, link, details, type FROM watchlist_cpu RIGHT JOIN cpus ON watchlist_cpu.product_id = cpus.id $1:raw", where)
         .then(cpus => {
             return cpus;
         })
@@ -100,7 +103,7 @@ module.exports = (dbase = db) => {
             return null;
         })
 
-        const gpuList = await dbase.manyOrNone("SELECT * FROM users $1:raw", where)
+        const gpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, availability, retailer, link, details, type FROM watchlist_gpu RIGHT JOIN gpus ON watchlist_gpu.product_id = gpus.id $1:raw", where)
         .then(gpus => {
             return gpus;
         })
@@ -108,12 +111,11 @@ module.exports = (dbase = db) => {
             console.log(err);
             return null;
         })
-
-        return {
-            cpuList,
-            gpuList
-        }
+        
+        cpuList.push(...gpuList)
+        return cpuList
     }
+
 
     return {
         addCPUToWatchlist,
