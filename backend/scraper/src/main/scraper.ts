@@ -11,8 +11,8 @@ let products = {
     "gpu": array1,
     "cpu": array2
 };
-let today = new Date()
 
+let today = new Date()
 
 /**
  *This is an array of urls to scrape
@@ -83,7 +83,7 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
         availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim(),
         link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href'), baseUrl),
         retailer: selector.retailer,
-        detail: {
+        details: {
             productDetails: [
                 {
                     datetime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
@@ -91,16 +91,17 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
                     availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim()
                 }
             ]
-        }
+        },
+        type:type
     }
 
 
     if(type === "gpu") {
 
-        products.gpu.push(productsArray)
+        products.gpu.push(<Product>productsArray)
     }else if(type === "cpu"){
 
-        products.cpu.push(productsArray)
+        products.cpu.push(<Product>productsArray)
     }
 
 
@@ -201,8 +202,9 @@ export const scrape = async () => {
 
 //module.exports = {scrape}
 
-scrape().then(res => {
-   // console.log(res)
-})
+// scrape().then(res => {
+//    // console.log(res)
+// })
 
 //Clink link and get the description
+
