@@ -1,92 +1,57 @@
-const UserRepo = require('../repository/userRepo.js')
-const userRepo = new UserRepo()
+const userRepo = require('../repository/userRepo.js')()
 
 const passwordEncoder = require('../../utilities/passwordEncoder.js')
 const jwtUtil = require('../../utilities/jwtUtil.js')
 
+const InvalidRequestError = require('../../errors/InvallidRequest.error')
+const RegisterError = require('../../errors/Register.error')
+const LoginError = require('../../errors/Login.error')
+const UsernameNotFoundError = require('../../errors/UsernameNotFound.error')
+
 /**
  * 
- * @param {} request 
- * @returns 
+ * @param {object} userRepository a object of the database CRUD class to be used
+ * @param {object} passwordEncod a object of the bcrypt class   //not permanent, could switch with action bcrypt class)
+ * @param {object} jwtUtility a object that handles all the functionality to generate a jwt token for a user
+ * @returns {object} register & login functions
  */
 
+module.exports = (userRepository = userRepo, passwordEncod = passwordEncoder, jwtUtility = jwtUtil) => {
 
-module.exports = class UserService {
-
-    constructor(userRepository = userRepo, passwordEncod = passwordEncoder) {
-        this.userRepository = userRepository
-        this.passwordEncoder = passwordEncod;
-    }
-
-    register = async(request) => {
-
-        if (!('username' in request) || !('password' in request)) {
-            return {
-                statusCode: 400,
-            }
-        }
-        let user = await this.userRepository.getUser(request.username);
-        if (user) {
-            return {
-                statusCode: 200,
-                message: "Username already taken"
-            }
-        }
-        const passwordHash = await this.passwordEncoder.encode(request.password)
-        let result = await this.userRepository.addUser(request.username, passwordHash);
+    const register = async(request) => {
+        if (!('username' in request) || !('password' in request))
+            throw new InvalidRequestError();
+        let user = await userRepository.getUser(request.username);
+        console.log(user)
+        if (user != null)
+            throw new RegisterError("Invalid username");
+        const passwordHash = await passwordEncod.encode(request.password);
+        let result = await userRepository.addUser(request.username, passwordHash);
+        if (result == null)
+            throw new Error()
         user = {
+            id: result,
             username: request.username,
             password: passwordHash
         }
-        if (result == true) {
-            return {
-                statusCode: 201,
-                token: jwtUtil.generateToken(user)
-            }
-        }
-        return {
-            statusCode: 500
-        }
-
+        return jwtUtility.generateToken(user);
     }
 
-
-    login = async(request) => {
-        if (!('username' in request) || !('password' in request)) {
-            return {
-                statusCode: 400
-            }
-        }
-        let user = await this.userRepository.getUser(request.username);
-        if (!user) {
-            return {
-                statusCode: 200,
-                message: "Invalid login credentials"
-            }
-        }
-        const passwordHash = await this.passwordEncoder.encode(request.password);
-        if (user.password != passwordHash) {
-            return {
-                statusCode: 200,
-                message: "Invalid login credentials"
-            }
-        }
-        return {
-            statusCode: 200,
-            token: jwtUtil.generateToken(user)
-        }
+    const login = async(request) => {
+        if (!('username' in request) || !('password' in request))
+            throw new InvalidRequestError();
+        let user = await userRepository.getUser(request.username);
+        if (user == null)
+            throw new UsernameNotFoundError()
+        console.log(user)
+        let result = await passwordEncod.compare(request.password, user.hash)
+        if (result == false)
+            throw new LoginError()
+        return jwtUtility.generateToken(user)
     }
 
-    deleteUser(request) {
-    
-    };
-    
-    addToWatchlist(request) {
-    
+    return {
+        register,
+        login
     }
-    
-    removeFromWatchlist(request) {
-    
-    } 
-
 }
