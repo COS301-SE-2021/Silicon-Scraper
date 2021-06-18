@@ -1,7 +1,7 @@
 import {Product} from "../utilities/productsModel";
 
 const { Client, sql, Pool } = require('pg')
-const env = require('../../config.js')
+const env = require('../../../config')
 const scraper = require("./scraper.ts");
 const pgp = require('pg-promise')({
     /* initialization options */
@@ -20,17 +20,17 @@ const db = pgp(
     client
 )
 
-const cs = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','detail' ], {table:'gpus'})
+const cs = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details','type'], {table:'gpus'})
 
-const cs_ = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','detail' ], {table:'cpus'})
+const cs_ = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details', 'type' ], {table:'cpus'})
 
 const getProducts =  async () => {
     await scraper.scrape().then((products: any) => {
 
         //if  db empty
-        insert(products).then(p => {
-            console.log(p)
-        })
+        // insert(products).then(p => {
+        //     console.log(p)
+        // })
 
         //else
         // updateProducts().then(p => {
@@ -40,6 +40,10 @@ const getProducts =  async () => {
     })
 
 }
+
+getProducts().then(() => {
+    console.log("successful")
+})
 
 const insert = async (products: any) => {
 
@@ -117,12 +121,14 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{
                 }
                 if(!avail){
                     //test the timestamp
-                    let currentDate = results[rkey].detail.productDetails[0].datetime.split('-')[1]
-                    let newDate = products[pkey].detail.productDetails[0].datetime.split('-')[1]
-                    let currDay = results[rkey].detail.productDetails[0].datetime.split('-')[2]
-                    let newDay = products[pkey].detail.productDetails[0].datetime.split('-')[2]
+                    let currentDate = results[rkey].details.productDetails[0].datetime.split('-')[1]
+                    let newDate = products[pkey].details.productDetails[0].datetime.split('-')[1]
+                    let currDay = results[rkey].details.productDetails[0].datetime.split('-')[2]
+                    let newDay = products[pkey].details.productDetails[0].datetime.split('-')[2]
                     let timeInDb = (Number(newDate) - Number(currentDate))*3+ Number(currDay) + Number(newDay)
                     if(timeInDb >= 90){
+                        //This item is stale and had its availability has not been updated, it must be removed from the database
+
 
                     }
 

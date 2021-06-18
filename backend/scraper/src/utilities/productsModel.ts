@@ -6,6 +6,7 @@ export interface Product {
     availability: string;
     link: string;
     retailer: string;
-    detail: { productDetails: { datetime: string; price: number; availability: string; }[]; };
+    details: { productDetails: { datetime: string; price: number; availability: string; }[]; };
+    type:string;
 }
 

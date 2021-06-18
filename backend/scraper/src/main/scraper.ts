@@ -83,7 +83,7 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
         availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim(),
         link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href'), baseUrl),
         retailer: selector.retailer,
-        detail: {
+        details: {
             productDetails: [
                 {
                     datetime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
@@ -91,16 +91,17 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
                     availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim()
                 }
             ]
-        }
+        },
+        type:type
     }
 
 
     if(type === "gpu") {
 
-        products.gpu.push(productsArray)
+        products.gpu.push(<Product>productsArray)
     }else if(type === "cpu"){
 
-        products.cpu.push(productsArray)
+        products.cpu.push(<Product>productsArray)
     }
 
 
