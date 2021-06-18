@@ -66,7 +66,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "jest tests/watchlist/watchlistService.test.js",
+    "test": "jest tests/users",
     "start": "nodemon index.js"
   },
   "jest": {
