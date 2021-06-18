@@ -28,14 +28,14 @@ const getProducts =  async () => {
     await scraper.scrape().then((products: any) => {
 
         //if  db empty
-        // insert(products).then(p => {
-        //     console.log(p)
+        // insert(products).then(res => {
+        //     console.log(res)
         // })
 
         //else
-        // updateProducts().then(p => {
-        //     console.log(p)
-        // })
+        update(products).then(res => {
+            console.log(res)
+        })
 
     })
 
@@ -66,6 +66,13 @@ getProducts().then(r => {
 })
 
 
+
+const update = async (products: any) => {
+
+    await  queryProducts("gpu", products.gpu)
+    await  queryProducts("cpu", products.cpu)
+
+}
 /**
  * Ths function get all products from the data base given a product type
  * @param type
@@ -76,7 +83,6 @@ const queryProducts = async (table:string, products:Product[])=>{
          updateProducts(result, products, table)
     })
 }
-
 
 /**
  * this function updates the availability or rent
@@ -128,7 +134,13 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{
                     let timeInDb = (Number(newDate) - Number(currentDate))*3+ Number(currDay) + Number(newDay)
                     if(timeInDb >= 90){
                         //This item is stale and had its availability has not been updated, it must be removed from the database
-
+                        await deleteProduct(results[rkey].id, table).then((error:any)=>{
+                            if(error){
+                                console.log(error)
+                            }else{
+                                console.log("Successful")
+                            }
+                        })
 
                     }
 
@@ -145,6 +157,12 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{
  * if the timestamp of an item
  * that has been unavailable for over 3 months we would remove that item from the data base
  *
- * @param Product
+ * @param id
  * @returns void
  */
+const deleteProduct = async (id:any, table:any) => {
+    await db.none('DELETE FROM ${table:name} WHERE id=${id:name}', {
+        table:table,
+        id:id
+    })
+}
