@@ -7,7 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ProductDetailWidget extends StatefulWidget {
 
-
   final Product item;
   ProductDetailWidget(this.item);
 
@@ -26,9 +25,6 @@ class ProductDetailWidget extends StatefulWidget {
   get desctiption => item.description;
 
   get url => item.url;
-
-  get theItem => item;
-
 
   @override
   _ProductDetailWidgetState createState() => _ProductDetailWidgetState(item);

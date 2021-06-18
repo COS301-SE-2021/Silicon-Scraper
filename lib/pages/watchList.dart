@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/services/watchListService.dart';
+import 'package:silicon_scraper/widgets/productWidget.dart';
 
 class WatchList extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class WatchList extends StatefulWidget {
 
 class _WatchListState extends State<WatchList> {
   WatchListSingleton watch= WatchListSingleton.getState();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +19,18 @@ class _WatchListState extends State<WatchList> {
         // the App.build method, and use it to set our appbar title.
         title: Center(child: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)),
 //        backgroundColor:Color(0xff0E3854) ,
+        actions: <Widget>[
+     Padding(
+      padding: EdgeInsets.only(right: 20.0),
+        child: GestureDetector(
+          onTap: () {setState(() {
+          }); },
+          child: Icon(
+            Icons.loop_sharp,
+            size: 26.0,
+          ),
+        )
+    ),],
         backgroundColor: Colors.red[800],
       ),
       body: Container(
@@ -30,6 +44,13 @@ class _WatchListState extends State<WatchList> {
         else if(snapshot.data!=null)
         {
         return ProductListView(context, snapshot.data);
+//        return ListView.builder(
+//            itemCount:snapshot.data.length ,
+//            itemBuilder: (_,index){
+//          return
+//            ProductWidget(item:snapshot.data[index]);
+//        }
+//        );
         }
         else
         {

@@ -1,4 +1,3 @@
-
 import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 
@@ -50,6 +49,18 @@ class WatchListService
   Future<List<Product>> getProductlist()
   {
     return Future.value(items);
+  }
+
+  bool findItem(Product p)
+  {
+    for(var e in items)
+    {
+      if(e == p)
+      {
+        return true;
+      }
+    }
+     return false;
   }
 
 }
