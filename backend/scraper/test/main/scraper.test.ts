@@ -3,18 +3,19 @@ import * as scraper  from "../../src/main/scraper";
 import { selectorsArray } from "../../src/utilities/selectors";
 //const scrape = require('../../src/main/scraper');
 
-// const eve = require("../../__mocks__/mockUrl")
-// jest.mock('axios');
-// const mockAxios = axios as jest.Mocked<typeof axios>;
+const eve = require("../../__mocks__/mockUrl")
+jest.mock('axios');
+const mockAxios = axios as jest.Mocked<typeof axios>;
 
-// let d = eve.getEveTechMockUrl()
-// export const mockedResponse = {
-//     data: d,
-//     status: 200,
-//     statusText: "OK",
-//     headers: {},
-//     config: {},
-// }
+let d = eve.getEveTechMockUrl()
+export const mockedResponse = {
+    data: d,
+    status: 200,
+    statusText: "OK",
+    headers: {},
+    config: {},
+} 
+
 // jest.mock('../../src/utilities/selectors', () => ({
 //     getAvailabilitySelector: jest.fn().mockImplementation(() => {return 'availabilty_selector'}),
 //     getLinkSelector: jest.fn().mockImplementation(() => "link_selector"),
