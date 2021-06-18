@@ -75,10 +75,12 @@ const queryProducts = async (table:string, products:Product[])=>{
 
 
 /**
- *this function updades the availability or rent
- *
+ * this function updates the availability or rent
+ * @param table
+ * @param column
+ * @param value
+ * @param id
  */
-
 const updateDetails = async (table:any, column:any, value:any, id:any)=>{
     await db.none('UPDATE ${table:name} ${column:name}=${value:name} WHERE id=${id:name}', {
         table:table,
@@ -111,9 +113,18 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{
                 }else if (!(products[pkey].price === results[rkey].price)){
                     //call update
                     await updateDetails(table, "price", products[pkey].price, results[rkey].id)
+
                 }
                 if(!avail){
                     //test the timestamp
+                    let currentDate = results[rkey].detail.productDetails[0].datetime.split('-')[1]
+                    let newDate = products[pkey].detail.productDetails[0].datetime.split('-')[1]
+                    let currDay = results[rkey].detail.productDetails[0].datetime.split('-')[2]
+                    let newDay = products[pkey].detail.productDetails[0].datetime.split('-')[2]
+                    let timeInDb = (Number(newDate) - Number(currentDate))*3+ Number(currDay) + Number(newDay)
+                    if(timeInDb >= 90){
+
+                    }
 
                 }
 

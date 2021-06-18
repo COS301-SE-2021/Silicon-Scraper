@@ -201,8 +201,9 @@ export const scrape = async () => {
 
 //module.exports = {scrape}
 
-scrape().then(res => {
-   // console.log(res)
-})
+// scrape().then(res => {
+//    // console.log(res)
+// })
 
 //Clink link and get the description
+
