@@ -1,4 +1,4 @@
-const db_env = require('dotenv').config({path:__dirname+'/.env'})
+const db_env = require('dotenv').config()
 
 const configs = {
     port : process.env.DB_PORT,
