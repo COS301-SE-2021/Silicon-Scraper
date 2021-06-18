@@ -92,12 +92,28 @@ const queryProducts = async (table:string, products:Product[])=>{
  * @param id
  */
 const updateDetails = async (table:any, column:any, value:any, id:any)=>{
+
     await db.none('UPDATE ${table:name} ${column:name}=${value:name} WHERE id=${id:name}', {
         table:table,
         column:column,
         value:value,
         id:id
     });
+}
+
+/**
+ * if the timestamp of an item
+ * that has been unavailable for over 3 months we would remove that item from the data base
+ *
+ * @param id
+ * @param table
+ * @returns void
+ */
+const deleteProduct = async (id:any, table:any) => {   //needs to be tested
+    await db.none('DELETE FROM ${table:name} WHERE id=${id:name}', {
+        table:table,
+        id:id
+    })
 }
 
 
@@ -141,11 +157,8 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{
                                 console.log("Successful")
                             }
                         })
-
                     }
-
                 }
-
             }
         }
     }
@@ -153,16 +166,3 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{
 
 
 
-/**
- * if the timestamp of an item
- * that has been unavailable for over 3 months we would remove that item from the data base
- *
- * @param id
- * @returns void
- */
-const deleteProduct = async (id:any, table:any) => {
-    await db.none('DELETE FROM ${table:name} WHERE id=${id:name}', {
-        table:table,
-        id:id
-    })
-}
