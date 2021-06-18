@@ -33,9 +33,9 @@ const getProducts =  async () => {
         })
 
         //else
-        updateProducts().then(p => {
-            console.log(p)
-        })
+        // updateProducts().then(p => {
+        //     console.log(p)
+        // })
 
     })
 
@@ -67,20 +67,26 @@ getProducts().then(r => {
  * @param type
  * @returns []
  */
-const queryProducts = async (type:string, products:Product[])=>{
-    await db.any(`SELECT * FROM $1`,type).then( (result:any)=>{
-         updateProducts(result, products)
+const queryProducts = async (table:string, products:Product[])=>{
+    await db.any(`SELECT * FROM $1`,table).then( (result:any)=>{
+         updateProducts(result, products, table)
     })
 }
 
 
 /**
- *this function updades
- *
+ *this function updades the availability or rent
  *
  */
 
-
+const updateDetails = async (table:any, column:any, value:any, id:any)=>{
+    await db.none('UPDATE ${table:name} ${column:name}=${value:name} WHERE id=${id:name}', {
+        table:table,
+        column:column,
+        value:value,
+        id:id
+    });
+}
 
 
 /**
@@ -91,11 +97,23 @@ const queryProducts = async (type:string, products:Product[])=>{
  * @returns void
  * @param products
  */
-const updateProducts = async (results:any, products:Product[])=>{
+const updateProducts = async (results:any, products:Product[], table:string)=>{
     for( const rkey in results) {
         for (const pkey in products) {
             if (products[pkey].model === results[rkey].model && products[pkey].brand === results[rkey].brand && products[pkey].retailer === results[rkey].retailer) {
+                let avail = false;
+                //Update the availability and/or price if it changed
                 if(!(products[pkey].availability === results[rkey].availability)){
+                    avail=true;
+                    //call update
+                    await updateDetails(table, "availability", products[pkey].availability, results[rkey].id)
+
+                }else if (!(products[pkey].price === results[rkey].price)){
+                    //call update
+                    await updateDetails(table, "price", products[pkey].price, results[rkey].id)
+                }
+                if(!avail){
+                    //test the timestamp
 
                 }
 
