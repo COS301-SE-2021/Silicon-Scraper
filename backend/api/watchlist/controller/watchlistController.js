@@ -43,12 +43,23 @@ router.get('/', jwtUtil.verifyToken, async(req, res) => {
         .json({
             message: "An error occurred"
         })
+        .send()
     })
 })
 
 router.delete('/',  jwtUtil.verifyToken, async(req, res) => {
-    console.log(req.user)
-    res.status(200).send()
+    await watchlistService.removeProduct(req.body, req.user)
+    .then(resp => {
+        res.status(204)
+        .json({
+            message: "success"
+        })
+        .send()
+    })
+    .catch(err => {
+        res.status(500)
+        .send()
+    })
 })
 
 module.exports = router;

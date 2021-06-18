@@ -28,19 +28,26 @@ module.exports = (watchRepo = watchlistRepo) => {
         .catch(err => {
             return null;
         })
-        console.log(result == null)
         if(result == null)
             throw new Error()
-        console.log("hello")
         return result;
     }
 
-    const removeProduct = async(request) => {
-
+    const removeProduct = async(request, user) => {
+        if (!('type' in request) || !('productID' in request))
+            throw new InvalidRequestError();
+        return await watchRepo.removeProductFromWatchlist(user.id, request.productID, request.type)
+        .then(res => {
+            return res;
+        })
+        .catch(err => {
+            return false;
+        })
     }
 
     return {
         addProduct,
-        getWatchlist
+        getWatchlist,
+        removeProduct
     }
 }

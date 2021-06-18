@@ -111,15 +111,41 @@ module.exports = (dbase = db) => {
             console.log(err);
             return null;
         })
-        
+
         cpuList.push(...gpuList)
         return cpuList
+    }
+
+    /**
+     * This funtion handles the process of removing an item from a user's watchlist.
+     * 
+     * @param {string} userID 
+     * @param {string} productID 
+     * @param {string} productType 
+     * @returns 
+     */
+
+    const removeProductFromWatchlist = async(userID, productID, productType) => {
+        const where = pgp.as.format('WHERE user_id = $1 AND product_id = $2', [userID, productID]);
+        let query;
+        if (productType == "CPU")
+            query = "DELETE FROM watchlist_cpu";
+        else
+            query = "DELETE FROM watchlist_gpu";
+        return await dbase.none(query + " $1:raw", where)
+        .then(res => {
+            return true;
+        })
+        .catch(err=> {
+            return false;
+        })
     }
 
 
     return {
         addCPUToWatchlist,
         addGPUToWatchlist,
-        getWatchlist
+        getWatchlist,
+        removeProductFromWatchlist
     }
 }
