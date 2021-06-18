@@ -24,8 +24,21 @@ function genSQLQuery(query) {
 }
 
 const getProducts = async (req, res) => {
-    const data = await repo.query('SELECT * FROM gpus');
-    res.json(data);
+    const query = req.query;
+    const values = ['gpus', 1, 20];
+    if('type' in query) {
+        if(query.type === 'cpu' || query.type === 'gpu') { values[0] = query.type+'s'; }
+    }
+    else { values.push(''); }
+    if('page' in query) { 
+        values[1] = query.page; 
+    }
+    if('limit' in query) { 
+        values[2] = query.limit; 
+    }
+    const data = await repo.query(`SELECT * FROM ${values[0]} OFFSET ${(values[1]-1)*values[2]} LIMIT ${values[2]}`);
+    console.log(data.rows);
+    res.json(data.rows);
 }
 
 const search = async (req, res) => {
