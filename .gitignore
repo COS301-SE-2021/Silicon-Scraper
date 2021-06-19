@@ -32,7 +32,7 @@
 /build/
 
 #database
-backend/.env
+.env
 
 # API related
 node_modules/
