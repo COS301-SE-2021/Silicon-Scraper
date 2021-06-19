@@ -43,7 +43,6 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
     await userService.login(req.body)
     .then(response => {
-        console.log("Hello: " + response)
         res.status(200)
         .json({
             token: response
