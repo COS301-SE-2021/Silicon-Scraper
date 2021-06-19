@@ -33,7 +33,7 @@ let jk = 0;
  * @param selector
  * @returns {array} An array of products
  */
-const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
+export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
     const html = await axios.get(webToScrape);
     return getWebData(html.data, selector, baseUrl, type)
 }
@@ -186,9 +186,9 @@ export const titleParser = (title: string) =>{
  * @returns {array} array Of product objects
  */
 export const scrape = async () => {
-
+    debugger;
     for (const selector of selectors) {
-        for (const url of urls) {
+        for (const url of urls) {          
             for(const url_ of url.urls) {
 
                 await scrapeSilon(url_, selector, selector.getBaseUrl(), url.type);
@@ -200,11 +200,15 @@ export const scrape = async () => {
     return products;
 }
 
+export const scrapers = async (urls:any, selector: any, baseUrl:string, type: any) => {
+    await scrapeSilon(urls, selector, baseUrl, type);
+}
+
 //module.exports = {scrape}
 
 // scrape().then(res => {
 //    // console.log(res)
-// })
+ //})
 
 //Clink link and get the description
 
