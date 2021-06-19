@@ -72,12 +72,10 @@ class WatchListService
       items.remove(p);
     }
   }
-
   Future<List<Product>> getProductlist()
   {
     return Future.value(items);
   }
-
   bool findItem(Product p)
   {
     for(var e in items)
@@ -89,7 +87,6 @@ class WatchListService
     }
      return false;
   }
-
   Future removeRequest(Product item)async
   {
     var url = Uri.parse("http://10.0.2.2:3000/watchlist");
