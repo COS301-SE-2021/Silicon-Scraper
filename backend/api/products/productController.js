@@ -30,25 +30,23 @@ const getProducts = async (req, res) => {
     }
     else { values.push(''); }
     if('page' in query) { 
-        if(!isNaN(parseInt(query.page)))
-            values[1] = query.page; 
+        let page = parseInt(query.page);
+        if(!isNaN(page))
+            values[1] = (page > 0) ? page : 1;
     }
     if('limit' in query) { 
-        if(!isNaN(parseInt(query.limit)))
-            values[2] = query.limit; 
+        let limit = parseInt(query.limit);
+        if(!isNaN(limit))
+            values[2] = (limit > 0) ? limit : 20; 
     }
     let offset = (values[1]-1)*values[2];
     let response = {
         status: 200,
         products: []
     };
-    try {
-        const data = await repo.query(`SELECT * FROM ${values[0]} OFFSET ${offset} LIMIT ${values[2]}`);
-        console.log(data.rows);
-        response.products = data.rows;
-    } catch(error) {
-        console.log(error)
-    }
+    const data = await repo.fetchData(`SELECT * FROM ${values[0]} OFFSET ${offset} LIMIT ${values[2]}`);
+    response.products = data;
+
     res.json(response);
 }
 
@@ -56,46 +54,40 @@ const search = async (req, res) => {
     const query = req.query;
     const queryObj = {
         key: '',
-        page: 0,
-        limit: ''
+        page: 1,
+        limit: 20
     };
     Object.keys(query).forEach((x) => {
-        console.log(`Key=${x}`);
         switch(x) {
             case 'key':
                 queryObj.key = query.key.toLowerCase();
                 break;
             case 'page':
-                if(!isNaN(parseInt(query.page)))
-                    queryObj.page = query.page;
+                let page = parseInt(query.page);
+                if(!isNaN(page))
+                    queryObj.page = (page > 0) ? page : 1;
                 break;
             case 'limit':
-                if(!isNaN(parseInt(query.limit)))    
-                    queryObj.limit = query.limit;
+                let limit = parseInt(query.limit)
+                if(!isNaN(limit))    
+                    queryObj.limit = (limit > 0) ? limit : 20;
                 break;
             default:
                 break;
         }
     });
 
-    const sql = {
-        name: 'search',
-        text: 'SELECT * FROM gpus UNION SELECT * FROM cpus'
-    }
-    
     const result = [];
-    try {
-        const data = await repo.query(sql);
-        data.rows.forEach((x) => {
+    if(queryObj.key !== '') {
+        const data = await repo.fetchData('SELECT * FROM gpus UNION SELECT * FROM cpus');
+        data.forEach((x) => {
             let value = (x.brand+' '+x.model).toLowerCase();
             if(value.includes(queryObj.key)) {
                 result.push(x);
             }
         });
-    } catch(error) {
-        console.log(error)
     }
-    console.log(result)
+
     const response = {status: 200, products: result.slice((queryObj.page-1)*queryObj.limit, (queryObj.page)*queryObj.limit)};
     res.json(response);
 }
@@ -103,13 +95,9 @@ const search = async (req, res) => {
 const getProductByID = async (req, res) => {
     let id = req.params.id;
     const response = {status: 200, products: []};
-    try {
-        const data = await repo.query(`SELECT * FROM (SELECT * FROM gpus UNION SELECT * FROM cpus) AS tbl WHERE id = '${id}'`);
-        if(data.rows.length !== 0) {
-            response.products = data.rows;
-        }
-    } catch(error) {
-        console.log(error);
+    const data = await repo.fetchData(`SELECT * FROM (SELECT * FROM gpus UNION SELECT * FROM cpus) AS tbl WHERE id = '${id}'`);
+    if(data.length !== 0) {
+        response.products = data;
     }
     res.json(response);
 }
