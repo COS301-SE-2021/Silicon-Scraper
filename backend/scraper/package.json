@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "",
-    "test": "jest"
+    "start": "",
+    "test": "jest --runInBand --detectOpenHandles --coverage"
   },
   "keywords": [],
   "author": "",

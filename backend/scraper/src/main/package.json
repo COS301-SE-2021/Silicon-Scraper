@@ -4,7 +4,7 @@
   "description": "A web-scraper for the silicon-scraper project",
   "main": "scraperDbOp.ts",
   "scripts": {
-    "start": "ts-node scraper.ts",
+    "start": "ts-node scraperDbOp.ts",
     "test": "jest",
     "build": "tsc"
   },

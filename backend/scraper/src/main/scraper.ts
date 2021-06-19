@@ -11,8 +11,8 @@ let products = {
     "gpu": array1,
     "cpu": array2
 };
-let today = new Date()
 
+let today = new Date()
 
 /**
  *This is an array of urls to scrape
@@ -33,7 +33,7 @@ let jk = 0;
  * @param selector
  * @returns {array} An array of products
  */
-const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
+export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
     const html = await axios.get(webToScrape);
     return getWebData(html.data, selector, baseUrl, type)
 }
@@ -54,7 +54,7 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:
                 addToProducts(b++, $, selector, baseUrl, type, col);
             })
         })
-
+    
         return products;
 }
 
@@ -80,30 +80,31 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
         brand: title.brand,
         model: title.model,
         price: price,
-        availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim(),
+        availability: availability($(data).find(selector.getAvailabilitySelector(index)).text().trim()),
         link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href'), baseUrl),
         retailer: selector.retailer,
-        detail: {
+        details: {
             productDetails: [
                 {
+                    //change datetime when calling the cache data
+
                     datetime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
                     price: trimPrice($(data).find(selector.getPriceSelector()).text().trim()),
-                    availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim()
+                    availability: availability($(data).find(selector.getAvailabilitySelector(index)).text().trim())
                 }
             ]
-        }
+        },
+        type:type,
+        description:""
     }
-
 
     if(type === "gpu") {
 
-        products.gpu.push(productsArray)
+        products.gpu.push(<Product>productsArray)
     }else if(type === "cpu"){
 
-        products.cpu.push(productsArray)
+        products.cpu.push(<Product>productsArray)
     }
-
-
 
 }
 
@@ -185,9 +186,8 @@ export const titleParser = (title: string) =>{
  * @returns {array} array Of product objects
  */
 export const scrape = async () => {
-
     for (const selector of selectors) {
-        for (const url of urls) {
+        for (const url of urls) {          
             for(const url_ of url.urls) {
 
                 await scrapeSilon(url_, selector, selector.getBaseUrl(), url.type);
@@ -199,23 +199,20 @@ export const scrape = async () => {
     return products;
 }
 
+
+const availability = (availability:string) => {
+    if(availability.includes("In Stock") || availability.includes("add")){
+        return "In Stock"
+    }else{
+        return "Out of Stock"
+    }
+}
+
 //module.exports = {scrape}
 
-scrape().then(res => {
-    console.log(res)
-})
+// scrape().then(res => {
+//    // console.log(res)
+ //})
 
 //Clink link and get the description
-
-
-
-
-
-
-
-
-
-
-
-
 
