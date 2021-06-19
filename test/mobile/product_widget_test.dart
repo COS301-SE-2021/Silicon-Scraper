@@ -8,7 +8,7 @@ import 'mocks/json/productsjson.dart';
 
 void main() {
   var data = JSONData();
-  Product item=new Product(data['products'][0]['brand'], data["products"][0]['model'], data["products"][0]['price'], data["products"][0]['retailer'], data["products"][0]['description'], data["products"][0]['url'], data["products"][0]['image'], data["products"][0]['availability']);
+  Product item=new Product(data[0]['brand'], data[0]['model'], data[0]['price'], data[0]['retailer'], data[0]['description'], data[0]['url'], data[0]['image'], data[0]['availability']);
   group("test Product widget", () {
     testWidgets(
       'should properly mock Image.network and not crash',
@@ -19,18 +19,18 @@ void main() {
 
     testWidgets("finds brand text on widget", (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
-      final titleFinder = find.text(data['products'][0]['brand']);
+      final titleFinder = find.text(data[0]['brand']);
       expect(titleFinder, findsOneWidget);
     });
 //  todo  model not added yet
 //    testWidgets("find model text on widget", (WidgetTester tester) async {
 //      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
-//      final titleFinder = find.text(data['products'][0]['model']);
+//      final titleFinder = find.text(data[0]['model']);
 //      expect(titleFinder, findsOneWidget);
 //    });
   testWidgets("finds retailer text on widget", (WidgetTester tester) async {
    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
-    final titleFinder = find.text(data['products'][0]['retailer']);
+    final titleFinder = find.text(data[0]['retailer']);
     expect(titleFinder, findsOneWidget);
   });
   testWidgets("finds availability text on widget", (WidgetTester tester) async {
@@ -40,7 +40,7 @@ void main() {
   });
   testWidgets("finds price text on widget", (WidgetTester tester) async {
     await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
-    final titleFinder = find.text('R'+data['products'][0]['price'].toString());
+    final titleFinder = find.text('R'+data[0]['price'].toString());
     expect(titleFinder, findsOneWidget);
   });
 
