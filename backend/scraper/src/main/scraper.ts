@@ -186,7 +186,6 @@ export const titleParser = (title: string) =>{
  * @returns {array} array Of product objects
  */
 export const scrape = async () => {
-    debugger;
     for (const selector of selectors) {
         for (const url of urls) {          
             for(const url_ of url.urls) {
