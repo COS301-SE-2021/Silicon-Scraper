@@ -61,7 +61,7 @@ describe('Watchlist repository integration test', () => {
     it('removing products from a users watchlist', async() => {
         let response = await watchRepo.removeProduct(userID, productID, "CPU");
         expect(response).toBe(true)
-        expect(db.none.mock.calls.length).toBe(1)
+        expect(db.none.mock.calls.length).toBe(2)
         expect(db.none.mock.calls[0][0]).not.toBeNull()
     })
 })
