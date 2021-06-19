@@ -94,24 +94,24 @@ module.exports = (dbase = db) => {
 
     const getWatchlist = async(userID) => {
         const where = pgp.as.format('WHERE user_id = $1', userID);
-        const cpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, availability, retailer, link, details, type FROM watchlist_cpu RIGHT JOIN cpus ON watchlist_cpu.product_id = cpus.id $1:raw", where)
+        const cpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, description, availability, retailer, link FROM watchlist_cpu RIGHT JOIN cpus ON watchlist_cpu.product_id = cpus.id $1:raw", where)
         .then(cpus => {
             return cpus;
         })
         .catch(err => {
-            return null;
+            return [];
         })
 
-        const gpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, availability, retailer, link, details, type FROM watchlist_gpu RIGHT JOIN gpus ON watchlist_gpu.product_id = gpus.id $1:raw", where)
+        const gpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, description, availability, retailer, link FROM watchlist_gpu RIGHT JOIN gpus ON watchlist_gpu.product_id = gpus.id $1:raw", where)
         .then(gpus => {
             return gpus;
         })
         .catch(err => {
-            return null;
+            return [];
         })
 
         cpuList.push(...gpuList)
-        return cpuList
+        return cpuList;
     }
 
     /**
@@ -123,7 +123,8 @@ module.exports = (dbase = db) => {
      * @returns {boolean} value indicating if the process was successful (true) or not (false)
      */
 
-    const removeProductFromWatchlist = async(userID, productID, productType) => {
+    const removeProduct = async(userID, productID, productType) => {
+        console.log(userID + " " + productID + " " + productType)
         const where = pgp.as.format('WHERE user_id = $1 AND product_id = $2', [userID, productID]);
         let query;
         if (productType == "CPU")
@@ -144,6 +145,6 @@ module.exports = (dbase = db) => {
         addCPUToWatchlist,
         addGPUToWatchlist,
         getWatchlist,
-        removeProductFromWatchlist
+        removeProduct
     }
 }

@@ -50,14 +50,16 @@ router.get('/', jwtUtil.verifyToken, async(req, res) => {
 router.delete('/',  jwtUtil.verifyToken, async(req, res) => {
     await watchlistService.removeProduct(req.body, req.user)
     .then(resp => {
-        res.status(204)
+        res.status(200)
         .json({
-            message: "success"
-        })
-        .send()
+            message: "Success"
+        }).send()
     })
     .catch(err => {
         res.status(500)
+        .json({
+            message: "Failed"
+        })
         .send()
     })
 })
