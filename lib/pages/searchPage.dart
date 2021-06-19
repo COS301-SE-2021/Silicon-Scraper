@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
+import 'package:silicon_scraper/services/searchService.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -59,6 +60,8 @@ class _SearchPage extends State<SearchPage> {
 }
 
 class ProductSearch extends SearchDelegate<String> {
+  SearchSingleton search = SearchSingleton.getState();
+
   bool available = false;
   bool limitedStock = false;
   bool outOfStock = false;
@@ -93,13 +96,14 @@ class ProductSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) => FutureBuilder<List<Product>>(
-        future: getProducts(),
+        future: search.getProductList(query),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
             default:
               if (snapshot.hasError) {
+                print(snapshot.error);
                 return Container(
                   color: Colors.white,
                   alignment: Alignment.center,
@@ -110,11 +114,11 @@ class ProductSearch extends SearchDelegate<String> {
                 );
               } else {
                 // get results from the query (after user presses enter/ clicks on a suggestion)
-                List<Product> products = getResults(snapshot.data, query);
-                if (products.isEmpty) {
+                //List<Product> products = testResults(snapshot.data, query);
+                if (snapshot.data == null) {
                   return buildNoResults();
                 }
-                return buildResultSuccess(context, products);
+                return buildResultSuccess(context, snapshot.data);
               }
           }
         },
@@ -269,7 +273,7 @@ class ProductSearch extends SearchDelegate<String> {
                   RangeSlider(
                     values: _priceRangeValues,
                     min: 0,
-                    max: getMaxPrice(products),
+                    max: 50000.0,
                     divisions: 20,
                     labels: RangeLabels(
                       _priceRangeValues.start.round().toString(),
