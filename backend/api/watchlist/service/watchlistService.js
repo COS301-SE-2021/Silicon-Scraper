@@ -34,7 +34,7 @@ module.exports = (watchRepo = watchlistRepo) => {
     }
 
     const removeProduct = async(request, user) => {
-        if (!('type' in request) || !('productID' in request))
+        if (!('productID' in request))
             throw new InvalidRequestError();
         return await watchRepo.removeProduct(user.id, request.productID, request.type)
         .then(res => {
