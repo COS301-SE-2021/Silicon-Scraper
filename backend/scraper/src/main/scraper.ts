@@ -94,9 +94,9 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
                 }
             ]
         },
-        type:type
+        type:type,
+        description:""
     }
-
 
     if(type === "gpu") {
 
@@ -105,8 +105,6 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
 
         products.cpu.push(<Product>productsArray)
     }
-
-
 
 }
 

@@ -20,39 +20,27 @@ const db = pgp(
     client
 )
 
-const cs = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details','type'], {table:'gpus'})
+const cs = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details','type', 'description'], {table:'gpus'})
 
-const cs_ = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details', 'type' ], {table:'cpus'})
+const cs_ = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details', 'type', 'description' ], {table:'cpus'})
 
-const getProducts =  async () => { //needs to be tested
+export const getProducts =  async () => { //needs to be tested
     await scraper.scrape().then((products: any) => {
 
-        //if  db empty
-        // insert(products).then(res => {
-        //     console.log(res)
-        // })
-
-        //else
         update(products).then(res => {
             console.log(res)
         })
-
-        console.log("yebo")
-
     })
-
 }
 
 getProducts().then(() => {
     console.log("successful")
 })
 
-const insert = async (products: any) => {
 
-    await  exeQuery(pgp.helpers.insert(products.gpu, cs))
-    await  exeQuery(pgp.helpers.insert(products.cpu, cs_))
-
-}
+/**
+ * @param query
+ */
 const exeQuery = async (query:any) =>{
     await db.none(query).then( (err: any) => {
         if(err){
@@ -68,7 +56,9 @@ const exeQuery = async (query:any) =>{
 // })
 
 
-
+/**
+ * @param products
+ */
 const update = async (products: any) => {
 
     await  queryProducts("gpus", products.gpu)
@@ -76,13 +66,24 @@ const update = async (products: any) => {
 
 }
 /**
+ * Checks if the database is empty, if true it inserts to the db else
  * Ths function get all products from the data base given a product type
  * @param type
  * @returns []
  */
 const queryProducts = async (table:string, products:Product[])=>{ //needs to be tested
-    await db.any('SELECT * FROM $1:raw',table).then( (result:any)=>{
-         updateProducts(result, products, table)
+    await db.any('SELECT * FROM $1:raw',table).then(async (result:any)=>{
+        if(result.length === 0){
+            //insert(products)
+            if(table === "gpus")
+                await  exeQuery(pgp.helpers.insert(products, cs))
+
+            else if(table === "cpus")
+                await  exeQuery(pgp.helpers.insert(products, cs_))
+
+        }else{
+            await updateProducts(result, products, table) //compare the products from db and the scraped products
+        }
     })
 }
 
