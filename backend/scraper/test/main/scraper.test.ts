@@ -101,6 +101,7 @@ describe("scraperTest()", () => {
 
     test("Should produce concatenation error", () => { // this should fail
         expect(scraper.concatUrl("", "")).toBe("");
+        expect(scraper.concatUrl(undefined, "baseurl")).toBe("https://www.evetech.co.za/")
     })
     
     test('Should return array of products', async () =>{
