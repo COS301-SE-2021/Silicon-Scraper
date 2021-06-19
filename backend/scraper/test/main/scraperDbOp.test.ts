@@ -29,23 +29,5 @@ describe("Database operations tests", () => {
 describe("Testing the data operation",  () => {
 
 
-     test("Should call the query function only twice", async() => {
-         await update({"gpu":["g1", "g2"], "cpu":["c1", "c2"]})
-         expect(db.any.call.length).toBe(1)
-     })
-
-    test("When db is empty it should call exeQuery twice", async() =>{
-        await update({"gpu":["g1", "g2"], "cpu":["c1", "c2"]})
-        expect(db.none.call.length).toBe(1)
-    })
-
-    test("", async () => {
-        await queryProducts("gpu", [])
-    })
-
-
-
-
-
 
 })

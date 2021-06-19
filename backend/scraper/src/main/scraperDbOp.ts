@@ -1,6 +1,4 @@
 import {Product} from "../utilities/productsModel";
-
-const { Client, sql, Pool } = require('pg')
 const env = require('../../../config')
 const scraper = require("./scraper.ts");
 const pgp = require('pg-promise')({
