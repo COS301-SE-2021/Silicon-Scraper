@@ -54,7 +54,7 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:
                 addToProducts(b++, $, selector, baseUrl, type, col);
             })
         })
-
+    
         return products;
 }
 

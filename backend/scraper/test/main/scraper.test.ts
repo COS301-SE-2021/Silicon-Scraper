@@ -24,9 +24,6 @@ const mockedResponse = {
 mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
 
 
-//Mock urls
-
-
 //const scrape = require('../../src/main/scraper');
 
 // jest.mock('../../src/utilities/selectors', () => ({
@@ -56,6 +53,7 @@ describe("scraperTest()", () => {
     afterAll(done => {
         done();
     })
+    
 
     const index = 0;
     const select = [
@@ -120,32 +118,13 @@ describe("scraperTest()", () => {
         }
         
         expect(product).toEqual(expect.arrayContaining([]))
+        expect(product).not.toBeNull();
+        expect(product?.cpu).not.toBeNull();
+        expect(product?.gpu).not.toBeNull();
        
-
-        
-        // expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx')
         // expect(selectorsArray[0].getTableSelector).toHaveBeenCalled();
         
-       //expect(products).not.toBeNull();
-    })
-
-    test("fetches data successfully", async () =>{
-        const expected = {
-            image: "image",
-            brand: "brand",
-            model: "model",
-            price: "test",
-            availability: "availability",
-            link: "link",
-            retailer: "retailer"
-        };
-
-        //const data = eve.getEveTechMockUrl();
-
-       // mockAxios.get.mockResolvedValueOnce( data )(() => Promise.resolve(data));
-      //  const product = await scraper.scrape();
-        // expect(product).toEqual(expect.arrayContaining([]));
-    
+       
     })
 })
 
