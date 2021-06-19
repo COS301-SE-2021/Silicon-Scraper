@@ -41,7 +41,7 @@ dev_dependencies:
 #  image_test_utils: ^1.0.0
   #for search bar
   material_floating_search_bar: ^0.3.4
-
+  filter_list: ^0.0.9
   network_image_mock: ^2.0.1
 
 
