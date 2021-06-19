@@ -38,7 +38,7 @@ dev_dependencies:
   #for opening links
   url_launcher: ^5.7.5
   #for testing with network images
-  #image_test_utils:
+#  image_test_utils:
   #for search bar
   material_floating_search_bar: ^0.3.4
   #for testing with network images
