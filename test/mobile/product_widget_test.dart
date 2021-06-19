@@ -1,33 +1,57 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:network_image_mock/network_image_mock.dart';
+import 'package:silicon_scraper/classes/product.dart';
+import 'package:silicon_scraper/widgets/productWidget.dart';
+import 'mocks/json/productsjson.dart';
+
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-//    // Build our app and trigger a frame.
-//    product item=new product("Gigabyte GeForce RTX 3090 GAMING OC 24GB GDDR6X Gaming Graphics Card","model xxfgrfghd",43999.0,"evetech","0496 Cuda Core / 3‎84-bit Memory Interface / Boost Clock : 1755MHz / WINDFORCE 3X Cooling System / Protection Metal Back Plate / NVIDIA Ampere Streaming Multiprocessors / SC-G3090-GO + FREE DELIVERY !","https://www.evetech.co.za/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card/best-deal/10547.aspx","https://www.evetech.co.za/repository/ProductImages/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card-330px-v1.jpg","available");
-//
-//    await tester.pumpWidget(
-//        MaterialApp(
-//          home: Scaffold(
-//            body: Center(
-//              // Center is a layout widget. It takes a single child and positions it
-//              // in the middle of the parent.
-//              child: ProductWidget(item: item),
-//              ),
-//            ),
-//            // This trailing comma makes auto-formatting nicer for build methods.
-//          ),
-//        );
-//
-//    // Verify that our counter starts at 0.
-//    expect(find.text('Gigabyte GeForce RTX 3090 GAMING OC 24GB GDDR6X Gaming Graphics Card'), findsOneWidget);
-//    expect(find.text('model'), findsNothing);
-//
-//    // Tap the '+' icon and trigger a frame.
-//    await tester.tap(find.byIcon(Icons.add));
-//    await tester.pump();
-//
-//    // Verify that our counter has incremented.
-//    expect(find.text('0'), findsNothing);
-//    expect(find.text('1'), findsOneWidget);
+  var data = JSONData();
+  Product item=new Product(data[0]['brand'], data[0]['model'], data[0]['price'], data[0]['retailer'], data[0]['description'], data[0]['url'], data[0]['image'], data[0]['availability']);
+  group("test Product widget", () {
+    testWidgets(
+      'should properly mock Image.network and not crash',
+          (WidgetTester tester) async {
+        mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+      },
+    );
+
+    testWidgets("finds brand text on widget", (WidgetTester tester) async {
+      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+      final titleFinder = find.text(data[0]['brand']);
+      expect(titleFinder, findsOneWidget);
+    });
+//  todo  model not added yet
+//    testWidgets("find model text on widget", (WidgetTester tester) async {
+//      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+//      final titleFinder = find.text(data[0]['model']);
+//      expect(titleFinder, findsOneWidget);
+//    });
+  testWidgets("finds retailer text on widget", (WidgetTester tester) async {
+   await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+    final titleFinder = find.text(data[0]['retailer']);
+    expect(titleFinder, findsOneWidget);
+  });
+  testWidgets("finds availability text on widget", (WidgetTester tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+    final titleFinder = find.text(item.getAvailability());
+    expect(titleFinder, findsOneWidget);
+  });
+  testWidgets("finds price text on widget", (WidgetTester tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+    final titleFinder = find.text('R'+data[0]['price'].toString());
+    expect(titleFinder, findsOneWidget);
+  });
+
+  testWidgets("test on tap returns ProductDetail widget", (WidgetTester tester) async {
+    await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
+    await tester.tap(find.byType(InkWell));
+
+    // Rebuild the widget after the state has changed.
+    await tester.pumpAndSettle();
+    final text=find.text('Product detail');
+    expect(text, findsOneWidget);
+  });
   });
 }

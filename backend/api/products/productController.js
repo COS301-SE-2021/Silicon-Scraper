@@ -22,6 +22,12 @@ function genSQLQuery(query) {
     });
 }
 
+/**
+ * @param {*} req - Express request object
+ * @param {*} res - Express response object
+ * @description Fetches products from the database. Default GPU but can specify type as either cpu or gpu.
+ * Page number and Limit number can be specified to increase or decrease the number of products returned.
+ */
 const getProducts = async (req, res) => {
     const query = req.query;
     const values = ['gpus', 1, 20];
@@ -50,6 +56,13 @@ const getProducts = async (req, res) => {
     res.json(response);
 }
 
+
+/**
+ * @param {*} req 
+ * @param {*} res 
+ * @description Searches db for key included in request object. 
+ * Page number and Limit number can be specified to increase or decrease the number of products returned.
+ */
 const search = async (req, res) => {
     const query = req.query;
     const queryObj = {
@@ -92,6 +105,11 @@ const search = async (req, res) => {
     res.json(response);
 }
 
+/**
+ * @param {*} req 
+ * @param {*} res 
+ * @description Finds the product in the database with the id value specified in request.
+ */
 const getProductByID = async (req, res) => {
     let id = req.params.id;
     const response = {status: 200, products: []};
