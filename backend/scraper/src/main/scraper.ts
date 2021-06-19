@@ -86,15 +86,17 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
         details: {
             productDetails: [
                 {
+                    //change datetime when calling the cache data
+
                     datetime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
                     price: trimPrice($(data).find(selector.getPriceSelector()).text().trim()),
                     availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim()
                 }
             ]
         },
-        type:type
+        type:type,
+        description:""
     }
-
 
     if(type === "gpu") {
 
@@ -103,8 +105,6 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
 
         products.cpu.push(<Product>productsArray)
     }
-
-
 
 }
 

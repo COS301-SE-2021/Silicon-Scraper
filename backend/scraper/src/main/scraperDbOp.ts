@@ -20,37 +20,27 @@ const db = pgp(
     client
 )
 
-const cs = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details','type'], {table:'gpus'})
+const cs = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details','type', 'description'], {table:'gpus'})
 
-const cs_ = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details', 'type' ], {table:'cpus'})
+const cs_ = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image','link','availability','details', 'type', 'description' ], {table:'cpus'})
 
-const getProducts =  async () => {
+export const getProducts =  async () => { //needs to be tested
     await scraper.scrape().then((products: any) => {
 
-        //if  db empty
-        // insert(products).then(res => {
-        //     console.log(res)
-        // })
-
-        //else
         update(products).then(res => {
             console.log(res)
         })
-
     })
-
 }
 
 getProducts().then(() => {
     console.log("successful")
 })
 
-const insert = async (products: any) => {
 
-    await  exeQuery(pgp.helpers.insert(products.gpu, cs))
-    await  exeQuery(pgp.helpers.insert(products.cpu, cs_))
-
-}
+/**
+ * @param query
+ */
 const exeQuery = async (query:any) =>{
     await db.none(query).then( (err: any) => {
         if(err){
@@ -61,26 +51,39 @@ const exeQuery = async (query:any) =>{
     })
 }
 
-getProducts().then(r => {
-    console.log("getProducts")
-})
+// getProducts().then(r => {
+//     console.log("getProducts")
+// })
 
 
-
+/**
+ * @param products
+ */
 const update = async (products: any) => {
 
-    await  queryProducts("gpu", products.gpu)
-    await  queryProducts("cpu", products.cpu)
+    await  queryProducts("gpus", products.gpu)
+    await  queryProducts("cpus", products.cpu)
 
 }
 /**
+ * Checks if the database is empty, if true it inserts to the db else
  * Ths function get all products from the data base given a product type
  * @param type
  * @returns []
  */
-const queryProducts = async (table:string, products:Product[])=>{
-    await db.any(`SELECT * FROM $1`,table).then( (result:any)=>{
-         updateProducts(result, products, table)
+const queryProducts = async (table:string, products:Product[])=>{ //needs to be tested
+    await db.any('SELECT * FROM $1:raw',table).then(async (result:any)=>{
+        if(result.length === 0){
+            //insert(products)
+            if(table === "gpus")
+                await  exeQuery(pgp.helpers.insert(products, cs))
+
+            else if(table === "cpus")
+                await  exeQuery(pgp.helpers.insert(products, cs_))
+
+        }else{
+            await updateProducts(result, products, table) //compare the products from db and the scraped products
+        }
     })
 }
 
@@ -91,31 +94,28 @@ const queryProducts = async (table:string, products:Product[])=>{
  * @param value
  * @param id
  */
-const updateDetails = async (table:any, column:any, value:any, id:any)=>{
+const updateDetails = async (table:any, column:any, value:any, id:any)=>{ //needs to be tested
 
-    await db.none('UPDATE ${table:name} ${column:name}=${value:name} WHERE id=${id:name}', {
-        table:table,
-        column:column,
-        value:value,
-        id:id
-    });
+    const restQuery = pgp.as.format('$1:raw SET  $2:raw = $3 WHERE id = $4', [table, column, value, id])
+    await db.none('UPDATE $1:raw ', restQuery);
+
 }
+
 
 /**
  * if the timestamp of an item
  * that has been unavailable for over 3 months we would remove that item from the data base
  *
- * @param id
+ * @param id_
  * @param table
  * @returns void
  */
-const deleteProduct = async (id:any, table:any) => {   //needs to be tested
-    await db.none('DELETE FROM ${table:name} WHERE id=${id:name}', {
-        table:table,
-        id:id
-    })
-}
+const deleteProduct = async (id_:any, table:any) => {   //needs to be tested
 
+    const restQuery = pgp.as.format('$1:raw WHERE id = $2', [table, id_])
+    await db.none('DELETE FROM $1:raw', restQuery);
+
+}
 
 /**
  * The function get all products from the data base given a product type
@@ -125,12 +125,13 @@ const deleteProduct = async (id:any, table:any) => {   //needs to be tested
  * @returns void
  * @param products
  */
-const updateProducts = async (results:any, products:Product[], table:string)=>{
+const updateProducts = async (results:any, products:Product[], table:string)=>{ //needs to be tested
     for( const rkey in results) {
         for (const pkey in products) {
             if (products[pkey].model === results[rkey].model && products[pkey].brand === results[rkey].brand && products[pkey].retailer === results[rkey].retailer) {
                 let avail = false;
                 //Update the availability and/or price if it changed
+
                 if(!(products[pkey].availability === results[rkey].availability)){
                     avail=true;
                     //call update
@@ -148,6 +149,7 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{
                     let currDay = results[rkey].details.productDetails[0].datetime.split('-')[2]
                     let newDay = products[pkey].details.productDetails[0].datetime.split('-')[2]
                     let timeInDb = (Number(newDate) - Number(currentDate))*3+ Number(currDay) + Number(newDay)
+
                     if(timeInDb >= 90){
                         //This item is stale and had its availability has not been updated, it must be removed from the database
                         await deleteProduct(results[rkey].id, table).then((error:any)=>{
