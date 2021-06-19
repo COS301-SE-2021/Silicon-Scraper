@@ -15,7 +15,8 @@ class WatchListService
       }
     else
       {
-        var url = Uri.parse("http://10.0.2.2:3000/watchlist");
+        var url = Uri.parse("http://localhost:3000/products/search?key=rtx&page=1&limit=20");
+//      var url = Uri.parse("http://localhost:3000/products/search?key=rtx&page=1&limit=20");
         Map <String,String> headers={
           "Content-Type":"application/json; charset=utf-8",
           "Bearer":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsInBhc3N3b3JkIjoiJDJiJDEyJFpuSGxxYXBBVkp6dlo1ZVc2d0JjeHUuOE01LnJFTm9kYUkwa1dvNWY3MXVsdlg1UHhlR3lHIn0sImlhdCI6MTYyNDA5OTk0MCwiZXhwIjoxNjI0MTg2MzQwfQ.TL0Zk9bh3NuM7m-5KwMlJAYWlwRRPiZHTuwIMQjqM38"
@@ -37,7 +38,7 @@ class WatchListService
   }
   Future setItems()async
   {
-    items=await watchListtRequest(false);
+    items=await watchListtRequest(true);
     print("setItems");
     return true;
   }
