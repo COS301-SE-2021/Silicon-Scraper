@@ -72,14 +72,4 @@ router.delete('/', (req, res) => {
     res.status(501).send()
 });
 
-
-router.post('/watchlist', (req, res) => {
-    res.status(501).send()
-});
-
-
-router.delete('/watchlist', jwtUtil.verifyToken, (req, res) => {
-    res.status(501).send()
-});
-
 module.exports = router;
