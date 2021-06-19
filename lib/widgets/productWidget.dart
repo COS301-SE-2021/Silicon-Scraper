@@ -33,7 +33,7 @@ class ProductWidget extends StatelessWidget {
                 children: [
                   Container(
                       width: MediaQuery.of(context).size.width / 2,
-                      child: Text("${item.brand}", style: TextStyle(
+                      child: Text("${item.brand+" "+item.model}", style: TextStyle(
                         fontSize: 15, fontWeight: FontWeight.bold,),)
                   ),
                   Row(

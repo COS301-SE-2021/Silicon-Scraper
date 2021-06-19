@@ -14,13 +14,15 @@ List<Product> addProducts(List json)
         {
           String name=json[i]['brand'];
           String model=json[i]['model'];
-          double price=json[i]['price'];
+          double price=json[i]['price'].toDouble();
           String retailer=json[i]['retailer'];
           String description=json[i]['description'];
           String url=json[i]['url'];
           String photo=json[i]['image'];
           String sAvailability=json[i]['availability'];
-          items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability));
+          String id=json[i]['id'];
+          String type=json[i]['type'];
+          items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability,id,type));
         }
       }
 

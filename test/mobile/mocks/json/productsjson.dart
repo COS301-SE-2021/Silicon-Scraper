@@ -2,6 +2,8 @@
  JSONData(){
   return  [
       {
+        "id":"1",
+        "type":"gpu",
         "brand":"MSI GeForce RTX 3090" ,
         "model":"SUPRIM X 24GB GDDR6X Graphics Card" ,
         "price": 45999.0,
@@ -12,6 +14,8 @@
         "availability": "outofstock"
       },
       {
+        "id":"2",
+        "type":"gpu",
         "brand":"ASUS ROG Strix GeForce RTX 3090" ,
         "model":"OC 24GB White GDDR6X Gaming Graphics Card " ,
         "price": 45999.0,
@@ -22,6 +26,8 @@
         "availability": "outofstock"
       },
       {
+        "id":"3",
+        "type":"gpu",
         "brand": "MSI GeForce RTX 3090 Gaming X TRIO",
         "model": "Gaming X TRIO 24GB GDDR6X Graphics Card",
         "price": 44999.0,
@@ -32,6 +38,8 @@
         "availability":"outofstock"
       },
       {
+        "id":"4",
+        "type":"gpu",
         "brand":"Gigabyte GeForce RTX 3090 GAMING" ,
         "model": "OC 24GB GDDR6X Gaming Graphics Card",
         "price":43999.0 ,
@@ -42,6 +50,8 @@
         "availability": "available"
       },
       {
+        "id":"5",
+        "type":"gpu",
         "brand":"NVIDIA Quadro RTX 5000" ,
         "model":"16GB GDDR6 3072 Cuda Core Workstation Graphics Card" ,
         "price":39999.0 ,
@@ -52,6 +62,8 @@
         "availability": "out of stock"
       },
       {
+        "id":"6",
+        "type":"gpu",
         "brand":"Gigabyte Radeon RX 6900" ,
         "model": "XT GAMING OC 16GB GDDR6 Gaming Graphics Card",
         "price": 34999.0,
@@ -62,6 +74,8 @@
         "availability": "available"
       },
       {
+        "id":"7",
+        "type":"gpu",
         "brand": "ASUS TUF Gaming GeForce RTX 3060",
         "model": "OC 12GB GDDR6 Graphics Card",
         "price": 13499.0,
