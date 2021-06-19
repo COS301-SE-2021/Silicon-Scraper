@@ -125,18 +125,23 @@ module.exports = (dbase = db) => {
     const removeProduct = async(userID, productID, productType) => {
         console.log(userID + " " + productID + " " + productType)
         const where = pgp.as.format('WHERE user_id = $1 AND product_id = $2', [userID, productID]);
-        let query;
-        if (productType == "CPU")
-            query = "DELETE FROM watchlist_cpu";
-        else
-            query = "DELETE FROM watchlist_gpu";
-        return await dbase.none(query + " $1:raw", where)
+        const query1 = "DELETE FROM watchlist_cpu";
+        const query2 = "DELETE FROM watchlist_gpu";
+        let result = await dbase.none(query1 + " $1:raw", where)
         .then(res => {
             return true;
         })
         .catch(err=> {
             return false;
         })
+        result = await dbase.none(query2 + " $1:raw", where)
+        .then(res => {
+            return true;
+        })
+        .catch(err=> {
+            return false;
+        })
+        return result;
     }
 
 
