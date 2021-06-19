@@ -38,7 +38,6 @@ module.exports = (dbase = db) => {
      */
 
     const addCPUToWatchlist = async(userID, cpuID) => {
-        console.log(userID + " " + cpuID)
         const cs = new pgp.helpers.ColumnSet(['user_id', 'product_id'], {table: 'watchlist_cpu'})
         const list = {
             user_id: userID,
