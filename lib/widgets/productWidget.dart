@@ -6,10 +6,10 @@ class ProductWidget extends StatelessWidget {
   final Product item;
   const ProductWidget({Key key, this.item}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context)
   {
-
       return Card(
         elevation: 60.0,
         shape: RoundedRectangleBorder(
@@ -26,21 +26,8 @@ class ProductWidget extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height / 6,
-                child: Image.network('${item.photo}',
-                 /* loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes
-                          : null,
-                    );
-                  },*/),
+                height: MediaQuery.of(context).size.height / 6,
+                child: Image.network('${item.photo}',),
               ),
               SizedBox(width: 30,),
               Column(

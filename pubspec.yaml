@@ -36,13 +36,14 @@ dev_dependencies:
   mockito: 
   test: ^1.16.5
   #for opening links
-  url_launcher: ^6.0.6
+  url_launcher: ^5.7.5
   #for testing with network images
-#  image_test_utils: ^1.0.0
+#  image_test_utils:
   #for search bar
   material_floating_search_bar: ^0.3.4
+
+  network_image_mock:
   filter_list: ^0.0.9
-  network_image_mock: ^2.0.1
 
 
 # For information on the generic Dart part of this file, see the
