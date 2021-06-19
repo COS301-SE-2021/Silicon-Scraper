@@ -80,7 +80,7 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
         brand: title.brand,
         model: title.model,
         price: price,
-        availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim(),
+        availability: availability($(data).find(selector.getAvailabilitySelector(index)).text().trim()),
         link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href'), baseUrl),
         retailer: selector.retailer,
         details: {
@@ -90,7 +90,7 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
 
                     datetime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
                     price: trimPrice($(data).find(selector.getPriceSelector()).text().trim()),
-                    availability: $(data).find(selector.getAvailabilitySelector(index)).text().trim()
+                    availability: availability($(data).find(selector.getAvailabilitySelector(index)).text().trim())
                 }
             ]
         },
@@ -199,6 +199,14 @@ export const scrape = async () => {
     return products;
 }
 
+
+const availability = (availability:string) => {
+    if(availability.includes("In Stock") || availability.includes("add")){
+        return "In Stock"
+    }else{
+        return "Out of Stock"
+    }
+}
 
 //module.exports = {scrape}
 

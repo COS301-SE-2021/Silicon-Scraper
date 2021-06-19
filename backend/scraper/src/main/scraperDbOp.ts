@@ -28,7 +28,7 @@ export const getProducts =  async () => { //needs to be tested
     await scraper.scrape().then((products: any) => {
 
         update(products).then(res => {
-            console.log(res)
+            console.log("200 ok")
         })
     })
 }
@@ -37,11 +37,10 @@ getProducts().then(() => {
     console.log("successful")
 })
 
-
 /**
  * @param query
  */
-const exeQuery = async (query:any) =>{
+export const exeQuery = async (query:any) =>{
     await db.none(query).then( (err: any) => {
         if(err){
             console.log(err)
@@ -51,15 +50,10 @@ const exeQuery = async (query:any) =>{
     })
 }
 
-// getProducts().then(r => {
-//     console.log("getProducts")
-// })
-
-
 /**
  * @param products
  */
-const update = async (products: any) => {
+export const update = async (products: any) => {
 
     await  queryProducts("gpus", products.gpu)
     await  queryProducts("cpus", products.cpu)
@@ -71,7 +65,7 @@ const update = async (products: any) => {
  * @param type
  * @returns []
  */
-const queryProducts = async (table:string, products:Product[])=>{ //needs to be tested
+export let queryProducts = async (table:string, products:Product[])=>{ //needs to be tested
     await db.any('SELECT * FROM $1:raw',table).then(async (result:any)=>{
         if(result.length === 0){
             //insert(products)
