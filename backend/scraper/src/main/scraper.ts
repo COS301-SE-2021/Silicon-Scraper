@@ -200,9 +200,6 @@ export const scrape = async () => {
     return products;
 }
 
-export const scrapers = async (urls:any, selector: any, baseUrl:string, type: any) => {
-    await scrapeSilon(urls, selector, baseUrl, type);
-}
 
 //module.exports = {scrape}
 

@@ -3,7 +3,7 @@ import * as scraper  from "../../src/main/scraper";
 //import { selectorsArray } from "../../src/utilities/selectors";
 import { urls } from "../../__mocks__/urlMock";
 import axios from "axios"
-import { getEveTecGpuUrl } from "../../src/utilities/url";
+//import { getEveTecGpuUrl } from "../../src/utilities/url";
 import { selectorsArray } from "../../src/utilities/selectors";
 const url = require("../../src/utilities/url")
 
@@ -26,38 +26,6 @@ const mockedResponse = {
 mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
 
 //Mock urls
-
-jest.mock("../../src/utilities/url")
-
-let getEveTecGpuUrlMock = getEveTecGpuUrl as jest.MockedFunction<typeof getEveTecGpuUrl>
-getEveTecGpuUrlMock = jest.fn().mockResolvedValue({
-    urls: ["https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx"]
-} )
-
-let getEveTecCpuUrl = url.getEveTecCpuUrl as jest.MockedFunction<typeof url.getEveTecCpuUrl>;
-getEveTecCpuUrl = jest.fn().mockResolvedValue({
-    urls: ["https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx"]
-} )
-
-let getAmpTekGpuUrl = url.getAmpTekGpuUrl as jest.MockedFunction<typeof url.getAmpTekGpuUrl>;
-getAmpTekGpuUrl = jest.fn().mockResolvedValue({
-    urls: ["https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx"]
-} )
-
-let getAmpTekCpuUrl = url.getAmpTekCpuUrl as jest.MockedFunction<typeof url.getAmpTekCpuUrl>;
-getAmpTekCpuUrl = jest.fn().mockResolvedValue({
-    urls: ["https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx"]
-} )
-
-let getDreamwareGpuUrl = url.getDreamwareGpuUrl as jest.MockedFunction<typeof url.getDreamwareGpuUrl>;
-getDreamwareGpuUrl = jest.fn().mockResolvedValue({
-    urls: ["https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx"]
-} )
-let getDreamwareCpuUrl = url.getDreamwareCpuUrl as jest.MockedFunction<typeof url.getDreamwareCpuUrl>;
-getDreamwareCpuUrl = jest.fn().mockResolvedValue({
-    urls: ["https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx"]
-} );
-
 
 
 //const scrape = require('../../src/main/scraper');
@@ -136,14 +104,14 @@ describe("scraperTest()", () => {
     })
     
     test('Should return array of products', async () =>{
-        console.log(getEveTecGpuUrlMock())
         urls.forEach(element => {
             expect(element).toBeTruthy();
         });
-        const product = await scraper.scrapeSilon(getEveTecGpuUrlMock().urls, selectorsArray[0], "https://www.dreamwaretech.co.za/", "gpu");
         
-        //expect(mockAxios.get).toHaveBeenCalledTimes(33);
-        expect(getEveTecGpuUrlMock).toBeCalled();
+        const product = await scraper.scrapeSilon(urls[0](), selectorsArray[0], "https://www.dreamwaretech.co.za/", "gpu");
+        
+        expect(mockAxios.get).toHaveBeenCalled();
+        expect(urls[0]).toBeCalled();
         //for(const url_ in urls){
             //expect(mockAxios.get).toHaveBeenCalledWith(urls[0]().urls);
         //}

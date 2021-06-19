@@ -28,13 +28,6 @@ const pad = ((num: number) => {
     return (num<10? '0':'') + num;
 })
 
-// const isIndexValid = ((index: any) => {
-//     if(index < 0){
-//         throw new Error("Error: index invalid");
-//     }else return true;
-    
-// })
-
 class EvetechSelectors extends Selectors {
 
     constructor(ret:string) {
