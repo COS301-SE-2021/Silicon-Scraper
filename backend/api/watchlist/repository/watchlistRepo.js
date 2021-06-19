@@ -32,9 +32,9 @@ module.exports = (dbase = db) => {
      * id is already within the person's CPU watchlist.
      * 
      * 
-     * @param {string} userID of the user of which we want to add a product to the watchlist for
-     * @param {string} cpuID 
-     * @returns {boolean} determining whether the query was successful or not
+     * @param {string} userID id of the user of which we want to add a product to the watchlist for
+     * @param {string} cpuID id of the cpu product to be added to the watchlist
+     * @returns {boolean} determining whether the query was successful (true) or not (false)
      */
 
     const addCPUToWatchlist = async(userID, cpuID) => {
@@ -44,7 +44,6 @@ module.exports = (dbase = db) => {
             user_id: userID,
             product_id: cpuID
         }
-        console.log(list)
         const query = pgp.helpers.insert(list, cs)
         return await dbase.none(query)
         .then(res => {
@@ -62,13 +61,12 @@ module.exports = (dbase = db) => {
      * id is already within the person's GPU watchlist.
      * 
      * 
-     * @param {string} userID of the user of which we want to add a product to the watchlist for
-     * @param {string} gpuID 
-     * @returns {boolean} determining whether the query was successful or not
+     * @param {string} userID id of the user of which we want to add a product to the watchlist for
+     * @param {string} gpuID id of the gpu product to be added to the watchlist
+     * @returns {boolean} determining whether the query was successful (true) or not (false)
      */
 
     const addGPUToWatchlist = async(userID, gpuID) => {
-        console.log(userID + " " + gpuID)
         const cs = new pgp.helpers.ColumnSet(['user_id', 'product_id'], {table: 'watchlist_gpu'})
         const list = {
             user_id: userID,
@@ -86,10 +84,12 @@ module.exports = (dbase = db) => {
 
     /**
      * This function handles the operation of getting the products from a user's watchlist
-     * and returning them. 
+     * and returning them. If the products from the user's wishlist were retrieved successfully
+     * then an array with all the products will be returned. If the process was not successful then
+     * an empty array will be returned.
      * 
-     * @param {string} userID 
-     * @returns {object} of cpus & gpus from the user's watchlist
+     * @param {string} userID id of the user
+     * @returns {Array} of the cpus & gpus from the user's watchlist
      */
 
     const getWatchlist = async(userID) => {
@@ -99,7 +99,6 @@ module.exports = (dbase = db) => {
             return cpus;
         })
         .catch(err => {
-            console.log(err)
             return null;
         })
 
@@ -108,7 +107,6 @@ module.exports = (dbase = db) => {
             return gpus;
         })
         .catch(err => {
-            console.log(err);
             return null;
         })
 
@@ -119,10 +117,10 @@ module.exports = (dbase = db) => {
     /**
      * This funtion handles the process of removing an item from a user's watchlist.
      * 
-     * @param {string} userID 
-     * @param {string} productID 
-     * @param {string} productType 
-     * @returns 
+     * @param {string} userID id of the user
+     * @param {string} productID id of the product within the watchlist
+     * @param {string} productType indicates whether the product is a CPU/GPU
+     * @returns {boolean} value indicating if the process was successful (true) or not (false)
      */
 
     const removeProductFromWatchlist = async(userID, productID, productType) => {
