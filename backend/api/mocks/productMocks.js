@@ -1,3 +1,6 @@
+/**
+ * @constant {Object} - Contains data from db to be used for testing
+ */
 const mockData = [
     {
         id: "1b6d0e22-ca06-414a-80b8-1ca634f29d6e",
