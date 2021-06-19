@@ -30,7 +30,7 @@ List<Product> addProducts(List json)
         }
       }
 
-    return items;
+  return items;
 }
 
 Future<String>_loadFromAsset() async {
@@ -72,6 +72,16 @@ List<Product> getResults(List<Product> unProcessedProducts, String query){
         containsIgnoreCase(unProcessedProducts.elementAt(i).model, query)) {
       products.add(unProcessedProducts.elementAt(i));
     }
+  }
+  return products;
+}
+
+List<Product> testResults(List<Product> unProcessedProducts, String query){
+
+  List<Product> products = [];
+  for (int i = 0; i < unProcessedProducts.length; i++) {
+    print(1);
+    print(unProcessedProducts.elementAt(i).brand);
   }
   return products;
 }

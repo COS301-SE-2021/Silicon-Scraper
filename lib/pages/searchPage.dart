@@ -96,13 +96,14 @@ class ProductSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) => FutureBuilder<List<Product>>(
-        future: search.getProductList(query),
+        future: search.setProductList(query),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
             default:
               if (snapshot.hasError) {
+                print("Snapshot error:");
                 print(snapshot.error);
                 return Container(
                   color: Colors.white,
@@ -128,7 +129,7 @@ class ProductSearch extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) => Container(
         color: Colors.white,
         child: FutureBuilder<List<Product>>(
-          future: getProducts(),
+          future: search.setProductList(query),
           builder: (context, snapshot) {
             if (query.isEmpty) return buildNoSuggestions();
 

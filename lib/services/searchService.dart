@@ -31,46 +31,41 @@ class SearchService {
   //
   // }
 
-  Future<dynamic> searchRequest(String query) async {
+  Future searchRequest(String query) async {
 
     Uri uri = Uri.parse("http://10.0.2.2:3000/products/search?key="+query+"&page=1&limit=20");
-    //Uri uri = Uri.parse("http://10.0.2.2:3000/watchlist");
-    Map <String,String> headers = {
+    Map <String,String> headers={
       "Content-Type":"application/json; charset=utf-8",
-      "Bearer":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiMzIwNjljMzItM2I5Yi00N2NhLThjNzktMTgxNWE1MzRjMDJiIiwidXNlcm5hbWUiOiJNcGVuZHVsbyIsImhhc2giOiIkMmIkMTIkRE1GbzRQaVBsOGhEdFVuU0o3WDZzdVBzU2lRLnUuUlU0S2pDWUxHc0FQck5uSXY2bnNZanUifSwiaWF0IjoxNjI0MDE3MzU2LCJleHAiOjE2MjQxMDM3NTZ9.9gy-JqAgFk8Oq_rdIh9ELzEsUONn_8ZAowLgE0ZgdtY"
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsInBhc3N3b3JkIjoiJDJiJDEyJFpuSGxxYXBBVkp6dlo1ZVc2d0JjeHUuOE01LnJFTm9kYUkwa1dvNWY3MXVsdlg1UHhlR3lHIn0sImlhdCI6MTYyNDA5OTk0MCwiZXhwIjoxNjI0MTg2MzQwfQ.TL0Zk9bh3NuM7m-5KwMlJAYWlwRRPiZHTuwIMQjqM38',
     };
     final response = await http.get(uri, headers: headers);
+    print(response.statusCode);
 
     final jsonResponse = jsonDecode(response.body);
-    return jsonResponse;
+    // print(response.body);
+    //print(jsonResponse);
+    Map<String, dynamic> map = json.decode(response.body);
+    List<dynamic> responseData = map["products"];
 
-    //final jsonResponse = jsonDecode(response.body);
-
-    //return addProducts(jsonResponse);
-
-    //check status code
-    //print(response.statusCode);
-    //print(response.body);
-    //final responseJson = jsonDecode(response.body);
-    //if (response.statusCode == 200){
-    //}
-    return;
+    if (response.statusCode == 200){
+      return addProducts(responseData);
+    }
+    return false;
   }
 
   SearchService() {
-//    setItems();
+    //setItems();
   }
 
-  // void setItems(String setQuery) async {
+  // void setItems() async {
   //   //items = await getProducts();
-  //   var json = await searchRequest(setQuery);
+  //   items = await searchRequest(setQuery);
   //   print(items.length);
   // }
 
-  Future<List<Product>> getProductList(String query) async {
-    var json = await searchRequest(query);
-    items = addProducts(json);
-    return items;
+  Future<List<Product>> setProductList(String query) async {
+    return await searchRequest(query);
+    return addProducts(items);
   }
 
 
