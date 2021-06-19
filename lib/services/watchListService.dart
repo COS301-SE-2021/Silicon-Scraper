@@ -1,6 +1,7 @@
 import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class WatchListService
 {
@@ -14,24 +15,31 @@ class WatchListService
       }
     else
       {
-        var url = Uri.parse("localhost:3000/watchlist");
+        var url = Uri.parse("http://10.0.2.2:3000/watchlist");
         Map <String,String> headers={
           "Content-Type":"application/json; charset=utf-8",
-          "Bearer":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiMzIwNjljMzItM2I5Yi00N2NhLThjNzktMTgxNWE1MzRjMDJiIiwidXNlcm5hbWUiOiJNcGVuZHVsbyIsImhhc2giOiIkMmIkMTIkRE1GbzRQaVBsOGhEdFVuU0o3WDZzdVBzU2lRLnUuUlU0S2pDWUxHc0FQck5uSXY2bnNZanUifSwiaWF0IjoxNjI0MDE3MzU2LCJleHAiOjE2MjQxMDM3NTZ9.9gy-JqAgFk8Oq_rdIh9ELzEsUONn_8ZAowLgE0ZgdtY"
+          "Bearer":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsInBhc3N3b3JkIjoiJDJiJDEyJFpuSGxxYXBBVkp6dlo1ZVc2d0JjeHUuOE01LnJFTm9kYUkwa1dvNWY3MXVsdlg1UHhlR3lHIn0sImlhdCI6MTYyNDA5OTk0MCwiZXhwIjoxNjI0MTg2MzQwfQ.TL0Zk9bh3NuM7m-5KwMlJAYWlwRRPiZHTuwIMQjqM38"
         };
-        var response = await http.get(url,headers: headers);
-
-        return;
+        final response = await http.get(url,headers: headers);
+        print(response.statusCode);
+        var responseData = json.decode(response.body);
+        print(responseData);
+        if(response.statusCode==200)
+         {
+            return addProducts(responseData);
+         }
+        return false;
       }
   }
   WatchListService()
   {
-//    setItems();
+    setItems();
   }
-  void setItems()async
+  Future setItems()async
   {
-    items=await watchListtRequest(true);
+    items=await watchListtRequest(false);
     print("setItems");
+    return true;
   }
   void addItem(Product p)
   {
