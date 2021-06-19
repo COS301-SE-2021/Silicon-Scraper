@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 class Product
 {
+  final String type;
+  final String id;
   final String brand;
   final String model;
   final double price;
@@ -16,7 +18,7 @@ class Product
   availability stockAvailability;
 
   Product(this.brand, this.model, this.price, this.retailer, this.description,
-      this.url, this.photo,String sAvailability)
+      this.url, this.photo,String sAvailability,this.id,this.type)
   {
     if(sAvailability==null)
       {

@@ -8,7 +8,7 @@ import 'mocks/json/productsjson.dart';
 
 void main() {
   var data = JSONData();
-  Product item=new Product(data[0]['brand'], data[0]['model'], data[0]['price'], data[0]['retailer'], data[0]['description'], data[0]['url'], data[0]['image'], data[0]['availability']);
+  Product item=new Product(data[0]['brand'], data[0]['model'], data[0]['price'], data[0]['retailer'], data[0]['description'], data[0]['url'], data[0]['image'], data[0]['availability'],data[0]['id'],data[0][['type']]);
   group("test Product widget", () {
     testWidgets(
       'should properly mock Image.network and not crash',
@@ -19,7 +19,7 @@ void main() {
 
     testWidgets("finds brand text on widget", (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductWidget(item:item))));
-      final titleFinder = find.text(data[0]['brand']);
+      final titleFinder = find.text(data[0]['brand']+" "+data[0]['model']);
       expect(titleFinder, findsOneWidget);
     });
 //  todo  model not added yet
