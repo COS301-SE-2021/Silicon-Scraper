@@ -93,7 +93,7 @@ module.exports = (dbase = db) => {
 
     const getWatchlist = async(userID) => {
         const where = pgp.as.format('WHERE user_id = $1', userID);
-        const cpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, description, availability, retailer, link FROM watchlist_cpu RIGHT JOIN cpus ON watchlist_cpu.product_id = cpus.id $1:raw", where)
+        const cpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, description, availability, retailer, link, type FROM watchlist_cpu RIGHT JOIN cpus ON watchlist_cpu.product_id = cpus.id $1:raw", where)
         .then(cpus => {
             return cpus;
         })
@@ -101,7 +101,7 @@ module.exports = (dbase = db) => {
             return [];
         })
 
-        const gpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, description, availability, retailer, link FROM watchlist_gpu RIGHT JOIN gpus ON watchlist_gpu.product_id = gpus.id $1:raw", where)
+        const gpuList = await dbase.manyOrNone("SELECT id, image, brand, model, price, description, availability, retailer, link, type FROM watchlist_gpu RIGHT JOIN gpus ON watchlist_gpu.product_id = gpus.id $1:raw", where)
         .then(gpus => {
             return gpus;
         })
