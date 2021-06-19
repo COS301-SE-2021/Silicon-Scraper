@@ -43,7 +43,6 @@ router.post('/', async (req, res) => {
 router.post('/login', async (req, res) => {
     await userService.login(req.body)
     .then(response => {
-        console.log("Hello: " + response)
         res.status(200)
         .json({
             token: response
@@ -69,16 +68,6 @@ router.post('/login', async (req, res) => {
 
 
 router.delete('/', (req, res) => {
-    res.status(501).send()
-});
-
-
-router.post('/watchlist', (req, res) => {
-    res.status(501).send()
-});
-
-
-router.delete('/watchlist', jwtUtil.verifyToken, (req, res) => {
     res.status(501).send()
 });
 

@@ -36,12 +36,12 @@ module.exports = (watchRepo = watchlistRepo) => {
     const removeProduct = async(request, user) => {
         if (!('type' in request) || !('productID' in request))
             throw new InvalidRequestError();
-        return await watchRepo.removeProductFromWatchlist(user.id, request.productID, request.type)
+        return await watchRepo.removeProduct(user.id, request.productID, request.type)
         .then(res => {
             return res;
         })
         .catch(err => {
-            return false;
+            return err;
         })
     }
 
