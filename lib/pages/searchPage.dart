@@ -4,19 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  _SearchPage createState() => _SearchPage();
+}
+
+class _SearchPage extends State<SearchPage> {
+  @override
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Center(
               child: Text(
-                "Search",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25),
-              )),
+            "Search",
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+          )),
           actions: [
             IconButton(
               icon: Icon(Icons.search),
@@ -33,37 +35,43 @@ class SearchPage extends StatelessWidget {
           margin: const EdgeInsets.all(15.0),
           child: Center(
               child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
+            text: TextSpan(
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+              children: [
+                TextSpan(text: 'Click '),
+                WidgetSpan(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 5.0),
+                    child: Icon(Icons.search),
                   ),
-                  children: [
-                    TextSpan(text: 'Click '),
-                    WidgetSpan(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 5.0),
-                        child: Icon(Icons.search),
-                      ),
-                    ),
-                    TextSpan(text: 'to search for product name or brand...'),
-                  ],
                 ),
-              )),
+                TextSpan(text: 'to search for product name or brand...'),
+              ],
+            ),
+          )),
         ),
       );
 }
 
 class ProductSearch extends SearchDelegate<String> {
-  String availabilityFilter = "";
-  String retailerFilter = "";
-  double priceFilter = 0.0;
+  bool available = false;
+  bool limitedStock = false;
+  bool outOfStock = false;
+  bool notSpecified = false;
+
+  bool retailer1 = false;
+  bool retailer2 = false;
+  bool retailer3 = false;
+
+  RangeValues _priceRangeValues = const RangeValues(0, 4000);
 
   @override
-  List<Widget> buildActions(BuildContext context) =>
-      [
+  List<Widget> buildActions(BuildContext context) => [
         IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {
@@ -78,15 +86,13 @@ class ProductSearch extends SearchDelegate<String> {
       ];
 
   @override
-  Widget buildLeading(BuildContext context) =>
-      IconButton(
+  Widget buildLeading(BuildContext context) => IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () => close(context, null),
       );
 
   @override
-  Widget buildResults(BuildContext context) =>
-      FutureBuilder<List<Product>>(
+  Widget buildResults(BuildContext context) => FutureBuilder<List<Product>>(
         future: getProducts(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -115,8 +121,7 @@ class ProductSearch extends SearchDelegate<String> {
       );
 
   @override
-  Widget buildSuggestions(BuildContext context) =>
-      Container(
+  Widget buildSuggestions(BuildContext context) => Container(
         color: Colors.white,
         child: FutureBuilder<List<Product>>(
           future: getProducts(),
@@ -130,8 +135,8 @@ class ProductSearch extends SearchDelegate<String> {
                 if (snapshot.hasError || snapshot.data.isEmpty) {
                   return buildNoSuggestions();
                 } else {
-                  List<String> productBrandOrModel = getSuggestions(
-                      snapshot.data, query);
+                  List<String> productBrandOrModel =
+                      getSuggestions(snapshot.data, query);
                   if (productBrandOrModel.isEmpty) {
                     return buildNoSuggestions();
                   }
@@ -142,16 +147,14 @@ class ProductSearch extends SearchDelegate<String> {
         ),
       );
 
-  Widget buildNoSuggestions() =>
-      Center(
+  Widget buildNoSuggestions() => Center(
         child: Text(
           'No suggestions',
           style: TextStyle(fontSize: 28, color: Colors.black),
         ),
       );
 
-  Widget buildSuggestionsSuccess(List<String> suggestions) =>
-      ListView.builder(
+  Widget buildSuggestionsSuccess(List<String> suggestions) => ListView.builder(
         itemCount: suggestions.length,
         itemBuilder: (context, index) {
           final suggestion = suggestions[index];
@@ -162,7 +165,7 @@ class ProductSearch extends SearchDelegate<String> {
             tileColor: Colors.white,
             onTap: () {
               query = suggestion;
-              // user clicks on suggestion this calls buildresults
+              // user clicks on suggestion this calls build results
               showResults(context);
             },
             title: RichText(
@@ -188,8 +191,7 @@ class ProductSearch extends SearchDelegate<String> {
         },
       );
 
-  Widget buildNoResults() =>
-      Center(
+  Widget buildNoResults() => Center(
         child: Padding(
           padding: EdgeInsets.all(25),
           child: RichText(
@@ -204,7 +206,7 @@ class ProductSearch extends SearchDelegate<String> {
                 TextSpan(text: 'Couldn\'t find "' + query + '". \n\n'),
                 TextSpan(
                     text:
-                    'Check your spelling or try searching with a different keyword.',
+                        'Check your spelling or try searching with a different keyword.',
                     style: TextStyle(
                         color: Colors.grey[700],
                         fontWeight: FontWeight.bold,
@@ -222,69 +224,119 @@ class ProductSearch extends SearchDelegate<String> {
             backgroundColor: Colors.white,
           ),
           drawer: Drawer(
-            child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
+              child: StatefulBuilder(
+            builder: (context, _setState) => ListView(
               children: <Widget>[
-                ListTile(
-                  title: Text('Availability'),
-                  trailing: IconButton(
-                    icon: Icon(Icons.arrow_downward),
-                    color: Colors.black,
-                    onPressed: () async {
-                      openAvailabilityFilter();
+                ExpansionTile(title: Text('Availability'), children: <Widget>[
+                  CheckboxListTile(
+                    title: const Text('Available'),
+                    value: this.available,
+                    onChanged: (bool value) {
+                      _setState(() {
+                        this.available = value;
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: const Text('Limited Stock'),
+                    value: this.limitedStock,
+                    onChanged: (bool value) {
+                      _setState(() {
+                        this.limitedStock = value;
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: const Text('Out of Stock'),
+                    value: this.outOfStock,
+                    onChanged: (bool value) {
+                      _setState(() {
+                        this.outOfStock = value;
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: const Text('Not Specified'),
+                    value: this.notSpecified,
+                    onChanged: (bool value) {
+                      _setState(() {
+                        this.notSpecified = value;
+                      });
+                    },
+                  ),
+                ]),
+                ExpansionTile(title: Text('Price'), children: <Widget>[
+                  RangeSlider(
+                    values: _priceRangeValues,
+                    min: 0,
+                    max: getMaxPrice(products),
+                    divisions: 20,
+                    labels: RangeLabels(
+                      _priceRangeValues.start.round().toString(),
+                      _priceRangeValues.end.round().toString(),
+                    ),
+                    onChanged: (RangeValues values) {
+                      _setState(() {
+                        _priceRangeValues = values;
+                      });
                     },
                   )
-                ),
-                ListTile(
-                  title: Text('Retailer'),
-                    trailing: IconButton(
-                      icon: Icon(Icons.arrow_downward),
-                      color: Colors.black,
-                      onPressed: () async {
-                        openRetailerFilter();
-                      },
-                    )
-                ),
-                ListTile(
-                  title: Text('Price'),
-                    trailing: IconButton(
-                      icon: Icon(Icons.arrow_downward),
-                      color: Colors.black,
-                      onPressed: () async {
-                        openPriceFilter();
-                      },
-                    )
-                ),
+                ]),
+                ExpansionTile(title: Text('Retailer'), children: <Widget>[
+                  CheckboxListTile(
+                    title: const Text('EveTech'),
+                    value: this.retailer1,
+                    onChanged: (bool value) {
+                      _setState(() {
+                        this.retailer1 = value;
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: const Text('WootWare'),
+                    value: this.retailer2,
+                    onChanged: (bool value) {
+                      _setState(() {
+                        this.retailer2 = value;
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: const Text('PC Link'),
+                    value: this.retailer3,
+                    onChanged: (bool value) {
+                      _setState(() {
+                        this.retailer3 = value;
+                      });
+                    },
+                  ),
+                ]),
                 ElevatedButton(
                   onPressed: () {
-                    // function to apply all the filters to the search query and return the products
+                    List<Product> filteredProducts = applyFilters(
+                        products,
+                        available,
+                        limitedStock,
+                        outOfStock,
+                        notSpecified,
+                        _priceRangeValues.start,
+                        _priceRangeValues.end,
+                        retailer1,
+                        retailer2,
+                        retailer3);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (BuildContext context) {
+                      return buildResultSuccess(context, filteredProducts);
+                    }));
                   },
                   child: const Text('Apply'),
                 ),
               ],
             ),
-            // child: Center(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: <Widget>[
-            //       Text('This is the Drawer'),
-            //       ElevatedButton(
-            //         onPressed: (){
-            //           // function to apply all the filters to the search query
-            //           showResults(context);
-            //         },
-            //         child: const Text('Apply'),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-          ),
+          )),
           body: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
-              child: ProductListView(context, products)
-
-          ));
+              child: ProductListView(context, products)));
 }
