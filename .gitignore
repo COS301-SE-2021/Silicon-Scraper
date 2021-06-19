@@ -31,9 +31,14 @@
 .pub/
 /build/
 
+#testing
+coverage/
+
 #database
 .env
 
+#typescript
+backend/scraper/dist/
 # API related
 node_modules/
 

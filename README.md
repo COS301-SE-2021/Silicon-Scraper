@@ -26,8 +26,8 @@ add it to a watch list to be notified of any changes in price or availability et
 - [Branching Strategy](#branching-strategy)
 
 ## Demo 1
-- [Bug Busters Inc-Demo 1](#demo1-video)
-- [SRS document](#srs-document)
+- [Bug Busters Inc-Demo 1](https://drive.google.com/file/d/1BzEwC8Sf2_5Gp3KvHEA-UuNh6RIt4tN7/view?usp=sharing)
+- [SRS document](https://drive.google.com/file/d/19dqh565O4LM0uwT4G8P8wQwiJxE7A-iE/view?usp=sharing)
 
 ## Project Management Tools
 - [Discord (Communication tools)](https://discord.gg/xpsn3YRn)
@@ -45,19 +45,23 @@ _Team Leader_\
 > Automation, Iot ,App development ,Fishing ,Chess and Theology. I am ambitious and have a tendency to take on tasks without knowing what I'm getting myself into
 > but I'm always proud at the end.  
 
-**Mpendulo Sibeko**
+**Mpendulo Sibeko**\
+<img src="https://user-images.githubusercontent.com/68823746/120770199-32636e80-c51e-11eb-892c-1a8efbca3f54.png" width="250" height="250">
 - [LinkedIn](https://www.linkedin.com/in/mpendulo-s-aa4b53106/)
-- [Github](#link)
-> Short description
+- [Github](https://github.com/MkSibeko)
+> I am a final year computer science student (with a minor in data science) at the University of Pretoria. I enjoy developing ML related applications in pyhton.
+> I aspire to be a catalyst for the growth of the tech community in africa. I enjoy reading up on social science related matters and binging on Tech-YouTube as well as anime
+
 
 **Thato Jadezwani**
 - [LinkedIn](#link)
 > Short description
 
-**Thato (Lesedi) Motoma**
+**Thato (Lesedi) Motoma**\
+<img src="https://media-exp1.licdn.com/dms/image/C4D03AQF5K6g5rPqE1A/profile-displayphoto-shrink_800_800/0/1622795047263?e=1628121600&v=beta&t=k6QHUpdZU20Sj0anYUiW8fRL3DgJdNcX85dNxOC30vw" width="250" height="250">
 - [LinkedIn](https://www.linkedin.com/in/thato-lesedi-motoma-69311b1b1/)
-- [Github](#link)
-> Short description
+- [Github](https://github.com/lesedimotoma)
+> I am an open minded and flexible final year Computer Science student. A Linux enthusiast at heart, I dive into the deep end when it comes to trying something new. I hope to one day play a hand in diversifying and growing the IT industry in South Africa. 
 
 **Tanatswa Dendere**\
 <img src="https://bit.ly/2SUdylW" alt="Tanatswa Dendere" width="250" height="250">
