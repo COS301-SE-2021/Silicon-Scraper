@@ -70,7 +70,7 @@ List<String> getSuggestions(List<Product> unProcessedProducts, String query) {
   for (int i = 0; i < unProcessedProducts.length; i++) {
     if (containsIgnoreCase(unProcessedProducts.elementAt(i).brand, query) || containsIgnoreCase(
         unProcessedProducts.elementAt(i).model, query)) {
-      productSuggestions.add(unProcessedProducts.elementAt(i).brand);
+      productSuggestions.add(unProcessedProducts.elementAt(i).model);
     }
   }
   return productSuggestions;
