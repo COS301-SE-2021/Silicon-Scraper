@@ -21,7 +21,7 @@ List<Product> addProducts(List json)
           String photo=json[i]['image'];
           String sAvailability=json[i]['availability'];
           String id=json[i]['id'];
-          String type=json[i]['type'];
+          String type=json[i]['type'].toUpperCase();
           items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability,id,type));
         }
       }

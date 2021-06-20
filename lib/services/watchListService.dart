@@ -7,7 +7,7 @@ class WatchListService
 {
   List<Product> items=[];
 
-  Future watchListtRequest(bool mock)async
+  Future watchListRequest(bool mock)async
   {
     if(mock)
       {
@@ -37,9 +37,9 @@ class WatchListService
   }
   Future setItems()async
   {
-    items=await watchListtRequest(true);
+    items=await watchListRequest(false);
     print("setItems");
-    return true;
+    return items;
   }
   void addItem(Product p)async
   {
@@ -100,7 +100,8 @@ class WatchListService
       'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MTgxNDQ2LCJleHAiOjE2MjQyNjc4NDZ9.a0c0qLz7pBzau4r_T9Tcy4O-UqQlL8IJMOF7ZjAqTZQ',
     };
     Map vars={
-      "productID":item.id
+      "productID":item.id,
+      "type":item.type
     };
 
     var send=jsonEncode(vars);
@@ -112,7 +113,7 @@ class WatchListService
     {
       if(responseData['message']=="Success")
         {
-          await removeItem(item);
+//          await removeItem(item);
           return false;
         }
     }
@@ -127,15 +128,18 @@ class WatchListService
     };
     Map vars={
       "productID":item.id,
+      "type":item.type
     };
-    final response = await http.post(url,headers: headers,body:vars );
+    var send=jsonEncode(vars);
+    final response = await http.post(url,headers: headers,body:send );
     print(response.statusCode);
     var responseData = json.decode(response.body);
     print(responseData);
     if(response.statusCode==200)
     {
-      if(responseData.data=="Success")
+      if(responseData['message']=="Success")
       {
+//        await addItem(item);
         return true;
       }
     }
