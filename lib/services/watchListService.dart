@@ -18,7 +18,7 @@ class WatchListService
         var url = Uri.parse("http://10.0.2.2:3000/watchlist");
         Map <String,String> headers={
           "Content-Type":"application/json; charset=utf-8",
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsInBhc3N3b3JkIjoiJDJiJDEyJFpuSGxxYXBBVkp6dlo1ZVc2d0JjeHUuOE01LnJFTm9kYUkwa1dvNWY3MXVsdlg1UHhlR3lHIn0sImlhdCI6MTYyNDA5OTk0MCwiZXhwIjoxNjI0MTg2MzQwfQ.TL0Zk9bh3NuM7m-5KwMlJAYWlwRRPiZHTuwIMQjqM38',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MTgxNDQ2LCJleHAiOjE2MjQyNjc4NDZ9.a0c0qLz7pBzau4r_T9Tcy4O-UqQlL8IJMOF7ZjAqTZQ',
         };
         final response = await http.get(url,headers: headers);
         print(response.statusCode);
@@ -37,7 +37,7 @@ class WatchListService
   }
   Future setItems()async
   {
-    items=await watchListtRequest(true);
+    items=await watchListtRequest(false);
     print("setItems");
     return true;
   }
@@ -57,7 +57,7 @@ class WatchListService
         items.add(p);
       }
   }
-  void removeItem(Product p) async
+  Future removeItem(Product p) async
   {
     bool contains=false;
     for(var e in items)
@@ -69,8 +69,13 @@ class WatchListService
     }
     if(contains)
     {
-      items.remove(p);
+          items.remove(p);
     }
+    else
+      {
+      return false;
+    }
+
   }
   Future<List<Product>> getProductlist()
   {
@@ -92,30 +97,33 @@ class WatchListService
     var url = Uri.parse("http://10.0.2.2:3000/watchlist");
     Map <String,String> headers={
       "Content-Type":"application/json; charset=utf-8",
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsInBhc3N3b3JkIjoiJDJiJDEyJFpuSGxxYXBBVkp6dlo1ZVc2d0JjeHUuOE01LnJFTm9kYUkwa1dvNWY3MXVsdlg1UHhlR3lHIn0sImlhdCI6MTYyNDA5OTk0MCwiZXhwIjoxNjI0MTg2MzQwfQ.TL0Zk9bh3NuM7m-5KwMlJAYWlwRRPiZHTuwIMQjqM38',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MTgxNDQ2LCJleHAiOjE2MjQyNjc4NDZ9.a0c0qLz7pBzau4r_T9Tcy4O-UqQlL8IJMOF7ZjAqTZQ',
     };
     Map vars={
-      "productID":item.id,
+      "productID":item.id
     };
-    final response = await http.delete(url,headers: headers,body:vars );
+
+    var send=jsonEncode(vars);
+    final response = await http.delete(url,headers: headers,body:send);
     print(response.statusCode);
     var responseData = json.decode(response.body);
     print(responseData);
     if(response.statusCode==200)
     {
-      if(responseData.data=="Success")
+      if(responseData['message']=="Success")
         {
-          return true;
+          await removeItem(item);
+          return false;
         }
     }
-    return false;
+    return true;
   }
   Future addRequest(Product item)async
   {
     var url = Uri.parse("http://10.0.2.2:3000/watchlist");
     Map <String,String> headers={
       "Content-Type":"application/json; charset=utf-8",
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsInBhc3N3b3JkIjoiJDJiJDEyJFpuSGxxYXBBVkp6dlo1ZVc2d0JjeHUuOE01LnJFTm9kYUkwa1dvNWY3MXVsdlg1UHhlR3lHIn0sImlhdCI6MTYyNDA5OTk0MCwiZXhwIjoxNjI0MTg2MzQwfQ.TL0Zk9bh3NuM7m-5KwMlJAYWlwRRPiZHTuwIMQjqM38',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MTgxNDQ2LCJleHAiOjE2MjQyNjc4NDZ9.a0c0qLz7pBzau4r_T9Tcy4O-UqQlL8IJMOF7ZjAqTZQ',
     };
     Map vars={
       "productID":item.id,

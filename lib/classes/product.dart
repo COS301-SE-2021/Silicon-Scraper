@@ -24,7 +24,7 @@ class Product
       {
         this.stockAvailability=availability.notSpecified;
       }
-    else if(sAvailability.toLowerCase().compareTo("available") ==0)
+    else if(sAvailability.toLowerCase().compareTo("in stock") ==0)
       {
         this.stockAvailability=availability.available;
       }
@@ -32,7 +32,7 @@ class Product
       {
         this.stockAvailability=availability.limitedStock;
       }
-    else if(sAvailability.toLowerCase().compareTo("outofstock") ==0)
+    else if(sAvailability.toLowerCase().compareTo("out of stock") ==0)
     {
       this.stockAvailability=availability.outOfStock;
     }
