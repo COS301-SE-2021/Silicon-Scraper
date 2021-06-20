@@ -1,8 +1,7 @@
 import {Product} from "../utilities/productsModel";
-
-//const { Client, sql, Pool } = require('pg')
-const env = require('../../../config')
-const scraper = require("./scraper.ts");
+const env = require('../../config')
+//const scraper = require("./scraper.ts");
+import * as scraper from "../../src/main/scraper"
 const pgp = require('pg-promise')({
     /* initialization options */
     capSQL: true // capitalize all generated SQL

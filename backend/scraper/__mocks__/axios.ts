@@ -15,7 +15,7 @@
 //     headers: {},
 //     config: {},
 // }
-
+// mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
 // mockAxios.get.mockResolvedValue({mockedResponse} as  any);
 // // module.exports = {
 // //     get: jest.fn(() => Promise.resolve({data: d})),

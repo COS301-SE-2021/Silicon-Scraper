@@ -1,7 +1,7 @@
 import {Selectors} from "../utilities/selectors";
 import {Product} from "../utilities/productsModel";
 const cheerio = require("cheerio");
-const axios = require("axios");
+import axios from "axios"
 
 let url = require("../utilities/url.ts");
 let selectors = require("../utilities/selectors.ts").selectorsArray;
@@ -35,6 +35,7 @@ let jk = 0;
  */
 export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
     const html = await axios.get(webToScrape);
+    console.log(html)
     return getWebData(html.data, selector, baseUrl, type)
 }
 /**
@@ -66,7 +67,7 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:
  * @param $
  * @param selector
  */
-export const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string, data?: any) =>{
+const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string, data?: any) =>{
 
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
     let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())

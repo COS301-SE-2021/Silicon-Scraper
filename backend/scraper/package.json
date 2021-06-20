@@ -19,6 +19,8 @@
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^27.0.2",
     "cheerio": "^1.0.0-rc.9",
+    "dotenv": "^10.0.0",
+    "pg-promise": "^10.10.2",
     "source-map-loader": "^3.0.0"
   },
   "devDependencies": {
