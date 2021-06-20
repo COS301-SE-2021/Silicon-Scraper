@@ -35,7 +35,6 @@ let jk = 0;
  */
 export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
     const html = await axios.get(webToScrape);
-    console.log(html)
     return getWebData(html.data, selector, baseUrl, type)
 }
 /**
