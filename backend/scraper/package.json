@@ -16,16 +16,19 @@
     "@babel/preset-typescript": "^7.14.5",
     "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^27.0.2",
     "cheerio": "^1.0.0-rc.9",
+    "dotenv": "^10.0.0",
+    "pg-promise": "^10.10.2",
     "source-map-loader": "^3.0.0"
   },
   "devDependencies": {
+    "@types/node": "^15.12.4",
     "jest": "^27.0.4",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
+    "tslib": "^2.3.0",
     "typescript": "^3.9.9"
   }
 }
