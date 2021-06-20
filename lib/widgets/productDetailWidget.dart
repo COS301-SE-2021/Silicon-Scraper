@@ -108,16 +108,14 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
       ),
 //      bottomSheet: ,
       persistentFooterButtons: [ElevatedButton(onPressed: (){
-        setState(() {
+        setState(()async {
           if(!inWatch)
             {
-              watch.addItem(item);
-              inWatch=true;
+              inWatch=await watch.addRequest(item);
             }
           else if(inWatch)
           {
-            watch.removeItem(item);
-            inWatch=false;
+            inWatch=await watch.removeRequest(item);
           }
         });
       },  child:Icon(Icons.bookmark_outline_rounded,color: Colors.white,))

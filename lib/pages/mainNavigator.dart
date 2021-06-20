@@ -25,7 +25,7 @@ class MainNavigator extends StatefulWidget {
 }
 
 class _MainNavigatorState extends State<MainNavigator> {
-  int pageIndex=1;
+  int pageIndex=2;
   List<Widget> pageList=<Widget>[
     SearchPage(),
     WatchList(),

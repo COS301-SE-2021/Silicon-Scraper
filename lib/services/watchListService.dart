@@ -7,7 +7,7 @@ class WatchListService
 {
   List<Product> items=[];
 
-  Future watchListtRequest(bool mock)async
+  Future watchListRequest(bool mock)async
   {
     if(mock)
       {
@@ -15,11 +15,10 @@ class WatchListService
       }
     else
       {
-        var url = Uri.parse("http://localhost:3000/products/search?key=rtx&page=1&limit=20");
-//      var url = Uri.parse("http://localhost:3000/products/search?key=rtx&page=1&limit=20");
+        var url = Uri.parse("http://10.0.2.2:3000/watchlist");
         Map <String,String> headers={
           "Content-Type":"application/json; charset=utf-8",
-          "Bearer":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsInBhc3N3b3JkIjoiJDJiJDEyJFpuSGxxYXBBVkp6dlo1ZVc2d0JjeHUuOE01LnJFTm9kYUkwa1dvNWY3MXVsdlg1UHhlR3lHIn0sImlhdCI6MTYyNDA5OTk0MCwiZXhwIjoxNjI0MTg2MzQwfQ.TL0Zk9bh3NuM7m-5KwMlJAYWlwRRPiZHTuwIMQjqM38"
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MTgxNDQ2LCJleHAiOjE2MjQyNjc4NDZ9.a0c0qLz7pBzau4r_T9Tcy4O-UqQlL8IJMOF7ZjAqTZQ',
         };
         final response = await http.get(url,headers: headers);
         print(response.statusCode);
@@ -38,11 +37,11 @@ class WatchListService
   }
   Future setItems()async
   {
-    items=await watchListtRequest(true);
+    items=await watchListRequest(true);
     print("setItems");
-    return true;
+    return items;
   }
-  void addItem(Product p)
+  void addItem(Product p)async
   {
     bool contains=false;
     for(Product e in items)
@@ -58,7 +57,7 @@ class WatchListService
         items.add(p);
       }
   }
-  void removeItem(Product p)
+  Future removeItem(Product p) async
   {
     bool contains=false;
     for(var e in items)
@@ -70,15 +69,18 @@ class WatchListService
     }
     if(contains)
     {
-      items.remove(p);
+          items.remove(p);
     }
-  }
+    else
+      {
+      return false;
+    }
 
+  }
   Future<List<Product>> getProductlist()
   {
     return Future.value(items);
   }
-
   bool findItem(Product p)
   {
     for(var e in items)
@@ -89,6 +91,59 @@ class WatchListService
       }
     }
      return false;
+  }
+  Future removeRequest(Product item)async
+  {
+    var url = Uri.parse("http://10.0.2.2:3000/watchlist");
+    Map <String,String> headers={
+      "Content-Type":"application/json; charset=utf-8",
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MTgxNDQ2LCJleHAiOjE2MjQyNjc4NDZ9.a0c0qLz7pBzau4r_T9Tcy4O-UqQlL8IJMOF7ZjAqTZQ',
+    };
+    Map vars={
+      "productID":item.id,
+      "type":item.type
+    };
+
+    var send=jsonEncode(vars);
+    final response = await http.delete(url,headers: headers,body:send);
+    print(response.statusCode);
+    var responseData = json.decode(response.body);
+    print(responseData);
+    if(response.statusCode==200)
+    {
+      if(responseData['message']=="Success")
+        {
+//          await removeItem(item);
+          return false;
+        }
+    }
+    return true;
+  }
+  Future addRequest(Product item)async
+  {
+    var url = Uri.parse("http://10.0.2.2:3000/watchlist");
+    Map <String,String> headers={
+      "Content-Type":"application/json; charset=utf-8",
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MTgxNDQ2LCJleHAiOjE2MjQyNjc4NDZ9.a0c0qLz7pBzau4r_T9Tcy4O-UqQlL8IJMOF7ZjAqTZQ',
+    };
+    Map vars={
+      "productID":item.id,
+      "type":item.type
+    };
+    var send=jsonEncode(vars);
+    final response = await http.post(url,headers: headers,body:send );
+    print(response.statusCode);
+    var responseData = json.decode(response.body);
+    print(responseData);
+    if(response.statusCode==200)
+    {
+      if(responseData['message']=="Success")
+      {
+//        await addItem(item);
+        return true;
+      }
+    }
+    return false;
   }
 
 }

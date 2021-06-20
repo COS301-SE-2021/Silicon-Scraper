@@ -1,20 +1,31 @@
-import axios from "axios";
+//import { mockAxios } from "../../__mocks__/axios";
 import * as scraper  from "../../src/main/scraper";
+import { urls } from "../../__mocks__/urlMock";
+import axios from "axios"
 import { selectorsArray } from "../../src/utilities/selectors";
+const url = require("../../src/utilities/url")
+
+const eve = require("../../__mocks__/mockUrl")
+// Mock axios
+jest.mock("axios")
+
+let d: string = eve.getMockData()
+
+const mockAxios = axios as jest.Mocked<typeof axios>;
+
+const mockedResponse = {
+    data: d,
+    status: 200,
+    statusText: "OK",
+    headers: {},
+    config: {},
+}
+
+mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
+
+
 //const scrape = require('../../src/main/scraper');
 
-// const eve = require("../../__mocks__/mockUrl")
-// jest.mock('axios');
-// const mockAxios = axios as jest.Mocked<typeof axios>;
-
-// let d = eve.getEveTechMockUrl()
-// export const mockedResponse = {
-//     data: d,
-//     status: 200,
-//     statusText: "OK",
-//     headers: {},
-//     config: {},
-// }
 // jest.mock('../../src/utilities/selectors', () => ({
 //     getAvailabilitySelector: jest.fn().mockImplementation(() => {return 'availabilty_selector'}),
 //     getLinkSelector: jest.fn().mockImplementation(() => "link_selector"),
@@ -30,6 +41,7 @@ describe("scraperTest()", () => {
     let title: string; 
     let parsedTitle: any;
     let trimedPrice: number;
+
     beforeEach(() => {
         jest.resetModules();
         jest.clearAllMocks();
@@ -38,10 +50,14 @@ describe("scraperTest()", () => {
         trimedPrice = scraper.trimPrice("from R 50000");
       });
     
-     
+    afterAll(done => {
+        done();
+    })
+    
+
     const index = 0;
     const select = [
-        selectorsArray[0].getAvailabilitySelector(),
+       // selectorsArray[0].getAvailabilitySelector(),
     //    elector[1].getAvailabilitySelector(),
     //    selector.selectorsArray[0].getLinkSelector(index),
     //    selector.selectorsArray[0].getImageSelector(index),
@@ -65,39 +81,50 @@ describe("scraperTest()", () => {
     })
 
     test("Returns trimed price", () => {
-        expect(trimedPrice).toEqual(50000);
+        expect(trimedPrice).toEqual(50000)
+        expect(scraper.trimPrice("50000")).toEqual(undefined);
+    })
+
+    test("Should concatenate base url", () => {
+        let urlOld = "../collections/gpus"
+        const base = "https://baseUrl.com/"
+        let expected = base+"collections/gpus"
+        const concat = scraper.concatUrl(urlOld, base);
+        expect(concat).toBe(expected);
+
+        urlOld = "/p/collections"
+        expected = base+urlOld
+        expect(scraper.concatUrl(urlOld, base)).toBe(expected)
+    })
+
+    test("Should produce concatenation error", () => { // this should fail
+        expect(scraper.concatUrl("", "")).toBe("");
+        expect(scraper.concatUrl(undefined, "baseurl")).toBe("https://www.evetech.co.za/")
     })
     
-    test.skip('Should return array of products', async () =>{
-        //const products = await scraper.scrape();
-        // mockAxios.get.mockResolvedValueOnce(mockedResponse);
-        // expect(mockAxios.get).toHaveBeenCalledTimes(2);
-        // expect(mockAxios.get).toHaveBeenNthCalledWith(1,'https://www.evetech.co.za/components/nvidia-ati-graphics-cards-21.aspx')
-        // expect(mockAxios.get).toHaveBeenNthCalledWith(2, 'https://www.evetech.co.za/components/buy-cpu-processors-online-164.aspx')
-        // expect(selectorsArray[0].getTableSelector).toHaveBeenCalled();
-        select.forEach(element => {
+    test('Should return array of products', async () =>{
+        let product;
+        urls.forEach(element => {
             expect(element).toBeTruthy();
         });
-       //expect(products).not.toBeNull();
-    })
-
-    test.skip("fetches data successfully", async () =>{
-        const expected = {
-            image: "image",
-            brand: "brand",
-            model: "model",
-            price: "test",
-            availability: "availability",
-            link: "link",
-            retailer: "retailer"
-        };
-
-        //const data = eve.getEveTechMockUrl();
-
-       // mockAxios.get.mockResolvedValueOnce( data )(() => Promise.resolve(data));
-        // const product = await scrape.scrape();
-        // expect(product).toEqual(expect.arrayContaining([]));
-    
+        for(let i = 0; i<urls.length; i++){
+            product = await scraper.scrapeSilon(urls[i](), selectorsArray[0], "https://www.evetech.co.za/", urls[i]().type);
+            expect(urls[i]).toBeCalled();
+        }
+        
+        expect(mockAxios.get).toHaveBeenCalled();
+        for(let i = 0; i<urls.length; i++){
+            expect(mockAxios.get).toHaveBeenCalledWith(urls[i]());
+        }
+        
+        expect(product).toEqual(expect.arrayContaining([]))
+        expect(product).not.toBeNull();
+        expect(product?.cpu).not.toBeNull();
+        expect(product?.gpu).not.toBeNull();
+       
+        // expect(selectorsArray[0].getTableSelector).toHaveBeenCalled();
+        
+       
     })
 })
 

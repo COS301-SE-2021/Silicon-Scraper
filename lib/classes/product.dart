@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 class Product
 {
+  final String type;
+  final String id;
   final String brand;
   final String model;
   final double price;
@@ -16,13 +18,13 @@ class Product
   availability stockAvailability;
 
   Product(this.brand, this.model, this.price, this.retailer, this.description,
-      this.url, this.photo,String sAvailability)
+      this.url, this.photo,String sAvailability,this.id,this.type)
   {
     if(sAvailability==null)
       {
         this.stockAvailability=availability.notSpecified;
       }
-    else if(sAvailability.toLowerCase().compareTo("available") ==0)
+    else if(sAvailability.toLowerCase().compareTo("in stock") ==0)
       {
         this.stockAvailability=availability.available;
       }
@@ -30,7 +32,7 @@ class Product
       {
         this.stockAvailability=availability.limitedStock;
       }
-    else if(sAvailability.toLowerCase().compareTo("outofstock") ==0)
+    else if(sAvailability.toLowerCase().compareTo("out of stock") ==0)
     {
       this.stockAvailability=availability.outOfStock;
     }

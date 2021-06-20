@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/services/explorePageService.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 //import 'package:silicon_scraper/pages/searchPage.dart'; //add search functionality
 
@@ -19,6 +20,7 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
+  ExplorePageSingleton explore= ExplorePageSingleton.getState();
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -48,7 +50,7 @@ class _ExploreState extends State<Explore> {
       ),
       body: Container(
         child: FutureBuilder(
-            future: getProducts(),
+            future:explore.setItems(),
           builder: (BuildContext context,AsyncSnapshot snapshot){
               if(snapshot.connectionState==ConnectionState.none)
                 {
