@@ -5,12 +5,7 @@ import 'package:silicon_scraper/classes/product.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/services/searchService.dart';
 
-class SearchPage extends StatefulWidget {
-  @override
-  _SearchPage createState() => _SearchPage();
-}
-
-class _SearchPage extends State<SearchPage> {
+class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -114,8 +109,6 @@ class ProductSearch extends SearchDelegate<String> {
                   ),
                 );
               } else {
-                // get results from the query (after user presses enter/ clicks on a suggestion)
-                //List<Product> products = testResults(snapshot.data, query);
                 if (snapshot.data == null) {
                   return buildNoResults();
                 }
@@ -140,12 +133,12 @@ class ProductSearch extends SearchDelegate<String> {
                 if (snapshot.hasError || snapshot.data.isEmpty) {
                   return buildNoSuggestions();
                 } else {
-                  List<String> productBrandOrModel =
+                  List<String> productSuggestions =
                       getSuggestions(snapshot.data, query);
-                  if (productBrandOrModel.isEmpty) {
+                  if (productSuggestions.isEmpty) {
                     return buildNoSuggestions();
                   }
-                  return buildSuggestionsSuccess(productBrandOrModel);
+                  return buildSuggestionsSuccess(productSuggestions);
                 }
             }
           },
