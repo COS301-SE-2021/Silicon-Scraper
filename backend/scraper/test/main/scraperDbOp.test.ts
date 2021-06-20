@@ -106,7 +106,7 @@ describe("Database operations tests", () => {
         done();
     })
 
-    test("should return product when found in database", async () =>{
+    test("database updated with valid porduct", async () =>{
         mockScrape.mockResolvedValue({
                 gpu: gpus, 
                 cpu: cpus
@@ -119,9 +119,10 @@ describe("Database operations tests", () => {
         return getProducts().then(products => {
             expect(scrape).toBeCalled();
         });
-       //
 
-        //await update(products);
+    })
+
+    test("database not updated with invalid product", async () => {
 
     })
 
