@@ -14,12 +14,12 @@ group("product class test",(){
       Product gpu=new Product("", "", 0, "", "", "", "", "hfyudb","1","gpu");
       expect( gpu.stockAvailability,availability.notSpecified);
     });
-    test('product availability is available attribute should be available', (){
-      Product gpu=new Product("", "", 0, "", "", "", "", "avaIlable","1","gpu");
+    test('product in stock is available attribute should be available', (){
+      Product gpu=new Product("", "", 0, "", "", "", "", "in stock","1","gpu");
       expect(gpu.stockAvailability,availability.available);
     });
-    test('product availability is outofstock attribute should be outOfStock', (){
-      Product gpu=new Product("", "", 0, "", "", "", "", "ouTOfStock","1","gpu");
+    test('product availability is out of stock attribute should be outOfStock', (){
+      Product gpu=new Product("", "", 0, "", "", "", "", "out of stock","1","gpu");
       expect(gpu.stockAvailability,availability.outOfStock);
     });
     test('product availability is limitedstock attribute should be limitedStock', (){
@@ -29,12 +29,12 @@ group("product class test",(){
   });
 
   group("test get availability", (){
-    test("availability is available should return availbale",(){
-      Product gpu=new Product("", "", 0, "", "", "", "", "avaIlable","1","gpu");
+    test("availability is in stock should return availbale",(){
+      Product gpu=new Product("", "", 0, "", "", "", "", "in stock","1","gpu");
       expect(gpu.getAvailability(),"available");
     });
-    test('availability is outOfStock should return out of stock', (){
-      Product gpu=new Product("", "", 0, "", "", "", "", "ouTOfStock","1","gpu");
+    test('availability is out of stock should return out of stock', (){
+      Product gpu=new Product("", "", 0, "", "", "", "", "out of stock","1","gpu");
       expect(gpu.getAvailability(),"out of stock");
     });
     test('availability is limitedStock should return limited stock', (){
