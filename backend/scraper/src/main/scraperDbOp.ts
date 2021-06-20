@@ -25,9 +25,15 @@ const cs_ = new pgp.helpers.ColumnSet(['brand','model','price','retailer','image
 export const getProducts =  async () => { //needs to be tested
     await scraper.scrape().then((products: any) => {
 
-        update(products).then(res => {
-            console.log("200 ok")
-        })
+        if(!products || products.gpus.length == 0 || products.cpus.length == 0){
+            throw new Error("Empty products")
+
+        }else {
+            update(products).then(res => {
+                console.log("200 ok")
+            })
+        }
+
     })
 }
 
@@ -119,9 +125,13 @@ const deleteProduct = async (id_:any, table:any) => {   //needs to be tested
  */
 const updateProducts = async (results:any, products:Product[], table:string)=>{ //needs to be tested
     for( const rkey in results) {
+        let contains = false
+        let prod:any = {};
         for (const pkey in products) {
+            prod = products[pkey]
             if (products[pkey].model === results[rkey].model && products[pkey].brand === results[rkey].brand && products[pkey].retailer === results[rkey].retailer) {
                 let avail = false;
+                contains = true;
                 //Update the availability and/or price if it changed
 
                 if(!(products[pkey].availability === results[rkey].availability)){
@@ -140,7 +150,7 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{ 
                     let newDate = products[pkey].details.productDetails[0].datetime.split('-')[1]
                     let currDay = results[rkey].details.productDetails[0].datetime.split('-')[2]
                     let newDay = products[pkey].details.productDetails[0].datetime.split('-')[2]
-                    let timeInDb = (Number(newDate) - Number(currentDate))*3+ Number(currDay) + Number(newDay)
+                    let timeInDb = Math.abs(Number(newDate) - Number(currentDate))*3+ Number(currDay) + Number(newDay)
 
                     if(timeInDb >= 90){
                         //This item is stale and had its availability has not been updated, it must be removed from the database
@@ -155,8 +165,20 @@ const updateProducts = async (results:any, products:Product[], table:string)=>{ 
                 }
             }
         }
+
+        if(!contains)
+           await insert(prod, table)
     }
 }
-
-
+/**
+ *
+ * @param prod
+ * @param table
+ */
+const insert = (prod:Product, table:string)=>{
+    db.none('INSERT INTO $1:raw (brand, model , price , retailer , image , link , availability , details ,  type ,  description ) ' +
+        'VALUES ($2, $3, $4, $5, $6, $7, $8, $9, $10, $11)', [
+        table,  prod.brand, prod.model, prod.price , prod.retailer , prod.image , prod.link , prod.availability , prod.details ,  prod.type ,  prod.description
+    ])
+}
 
