@@ -56,16 +56,6 @@ describe("scraperTest()", () => {
     
 
     const index = 0;
-    const select = [
-       // selectorsArray[0].getAvailabilitySelector(),
-    //    elector[1].getAvailabilitySelector(),
-    //    selector.selectorsArray[0].getLinkSelector(index),
-    //    selector.selectorsArray[0].getImageSelector(index),
-    //    selector.selectorsArray[0].getTitleSelector(index),
-    //    selector.selectorsArray[0].getTableSelector(),
-    //    selector.selectorsArray[0].getPriceSelector(),
-    //    selector.selectorsArray[0].getRowSelector()
-    ]
 
     test("Should not return empty string", () => {
         expect(parsedTitle).toEqual(expect.not.stringMatching(/^$/));

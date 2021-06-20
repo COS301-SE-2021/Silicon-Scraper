@@ -23,7 +23,7 @@ export const getAmpTekUrl = () =>{
 export const getAmpTekGpuUrl = () =>{
     return {
         urls:["https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/?count=36&paged=",
-        "https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/page/2/?count=36"],
+        "https://amptek.co.za/product-category/hardware/computer-components/graphic-cards-gpu/"],
 
         "type":"gpu"
     }
