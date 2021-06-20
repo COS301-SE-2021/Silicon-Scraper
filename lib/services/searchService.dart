@@ -74,3 +74,73 @@ List<String> getSuggestions(List<Product> unProcessedProducts, String query) {
   return productSuggestions;
 }
 
+List<Product> applyFilters(
+    List<Product> product,
+    bool available,
+    bool limitedStock,
+    bool outOfStock,
+    bool notSpecified,
+    double maxPrice,
+    double minPrice,
+    bool retailer1,
+    bool retailer2,
+    bool retailer3) {
+  List<Product> filteredProducts = [];
+
+  bool add = false;
+  for (int i = 0; i < product.length; i++) {
+    // product can only be added if it applies to all the filters chosen
+
+    // check availability
+    // 1. check which filters are true
+    // 2. if its true check each product
+    if (available) {
+      if (product.elementAt(i).getAvailability().compareTo("available") == 0) {
+        add = true;
+      }
+    } else if (limitedStock) {
+      if (product.elementAt(i).getAvailability().compareTo("limited stock") ==
+          0) {
+        add = true;
+      }
+    } else if (outOfStock) {
+      if (product.elementAt(i).getAvailability().compareTo("out of stock") ==
+          0) {
+        add = true;
+      }
+    } else if (notSpecified) {
+      if (product.elementAt(i).getAvailability().compareTo("not specified") ==
+          0) {
+        add = true;
+      }
+    }
+
+    //check for products within price range
+    if (product.elementAt(i).price >= minPrice &&
+        product.elementAt(i).price <= maxPrice) {
+      add = true;
+    }
+
+    // check retailer
+    if (retailer1) {
+      if (product.elementAt(i).retailer.toLowerCase().contains("evetech")) {
+        add = true;
+      }
+    } else if (retailer2) {
+      if (product.elementAt(i).retailer.toLowerCase().contains("dreamware")) {
+        add = true;
+      }
+    } else if (retailer3) {
+      if (product.elementAt(i).retailer.toLowerCase().contains("amptek")) {
+        add = true;
+      }
+    }
+
+//add product that applies to the filters
+    if (add) {
+      filteredProducts.add(product.elementAt(i));
+    }
+    add = false;
+  }
+  return filteredProducts;
+}
