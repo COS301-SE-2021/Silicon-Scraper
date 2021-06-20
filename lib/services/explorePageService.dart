@@ -40,7 +40,7 @@ class ExplorePageService
   }
 
   Future setItems()async {
-    items=await explorePageRequest(false);
+    items=await explorePageRequest(true);
     print("setItems");
     return items;
   }
