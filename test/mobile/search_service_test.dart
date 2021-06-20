@@ -91,26 +91,20 @@ import 'package:silicon_scraper/services/searchService.dart';
 
 void main() {
     group("testing search service (currently in getProducts for now)",(){
-//
-// List<Product> getResults(List<Product> unProcessedProducts, String query) {
-//   List<Product> products = [];
-//   for (int i = 0; i < unProcessedProducts.length; i++) {
-//     if (containsIgnoreCase(unProcessedProducts.elementAt(i).brand, query) ||
-//         containsIgnoreCase(unProcessedProducts.elementAt(i).model, query)) {
-//       products.add(unProcessedProducts.elementAt(i));
-//     }
-//   }
-//   return products;
-// }
-      test("testing if the query is contained in model or brand of an x item",(){
+
+      test("testing if the query is contained in model or brand of an x item... to return true",(){
         bool contained = containsIgnoreCase("modelOrBrand", "or");
         expect(contained, true);
       });
-      test("testing get results service ",(){
-        List data=[];
-        var list=addProducts(data);
-        expect(list.length, 0);
+      test("testing if the query is contained in model or brand of an x item... to return false",(){
+        bool contained = containsIgnoreCase("modelOrBrand", "tanaa");
+        expect(contained, false);
       });
+      // test("testing get results service ",(){
+      //   List data=[];
+      //   var list=addProducts(data);
+      //   expect(list.length, 0);
+      // });
       // test("testing that the data is correct for the first element",(){
       //   var list=addProducts(JSONData());
       //   expect(list[0].brand,"MSI GeForce RTX 3090");
