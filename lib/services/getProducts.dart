@@ -53,6 +53,7 @@ bool containsIgnoreCase(String modelOrBrand, String query) {
   return modelOrBrand.toLowerCase().contains(query.toLowerCase());
 }
 
+
 List<Product> getResults(List<Product> unProcessedProducts, String query) {
   List<Product> products = [];
   for (int i = 0; i < unProcessedProducts.length; i++) {
@@ -65,16 +66,14 @@ List<Product> getResults(List<Product> unProcessedProducts, String query) {
 }
 
 List<String> getSuggestions(List<Product> unProcessedProducts, String query) {
-  List<String> productBrandOrModel = [];
+  List<String> productSuggestions = [];
   for (int i = 0; i < unProcessedProducts.length; i++) {
-    if (containsIgnoreCase(unProcessedProducts.elementAt(i).brand, query)) {
-      productBrandOrModel.add(unProcessedProducts.elementAt(i).brand);
-    } else if (containsIgnoreCase(
+    if (containsIgnoreCase(unProcessedProducts.elementAt(i).brand, query) || containsIgnoreCase(
         unProcessedProducts.elementAt(i).model, query)) {
-      productBrandOrModel.add(unProcessedProducts.elementAt(i).model);
+      productSuggestions.add(unProcessedProducts.elementAt(i).brand);
     }
   }
-  return productBrandOrModel;
+  return productSuggestions;
 }
 
 List<Product> applyFilters(
