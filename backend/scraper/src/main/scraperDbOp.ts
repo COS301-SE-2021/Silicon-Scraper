@@ -25,23 +25,26 @@ export const dataOps = (db=db_) => {
 
      const getProducts = async () => { //needs to be tested
 
-        await scraper.scrape().then((products: any) => {
+        await scraper.scrape().then(async (products: any) => {
 
-            if (products === undefined) {
+            if (products.gpu.length == 0 || products.cpu.length == 0) {
                 throw new Error("Empty products")
 
             } else {
                 //console.log(products)
-                update(products).then(res => {
-                    console.log("200 ok")
+                await update(products).then(res => {
+                    return ("200 ok")
                 })
+                return("updated products")
             }
 
         })
+
+         return("Successful update")
     }
 
-    getProducts().then(() => {
-        console.log("successful")
+    getProducts().then((data) => {
+        console.log(data)
     })
 
     /**
@@ -77,8 +80,11 @@ export const dataOps = (db=db_) => {
         await db.any('SELECT * FROM $1:raw', table).then(async (result: any) => {
             if (result.length === 0) {
                 //insert(products)
-                if (table === "gpus")
+                if (table === "gpus"){
+
                     await exeQuery(pgp.helpers.insert(products, cs))
+                }
+
 
                 else if (table === "cpus")
                     await exeQuery(pgp.helpers.insert(products, cs_))
@@ -194,7 +200,8 @@ export const dataOps = (db=db_) => {
         updateDetails,
         deleteProduct,
         updateProducts,
-        insert
+        insert,
+        queryProducts
     }
 }
 
