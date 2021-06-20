@@ -291,7 +291,7 @@ class ProductSearch extends SearchDelegate<String> {
                     },
                   ),
                   CheckboxListTile(
-                    title: const Text('WootWare'),
+                    title: const Text('Dreamware'),
                     value: this.retailer2,
                     onChanged: (bool value) {
                       _setState(() {
@@ -300,7 +300,7 @@ class ProductSearch extends SearchDelegate<String> {
                     },
                   ),
                   CheckboxListTile(
-                    title: const Text('PC Link'),
+                    title: const Text('Amptek'),
                     value: this.retailer3,
                     onChanged: (bool value) {
                       _setState(() {
