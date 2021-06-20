@@ -32,7 +32,7 @@ export const getProducts =  async () => { //needs to be tested
     })
 }
 
-getProducts().then(() => {
+ getProducts().then(() => {
     console.log("successful")
 })
 
