@@ -1,7 +1,6 @@
 
  JSONData(){
-  return {
-    "products": [
+  return  [
       {
         "brand":"MSI GeForce RTX 3090" ,
         "model":"SUPRIM X 24GB GDDR6X Graphics Card" ,
@@ -72,6 +71,5 @@
         "image": "https://www.evetech.co.za/repository/ProductImages/asus-geforce-rtx-3060-oc-tuf-12gb-gddr6-400px-v1.jpg",
         "availability":"notspecified"
       }
-    ]
-  };
+    ];
 }
