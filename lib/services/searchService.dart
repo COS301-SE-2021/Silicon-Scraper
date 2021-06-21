@@ -80,8 +80,8 @@ List<Product> applyFilters(
     bool limitedStock,
     bool outOfStock,
     bool notSpecified,
-    double maxPrice,
     double minPrice,
+    double maxPrice,
     bool retailer1,
     bool retailer2,
     bool retailer3) {

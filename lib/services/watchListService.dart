@@ -37,7 +37,7 @@ class WatchListService
   }
   Future setItems()async
   {
-    items=await watchListRequest(false);
+    items=await watchListRequest(true);
     print("setItems");
     return items;
   }
