@@ -55,8 +55,7 @@ describe("scraper database operations", () =>{
         const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
         const scraper_ = jest.spyOn(scraper,'scrape')
         await dataOps(db).getProducts()
-        await expect(scraper_)
 
-})
+   })
 
 })
