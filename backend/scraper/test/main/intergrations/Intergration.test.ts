@@ -19,7 +19,6 @@ const mockedResponse = {
 
 mockAxios.get = jest.fn().mockResolvedValue(mockedResponse)
 
-
 let pgp = jest.fn(() => ({
     none: jest.fn(() => Promise.resolve()) ,
     any: jest.fn(() => Promise.resolve([])),
@@ -33,15 +32,18 @@ let pgp = jest.fn(() => ({
     })
 }))
 
-
 let db = pgp()
 
-
-
 describe("scraper database operations", () =>{
+    beforeEach(() => {
+        jest.resetModules();
+        jest.clearAllMocks();
+    });
+
      test("Testing the intergration between scraper and scraperDataOperations", async () => {
          expect (await dataOps(db).getProducts()).toEqual("Successful update")
      })
+
 
     test("Getproducts should call scrape only once", async () => {
         const scraper_ = jest.spyOn(scraper,'scrape')
@@ -54,8 +56,18 @@ describe("scraper database operations", () =>{
 
         const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
         const scraper_ = jest.spyOn(scraper,'scrape')
-        await dataOps(db).getProducts()
+        return await dataOps(db).getProducts().then(async () => {
+            await expect(scraper_).toHaveBeenCalledTimes(3)
+        })
 
    })
+
+    test("If the scrape return data when called by the get products", async () =>{
+        const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
+        const scraper_ = jest.spyOn(scraper,'scrape')
+        return await dataOps(db).getProducts().then(async () => {
+        expect(scraper_).toHaveReturned()
+        })
+    })
 
 })
