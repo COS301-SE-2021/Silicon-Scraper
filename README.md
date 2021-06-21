@@ -17,7 +17,7 @@ add it to a watch list to be notified of any changes in price or availability et
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/COS301-SE-2021/Silicon-Scraper)](https://github.com/COS301-SE-2021/Silicon-Scraper/pulls)
 [![GitHub Flutter Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Dart?label=Flutter%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Dart?label=Flutter%20Build)
 [![GitHub API Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=API%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=API%20Build)
-[![GitHub Scraper Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Node.js%20CI?label=Scraper)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Node.js%20CI?label=Scraper)
+[![GitHub Scraper Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Scraper%20CI/master?label=Scraper%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Scraper%20CI/master?label=Scraper%20Build)
 [![Coverage Status](https://coveralls.io/repos/github/COS301-SE-2021/Silicon-Scraper/badge.svg?branch=master&style=for-the-badge)](https://coveralls.io/github/COS301-SE-2021/Silicon-Scraper?branch=master)
 ## Contents 
 - [Demo 1](#demo-1)
@@ -28,6 +28,12 @@ add it to a watch list to be notified of any changes in price or availability et
 ## Demo 1
 - [Bug Busters Inc-Demo 1](https://drive.google.com/file/d/1BzEwC8Sf2_5Gp3KvHEA-UuNh6RIt4tN7/view?usp=sharing)
 - [SRS document](https://drive.google.com/file/d/19dqh565O4LM0uwT4G8P8wQwiJxE7A-iE/view?usp=sharing)
+
+## Demo 2
+- [Bug Busters Inc-Demo 2](https://drive.google.com/file/d/1cchFs_trKshNYPezOdB0GZxAqkR32yfc/view?usp=sharing)
+- [SRS document](https://drive.google.com/file/d/1hfjHRmtQ-GGJUUo7QJy-FRRyZkLg6ADi/view?usp=sharing)
+- [User manual](https://drive.google.com/file/d/19kM9zs_i-K42ISxDN-ZQtg89MC0fT3Wz/view?usp=sharing)
+- [Coding Standards](https://drive.google.com/file/d/1Xz1MYEKZbJ4Opc4wdHBSLzlEFQ_hjpr6/view?usp=sharing)
 
 ## Project Management Tools
 - [Discord (Communication tools)](https://discord.gg/xpsn3YRn)
