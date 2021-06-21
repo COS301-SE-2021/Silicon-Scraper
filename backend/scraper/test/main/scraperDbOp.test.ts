@@ -1,139 +1,148 @@
-// import {update, queryProducts, getProducts} from "../../src/main/scraperDbOp";
-// import axios from "axios";
-// import { scrape, scrapeSilon } from "../../src/main/scraper";
-// import { Product } from "../../src/utilities/productsModel";
-// //import { scrape } from "../../src/main/scraper";
-// //import { scrape } from "../../__mocks__/scraper";
+import {dataOps} from "../../src/main/scraperDbOp";
+import axios from "axios";
+import { scrape, scrapeSilon } from "../../src/main/scraper";
+import { Product } from "../../src/utilities/productsModel";
 
-// const eve = require("../../__mocks__/mockUrl")
-// // Mock axios
-// jest.mock("axios")
+const eve = require("../../__mocks__/mockUrl")
+// Mock axios
+jest.mock("axios")
 
-// let d: string = eve.getMockData()
+let d: string = eve.getMockData()
 
-// const mockAxios = axios as jest.Mocked<typeof axios>;
+const mockAxios = axios as jest.Mocked<typeof axios>;
 
-// const mockedResponse = {
-//     data: d,
-//     status: 200,
-//     statusText: "OK",
-//     headers: {},
-//     config: {},
-// }
+const mockedResponse = {
+    data: d,
+    status: 200,
+    statusText: "OK",
+    headers: {},
+    config: {},
+}
 
-// mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
+mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
 
-// const gpus = [{
-//     image: "gpuTitle", 
-//     brand: "gpubrand",
-//     model: "gpuModel",
-//     price: "gpuPrice",
-//     availability: "gpuAvailabilty",
-//     link: "gpuLink",
-//     retailer: "gpuRetailer",
-//     details: {
-//         productDetails: [
-//             {
-//                 dateTime: "dateTime",
-//                 price: "500000",
-//                 availabilty: "gpuAvailabilty"
-//             }
-//         ]
-//     },
-//     type: "gpu",
-//     description: "gpuDescr"
-// }]
+const gpus: Product[] = [{
+    image: "gpuTitle", 
+    brand: "gpubrand",
+    model: "gpuModel",
+    price: 500000,
+    availability: "gpuAvailabilty",
+    link: "gpuLink",
+    retailer: "gpuRetailer",
+    details: {
+        productDetails: [
+            {
+                datetime: "dateTime",
+                price: 500000,
+                availability: "gpuAvailabilty"
+            }
+        ]
+    },
+    type: "gpu",
+    description: "gpuDescr"
+}]
 
-// const cpus = [{
-//     image: "cpuTitle", 
-//     brand: "cpubrand",
-//     model: "cpuModel",
-//     price: "cpuPrice",
-//     availability: "cpuAvailabilty",
-//     link: "cpuLink",
-//     retailer: "cpuRetailer",
-//     details: {
-//         productDetails: [
-//             {
-//                 dateTime: "dateTime",
-//                 price: "500004",
-//                 availabilty: "cpuAvailabilty"
-//             }
-//         ]
-//     },
-//     type: "cpu",
-//     description: ""
-// }]
+const cpus: Product[] = [{
+    image: "cpuTitle", 
+    brand: "cpubrand",
+    model: "cpuModel",
+    price: 400000,
+    availability: "cpuAvailabilty",
+    link: "cpuLink",
+    retailer: "cpuRetailer",
+    details: {
+        productDetails: [
+            {
+                datetime: "dateTime",
+                price: 400000,
+                availability: "cpuAvailabilty"
+            }
+        ]
+    },
+    type: "cpu",
+    description: ""
+}]
 
-// const product: Product = {
+jest.mock("../../src/main/scraper.ts")
 
-// }
-// jest.mock("../../src/main/scraper.ts")
+const mockScrape = scrape as jest.MockedFunction<typeof scrape>
+const mockScrapeSilon = scrapeSilon as jest.MockedFunction<typeof scrapeSilon>
 
-// const mockScrape = scrape as jest.MockedFunction<typeof scrape>
-// const mockSCrapeSilon = scrapeSilon as jest.MockedFunction<typeof scrapeSilon>
+jest.mock("pg-promise")
 
-// mockScrape.mockResolvedValue({
-//     gpu: gpus, 
-//     cpu: cpus
-// })
+describe("Database operations tests", () => {
+    let products: any;
+    let dbOps: any;
+    let pg; 
+    let db: any;
+    pg = jest.fn(() => ({
+        none: jest.fn().mockResolvedValue(Promise.resolve()),
+        any: jest.fn().mockReturnValue((query: any) => Promise.resolve([]))
+    }))
 
+    beforeEach(() =>{
+        jest.resetModules();
+        jest.resetAllMocks();
+        products = [{
+            gpu: gpus,
+            cpu: cpus
+        }]
 
-// //const pgp = pg-promise as jest.Mocked<typeof pg-promis>;
+        dbOps = dataOps(db);
 
-// let pgp = jest.fn(() => ({
-//     none: jest.fn(),
-//     any: jest.fn(),
-//     as: jest.fn(() => {
-//         format:jest.fn()
+        mockScrape.mockResolvedValue({
+            gpu: gpus, 
+            cpu: cpus
+        })
+    
+    })
+    db = pg();
 
-//     }),
-//     helpers:jest.fn(() => {
-//         ColumnSet:jest.fn()
-//     })
-// }))
-
-// jest.mock('pg-promise');
-
-// let db = pgp()
-
-// describe("Database operations tests", () => {
-//     let products: any;
-//     beforeEach(() =>{
-//         jest.resetModules();
-//         jest.resetAllMocks();
-//         products = {
-//             gpus: gpus,
-//             cpus: cpus
-//         }
-//     })
-
-//     afterAll((done) => {
-//         done();
-//     })
-
-//     test("should return product when found in database", async () =>{
+    test("database updated with valid product", async () =>{
+        return dbOps.getProducts().then(async () => {
+            await expect(scrape).toBeCalled();
+           // await expect(scrape).toHaveBeenCalledTimes(1);
+            expect(db.any).toBeCalled();
+            expect(db.any.mock.calls[0]).not.toBeNull();
+        }).catch((e: any) => {})
         
-//         // jest.mock("../../src/main/scraper.ts")
-//         // let scrapeMock = scrape as jest.MockedFunction<typeof scrape>
-//         // scrapeMock = jest.fn().mockResolvedValueOnce(Promise.resolve({products}));
+    })
 
-//        await getProducts();
+    test("database not updated with invalid product", async () => {
+        let gpu: Product[] = [];
+        mockScrape.mockResolvedValueOnce({
+            gpu: gpu,
+            cpu: gpu
+        })
 
-//        // await update(products);
+        await expect(Promise.reject(dbOps.getProducts())).rejects.not.toThrow('octopus').catch((e)=>{});
 
-//     })
-
-//     test("should 404 when not found", () => {
+        return dbOps.getProducts().then(async () => {
+            expect(scrape).toBeCalled();
+            expect(db.any).toBeCalled();
+            expect(db.any.mock.calls.length).toBe(1);
+        }).catch((e: any) => {})
+           
         
-//     })
+    })
 
-// })
-
-describe("Testing the data operation",  () => {
-    test("should 404 when not found", () => {
+    test("update with valid product", async () => {
+        return dbOps.update({gpu: gpus, cpu: cpus}).then(() => {
+            expect(db.any.mock.calls.length).toBe(1);
+            expect(db.any.mock.calls[0]).not.toBeNull();
+            expect(db.none.mock.calls.length).toBe(1);
+        }).catch((e: any) => {})
         
-           })
+    })
 
+
+    test("Execute query fails", async () => {
+        db.none = jest.fn(() => Promise.reject())
+        await dbOps.exeQuery("").then(() => {
+            expect(db.none).toBeCalled();
+            expect(db.none.mock.calls.length).toBe(1);
+        }).catch((e: any) => {})            
+        
+    })
 
 })

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "",
-    "test": "jest --runInBand --detectOpenHandles --coverage"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -21,11 +21,13 @@
     "babel-jest": "^27.0.2",
     "cheerio": "^1.0.0-rc.9",
     "dotenv": "^10.0.0",
+    "pg-mem": "^1.9.9",
     "pg-promise": "^10.10.2",
     "source-map-loader": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^15.12.4",
+    "@types/pg-promise": "^5.4.3",
     "jest": "^27.0.4",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",

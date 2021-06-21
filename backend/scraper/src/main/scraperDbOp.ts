@@ -25,26 +25,22 @@ export const dataOps = (db=db_) => {
 
      const getProducts = async () => { //needs to be tested
 
-        await scraper.scrape().then(async (products: any) => {
+        await scraper.scrape().then((products: any) => {
+                if (products.gpu.length == 0 || products.cpu.length == 0) {
+                    throw new Error("Empty products");
 
-            if (products.gpu.length == 0 || products.cpu.length == 0) {
-                throw new Error("Empty products")
+                } else {
+                    update(products).then(async (res) => {
+                        console.log("200 ok")
+                    }).catch((e) => {})
 
-            } else {
-                //console.log(products)
-                await update(products).then(res => {
-                    return ("200 ok")
-                })
-                return("updated products")
-            }
+                }
 
         })
-
-         return("Successful update")
     }
 
-    getProducts().then((data) => {
-        console.log(data)
+    getProducts().then(() => {
+        console.log("successful")
     })
 
     /**
@@ -53,11 +49,11 @@ export const dataOps = (db=db_) => {
      const exeQuery = async (query: any) => {
         await db.none(query).then((err: any) => {
             if (err) {
-                console.log(err)
+                throw new Error(err);
             } else {
                 console.log(200, " ok")
             }
-        })
+        }).catch((e: any) => {})
     }
 
     /**
@@ -76,23 +72,24 @@ export const dataOps = (db=db_) => {
      * @returns []
      */
      let queryProducts = async (table: string, products: Product[]) => {
-        //needs to be tested
-        await db.any('SELECT * FROM $1:raw', table).then(async (result: any) => {
-            if (result.length === 0) {
-                //insert(products)
-                if (table === "gpus"){
 
-                    await exeQuery(pgp.helpers.insert(products, cs))
+        await db.any('SELECT * FROM $1:raw', table).then(async (result: any) => {
+                if (result.length === 0) {
+                    //insert(products)
+
+                    if (table === "gpus"){
+
+                        await exeQuery(pgp.helpers.insert(products, cs))
+                    }
+                    else if (table === "cpus")
+                        await exeQuery(pgp.helpers.insert(products, cs_))
+
+                } else {
+
+                    await updateProducts(result, products, table) //compare the products from db and the scraped products
                 }
 
-
-                else if (table === "cpus")
-                    await exeQuery(pgp.helpers.insert(products, cs_))
-
-            } else {
-                await updateProducts(result, products, table) //compare the products from db and the scraped products
-            }
-        })
+        }).catch((e: any) => {})
     }
 
     /**

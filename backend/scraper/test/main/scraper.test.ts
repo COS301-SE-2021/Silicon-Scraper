@@ -1,16 +1,12 @@
-//import { mockAxios } from "../../__mocks__/axios";
 import * as scraper  from "../../src/main/scraper";
 import { urls } from "../../__mocks__/urlMock";
 import axios from "axios"
 import { selectorsArray } from "../../src/utilities/selectors";
-const url = require("../../src/utilities/url")
 
 const eve = require("../../__mocks__/mockUrl")
-// Mock axios
+
 jest.mock("axios")
-
 let d: string = eve.getMockData()
-
 const mockAxios = axios as jest.Mocked<typeof axios>;
 
 const mockedResponse = {
@@ -22,20 +18,6 @@ const mockedResponse = {
 }
 
 mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
-
-
-//const scrape = require('../../src/main/scraper');
-
-// jest.mock('../../src/utilities/selectors', () => ({
-//     getAvailabilitySelector: jest.fn().mockImplementation(() => {return 'availabilty_selector'}),
-//     getLinkSelector: jest.fn().mockImplementation(() => "link_selector"),
-//     getImageSelector: jest.fn().mockImplementation(() => {return "image_selector"}),
-//     getTableSelector: jest.fn().mockImplementation(() => {return "table_selector"}),
-//     getRowSelector: jest.fn().mockImplementation(() => {return "row_selector"}),
-//     getTitleSelector: jest.fn().mockImplementation(() => {return "title_selector"}),
-//     getPriceSelector: jest.fn().mockImplementation(() => "price_selection")
-// }
-// )) 
 
 describe("scraperTest()", () => {
     let title: string; 
@@ -54,8 +36,6 @@ describe("scraperTest()", () => {
         done();
     })
     
-
-    const index = 0;
 
     test("Should not return empty string", () => {
         expect(parsedTitle).toEqual(expect.not.stringMatching(/^$/));
@@ -111,9 +91,6 @@ describe("scraperTest()", () => {
         expect(product).not.toBeNull();
         // expect(product?.cpu).not.toBeNull();
         // expect(product?.gpu).not.toBeNull();
-       
-        // expect(selectorsArray[0].getTableSelector).toHaveBeenCalled();
-        
        
     })
 })
