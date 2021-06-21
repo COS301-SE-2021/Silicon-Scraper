@@ -16,7 +16,7 @@ class ExplorePageService
       return await getProducts();
     }
     else
-    {
+     {
       var url = Uri.parse("http://10.0.2.2:3000/products/getProducts");
       Map <String,String> headers={
         "Content-Type":"application/json; charset=utf-8",
