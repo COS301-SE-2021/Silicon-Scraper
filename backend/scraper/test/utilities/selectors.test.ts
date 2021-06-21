@@ -34,9 +34,6 @@ describe("selectorsTest()", () =>{
             expect(evetech).toEqual(expect.arrayContaining([expect.stringMatching(expected)]));
         });
 
-        test.skip("Should throw an error if index invalid", () => {
-            expect(evetech).toThrow();
-        })
     })
 
 })

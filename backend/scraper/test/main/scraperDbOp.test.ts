@@ -115,19 +115,18 @@ describe("Database operations tests", () => {
             cpu: gpu
         })
 
-        await expect(Promise.reject(dbOps.getProducts())).rejects.not.toThrow('octopus');
+        await expect(Promise.reject(dbOps.getProducts())).rejects.not.toThrow('octopus').catch((e)=>{});
 
-        await dbOps.getProducts().then(async () => {
+        return dbOps.getProducts().then(async () => {
             expect(scrape).toBeCalled();
             expect(db.any).toBeCalled();
             expect(db.any.mock.calls.length).toBe(1);
         }).catch((e: any) => {})
            
-            //expect(() => {response}).toThrow()
         
     })
 
-    test.skip("update with valid product", async () => {
+    test("update with valid product", async () => {
         return dbOps.update({gpu: gpus, cpu: cpus}).then(() => {
             expect(db.any.mock.calls.length).toBe(1);
             expect(db.any.mock.calls[0]).not.toBeNull();
@@ -136,18 +135,13 @@ describe("Database operations tests", () => {
         
     })
 
-    test("Execute query successfully", async () => {
-        await expect(Promise.reject(dbOps.exeQuery('SELECT * FROM gpus'))).rejects.not.toThrow('octopus');
-
-    } )
 
     test("Execute query fails", async () => {
         db.none = jest.fn(() => Promise.reject())
         await dbOps.exeQuery("").then(() => {
             expect(db.none).toBeCalled();
             expect(db.none.mock.calls.length).toBe(1);
-        }).catch((e: any) => {})
-              
+        }).catch((e: any) => {})            
         
     })
 
