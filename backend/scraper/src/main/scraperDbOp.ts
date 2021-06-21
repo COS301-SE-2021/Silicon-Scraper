@@ -33,15 +33,16 @@ export const dataOps = (db=db_) => {
                     update(products).then(async (res) => {
                         console.log("200 ok")
                     }).catch((e) => {})
-
+                    
                 }
 
         })
+        return "Successful"
     }
 
     getProducts().then(() => {
-        console.log("successful")
-    })
+        console.log("Successful")
+    }).catch((e) => {})
 
     /**
      * @param query
@@ -72,8 +73,8 @@ export const dataOps = (db=db_) => {
      * @returns []
      */
      let queryProducts = async (table: string, products: Product[]) => {
-
         await db.any('SELECT * FROM $1:raw', table).then(async (result: any) => {
+
                 if (result.length === 0) {
                     //insert(products)
 

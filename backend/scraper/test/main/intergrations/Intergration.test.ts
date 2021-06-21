@@ -41,7 +41,8 @@ describe("scraper database operations", () =>{
     });
 
      test("Testing the intergration between scraper and scraperDataOperations", async () => {
-         expect (await dataOps(db).getProducts()).toEqual("Successful update")
+        const response = await dataOps(db).getProducts()
+        expect(response).toEqual("Successful")
      })
 
 
