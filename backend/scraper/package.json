@@ -17,6 +17,7 @@
     "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.23",
     "awesome-typescript-loader": "^5.2.1",
+    "axios": "^0.21.1",
     "babel-jest": "^27.0.2",
     "cheerio": "^1.0.0-rc.9",
     "dotenv": "^10.0.0",

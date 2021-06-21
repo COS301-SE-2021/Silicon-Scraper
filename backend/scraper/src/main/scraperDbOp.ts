@@ -28,20 +28,20 @@ export const dataOps = (db=db_) => {
         await scraper.scrape().then((products: any) => {
                 if (products.gpu.length == 0 || products.cpu.length == 0) {
                     throw new Error("Empty products");
-    
+
                 } else {
                     update(products).then(async (res) => {
                         console.log("200 ok")
                     }).catch((e) => {})
-    
+
                 }
 
-        }).catch((e) => {})
+        })
     }
 
-    getProducts().then(async() => {
+    getProducts().then(() => {
         console.log("successful")
-    }).catch((e) => {})
+    })
 
     /**
      * @param query
@@ -60,7 +60,7 @@ export const dataOps = (db=db_) => {
      * @param products
      */
      const update = async (products: any) => {
-        
+
         await queryProducts("gpus", products.gpu)
         await queryProducts("cpus", products.cpu)
 
@@ -76,19 +76,19 @@ export const dataOps = (db=db_) => {
         await db.any('SELECT * FROM $1:raw', table).then(async (result: any) => {
                 if (result.length === 0) {
                     //insert(products)
-                  
+
                     if (table === "gpus"){
-                    
+
                         await exeQuery(pgp.helpers.insert(products, cs))
                     }
                     else if (table === "cpus")
                         await exeQuery(pgp.helpers.insert(products, cs_))
-    
+
                 } else {
-        
+
                     await updateProducts(result, products, table) //compare the products from db and the scraped products
                 }
-            
+
         }).catch((e: any) => {})
     }
 
@@ -197,7 +197,8 @@ export const dataOps = (db=db_) => {
         updateDetails,
         deleteProduct,
         updateProducts,
-        insert
+        insert,
+        queryProducts
     }
 }
 
