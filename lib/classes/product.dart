@@ -14,11 +14,11 @@ class Product
   final String description;
 
   final String url;
-  final String photo; //url
+  final String image; //image
   availability stockAvailability;
 
   Product(this.brand, this.model, this.price, this.retailer, this.description,
-      this.url, this.photo,String sAvailability,this.id,this.type)
+      this.url, this.image,String sAvailability,this.id,this.type)
   {
     if(sAvailability==null)
       {
@@ -88,7 +88,7 @@ class Product
 enum availability
 {
   available,
-  limitedStock,
+  limitedStock,//remove
   outOfStock,
-  notSpecified
+  notSpecified//remove
 }

@@ -20,7 +20,7 @@ class ExplorePageService
       var url = Uri.parse("http://10.0.2.2:3000/products/getProducts");
       Map <String,String> headers={
         "Content-Type":"application/json; charset=utf-8",
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MTgxNDQ2LCJleHAiOjE2MjQyNjc4NDZ9.a0c0qLz7pBzau4r_T9Tcy4O-UqQlL8IJMOF7ZjAqTZQ',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MjY5OTM1LCJleHAiOjE2MjQzNTYzMzV9.zxMKowFfzwl3f9zCZSs9UKCu34Bg_4yOJqmaDt607dI',
       };
       final response = await http.get(url,headers: headers);
       print(response.statusCode);

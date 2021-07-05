@@ -45,6 +45,8 @@ dev_dependencies:
   network_image_mock: ^2.0.1
   #for http requests
   http: any
+  #for product detail widget
+  sliding_up_panel:
 
 
 # For information on the generic Dart part of this file, see the
