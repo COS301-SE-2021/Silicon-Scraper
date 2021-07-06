@@ -72,13 +72,15 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
             ),
         SlidingUpPanel(
           minHeight: 50,
+//          padding: EdgeInsets.fromLTRB(5, 50, 5, 0),
           borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
           header: Container(
-            padding: EdgeInsets.fromLTRB(80, 0, 0, 0),
+            padding: EdgeInsets.fromLTRB(80, 10, 0, 30),
             child: Text("${widget.brand +widget.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
           ),
-          panel: Center(
-            child: Text("This is the sliding Widget"),
+          panel: Container(
+            padding: EdgeInsets.fromLTRB(5, 50, 5, 0),
+            child: Text("${widget.desctiption}"),
           ),
         ),
           ],
