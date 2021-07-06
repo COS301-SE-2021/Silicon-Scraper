@@ -46,7 +46,6 @@ class _ExploreState extends State<Explore> {
       //       },
       //     )
       //   ],
-      backgroundColor: Colors.red[800],
       ),
       body: Container(
         child: FutureBuilder(

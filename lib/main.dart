@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/pages/mainNavigator.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
+import 'package:silicon_scraper/theme/colors.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -30,6 +31,11 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
 //        primarySwatch: Colors.green,
+      primaryColorLight: deepBlue,
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.dark,
+              color: deepBlue
+        )
       ),
       home: MainNavigator(),
     );

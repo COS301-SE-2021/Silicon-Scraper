@@ -24,7 +24,6 @@ class SearchPage extends StatelessWidget {
               },
             )
           ],
-          backgroundColor: Colors.red[800],
         ),
         body: Container(
           color: Colors.white,
