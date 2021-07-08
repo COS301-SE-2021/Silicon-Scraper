@@ -1,8 +1,9 @@
 import {Selectors} from "../utilities/selectors";
 import {Product} from "../utilities/productsModel";
+import {concatUrl, titleParser, availability, date, trimPrice} from "../utilities/parser";
 const cheerio = require("cheerio");
 const axios = require("axios");
-var j = "/web/20201111060705im_/https://www.evetech"; //delete b4 pushing to master
+
 
 let url = require("../utilities/url.ts");
 let selectors = require("../utilities/selectors.ts").selectorsArray;
@@ -35,31 +36,21 @@ let jk = 0;
  * @returns {array} An array of products
  */
 export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
+    //console.log(axios)
     const html = await axios.get(webToScrape);
-    return getWebData(html.data, selector, baseUrl, type)
-}
-/**
- *
- * @returns {*[]}
- * @param html
- */
+    const $ = await cheerio.load(html);
+    let b = 0;
 
-const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:string) => {
-
-        const $ = await cheerio.load(html);
-        let b = 0;
-
-        //Number of pages = number of times a request is going to happen at a specific site
-        $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
-            $(row).each((k: any, col: any) => {
-                addToProducts(b++, $, selector, baseUrl, type, col);
-            })
+    //Number of pages = number of times a request is going to happen at a specific site
+    $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
+        $(row).each((k: any, col: any) => {
+            addToProducts(b++, $, selector, baseUrl, type, col);
         })
-    
-        return products;
+    })
+
+    return products;
 }
 
-//module.exports = {getWebData}
 /**
  *
  * @param data
@@ -110,80 +101,6 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
 }
 
 /**
- * This function concatenates the given url to the base url of the specific Website
- * @param urlRES
- * @returns {string}
- */
-export const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
-
-    if(urlRES !== undefined) {
-        let base = urlRES.split('../')[1]
-
-        if(base !== undefined) {
-            base = baseUrl + base;
-            return base
-        }else if(urlRES.includes(j)){
-            return "https://web.archive.org"+urlRES;
-        } else {
-            let base1 = urlRES.split('/p/')[1]
-            if(base1 !== undefined) {
-                base1 = baseUrl + "/p/" + base1
-                return base1
-            }
-        }
-
-        return urlRES;
-    }else{
-        return url.getEveTecUrl()
-    }
-
-}
-
-//module.exports = {concatUrl}
-
-/**
- * This function cleans out the spaces and tabs from the innerHtml and returns the price ad is
- * @param price
- * @returns {number}
- */
- export const trimPrice = (price: string) =>{
-
-    let price_ = price.split('\n')[0].split('R')[1];
-    if(price_ !== undefined ){
-        return parseFloat(price.split('\n')[0].split('R')[1].replace(",", ""));
-    }else{
-        return price_
-    }
-}
-
-//module.exports = {trimPrice}
-
-/**
- * get the name , model and brand from the title
- * @return {object}
- */
-
-export const titleParser = (title: string) =>{
-    let detailedTitle = title.split(' ')
-    let model = ''
-    for (let i = 1; i < detailedTitle.length - 1; i++) {
-        if(i == 1){
-            model = detailedTitle[i]
-        }else{
-            model = model+" "+detailedTitle[i]
-        }
-
-    }
-    let detailedTitleObj = {
-        'brand' : detailedTitle[0],
-        'model' : model
-    }
-    return detailedTitleObj
-}
-
-//module.exports = titleParser;
-
-/**
  * This function loops through the url array and calls the scrape function
  * @returns {array} array Of product objects
  */
@@ -202,19 +119,6 @@ export const scrape = async () => {
 }
 
 
-const availability = (availability:string) => {
-    if(availability.includes("In Stock") || availability.includes("add")){
-        return "In Stock"
-    }else{
-        return "Out of Stock"
-    }
-}
-
-const date = (d:string)=>{
-
-    return "2020-11-27"
-    //return d
-}
 
 
 
