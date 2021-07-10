@@ -33,11 +33,11 @@ class ProductDetailWidget extends StatefulWidget {
 
 class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
-
   WatchListSingleton watch= WatchListSingleton.getState();
   Product item;
   _ProductDetailWidgetState(this.item);
   bool inWatch;
+  double buttonHeight= 220;
 
   @override
   void initState() {
@@ -47,29 +47,41 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final panelClose=MediaQuery.of(context).size.height/2.8;
+    final panelOpen=MediaQuery.of(context).size.height*0.7;
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Center(child: Text("Product detail",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)),
-//        backgroundColor:Color(0xff0E3854) ,
-//        backgroundColor: Colors.red[800],
+        title:
+        Text("Product detail",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),),
+        centerTitle: true,
       ),
       body: Container(
         child: Stack(
+//          overflow: Overflow.visible,
           children: [
             Container(
 //              color: Colors.grey,
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              height: MediaQuery.of(context).size.height/3,
+              alignment: Alignment.topCenter,
+//        margin: EdgeInsets.fromLTRB(0, 0, 0,MediaQuery.of(context).size.height/3 ),
+              height: MediaQuery.of(context).size.height/2,
               width: MediaQuery.of(context).size.width,
               child: Image.network('${widget.photo}',),
             ),
-        SlidingUpPanel(
-          minHeight: (MediaQuery.of(context).size.height/2),
+
+        Stack(
+          children: [
+            SlidingUpPanel(
+              onPanelSlide: (position)=>setState(()
+              {
+                final panelMaxScrollExtent=panelOpen-panelClose;
+                buttonHeight=position*panelMaxScrollExtent+220;
+              }),
+          backdropEnabled: true,
+          minHeight:panelClose,
+          maxHeight: panelOpen,
 //          padding: EdgeInsets.fromLTRB(5, 50, 5, 0),
           borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-          header: Container(
+          header:Container(
             width:MediaQuery.of(context).size.width ,
             padding: EdgeInsets.only(top:10),
             child: Row(
@@ -79,38 +91,29 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
               ],
             ),
           ),
-          panel: Container(
-            padding: EdgeInsets.fromLTRB(5, 50, 5, 0),
-            child: Text("${widget.desctiption}"),
+          panel: Column(
+            children: [
+
+              Container(
+                padding: EdgeInsets.fromLTRB(5, 50, 5, 0),
+                child: Text("${widget.desctiption}"),
+              ),
+            ],
           ),
+
+            ),
+            Positioned(
+                right: 10,
+                bottom: buttonHeight,
+                child: FloatingActionButton(
+                  child: Icon(Icons.bookmark), onPressed: (){},
+                )
+            ),
+        ]
         ),
           ],
-        )
+        ),
       ),
-/////
-//    old code here
-////
-//      persistentFooterButtons: [
-//        Text("R12000"),
-//        ElevatedButton(onPressed: (){
-//        setState(()async {
-//          if(!inWatch)
-//            {
-//              inWatch=await watch.addRequest(item);
-//            }
-//          else if(inWatch)
-//          {
-//            inWatch=await watch.removeRequest(item);
-//          }
-//        });
-//      },  child:Icon(Icons.bookmark_outline_rounded,color: Colors.white,))
-//        ,ElevatedButton(child: Icon(Icons.web),
-//          onPressed: ()async{
-//            var url = widget.url;
-//            return await launch(url);
-//
-//            },)
-//      ],
     );
   }
 

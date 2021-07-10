@@ -10,12 +10,12 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Center(
-              child: Text(
+          title: Text(
             "Search",
             style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
-          )),
+            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+          ),
+          centerTitle: true,
           actions: [
             IconButton(
               icon: Icon(Icons.search),
