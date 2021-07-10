@@ -59,24 +59,25 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
         child: Stack(
           children: [
             Container(
+//              color: Colors.grey,
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              height: MediaQuery.of(context).size.height/3,
               width: MediaQuery.of(context).size.width,
-//            child: Image.network('${widget.photo}',),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          '${widget.photo}',scale: 1.4
-                      ),
-                      fit: BoxFit.fitWidth
-                  )
-              ),
+              child: Image.network('${widget.photo}',),
             ),
         SlidingUpPanel(
-          minHeight: 50,
+          minHeight: (MediaQuery.of(context).size.height/2),
 //          padding: EdgeInsets.fromLTRB(5, 50, 5, 0),
           borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
           header: Container(
-            padding: EdgeInsets.fromLTRB(80, 10, 0, 30),
-            child: Text("${widget.brand +widget.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+            width:MediaQuery.of(context).size.width ,
+            padding: EdgeInsets.only(top:10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("${widget.brand +widget.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+              ],
+            ),
           ),
           panel: Container(
             padding: EdgeInsets.fromLTRB(5, 50, 5, 0),
