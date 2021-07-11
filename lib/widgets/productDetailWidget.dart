@@ -14,7 +14,7 @@ class ProductDetailWidget extends StatefulWidget {
   get photo => item.image;
   get retailer => item.retailer;
   get price => item.price;
-  get Availabilitytext => item.getAvailabilityText(20,TextAlign.left);
+  get Availabilitytext => item.getAvailabilityText(15,TextAlign.left);
   get brand => item.brand;
   get model => item.model;
   get desctiption => item.description;
@@ -78,12 +78,21 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
               margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
               borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
               header:Container(
-                width:MediaQuery.of(context).size.width ,
-                padding: EdgeInsets.only(top:10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                width:MediaQuery.of(context).size.width-20 ,
+                padding: EdgeInsets.only(top:10,left:50,right:50),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
                   children: [
-                    Text("${widget.brand +widget.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+                    Text("${widget.brand +" "+ widget.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text("Retailer: ${widget.retailer}",style: TextStyle(fontSize: 20,color: Colors.grey),),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -107,7 +116,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 //                ) ,
 //              ),
               panel: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 50, 0, 50),
+                  padding: EdgeInsets.fromLTRB(0, 90, 0, 0),
                   child: Text("${widget.desctiption+widget.desctiption+widget.desctiption+widget.desctiption}")
               ),
 
@@ -136,28 +145,38 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
               height: 50,
               width: MediaQuery.of(context).size.width,
 //                padding: EdgeInsets.fromLTRB(5, 0, 5, 80),
-              child:Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child:Column(
                 children: [
-                  Container(
-                    width: (MediaQuery.of(context).size.width/2)-20,
-                    child: Text('R ${widget.price.toStringAsFixed(2)}',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w400),),
-                  ),
-                  Container(
-                      child: FlatButton(
-                        onPressed: () { },
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: (MediaQuery.of(context).size.width/2)-20,
+                        child: Column(
+                          children: [
+                            widget.Availabilitytext,
+                            Text('R ${widget.price.toStringAsFixed(2)}',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w400),),
+                          ],
+                        ),
+                      ),
+                      Container(
+                          child: FlatButton(
+                            onPressed: () { },
 //                       style: ButtonStyle(
 //                          backgroundColor: MaterialStateProperty.all(myOrange),
 //                        ),
-                      color: myOrange,
-                        child: Row(
-                          children:[
-                            Icon(Icons.web,color: Colors.white),
-                            SizedBox(width: 5,),
-                            Text("VISIT SITE",style: TextStyle(fontSize: 18,color: Colors.white),)
-                          ]
-                        ),
-                      )
+                          color: myOrange,
+                            child: Row(
+                              children:[
+                                Icon(Icons.web,color: Colors.white),
+//                                SizedBox(width: 5,),
+                                Text("VISIT SITE",style: TextStyle(fontSize: 18,color: Colors.white),)
+                              ]
+                            ),
+                          )
+                      ),
+                    ],
                   ),
                 ],
               ) ,
