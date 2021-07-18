@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:silicon_scraper/pages/mainNavigator.dart';
+import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/theme/colors.dart';
 

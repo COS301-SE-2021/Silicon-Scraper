@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/pages/searchPage.dart';
-import 'package:silicon_scraper/pages/watchList.dart';
+import 'package:silicon_scraper/views/search_view.dart';
+import 'package:silicon_scraper/views/watch_list_view.dart';
 
-import 'explore.dart';
+import 'explore_view.dart';
 
 
 class MainNavigator extends StatefulWidget {
