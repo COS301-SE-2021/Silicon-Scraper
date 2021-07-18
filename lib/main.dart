@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
-import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/theme/colors.dart';
 
 void main() {
@@ -32,9 +31,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
 //        primarySwatch: Colors.green,
       primaryColorLight: deepBlue,
+        backgroundColor: Colors.grey[600],
         appBarTheme: AppBarTheme(
           brightness: Brightness.dark,
-              color: deepBlue
+              color: myLightBlue,
         )
       ),
       home: MainNavigator(),

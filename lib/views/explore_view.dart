@@ -30,6 +30,7 @@ class _ExploreState extends State<Explore> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+        backgroundColor: Colors.grey[600],
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
@@ -49,6 +50,7 @@ class _ExploreState extends State<Explore> {
       //   ],
       ),
       body: Container(
+//        color: ,
         child: FutureBuilder(
             future:explore.setItems(),
           builder: (BuildContext context,AsyncSnapshot snapshot){

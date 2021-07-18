@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
-import 'package:silicon_scraper/services/watchListService.dart';
-import 'package:silicon_scraper/widgets/productWidget.dart';
+import 'package:silicon_scraper/services/watch_list_service.dart';
 
 class WatchList extends StatefulWidget {
   @override

@@ -3,7 +3,7 @@ import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/services/searchService.dart';
 
-import 'mocks/json/productsjson.dart';
+import '../mocks/json/productsjson.dart';
 
 void main() {
   var list=addProducts(JSONData());
