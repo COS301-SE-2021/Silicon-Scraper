@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:silicon_scraper/models/product.dart';
+import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/widgets/productWidget.dart';
 
 List<Product> addProducts(List json)

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/models/product.dart';
+import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/watchListService.dart';
 import 'package:silicon_scraper/theme/colors.dart';
 import 'package:url_launcher/url_launcher.dart';

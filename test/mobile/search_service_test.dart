@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:silicon_scraper/models/product.dart';
+import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/services/searchService.dart';
 
