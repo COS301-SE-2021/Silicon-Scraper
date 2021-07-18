@@ -6,7 +6,8 @@ import 'package:silicon_scraper/theme/colors.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 
-class ProductDetailWidget extends StatefulWidget {
+class ProductDetailWidget extends StatefulWidget
+{
 
   final Product item;
   ProductDetailWidget(this.item);
@@ -44,6 +45,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
     final panelOpen=MediaQuery.of(context).size.height*0.8;
     return Scaffold(
       appBar: AppBar(
+
         title:
         Text("Product detail",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),),
         centerTitle: true,
@@ -117,7 +119,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 //              ),
               panel: Padding(
                   padding: EdgeInsets.fromLTRB(20, 90, 20, 0),
-                  child: Text("${widget.desctiption+widget.desctiption+widget.desctiption+widget.desctiption}")
+                  child: Text("${widget.desctiption}")
               ),
 
             ),
