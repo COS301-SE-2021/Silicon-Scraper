@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/widgets/product_detail_widget.dart';
 
-class VerticalProductWidget extends StatelessWidget {
+class VerticalProductWidget extends StatefulWidget {
   final Product item;
   const VerticalProductWidget({Key key, this.item}) : super(key: key);
 
+  @override
+  _VerticalProductWidgetState createState() => _VerticalProductWidgetState();
+}
+
+class _VerticalProductWidgetState extends State<VerticalProductWidget> {
   @override
   Widget build(BuildContext context)
   {
@@ -22,7 +27,7 @@ class VerticalProductWidget extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
-                builder: (context) => ProductDetailWidget(item)));
+                builder: (context) => ProductDetailWidget(widget.item)));
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -32,14 +37,14 @@ class VerticalProductWidget extends StatelessWidget {
               Container(
                 width: MediaQuery.of(context).size.width / 3,
                 height: MediaQuery.of(context).size.height / 7.3,
-                child: Image.network('${item.image}',),
+                child: Image.network('${widget.item.image}',),
               ),
               /// product name (brand+model)
               Container(
                 width: MediaQuery.of(context).size.width / 3,
                 //height: MediaQuery.of(context).size.height / 39,
                 margin: EdgeInsets.fromLTRB(5, 5, 0, 0),
-                child: Text("${item.brand+" "+item.model}", textAlign: TextAlign.left,style: TextStyle(
+                child: Text("${widget.item.brand+" "+widget.item.model}", textAlign: TextAlign.left,style: TextStyle(
                   fontSize: 14, color: Colors.black54, fontWeight: FontWeight.bold),),
               ),
               /// price and bookmark button
@@ -55,7 +60,7 @@ class VerticalProductWidget extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child:
-                              Text('R ${item.price.toStringAsFixed(2)}', textAlign: TextAlign.left, style: TextStyle(
+                              Text('R ${widget.item.price.toStringAsFixed(2)}', textAlign: TextAlign.left, style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
@@ -78,6 +83,5 @@ class VerticalProductWidget extends StatelessWidget {
       ),
     );
   }
-
 }
 

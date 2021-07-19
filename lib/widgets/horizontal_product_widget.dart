@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/widgets/product_detail_widget.dart';
 
-class ProductWidget extends StatelessWidget {
+class HorizontalProductWidget extends StatefulWidget {
   final Product item;
-  const ProductWidget({Key key, this.item}) : super(key: key);
+  const HorizontalProductWidget({Key key, this.item}) : super(key: key);
 
+  @override
+  _HorizontalProductWidgetState createState() => _HorizontalProductWidgetState();
+}
+
+class _HorizontalProductWidgetState extends State<HorizontalProductWidget> {
   @override
   Widget build(BuildContext context)
   {
@@ -22,7 +27,7 @@ class ProductWidget extends StatelessWidget {
             onTap: ()
             {
               Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => ProductDetailWidget(item)));
+                  builder: (context) => ProductDetailWidget(widget.item)));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -30,7 +35,7 @@ class ProductWidget extends StatelessWidget {
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height / 6,
-                  child: Image.network('${item.image}',),
+                  child: Image.network('${widget.item.image}',),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width /1.5,
@@ -39,7 +44,7 @@ class ProductWidget extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("${item.brand+" "+item.model}", textAlign: TextAlign.center,style: TextStyle(
+                      Text("${widget.item.brand+" "+widget.item.model}", textAlign: TextAlign.center,style: TextStyle(
                         fontSize: 15, fontWeight: FontWeight.bold,),),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -50,10 +55,10 @@ class ProductWidget extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("${item.retailer}", style: TextStyle(
+                                Text("${widget.item.retailer}", style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold,),
                                   textAlign: TextAlign.left,),
-                                item.getAvailabilityText(15, TextAlign.center),
+                                widget.item.getAvailabilityText(15, TextAlign.center),
                               ],
                             ),
                           ),
@@ -61,7 +66,7 @@ class ProductWidget extends StatelessWidget {
                             margin: EdgeInsets.only(top: 10),
                             child: Column(
                               children: [
-                                Text("R${item.price}", style: TextStyle(
+                                Text("R${widget.item.price}", style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.green)),
@@ -80,6 +85,5 @@ class ProductWidget extends StatelessWidget {
         ),
       );
   }
-
 }
 

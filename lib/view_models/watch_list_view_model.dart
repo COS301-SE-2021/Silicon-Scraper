@@ -20,7 +20,7 @@ class WatchListViewModel
     return false;
   }
 
-  Future removeItem(Product p) async
+  Future removeItem(Product p)async
   {
     if(findProduct(p))
     {
@@ -66,12 +66,21 @@ class WatchListViewModel
         itemCount:items.length ,
         itemBuilder: (_,index)
         {
-          return ProductWidget(item:items[index]);
+          return HorizontalProductWidget(item:items[index]);
         }
     );
   }
 
-
+  ListView verticalProductListView(BuildContext context,items)
+  {
+    return ListView.builder(
+        itemCount:items.length ,
+        itemBuilder: (_,index)
+        {
+          return HorizontalProductWidget(item:items[index]);
+        }
+    );
+  }
 }
 
 class WatchListViewModelSingleton extends WatchListViewModel
