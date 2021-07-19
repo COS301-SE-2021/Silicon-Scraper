@@ -8,7 +8,54 @@ class WatchListViewModel
   WatchListSingleton watch= WatchListSingleton.getState();
   List<Product> items=[];
 
+  bool findProduct(Product p)
+  {
+    for(var e in items)
+    {
+      if(e == p)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
 
+  Future removeItem(Product p) async
+  {
+    bool contains=false;
+    for(var e in items)
+    {
+      if(e == p)
+      {
+        contains=true;
+      }
+    }
+    if(contains)
+    {
+      items.remove(p);
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  Future addProduct(Product p)async
+  {
+    bool contains=false;
+    for(Product e in items)
+    {
+      if(e == p)
+      {
+        contains=true;
+      }
+    }
+
+    if(!contains)
+    {
+      items.add(p);
+    }
+  }
 
   ListView horizontalProductListView(BuildContext context,items)
   {
@@ -20,5 +67,20 @@ class WatchListViewModel
         }
     );
   }
+}
 
+class WatchListViewModelSingleton extends WatchListViewModel
+{
+  static WatchListViewModelSingleton _instance;
+
+  WatchListViewModelSingleton._internal();
+
+  static WatchListViewModelSingleton getState()
+  {
+    if(_instance==null)
+    {
+      _instance=WatchListViewModelSingleton._internal();
+    }
+    return _instance;
+  }
 }

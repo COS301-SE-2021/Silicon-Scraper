@@ -5,9 +5,9 @@ import 'dart:convert';
 
 class WatchListService
 {
-  List<Product> items=[];
+  WatchListService();
 
-  Future watchListRequest(bool mock)async
+  Future<List<Product>> watchListRequest(bool mock)async
   {
     if(mock)
       {
@@ -28,71 +28,11 @@ class WatchListService
          {
             return addProducts(responseData);
          }
-        return false;
-      }
-  }
-  WatchListService()
-  {
-    setItems();
-  }
-  Future setItems()async
-  {
-    items=await watchListRequest(true);
-    print("setItems");
-    return items;
-  }
-  void addItem(Product p)async
-  {
-    bool contains=false;
-    for(Product e in items)
-      {
-        if(e == p)
+        else
           {
-            contains=true;
+            throw
           }
       }
-
-    if(!contains)
-      {
-        items.add(p);
-      }
-  }
-  Future removeItem(Product p) async
-  {
-    bool contains=false;
-    for(var e in items)
-    {
-      if(e == p)
-      {
-        contains=true;
-      }
-    }
-    if(contains)
-    {
-          items.remove(p);
-    }
-    else
-      {
-      return false;
-    }
-
-  }
-
-  Future<List<Product>> getProductlist()
-  {
-    return Future.value(items);
-  }
-
-  bool findItem(Product p)
-  {
-    for(var e in items)
-    {
-      if(e == p)
-      {
-        return true;
-      }
-    }
-     return false;
   }
 
   Future removeRequest(Product item)async
@@ -116,7 +56,7 @@ class WatchListService
     {
       if(responseData['message']=="Success")
         {
-          await removeItem(item);
+//          await removeItem(item);
           return false;
         }
     }
@@ -143,7 +83,7 @@ class WatchListService
     {
       if(responseData['message']=="Success")
       {
-        await addItem(item);
+//        await addItem(item);
         return true;
       }
     }
