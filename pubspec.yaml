@@ -32,7 +32,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #Mockito for mobile.mocks
+  #Mockito for mocks
   mockito: 
   test: ^1.16.5
   #for opening links
@@ -62,7 +62,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - test/mobile/mocks/json/
+    - lib/mocks/json/
     - assets/images/
 
   # To add assets to your application, add an assets section, like this:

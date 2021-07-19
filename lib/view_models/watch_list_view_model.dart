@@ -1,12 +1,37 @@
+import 'package:silicon_scraper/injectors/watch_list_service_injector.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/watch_list_service.dart';
 import 'package:silicon_scraper/widgets/horizontal_product_widget.dart';
+import 'package:silicon_scraper/widgets/vertical_product_widget.dart';
 import 'package:flutter/material.dart';
 
 class WatchListViewModel
 {
-  WatchListSingleton watch= WatchListSingleton.getState();
+  WatchListInjector watch= WatchListInjector();
   List<Product> items=[];
+
+  WatchListViewModel();
+
+  Future setInitialProducts(bool mock)async
+  {
+    if(items.isNotEmpty)
+      {
+        return true;
+      }
+    else
+      {
+      try
+      {
+        items= await watch.dependency.watchListRequest(mock);
+        return true;
+      }
+      catch(e)
+      {
+        //handle error message
+        return;
+      }
+    }
+  }
 
   bool findProduct(Product p)
   {
@@ -26,7 +51,7 @@ class WatchListViewModel
     {
       try
       {
-        watch.removeRequest(p);// check response
+        watch.dependency.removeRequest(p);// check response
         items.remove(p);
       }
       catch(e)
@@ -46,7 +71,7 @@ class WatchListViewModel
     {
       try
       {
-        watch.addRequest(p);// check response
+        watch.dependency.addRequest(p);// check response
         items.add(p);
       }
       catch(e)
@@ -77,10 +102,12 @@ class WatchListViewModel
         itemCount:items.length ,
         itemBuilder: (_,index)
         {
-          return HorizontalProductWidget(item:items[index]);
+          return VerticalProductWidget(item:items[index]);
         }
     );
   }
+
+
 }
 
 class WatchListViewModelSingleton extends WatchListViewModel

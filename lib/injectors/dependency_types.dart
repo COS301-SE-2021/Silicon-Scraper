@@ -1,0 +1,5 @@
+enum DependencyType
+{
+  PROD,
+  MOCK,
+}

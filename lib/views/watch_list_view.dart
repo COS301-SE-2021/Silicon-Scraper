@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/services/getProducts.dart';
-import 'package:silicon_scraper/services/watch_list_service.dart';
+import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 
-class WatchList extends StatefulWidget {
+class WatchList extends StatefulWidget
+{
   @override
   _WatchListState createState() => _WatchListState();
 }
 
-class _WatchListState extends State<WatchList> {
-  WatchListSingleton watch= WatchListSingleton.getState();
+class _WatchListState extends State<WatchList>
+{
+  WatchListViewModelSingleton watch= WatchListViewModelSingleton.getState();
 
   @override
   Widget build(BuildContext context) {
@@ -36,26 +37,19 @@ class _WatchListState extends State<WatchList> {
     ),
       body: Container(
       child: FutureBuilder(
-      future: watch.watchListRequest(true),
+      future: watch.setInitialProducts(true),
       builder: (BuildContext context,AsyncSnapshot snapshot){
         if(snapshot.connectionState==ConnectionState.none)
         {
         return Center(child: CircularProgressIndicator());
         }
-        else if(snapshot.data!=null)
+        else if(watch.items.isNotEmpty)
         {
-        return ProductListView(context, snapshot.data);
-//        return ListView.builder(
-//            itemCount:snapshot.data.length ,
-//            itemBuilder: (_,index){
-//          return
-//            ProductWidget(item:snapshot.data[index]);
-//        }
-//        );
+          return watch.horizontalProductListView(context, watch.items);
         }
         else
         {
-        return Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator());
         }
     },
       ),

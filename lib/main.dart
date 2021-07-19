@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:silicon_scraper/theme/colors.dart';
+import 'injectors/dependency_types.dart';
+import 'injectors/watch_list_service_injector.dart';
 
 void main() {
+  WatchListInjector.configure(DependencyType.MOCK);
+
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,

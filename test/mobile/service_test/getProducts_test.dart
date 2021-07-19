@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:silicon_scraper/mocks/json/productsjson.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
-import '../mocks/json/productsjson.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 
 

@@ -336,5 +336,5 @@ class ProductSearch extends SearchDelegate<String> {
               decoration: BoxDecoration(
                 color: Colors.white,
               ),
-              child: ProductListView(context, products)));
+              child: productListView(context, products)));
 }
