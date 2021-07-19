@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/models/product.dart';
 import 'package:silicon_scraper/widgets/productWidget.dart';
+import 'package:silicon_scraper/widgets/verticalProductWidget.dart';
 
 List<Product> addProducts(List json)
 {
@@ -58,6 +59,22 @@ ListView ProductListView(BuildContext context,List<Product> items)
             ProductWidget( item:items[index]);
       }
   );
+}
+
+ListView productHorizontalListView(BuildContext context,List<Product> items)
+{
+  return ListView.builder(
+      itemCount:items.length ,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (_,index){
+        return
+          VerticalProductWidget( item:items[index]);
+      }
+  );
+}
+
+void tappedImage(){
+
 }
 
 //bool containsIgnoreCase(String modelOrBrand, String query) {
