@@ -1,6 +1,6 @@
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/watch_list_service.dart';
-import 'package:silicon_scraper/widgets/productWidget.dart';
+import 'package:silicon_scraper/widgets/horizontal_product_widget.dart';
 import 'package:flutter/material.dart';
 
 class WatchListViewModel

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/models/product_model.dart';
-import 'package:silicon_scraper/widgets/productWidget.dart';
-import 'package:silicon_scraper/widgets/verticalProductWidget.dart';
+import 'package:silicon_scraper/widgets/horizontal_product_widget.dart';
+import 'package:silicon_scraper/widgets/vertical_product_widget.dart';
 
 List<Product> addProducts(List json)
 {

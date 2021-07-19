@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:silicon_scraper/models/product_model.dart';
-import 'package:silicon_scraper/widgets/productDetailWidget.dart';
+import 'package:silicon_scraper/widgets/product_detail_widget.dart';
 import '../mocks/json/productsjson.dart';
 
 void main() {
