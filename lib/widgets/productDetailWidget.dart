@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/models/product.dart';
-import 'package:silicon_scraper/services/watchListService.dart';
+import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/services/watch_list_service.dart';
 import 'package:silicon_scraper/theme/colors.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 
-class ProductDetailWidget extends StatefulWidget {
+class ProductDetailWidget extends StatefulWidget
+{
 
   final Product item;
   ProductDetailWidget(this.item);
@@ -33,7 +33,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
   double buttonHeight= 200;
 
   @override
-  void initState() {
+  void initState()
+  {
     inWatch=watch.findItem(item);
     super.initState();
   }
@@ -44,6 +45,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
     final panelOpen=MediaQuery.of(context).size.height*0.8;
     return Scaffold(
       appBar: AppBar(
+
         title:
         Text("Product detail",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),),
         centerTitle: true,
@@ -116,8 +118,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 //                ) ,
 //              ),
               panel: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 90, 0, 0),
-                  child: Text("${widget.desctiption+widget.desctiption+widget.desctiption+widget.desctiption}")
+                  padding: EdgeInsets.fromLTRB(20, 90, 20, 0),
+                  child: Text("${widget.desctiption}")
               ),
 
             ),
@@ -125,7 +127,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                 right: 10,
                 bottom: buttonHeight,
                 child: FloatingActionButton(
-                  child: Icon(Icons.bookmark), onPressed: (){},
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.bookmark_outline,color: Colors.black,), onPressed: (){},
                 )
             ),
           Positioned(
@@ -133,52 +136,50 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
             right:10,
             left:10,
             child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide( //                    <--- top side
-                    color: Colors.grey,
-                    width: 1.0,
-                  ),
-                ),
-              ),
-//              color: Colors.grey,
+//              decoration: BoxDecoration(
+//                border: Border(
+//                  top: BorderSide( //                    <--- top side
+//                    color: Colors.grey,
+//                    width: 1.0,
+//                  ),
+//                ),
+//              ),
+////              color: Colors.grey,
               height: 50,
               width: MediaQuery.of(context).size.width,
 //                padding: EdgeInsets.fromLTRB(5, 0, 5, 80),
-              child:Column(
-                children: [
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: (MediaQuery.of(context).size.width/2)-20,
-                        child: Column(
-                          children: [
-                            widget.Availabilitytext,
-                            Text('R ${widget.price.toStringAsFixed(2)}',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w400),),
-                          ],
-                        ),
+              child:Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                width: (MediaQuery.of(context).size.width/2)-20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Column(
+                        children: [
+                          widget.Availabilitytext,
+                          Text('R ${widget.price.toStringAsFixed(2)}',style: TextStyle(fontSize: 25,fontWeight: FontWeight.w400),),
+                        ],
                       ),
-                      Container(
-                          child: FlatButton(
-                            onPressed: () { },
+                    ),
+                    Container(
+                        margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                        child: FlatButton(
+                          onPressed: () { },
 //                       style: ButtonStyle(
 //                          backgroundColor: MaterialStateProperty.all(myOrange),
 //                        ),
-                          color: myOrange,
-                            child: Row(
-                              children:[
-                                Icon(Icons.web,color: Colors.white),
-//                                SizedBox(width: 5,),
-                                Text("VISIT SITE",style: TextStyle(fontSize: 18,color: Colors.white),)
-                              ]
-                            ),
-                          )
-                      ),
-                    ],
-                  ),
-                ],
+                        color: myOrange,
+                          child: Row(
+                            children:[
+                              Icon(Icons.web,color: Colors.white),
+                              Text("VISIT SITE",style: TextStyle(fontSize: 18,color: Colors.white),)
+                            ]
+                          ),
+                        )
+                    ),
+                  ],
+                ),
               ) ,
             ),
           )

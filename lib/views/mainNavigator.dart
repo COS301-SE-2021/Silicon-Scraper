@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/pages/searchPage.dart';
-import 'package:silicon_scraper/pages/watchList.dart';
+import 'package:silicon_scraper/theme/colors.dart';
+import 'package:silicon_scraper/views/search_view.dart';
+import 'package:silicon_scraper/views/watch_list_view.dart';
 
-import 'explore.dart';
+import 'explore_view.dart';
 
 
 class MainNavigator extends StatefulWidget {
@@ -40,19 +41,24 @@ class _MainNavigatorState extends State<MainNavigator> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+
       body: pageList[pageIndex],
       bottomNavigationBar: BottomNavigationBar(
+
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+
         currentIndex: pageIndex,
         onTap: (value){
           setState(() {
             pageIndex=value;
           });
         },
-        backgroundColor: Colors.grey[100],
+        backgroundColor: Colors.grey[800],
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.search),label: "Search"),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark,color: Colors.yellow[800],),label: "Watch List"),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark,color: myOrange,),label: "Watch List"),
           BottomNavigationBarItem(icon: Icon(Icons.explore,color: Colors.green[600],),label: "explore"),
         ],
       ),

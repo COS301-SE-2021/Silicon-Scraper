@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/models/product.dart';
+import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/widgets/productDetailWidget.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -19,7 +19,8 @@ class ProductWidget extends StatelessWidget {
           ),
           margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: InkWell(
-            onTap: () {
+            onTap: ()
+            {
               Navigator.push(context, MaterialPageRoute(
                   builder: (context) => ProductDetailWidget(item)));
             },
@@ -31,7 +32,6 @@ class ProductWidget extends StatelessWidget {
                   height: MediaQuery.of(context).size.height / 6,
                   child: Image.network('${item.image}',),
                 ),
-//              SizedBox(width: 20,),
                 Container(
                   width: MediaQuery.of(context).size.width /1.5,
                   margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
@@ -60,7 +60,6 @@ class ProductWidget extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(top: 10),
                             child: Column(
-//                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text("R${item.price}", style: TextStyle(
                                     fontSize: 18,

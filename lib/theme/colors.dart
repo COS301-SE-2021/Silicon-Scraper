@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Color deepBlue= Color(0xff011627);
+
 Color beige= Color(0xffC8AD7F);
 Color myBlue=Color(0xff0E3854);
 Color myLightBlue=Color(0xff067EED);
@@ -14,3 +14,12 @@ MaterialColor theOrange = const MaterialColor(
     500: const Color(0xffFF7C1F),
   },
 );
+
+//test swatch1
+
+Color darkBlue=Color(0xff011627);
+Color brightWhite=Color(0xffFDFFFC);
+Color seaBlue=Color(0xff2EC4B6);
+Color redDead=Color(0xffE71D36);
+Color deepOrange=Color(0xffFF9F1c);
+//test swatch2

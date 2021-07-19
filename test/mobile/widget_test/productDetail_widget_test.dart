@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
-import 'package:silicon_scraper/models/product.dart';
+import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/widgets/productDetailWidget.dart';
-import 'mocks/json/productsjson.dart';
+import '../mocks/json/productsjson.dart';
 
 void main() {
   var data = JSONData();
@@ -14,16 +14,16 @@ void main() {
         await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(item))));
       },
     );
-    testWidgets("finds brand text on widget", (WidgetTester tester) async {
+    testWidgets("finds brand and model text on widget", (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(item))));
-      final titleFinder = find.text(data[0]['brand']);
+      final titleFinder = find.text(data[0]['brand']+" "+data[0]['model']);
       expect(titleFinder, findsOneWidget);
     });
-    testWidgets("find model text on widget", (WidgetTester tester) async {
-      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(item))));
-      final titleFinder = find.text(data[0]['model']);
-      expect(titleFinder, findsOneWidget);
-    });
+//    testWidgets("find model text on widget", (WidgetTester tester) async {
+//      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(item))));
+//      final titleFinder = find.text(data[0]['model']);
+//      expect(titleFinder, findsOneWidget);
+//    });
     testWidgets("finds retailer text on widget", (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(item))));
       await tester.pumpAndSettle();
@@ -37,16 +37,16 @@ void main() {
     });
     testWidgets("finds price text on widget", (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(item))));
-      final titleFinder = find.text('R'+data[0]['price'].toString());
+      final titleFinder = find.text('R '+data[0]['price'].toStringAsFixed(2));
       expect(titleFinder, findsOneWidget);
     });
-    testWidgets("finds detail text on widget", (WidgetTester tester) async {
-      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(item))));
-      final titleFinder = find.text(data[0]['description']);
-      expect(titleFinder, findsOneWidget);
-    });
+//    testWidgets("finds detail text on widget", (WidgetTester tester) async {
+//      await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(item))));
+//      final titleFinder = find.text(data[0]['description']);
+//      expect(titleFinder, findsOneWidget);
+//    });
     /**
      * can't test url launcher within flutter because it is handled by the operating system and not flutter
-     * **/
+     ***/
   });
 }

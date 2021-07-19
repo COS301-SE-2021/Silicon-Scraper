@@ -1,4 +1,4 @@
-import 'package:silicon_scraper/models/product.dart';
+import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -77,10 +77,12 @@ class WatchListService
     }
 
   }
+
   Future<List<Product>> getProductlist()
   {
     return Future.value(items);
   }
+
   bool findItem(Product p)
   {
     for(var e in items)
@@ -92,6 +94,7 @@ class WatchListService
     }
      return false;
   }
+
   Future removeRequest(Product item)async
   {
     var url = Uri.parse("http://10.0.2.2:3000/watchlist");
@@ -119,6 +122,7 @@ class WatchListService
     }
     return true;
   }
+
   Future addRequest(Product item)async
   {
     var url = Uri.parse("http://10.0.2.2:3000/watchlist");
@@ -152,10 +156,7 @@ class WatchListSingleton extends WatchListService
 {
   static WatchListSingleton _instance;
 
-  WatchListSingleton._internal(){
-//    setItems();
-//    print("new singleton");
-  }
+  WatchListSingleton._internal();
 
   static WatchListSingleton getState()
   {

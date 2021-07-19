@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
-import 'package:silicon_scraper/services/watchListService.dart';
-import 'package:silicon_scraper/widgets/productWidget.dart';
+import 'package:silicon_scraper/services/watch_list_service.dart';
 
 class WatchList extends StatefulWidget {
   @override
@@ -14,24 +13,24 @@ class _WatchListState extends State<WatchList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(
-//        // Here we take the value from the MyHomePage object that was created by
-//        // the App.build method, and use it to set our appbar title.
-//        title: Center(child: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)),
-////        backgroundColor:Color(0xff0E3854) ,
-//        actions: <Widget>[
-//     Padding(
-//      padding: EdgeInsets.only(right: 20.0),
-//        child: GestureDetector(
-//          onTap: () {setState(() {
-//          }); },
-//          child: Icon(
-//            Icons.loop_sharp,
-//            size: 26.0,
-//          ),
-//        )
-//    ),],
-//      ),
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Center(child: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)),
+//        backgroundColor:Color(0xff0E3854) ,
+        actions: <Widget>[
+     Padding(
+      padding: EdgeInsets.only(right: 20.0),
+        child: GestureDetector(
+          onTap: () {setState(() {
+          }); },
+          child: Icon(
+            Icons.loop_sharp,
+            size: 26.0,
+          ),
+        )
+    ),],
+      ),
     bottomNavigationBar: BottomAppBar(
 
     ),
