@@ -36,7 +36,7 @@ class _WatchListState extends State<WatchList> {
     ),
       body: Container(
       child: FutureBuilder(
-      future: watch.setItems(),
+      future: watch.watchListRequest(true),
       builder: (BuildContext context,AsyncSnapshot snapshot){
         if(snapshot.connectionState==ConnectionState.none)
         {

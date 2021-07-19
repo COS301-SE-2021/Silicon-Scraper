@@ -32,12 +32,12 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
   bool inWatch;
   double buttonHeight= 200;
 
-  @override
-  void initState()
-  {
-    inWatch=watch.findItem(item);
-    super.initState();
-  }
+//  @override
+//  void initState()
+//  {
+//    inWatch=watch.findItem(item);
+//    super.initState();
+//  }
 
   @override
   Widget build(BuildContext context) {

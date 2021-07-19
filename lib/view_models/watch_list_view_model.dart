@@ -22,38 +22,41 @@ class WatchListViewModel
 
   Future removeItem(Product p) async
   {
-    bool contains=false;
-    for(var e in items)
+    if(findProduct(p))
     {
-      if(e == p)
+      try
       {
-        contains=true;
+        watch.removeRequest(p);// check response
+        items.remove(p);
       }
-    }
-    if(contains)
-    {
-      items.remove(p);
+      catch(e)
+      {
+        // display error message
+      }
     }
     else
     {
-      return false;
+      //display error message product is not in your watch list
     }
   }
 
   Future addProduct(Product p)async
   {
-    bool contains=false;
-    for(Product e in items)
+    if(findProduct(p))
     {
-      if(e == p)
+      try
       {
-        contains=true;
+        watch.addRequest(p);// check response
+        items.add(p);
+      }
+      catch(e)
+      {
+        // display error message
       }
     }
-
-    if(!contains)
+    else
     {
-      items.add(p);
+      //display message product is already in your watch list
     }
   }
 
@@ -67,6 +70,8 @@ class WatchListViewModel
         }
     );
   }
+
+
 }
 
 class WatchListViewModelSingleton extends WatchListViewModel
