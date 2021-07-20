@@ -11,7 +11,7 @@ class WatchListViewModel
 
   WatchListViewModel();
 
-  Future setInitialProducts(bool mock)async
+  Future setInitialProducts()async
   {
     if(items.isNotEmpty)
       {
@@ -21,7 +21,7 @@ class WatchListViewModel
       {
       try
       {
-        items= await watch.dependency.watchListRequest(mock);
+        items= await watch.dependency.watchListRequest();
         return true;
       }
       catch(e)
@@ -36,7 +36,7 @@ class WatchListViewModel
   {
     for(var e in items)
     {
-      if(e == p)
+      if(e.isTheSame(p))
       {
         return true;
       }
@@ -105,8 +105,6 @@ class WatchListViewModel
         }
     );
   }
-
-
 }
 
 class WatchListViewModelSingleton extends WatchListViewModel

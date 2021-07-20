@@ -1,5 +1,6 @@
 // ignore: camel_case_types
 import 'package:flutter/material.dart';
+import 'package:quiver/core.dart';
 
 class Product
 {
@@ -16,6 +17,38 @@ class Product
   final String url;
   final String image; //image
   availability stockAvailability;
+
+  bool isTheSame(Product other)
+  {
+    return (
+        other.id==id &&
+        other.type==type &&
+        other.brand==brand &&
+        other.model==model &&
+        other.price==price &&
+        other.retailer==retailer &&
+        other.description==description &&
+        other.url==url &&
+        other.image==image&&
+        other.stockAvailability==stockAvailability
+    );
+  }
+
+  factory Product.fromJson(Map<String,dynamic>json)
+  {
+    return Product(
+      json['brand'],
+      json['model'],
+      json['price'].toDouble(),
+      json['retailer'],
+      json['description'],
+      json['url'],
+      json['image'],
+      json['availability'],
+      json['id'],
+      json['type'].toUpperCase(),
+    );
+  }
 
   Product(this.brand, this.model, this.price, this.retailer, this.description,
       this.url, this.image,String sAvailability,this.id,this.type)

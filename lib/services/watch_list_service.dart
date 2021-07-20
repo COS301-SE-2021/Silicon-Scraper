@@ -7,14 +7,8 @@ class WatchListService
 {
   WatchListService();
 
-  Future<List<Product>> watchListRequest(bool mock)async
+  Future<List<Product>> watchListRequest()async
   {
-    if(mock)
-      {
-        return await getProducts();
-      }
-    else
-      {
         var url = Uri.parse("http://10.0.2.2:3000/watchlist");
         Map <String,String> headers=
         {
@@ -35,7 +29,6 @@ class WatchListService
           {
 //            throw
           }
-      }
   }
 
   Future removeRequest(Product item)async
