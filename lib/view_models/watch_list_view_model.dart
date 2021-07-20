@@ -36,7 +36,7 @@ class WatchListViewModel
   {
     for(var e in items)
     {
-      if(e.isTheSame(p))
+      if(e==p)
       {
         return true;
       }
@@ -50,17 +50,19 @@ class WatchListViewModel
     {
       try
       {
-        watch.dependency.removeRequest(p);// check response
+        await watch.dependency.removeRequest(p);// check response
         items.remove(p);
+        return true;
       }
       catch(e)
       {
-        // display error message
+        throw e;
       }
     }
     else
     {
       //display error message product is not in your watch list
+      throw Exception("can't remove a product that is not in your watch list");
     }
   }
 
@@ -70,7 +72,7 @@ class WatchListViewModel
     {
       try
       {
-        watch.dependency.addRequest(p);// check response
+        await watch.dependency.addRequest(p);// check response
         items.add(p);
       }
       catch(e)
@@ -81,6 +83,7 @@ class WatchListViewModel
     else
     {
       //display message product is already in your watch list
+      throw Exception("can't add a product that is already in your watch list");
     }
   }
 

@@ -6,66 +6,48 @@ import 'json/productsjson.dart';
 
 class MockWatchListService extends WatchListService
 {
-  MockWatchListService();
+  MockWatchListService(this._initialReq, this._removeReq, this._addReq);
   /// attributes added to control the behaviour of our mock class
-  bool _initialReq=true;
-  bool _removeReq=true;
-  bool _addReq=true;
-
-  bool get initialReq => _initialReq;
-  bool get removeReq => _removeReq;
-  bool get addReq => _addReq;
-
-  set initialReq(bool value)
-  {
-    _initialReq = value;
-  }
-  set removeReq(bool value)
-  {
-    _removeReq = value;
-  }
-  set addReq(bool value)
-  {
-    _addReq = value;
-  }
-
+  bool _initialReq;
+  bool _removeReq;
+  bool _addReq;
 
   @override
   Future<List<Product>> watchListRequest()async
   {
-    if(initialReq)
+    if(_initialReq)
       {
         return addProducts(JSONData());
       }
     else
       {
-//        throw
+        throw Exception("error when sending initial request to server");
       }
   }
 
   @override
   Future addRequest(Product item)async
   {
-    if(addReq)
+    if(_addReq)
       {
         return true;
       }
     else
       {
-//        throw
+        throw Exception("error when sending add request to server");
       }
   }
 
   @override
   Future removeRequest(Product item)async
   {
-    if(removeReq)
+    if(_removeReq)
       {
         return true;
       }
     else
       {
-//        throw
+        throw Exception("error when sending remove request to server");
       }
   }
 

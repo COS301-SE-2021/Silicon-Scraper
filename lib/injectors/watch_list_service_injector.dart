@@ -7,10 +7,17 @@ class WatchListInjector
   static final WatchListInjector _singleton = WatchListInjector._internal();
 
   static DependencyType _type;
+  static bool _initialReq=true;
+  static bool _removeReq=true;
+  static bool _addReq=true;
 
-  static void configure(DependencyType depType)
+
+  static void configure(DependencyType depType,{bool initialReq=true,bool removeReq=true,bool addReq=true})
   {
     _type=depType;
+    _initialReq=initialReq;
+    _removeReq=removeReq;
+    _addReq=addReq;
   }
 
    factory WatchListInjector(){
@@ -23,9 +30,9 @@ class WatchListInjector
       case DependencyType.PROD:
         return WatchListService();
       case DependencyType.MOCK:
-        return MockWatchListService();
+        return MockWatchListService(_initialReq,_removeReq,_addReq);
       default:
-        return MockWatchListService();
+        return MockWatchListService(_initialReq,_removeReq,_addReq);
     }
   }
 

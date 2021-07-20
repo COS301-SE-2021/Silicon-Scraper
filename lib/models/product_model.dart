@@ -1,6 +1,4 @@
-// ignore: camel_case_types
 import 'package:flutter/material.dart';
-import 'package:quiver/core.dart';
 
 class Product
 {
