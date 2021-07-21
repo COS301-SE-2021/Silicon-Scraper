@@ -26,8 +26,7 @@ class WatchListViewModel
       }
       catch(e)
       {
-        //handle error message
-        return;
+        throw e;
       }
     }
   }
@@ -44,7 +43,19 @@ class WatchListViewModel
     return false;
   }
 
-  Future removeItem(Product p)async
+  bool findProductStrict(Product p)
+  {
+    for(var e in items)
+    {
+      if(e.isTheSame(p))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Future removeProduct(Product p)async
   {
     if(findProduct(p))
     {
@@ -68,16 +79,17 @@ class WatchListViewModel
 
   Future addProduct(Product p)async
   {
-    if(findProduct(p))
+    if(!findProductStrict(p))
     {
       try
       {
         await watch.dependency.addRequest(p);// check response
         items.add(p);
+        return true;
       }
       catch(e)
       {
-        // display error message
+        throw e;
       }
     }
     else
