@@ -67,7 +67,7 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:
  * @param $
  * @param selector
  */
-export const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string, data?: any) =>{
+export const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string,  data?: any) =>{
 
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
     let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())
@@ -75,9 +75,11 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
     if(price === undefined)
         return
 
-
+    if ( title.model === ""){
+        return 
+    }
     let productsArray = {
-        image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src'), baseUrl),
+        //image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src'), baseUrl),
         brand: title.brand,
         model: title.model,
         price: price,
@@ -166,17 +168,22 @@ export const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
 export const titleParser = (title: string) =>{
     let detailedTitle = title.split(' ')
     let model = ''
-    for (let i = 1; i < detailedTitle.length - 1; i++) {
-        if(i == 1){
-            model = detailedTitle[i]
+    let brand = '';
+    let graphics = ["GEFORCE", "RTX", "RX", "RADEON", "AMD", "GTX", "GT"]
+    for (let i = 0; i < detailedTitle.length - 1; i++) {
+        if(graphics.some(x => x === detailedTitle[i].toUpperCase())){
+            for (let k = i ; k< detailedTitle.length-1; k++){
+                model += " " + detailedTitle[k]
+            }
+            break;
         }else{
-            model = model+" "+detailedTitle[i]
+            brand += detailedTitle[i] + " "
         }
 
     }
     let detailedTitleObj = {
-        'brand' : detailedTitle[0],
-        'model' : model
+        'brand' : brand.slice(0,-1), //detailedTitle[0],
+        'model' : model.substring(1)
     }
     return detailedTitleObj
 }
@@ -192,7 +199,7 @@ export const scrape = async () => {
         for (const url of urls) {          
             for(const url_ of url.urls) {
 
-                await scrapeSilon(url_, selector, selector.getBaseUrl(), url.type);
+               await scrapeSilon(url_, selector, selector.getBaseUrl(), url.type);
 
             }
         }
