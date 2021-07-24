@@ -1,11 +1,10 @@
-
- JSONData(){
+JSONData(){
   return  [
       {
         "id":"1",
         "type":"gpu",
-        "brand":"MSI GeForce RTX 3090" ,
-        "model":"SUPRIM X 24GB GDDR6X Graphics Card" ,
+        "brand":"MSI " ,
+        "model":"GeForce RTX 3090" ,
         "price": 45999.0,
         "retailer": "evetech",
         "description": "/ 10496 Cuda Cores / Boost Clock: 1860 MHz / Triple Fan / Sturdy Brushed-finish Metal Backplate / 3x DisplayPort / 1x HDMI 2.1 / 912-V388-010 + FREE DELIVERY !",
@@ -17,7 +16,7 @@
         "id":"2",
         "type":"gpu",
         "brand":"ASUS ROG Strix GeForce RTX 3090" ,
-        "model":"OC 24GB White GDDR6X Gaming Graphics Card " ,
+        "model":"OC 24GB White GDDR6X Gaming Graphics Card" ,
         "price": 45999.0,
         "retailer": "evetech",
         "description": "/ 10496 Cuda Core / 384-bit Memory Interface / Boost Clock : 1890 MHz / Base Clock : 1400MHz / 3x DisplayPort / 2x HDMI / 90YV0F96-M0NM00 + FREE DELIVERY !",
