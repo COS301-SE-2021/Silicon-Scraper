@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/product_model.dart';
-import 'package:silicon_scraper/widgets/vertical_product_widget.dart';
+
 
 class SearchViewModel {
   SearchViewModel();
