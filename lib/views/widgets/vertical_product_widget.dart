@@ -30,7 +30,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                 builder: (context) => ProductDetailWidget(widget.item)));
           },
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// image
@@ -44,7 +44,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                 width: MediaQuery.of(context).size.width / 3,
                 //height: MediaQuery.of(context).size.height / 39,
                 margin: EdgeInsets.fromLTRB(5, 5, 0, 0),
-                child: Text("${widget.item.brand+" "+widget.item.model}", textAlign: TextAlign.left,style: TextStyle(
+                child: Text("${widget.item.brand+" "+widget.item.model}", maxLines: 2, overflow: TextOverflow.ellipsis,textAlign: TextAlign.left,style: TextStyle(
                   fontSize: 14, color: Colors.black54, fontWeight: FontWeight.bold),),
               ),
               /// price and bookmark button
@@ -60,7 +60,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                         Container(
                           margin: EdgeInsets.only(top: 5),
                           child:
-                              Text('R ${widget.item.price.toStringAsFixed(2)}', textAlign: TextAlign.left, style: TextStyle(
+                              Text('R ${widget.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black)),
