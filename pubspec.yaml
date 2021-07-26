@@ -32,9 +32,20 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #Mockito for mocks
+  #Mockito for mobile.mocks
   mockito: 
   test: ^1.16.5
+  #for opening links
+  url_launcher: ^5.7.5
+  #for testing with network images
+#  image_test_utils:
+  #for search bar
+  material_floating_search_bar: ^0.3.4
+  #for testing with network images
+  network_image_mock: ^2.0.1
+  #for http requests
+  http: any
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -46,6 +57,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - test/mobile/mocks/json/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
