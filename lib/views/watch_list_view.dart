@@ -14,6 +14,7 @@ class _WatchListState extends State<WatchList>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
@@ -45,7 +46,7 @@ class _WatchListState extends State<WatchList>
         }
         else if(watch.items.isNotEmpty)
         {
-          return watch.horizontalProductListView(context, watch.items);
+          return watch.floatingProductListView(context, watch.items);
         }
         else
         {
