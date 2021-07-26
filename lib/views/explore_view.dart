@@ -6,7 +6,7 @@ import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/explore_page_service.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/view_models/explore_detail_view_model.dart';
-import 'package:silicon_scraper/widgets/explore_detail_widget.dart';
+import 'file:///C:/Users/louis/AndroidStudioProjects/silicon_scraper/lib/views/widgets/explore_detail_widget.dart';
 //import 'package:silicon_scraper/pages/searchPage.dart'; //add search functionality
 
 class Explore extends StatefulWidget {
