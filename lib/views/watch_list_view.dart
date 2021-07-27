@@ -18,8 +18,8 @@ class _WatchListState extends State<WatchList>
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Center(child: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)),
-//        backgroundColor:Color(0xff0E3854) ,
+        title: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),),
+        centerTitle: true,
         actions: <Widget>[
      Padding(
       padding: EdgeInsets.only(right: 20.0),
