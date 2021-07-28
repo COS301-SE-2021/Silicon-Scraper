@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/theme/colors.dart';
+import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/views/widgets/product_detail_widget.dart';
 
 class FloatingProductWidget extends StatefulWidget {
@@ -7,10 +9,29 @@ class FloatingProductWidget extends StatefulWidget {
   const FloatingProductWidget({Key key, this.item}) : super(key: key);
 
   @override
-  _FloatingProductWidgetState createState() => _FloatingProductWidgetState();
+  _FloatingProductWidgetState createState() => _FloatingProductWidgetState(item);
 }
 
 class _FloatingProductWidgetState extends State<FloatingProductWidget> {
+  _FloatingProductWidgetState(this.item);
+  Product item;
+  WatchListViewModelSingleton watch=WatchListViewModelSingleton.getState();
+  Icon save;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    if(item.watch==false)
+    {
+      save=Icon(Icons.bookmark_outline,color: Colors.black,);
+    }
+    else
+    {
+      save=Icon(Icons.bookmark,color: theOrange,);
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context)
   {
@@ -34,7 +55,7 @@ class _FloatingProductWidgetState extends State<FloatingProductWidget> {
                     height:120,
                     width: MediaQuery.of(context).size.width*0.85,
                   child: Card(
-                    elevation: 20,
+                    elevation: 0,
                     color: Colors.white,
                     child: Container(
                       padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.20, 0, 0, 0),
@@ -42,6 +63,11 @@ class _FloatingProductWidgetState extends State<FloatingProductWidget> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+//                          Divider(
+//                            height:0,
+//                            thickness: 5,
+//                            color: Colors.black,
+//                          ),
                           Text("${widget.item.brand+" "+widget.item.model}", textAlign: TextAlign.center,style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold,),),
                           Container(
@@ -81,7 +107,8 @@ class _FloatingProductWidgetState extends State<FloatingProductWidget> {
                                           color: Colors.green)),
                                     ],
                                   ),
-                                )
+                                ),
+
                               ],
                             ),
                           ),
@@ -98,7 +125,20 @@ class _FloatingProductWidgetState extends State<FloatingProductWidget> {
                       height: 40,
                       child: FloatingActionButton(
                         backgroundColor: Colors.white,
-                        child: Icon(Icons.bookmark_border, color: Colors.black, size: 20,), onPressed: (){},),
+                        child: save, onPressed: (){},),
+                    ),
+                  ),
+                  /// divider line
+                  Positioned(
+                    bottom: 0,
+                    right: 5,
+                    child: Container(
+                      width: 280,
+                      child: Divider(
+                              height:0,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
                     ),
                   )
                 ]
@@ -109,6 +149,7 @@ class _FloatingProductWidgetState extends State<FloatingProductWidget> {
               height: MediaQuery.of(context).size.height / 5,
               child: Image.network('${widget.item.image}',),
             ),
+
           ],
       ),
         )

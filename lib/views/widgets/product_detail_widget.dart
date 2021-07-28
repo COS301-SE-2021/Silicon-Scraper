@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/watch_list_service.dart';
 import 'package:silicon_scraper/theme/colors.dart';
+import 'package:silicon_scraper/theme/colors.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class ProductDetailWidget extends StatefulWidget
@@ -19,6 +21,7 @@ class ProductDetailWidget extends StatefulWidget
   get model => item.model;
   get desctiption => item.description;
   get url => item.url;
+  get watch=> item.watch;
 
   @override
   _ProductDetailWidgetState createState() => _ProductDetailWidgetState(item);
@@ -29,7 +32,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
   WatchListSingleton watch= WatchListSingleton.getState();
   Product item;
   _ProductDetailWidgetState(this.item);
-  bool inWatch;
+  Icon save;
   double buttonHeight= 200;
 
 //  @override
@@ -38,6 +41,19 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 //    inWatch=watch.findItem(item);
 //    super.initState();
 //  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    if(widget.watch==false)
+      {
+       save=Icon(Icons.bookmark_outline,color: Colors.black,);
+      }
+    else
+      {
+        save=Icon(Icons.bookmark,color: theOrange,);
+      }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +144,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                 bottom: buttonHeight,
                 child: FloatingActionButton(
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.bookmark_outline,color: Colors.black,), onPressed: (){},
+                  child: save, onPressed: (){},
                 )
             ),
           Positioned(
@@ -165,7 +181,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                     Container(
                         margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
                         child: FlatButton(
-                          onPressed: () { },
+                  onPressed: ()async{
+                    var url = widget.url;
+                      return await launch(url);
+                      },
 //                       style: ButtonStyle(
 //                          backgroundColor: MaterialStateProperty.all(myOrange),
 //                        ),

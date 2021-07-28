@@ -23,11 +23,12 @@ List<Product> addProducts(List json)
           String sAvailability=json[i]['availability'];
           String id=json[i]['id'];
           String type=json[i]['type'].toUpperCase();
+          bool watch =json[i]['watch'];
           if(url==null)
             {
               url=json[i]['link'];
             }
-          items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability,id,type));
+          items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability,id,type,watch));
         }
       }
 

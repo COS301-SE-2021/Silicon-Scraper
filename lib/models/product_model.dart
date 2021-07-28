@@ -14,7 +14,14 @@ class Product
 
   final String url;
   final String image; //image
+  bool _watch;
   availability stockAvailability;
+
+  bool get watch => _watch;
+
+  set watch(bool value) {
+    _watch = value;
+  }
 
   bool isTheSame(Product other)
   {
@@ -45,11 +52,12 @@ class Product
       json['availability'],
       json['id'],
       json['type'].toUpperCase(),
+      json['watch'],
     );
   }
 
   Product(this.brand, this.model, this.price, this.retailer, this.description,
-      this.url, this.image,String sAvailability,this.id,this.type)
+      this.url, this.image,String sAvailability,this.id,this.type,this._watch)
   {
     if(sAvailability==null)
       {
