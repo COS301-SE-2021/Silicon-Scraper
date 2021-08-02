@@ -1,10 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/injectors/explore_service_injector.dart';
 import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/services/getProducts.dart';
 
 class ExploreViewModel {
+
+  ExplorePageInjector explore = ExplorePageInjector();
   List<Product> items=[];
 
   ExploreViewModel();
+
+  FutureBuilder getExplorePageProducts(String productType, bool showAll) {
+    List<Product> products = [];
+    List<Product> unprocessedProducts = [];
+    return FutureBuilder(
+      future: explore.dependency.setItems(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.none) {
+          print("problem with connection");
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.data != null) {
+          print("gets data");
+          unprocessedProducts = snapshot.data;
+          if (productType.compareTo("all") != 0) {
+            for (int i = 0; i < unprocessedProducts.length; i++) {
+              if (unprocessedProducts
+                      .elementAt(i)
+                      .type
+                      .toLowerCase()
+                      .compareTo(productType) ==
+                  0) {
+                products.add(unprocessedProducts.elementAt(i));
+              }
+            }
+          } else {
+            products = snapshot.data;
+          }
+
+          // check if the product array is not empty (ie no products)
+          if (products.isNotEmpty) {
+            if (showAll){
+              return productListView(context, products);
+            }
+            return productHorizontalListView(context, products);
+          } else {
+            if (productType.compareTo("cpu") == 0) {
+              return noProducts(context, "CPUs");
+            } else if (productType.compareTo("gpu") == 0) {
+              return noProducts(context, "GPUs");
+            } else {
+              return noProducts(context, "PRODUCTS");
+            }
+          }
+        } else {
+          print("ERROR: not getting data");
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
 
   String getTitle(String productType){
     String title = "Products";
@@ -16,42 +70,6 @@ class ExploreViewModel {
     }
     return title;
   }
-
-  List<Product> getExplorePageProducts(List<Product> unprocessedProducts, String productType){
-
-    if (productType.compareTo("all") == 0){
-      return unprocessedProducts;
-    }
-    List<Product> products = [];
-    for(int i = 0; i < unprocessedProducts.length; i++){
-      if (unprocessedProducts.elementAt(i).type.toLowerCase().compareTo(productType) == 0){
-        products.add(unprocessedProducts.elementAt(i));
-      }
-    }
-    return products;
-  }
-
-  // ListView horizontalProductListView(BuildContext context,items)
-  // {
-  //   return ListView.builder(
-  //       itemCount:items.length ,
-  //       itemBuilder: (_,index)
-  //       {
-  //         return HorizontalProductWidget(item:items[index]);
-  //       }
-  //   );
-  // }
-  //
-  // ListView verticalProductListView(BuildContext context,items)
-  // {
-  //   return ListView.builder(
-  //       itemCount:items.length ,
-  //       itemBuilder: (_,index)
-  //       {
-  //         return VerticalProductWidget(item:items[index]);
-  //       }
-  //   );
-  // }
 }
 
 class ExplorePageViewModelSingleton extends ExploreViewModel

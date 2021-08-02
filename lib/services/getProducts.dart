@@ -30,8 +30,7 @@ List<Product> addProducts(List json)
           items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability,id,type));
         }
       }
-
-  return items;
+    return items;
 }
 
 Future<String>_loadFromAsset() async {

@@ -9,7 +9,7 @@ class ExplorePageInjector
   static DependencyType _type;
 
   static void configure(DependencyType depType) {
-    _type=depType;
+    _type = depType;
   }
 
   factory ExplorePageInjector(){
@@ -19,10 +19,13 @@ class ExplorePageInjector
   ExplorePageService get dependency{
     switch(_type) {
       case DependencyType.PROD:
+        print("Explore getting production service");
         return ExplorePageService();
       case DependencyType.MOCK:
+        print("Explore getting mock service");
         return MockExplorePageService();
       default:
+        print("Explore getting default: mock service");
         return MockExplorePageService();
     }
   }

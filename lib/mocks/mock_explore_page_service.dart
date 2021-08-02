@@ -14,7 +14,7 @@ class MockExplorePageService extends ExplorePageService {
 
   @override
   Future explorePageRequest() async {
-    await getProducts();
+    return await getProducts();
   }
 
   @override

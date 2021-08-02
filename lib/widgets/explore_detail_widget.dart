@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/services/explore_page_service.dart';
-import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/view_models/explore_detail_view_model.dart';
-import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/views/search_view.dart';
 import 'package:silicon_scraper/views/watch_list_view.dart';
 
@@ -22,8 +19,7 @@ class ExploreDetailWidget extends StatefulWidget {
 }
 
 class _ExploreDetailWidgetState extends State<ExploreDetailWidget> {
-  ExplorePageSingleton explore = ExplorePageSingleton.getState();
-  ExplorePageViewModelSingleton exploreDetail =
+  ExplorePageViewModelSingleton explore =
       ExplorePageViewModelSingleton.getState();
 
   String productType;
@@ -40,7 +36,7 @@ class _ExploreDetailWidgetState extends State<ExploreDetailWidget> {
           backgroundColor: Colors.white,
           elevation: 1.0,
           title: Text(
-            exploreDetail.getTitle(productType),
+            explore.getTitle(productType),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -68,24 +64,7 @@ class _ExploreDetailWidgetState extends State<ExploreDetailWidget> {
         ),
         //backgroundColor: Colors.white,
         body: Container(
-          child: FutureBuilder(
-            future: explore.setItems(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.none) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.data != null) {
-                List<Product> products = exploreDetail.getExplorePageProducts(
-                    snapshot.data, productType);
-                if (products.isNotEmpty) {
-                  return productListView(context, products);
-                } else {
-                  return noProducts(context, "PRODUCTS");
-                }
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
+          child: explore.getExplorePageProducts("all", true)
         ));
   }
 }
