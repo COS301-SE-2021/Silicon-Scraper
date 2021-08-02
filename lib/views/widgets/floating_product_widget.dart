@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/theme/colors.dart';
-import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
+import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/product_detail_widget.dart';
+import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
+
 
 class FloatingProductWidget extends StatefulWidget {
   final Product item;
   const FloatingProductWidget({Key key, this.item}) : super(key: key);
-
   @override
   _FloatingProductWidgetState createState() => _FloatingProductWidgetState(item);
 }
@@ -16,19 +17,11 @@ class _FloatingProductWidgetState extends State<FloatingProductWidget> {
   _FloatingProductWidgetState(this.item);
   Product item;
   WatchListViewModelSingleton watch=WatchListViewModelSingleton.getState();
-  Icon save;
+  ProductViewModel state;
 
   @override
   void initState() {
-    // TODO: implement initState
-    if(item.watch==false)
-    {
-      save=Icon(Icons.bookmark_outline,color: Colors.black,);
-    }
-    else
-    {
-      save=Icon(Icons.bookmark,color: theOrange,);
-    }
+    state=ProductViewModel(item);
     super.initState();
   }
 
@@ -125,7 +118,9 @@ class _FloatingProductWidgetState extends State<FloatingProductWidget> {
                       height: 40,
                       child: FloatingActionButton(
                         backgroundColor: Colors.white,
-                        child: save, onPressed: (){},),
+                        child: state.save, onPressed: ()async{
+                          await state.changeState(context);
+                      },),
                     ),
                   ),
                   /// divider line
