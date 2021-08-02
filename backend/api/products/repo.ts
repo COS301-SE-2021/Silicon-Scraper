@@ -1,28 +1,19 @@
-import config from '../config';
-import { Pool } from 'pg';
-
-const pool = new Pool({
-    user: config.user,
-    host: config.host,
-    database: config.name,
-    password: config.pw,
-    port: config.port
-});
-
+import pool from '../database';
 /** 
  * Fetch data from database
  * @param {String} sqlQuery - Query used to fetch data from db
  */
 async function fetchData(sqlQuery: string) {
+    const client = await pool.connect();
     try {
-        const data = await pool.query(sqlQuery);
+        const data = await client.query(sqlQuery);
         return data.rows;
     } catch(error) {
-        return [];
+        return [];  
+    } finally {
+        console.log('client released');
+        client.release();
     }
 }
 
-export = {
-    pool,
-    fetchData
-}
+export default fetchData;

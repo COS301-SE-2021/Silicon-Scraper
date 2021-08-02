@@ -1,4 +1,4 @@
-import repo from "./repo";
+import fetchData from "./repo";
 
 interface Response {
     status: number,
@@ -35,7 +35,7 @@ function genSQLQuery(query: any) {
 const getProductByID = async (req, res) => {
     let id = req.params.id;
     const response: Response = {status: 200, products: []};
-    const data = await repo.fetchData(`SELECT * FROM (SELECT * FROM gpus UNION SELECT * FROM cpus) AS tbl WHERE id = '${id}'`);
+    const data = await fetchData(`SELECT * FROM (SELECT * FROM gpus UNION SELECT * FROM cpus) AS tbl WHERE id = '${id}'`);
     if(data.length !== 0) {
         response.products = data;
     }
@@ -77,7 +77,7 @@ const search = async (req, res) => {
 
     const result: string[] = [];
     if(queryObj.key !== '') {
-        const data = await repo.fetchData('SELECT * FROM gpus UNION SELECT * FROM cpus');
+        const data = await fetchData('SELECT * FROM gpus UNION SELECT * FROM cpus');
         data.forEach((x) => {
             let value = (x.brand+' '+x.model).toLowerCase();
             if(value.includes(queryObj.key)) {
@@ -115,7 +115,7 @@ const getProducts = async (req, res) => {
     }
     let offset = (values[1]-1)*values[2];
     let response: Response = {status: 200, products: []};
-    const data = await repo.fetchData(`SELECT * FROM ${values[0]} OFFSET ${offset} LIMIT ${values[2]}`);
+    const data = await fetchData(`SELECT * FROM ${values[0]} OFFSET ${offset} LIMIT ${values[2]}`);
     response.products = data;
 
     res.json(response);

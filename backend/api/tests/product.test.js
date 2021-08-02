@@ -1,7 +1,7 @@
 const request = require('supertest');
-const app = require('../app');
+const app = require('../build/app.js');
 const mockData = require('../mocks/productMocks');
-const repo = require('../products/repo')
+const repo = require('../build/products/repo.js');
 
 repo.pool.query = jest.fn();
 repo.fetchData = jest.fn();
