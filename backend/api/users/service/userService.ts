@@ -1,12 +1,14 @@
-import userRepo from "../repository/userRepo";
+import UserRepo from "../repository/userRepo";
 import ErrorTypes from "../../errors/ErrorTypes";
-import * as jwtUtil from '../../utilities/jwtUtil';
-import * as passwordEncoder from '../../utilities/passwordEncoder';
+import jwtUtil from '../../utilities/jwtUtil';
+import passwordEncoder from '../../utilities/passwordEncoder';
 
 const InvalidRequestError = ErrorTypes.InvalidRequestError;
 const RegisterError = ErrorTypes.RegisterError;
 const LoginError = ErrorTypes.LoginError;
 const UsernameNotFoundError = ErrorTypes.UsernameNotFoundError;
+
+const userRepo = UserRepo();
 
 /**
  * 
@@ -16,7 +18,7 @@ const UsernameNotFoundError = ErrorTypes.UsernameNotFoundError;
  * @returns {object} register & login functions
  */
 
-module.exports = (userRepository:any = userRepo, passwordEncod:any = passwordEncoder, jwtUtility = jwtUtil) => {
+export = (userRepository:any = userRepo, passwordEncod:any = passwordEncoder, jwtUtility = jwtUtil) => {
 
     /**
      * This function handles the functionality of a user registering on the platform. It takes in

@@ -1,6 +1,6 @@
 import express from "express";
 import ErrorTypes from "../../errors/ErrorTypes";
-import * as jwtUtil from '../../utilities/jwtUtil';
+import jwtUtil from '../../utilities/jwtUtil';
 import WatchlistService from "../service/watchlistService";
 
 const watchlistService = WatchlistService();

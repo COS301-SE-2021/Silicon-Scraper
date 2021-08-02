@@ -1,9 +1,11 @@
 import Errors = require("../../errors/ErrorTypes");
 const InvalidRequestError = Errors.InvalidRequestError;
-import * as watchlistRepo from '../repository/watchlistRepo';
-import * as jwtUtil from '../../utilities/jwtUtil';
+import WatchlistRepo = require("../repository/watchlistRepo");
+import jwtUtil from '../../utilities/jwtUtil';
 
-export = (watchRepo: any = watchlistRepo) => {
+const watchlistRepo = WatchlistRepo();
+
+export = (watchRepo = watchlistRepo) => {
 
     const addProduct = async(request) => {
         if (!('type' in request) || !('productID' in request))

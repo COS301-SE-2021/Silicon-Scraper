@@ -1,11 +1,15 @@
-const express = require('express');
-const router =  express.Router();
-const userService = require('../service/userService.js')()
-const jwtUtil = require('../../utilities/jwtUtil.js');
-const InvalidRequestError = require('../../errors/InvallidRequest.error.js');
-const RegisterError = require('../../errors/Register.error.js');
-const LoginError = require('../../errors/Login.error');
-const UsernameNotFoundError = require('../../errors/UsernameNotFound.error.js');
+import express from 'express';
+import UserService from '../service/userService';
+import jwtUtil from '../../utilities/jwtUtil';
+import ErrorTypes from '../../errors/ErrorTypes';
+
+const InvalidRequestError = ErrorTypes.InvalidRequestError;
+const RegisterError = ErrorTypes.RegisterError;
+const LoginError = ErrorTypes.LoginError;
+const UsernameNotFoundError = ErrorTypes.UsernameNotFoundError;
+
+const router: express.Router = express.Router();
+const userService = UserService();
 
 //Look for cleaner way to do this
 //My exception handling is messy
@@ -71,4 +75,4 @@ router.delete('/', (req, res) => {
     res.status(501).send()
 });
 
-module.exports = router;
+export default router;

@@ -25,7 +25,7 @@ const db = pg(
  *                   service
  */
 
-module.exports = (dbase = db) => {
+export = (dbase = db) => {
 
     /**
      * This function handles the function of adding a cpu product to a user's watchlist
