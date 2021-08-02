@@ -1,12 +1,12 @@
-const userRepo = require('../repository/userRepo.js')()
+import userRepo from "../repository/userRepo";
+import ErrorTypes from "../../errors/ErrorTypes";
+import * as jwtUtil from '../../utilities/jwtUtil';
+import * as passwordEncoder from '../../utilities/passwordEncoder';
 
-const passwordEncoder = require('../../utilities/passwordEncoder.js')
-const jwtUtil = require('../../utilities/jwtUtil.js')
-
-const InvalidRequestError = require('../../errors/InvallidRequest.error')
-const RegisterError = require('../../errors/Register.error')
-const LoginError = require('../../errors/Login.error')
-const UsernameNotFoundError = require('../../errors/UsernameNotFound.error')
+const InvalidRequestError = ErrorTypes.InvalidRequestError;
+const RegisterError = ErrorTypes.RegisterError;
+const LoginError = ErrorTypes.LoginError;
+const UsernameNotFoundError = ErrorTypes.UsernameNotFoundError;
 
 /**
  * 
@@ -16,7 +16,7 @@ const UsernameNotFoundError = require('../../errors/UsernameNotFound.error')
  * @returns {object} register & login functions
  */
 
-module.exports = (userRepository = userRepo, passwordEncod = passwordEncoder, jwtUtility = jwtUtil) => {
+module.exports = (userRepository:any = userRepo, passwordEncod:any = passwordEncoder, jwtUtility = jwtUtil) => {
 
     /**
      * This function handles the functionality of a user registering on the platform. It takes in
@@ -35,7 +35,7 @@ module.exports = (userRepository = userRepo, passwordEncod = passwordEncoder, jw
 
     const register = async(request) => {
         if (!('username' in request) || !('password' in request))
-            throw new InvalidRequestError();
+            throw new InvalidRequestError('missing paramater(s)');
         let user = await userRepository.getUser(request.username);
         if (user != null)
             throw new RegisterError("Invalid username");
@@ -65,13 +65,13 @@ module.exports = (userRepository = userRepo, passwordEncod = passwordEncoder, jw
 
     const login = async(request) => {
         if (!('username' in request) || !('password' in request))
-            throw new InvalidRequestError();
+            throw new InvalidRequestError('missing parameter(s)');
         let user = await userRepository.getUser(request.username);
         if (user == null)
-            throw new UsernameNotFoundError()
+            throw new UsernameNotFoundError(`user with username ${request.username} does not exist`);
         let result = await passwordEncod.compare(request.password, user.hash)
         if (result == false)
-            throw new LoginError()
+            throw new LoginError('invalid password')
         return jwtUtility.generateToken(user)
     }
 
