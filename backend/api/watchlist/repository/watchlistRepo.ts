@@ -1,4 +1,4 @@
-import configs from '../../config';
+import * as configs from '../../config';
 import { v4 } from 'uuid';
 import pgp from 'pg-promise';
 

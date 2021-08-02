@@ -18,4 +18,4 @@ const config: dbConfig = {
     user : process.env.DB_USER!
 }
 
-export default config;
+export = config;
