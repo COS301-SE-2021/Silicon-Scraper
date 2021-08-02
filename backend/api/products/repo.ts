@@ -11,7 +11,6 @@ async function fetchData(sqlQuery: string) {
     } catch(error) {
         return [];  
     } finally {
-        console.log('client released');
         client.release();
     }
 }

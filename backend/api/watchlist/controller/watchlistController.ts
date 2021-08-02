@@ -7,7 +7,9 @@ const watchlistService = WatchlistService();
 const InvalidRequestError = ErrorTypes.InvalidRequestError;
 const router: express.Router = express.Router();
 
-router.post('/', jwtUtil.verifyToken, async(req, res) => {
+router.use(jwtUtil.verifyToken);
+
+router.post('/', async(req, res) => {
     await watchlistService.addProduct(req.body)
     .then(response => {
         res.status(201)
@@ -34,7 +36,7 @@ router.post('/', jwtUtil.verifyToken, async(req, res) => {
     })
 })
 
-router.get('/', jwtUtil.verifyToken, async(req, res) => {
+router.get('/', async(req, res) => {
     const result = await watchlistService.getWatchlist(req.body.user)
     .then(resp => {
         res.status(200)
@@ -51,7 +53,7 @@ router.get('/', jwtUtil.verifyToken, async(req, res) => {
     })
 })
 
-router.delete('/',  jwtUtil.verifyToken, async(req, res) => {
+router.delete('/', async(req, res) => {
     await watchlistService.removeProduct(req.body)
     .then(resp => {
         res.status(200)
