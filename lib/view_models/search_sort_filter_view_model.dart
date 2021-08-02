@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 
-
 class SearchViewModel {
   SearchViewModel();
+
   bool containsIgnoreCase(String modelOrBrand, String query) {
     return modelOrBrand.toLowerCase().contains(query.toLowerCase());
   }
@@ -91,50 +91,53 @@ class SearchViewModel {
       "amptek"
     ];
 
-    // for each product go through all the filters (nested array) and for the 'true' filters:
+    // for each product
+    // check if any of the checkbox filters have been selected
+    // go through all the filters (nested for loop) and for the 'true' filters:
     // check if the product matches
     // if it does: add , if not add => false
     // if the product matches all the 'true' filters ,
     // check if its in the price range then add it to the filtered array
-
+    bool add = true;
     for (int p = 0; p < products.length; p++) {
-      bool add = false;
-      for (int i = 0; i < filters.length; i++) {
-        if (i < 2) {
-          if (filters[i]) {
-            print(filters[i]);
-            if (products
-                .elementAt(p)
-                .getAvailability()
-                .toLowerCase()
-                .compareTo(filterString[i]) ==
-                0) {
-              // print(products
-              //     .elementAt(p)
-              //     .getAvailability()); // returns a boolean i think?
-              add = true;
-            } else {
-              add = false;
+      if (inStock || outOfStock || retailer1 || retailer2 || retailer3) {
+        add = false;
+        for (int i = 0; i < filters.length; i++) {
+          if (i < 2) {
+            if (filters[i]) {
+              print(filters[i]);
+              if (products
+                      .elementAt(p)
+                      .getAvailability()
+                      .toLowerCase()
+                      .compareTo(filterString[i]) ==
+                  0) {
+                // print(products
+                //     .elementAt(p)
+                //     .getAvailability()); // returns a boolean i think?
+                add = true;
+              } else {
+                add = false;
+              }
             }
-          }
-        }
-        else {
-          if (filters[i]) {
-            if (products
-                .elementAt(p)
-                .retailer
-                .toLowerCase()
-                .compareTo(filterString[i]) ==
-                0) {
-              add = true;
+          } else {
+            if (filters[i]) {
+              if (products
+                      .elementAt(p)
+                      .retailer
+                      .toLowerCase()
+                      .compareTo(filterString[i]) ==
+                  0) {
+                add = true;
+              }
             }
           }
         }
       }
-
       if (add) {
         // lastly check the price range
-        if (products.elementAt(p).price >= minPrice && products.elementAt(p).price <= maxPrice) {
+        if (products.elementAt(p).price >= minPrice &&
+            products.elementAt(p).price <= maxPrice) {
           filteredProducts.add(products.elementAt(p));
         }
       }
@@ -145,20 +148,18 @@ class SearchViewModel {
   List<Product> getSortedFilteredProducts(List<Product> products) {
     return products;
   }
-
 }
 
-class SearchPageViewModelSingleton extends SearchViewModel
-{
+class SearchPageViewModelSingleton extends SearchViewModel {
   static SearchPageViewModelSingleton _instance;
-  SearchPageViewModelSingleton._internal(){
+
+  SearchPageViewModelSingleton._internal() {
 //
   }
-  static SearchPageViewModelSingleton getState()
-  {
-    if(_instance==null)
-    {
-      _instance=SearchPageViewModelSingleton._internal();
+
+  static SearchPageViewModelSingleton getState() {
+    if (_instance == null) {
+      _instance = SearchPageViewModelSingleton._internal();
     }
     return _instance;
   }

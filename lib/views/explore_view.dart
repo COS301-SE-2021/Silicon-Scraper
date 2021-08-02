@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:silicon_scraper/view_models/explore_detail_view_model.dart';
-import 'package:silicon_scraper/widgets/explore_detail_widget.dart';
+import 'package:silicon_scraper/views/widgets/explore_detail_widget.dart';
 
 class Explore extends StatefulWidget {
 

@@ -360,7 +360,9 @@ class ProductSearch extends SearchDelegate<String> {
                         onPressed: () {
                           showModalBottomSheet(
                               context: context,
-                              barrierColor: Colors.deepOrangeAccent,
+                              //barrierColor: Colors.deepOrangeAccent,
+                              isDismissible: false,
+                              enableDrag: false,
                               backgroundColor: Colors.white,
                               elevation: 10,
                               shape: RoundedRectangleBorder(
@@ -496,7 +498,7 @@ class ProductSearch extends SearchDelegate<String> {
                                                       color: Colors.grey),
                                                 ),
                                                 onPressed: () {
-                                                  Navigator.pop(context);
+                                                  Navigator.pop(context, this.products);
                                                 },
                                               ),
                                               TextButton(
@@ -559,7 +561,7 @@ class ProductSearch extends SearchDelegate<String> {
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                        text: searchViewModel.numberOfItems(this.products.length) + " items",
+                        text: searchViewModel.numberOfItems(this.products == null ? 0 : this.products.length) + " items",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
