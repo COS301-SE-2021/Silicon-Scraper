@@ -15,3 +15,19 @@ def setModel(data, models):
 
     return data
 
+
+#
+#This function cleans the given data by merging its brand and getting rid of the empty rows
+#
+def setBrand(data):
+    brands = set(data["brand"].str.upper())
+    brands = brands
+    brands = pd.DataFrame(brands)
+    brands = brands.rename(columns={0: "brand"})
+    brands
+
+    for brand in brands.itertuples():
+        data.loc[data["brand"].str.upper() == brand.brand, "brand"] = brand.Index
+
+    return data
+
