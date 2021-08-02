@@ -84,9 +84,10 @@ class Product
       this.stockAvailability=availability.notSpecified;
     }
   }
-
+  //todo remove
   String getAvailability()
   {
+
     if(this.stockAvailability==availability.available)
       {
         return "available";
@@ -105,7 +106,7 @@ class Product
     }
     return "not specified";
   }
-
+  //todo remove
   Widget getAvailabilityText(double size,TextAlign align)
   {
     if(this.stockAvailability==availability.available)
@@ -126,6 +127,7 @@ class Product
 
 enum availability
 {
+  //todo
   available,
   limitedStock,//remove
   outOfStock,

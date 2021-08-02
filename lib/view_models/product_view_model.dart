@@ -3,15 +3,15 @@ import 'package:silicon_scraper/theme/colors.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:flutter/material.dart';
 
-class ProductViewModel
+class ProductViewModel extends ChangeNotifier
 {
   WatchListViewModelSingleton watch=WatchListViewModelSingleton.getState();
-  final Product item;
+  final Product _item;
   Icon save;
 
-  ProductViewModel(this.item)
+  ProductViewModel(this._item)
   {
-    if(item.watch)
+    if(_item.watch)
       {
         save=Icon(Icons.bookmark,color: theOrange,);
       }
@@ -23,13 +23,14 @@ class ProductViewModel
 
   void changeState(context)async
   {
-    if(item.watch)
+    if(_item.watch)
       {
         try
         {
           print('remove watch');
-          item.watch=!await watch.removeProduct(item);
+          _item.watch=!await watch.removeProduct(_item);
           save=Icon(Icons.bookmark_outline,color: Colors.black ,);
+          notifyListeners();
           return;
         }
         catch(e)
@@ -42,8 +43,9 @@ class ProductViewModel
         try
         {
           print('put in watch');
-          item.watch=await watch.addProduct(item);
+          _item.watch=await watch.addProduct(_item);
           save=Icon(Icons.bookmark,color: theOrange,);
+          notifyListeners();
           return;
         }
         catch(e)
@@ -51,6 +53,44 @@ class ProductViewModel
           ///push error screen
         }
       }
+  }
+
+  Widget getAvailabilityText(double size,TextAlign align)
+  {
+    if(_item.stockAvailability==availability.available)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.green),textAlign: align,);
+    }
+    else if(_item.stockAvailability==availability.notSpecified)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.grey),textAlign: align);
+    }
+    else if(_item.stockAvailability==availability.outOfStock||_item.stockAvailability==availability.limitedStock)
+    {
+      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.red),textAlign: align);
+    }
+    return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,),textAlign: align);
+  }
+
+  String getAvailability()
+  {
+    if(_item.stockAvailability==availability.available)
+    {
+      return "available";
+    }
+    else if(_item.stockAvailability==availability.limitedStock)
+    {
+      return "limited stock";
+    }
+    else if(_item.stockAvailability==availability.outOfStock)
+    {
+      return "out of stock";
+    }
+    else if(_item.stockAvailability==availability.notSpecified)
+    {
+      return "not specified";
+    }
+    return "not specified";
   }
 
 }
