@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
+import 'package:provider/provider.dart';
 
 class WatchList extends StatefulWidget
 {
@@ -36,24 +37,30 @@ class _WatchListState extends State<WatchList>
     bottomNavigationBar: BottomAppBar(
 
     ),
-      body: Container(
-      child: FutureBuilder(
-      future: watch.setInitialProducts(),
-      builder: (BuildContext context,AsyncSnapshot snapshot){
-        if(snapshot.connectionState==ConnectionState.none)
+      body: Consumer<WatchListViewModel>(
+        builder: (BuildContext context,WatchListViewModel w, Widget child)
         {
-        return Center(child: CircularProgressIndicator());
-        }
-        else if(watch.items.isNotEmpty)
-        {
-          return watch.floatingProductListView(context, watch.items);
-        }
-        else
-        {
+          return w.floatingProductListView(context, w.items);
+        },
+        child: Container(
+        child: FutureBuilder(
+        future: watch.setInitialProducts(),
+        builder: (BuildContext context,AsyncSnapshot snapshot){
+          if(snapshot.connectionState==ConnectionState.none)
+          {
           return Center(child: CircularProgressIndicator());
-        }
+          }
+          else if(watch.items.isNotEmpty)
+          {
+           return watch.floatingProductListView(context, watch.items);
+          }
+          else
+          {
+            return Center(child: CircularProgressIndicator());
+          }
     },
-      ),
+        ),
+        ),
       ),
     );
   }

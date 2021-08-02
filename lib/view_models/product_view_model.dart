@@ -3,7 +3,7 @@ import 'package:silicon_scraper/theme/colors.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:flutter/material.dart';
 
-class ProductViewModel extends ChangeNotifier
+class ProductViewModel
 {
   WatchListViewModelSingleton watch=WatchListViewModelSingleton.getState();
   final Product _item;
@@ -30,7 +30,6 @@ class ProductViewModel extends ChangeNotifier
           print('remove watch');
           _item.watch=!await watch.removeProduct(_item);
           save=Icon(Icons.bookmark_outline,color: Colors.black ,);
-          notifyListeners();
           return;
         }
         catch(e)
@@ -45,7 +44,6 @@ class ProductViewModel extends ChangeNotifier
           print('put in watch');
           _item.watch=await watch.addProduct(_item);
           save=Icon(Icons.bookmark,color: theOrange,);
-          notifyListeners();
           return;
         }
         catch(e)

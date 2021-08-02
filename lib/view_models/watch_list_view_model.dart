@@ -5,12 +5,14 @@ import 'package:silicon_scraper/views/widgets/horizontal_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/views/widgets/vertical_product_widget.dart';
 
-class WatchListViewModel
+class WatchListViewModel extends ChangeNotifier
 {
   WatchListInjector watch=WatchListInjector();
   List<Product> items=[];
 
-  WatchListViewModel();
+  WatchListViewModel(){
+    setInitialProducts();
+  }
 
   Future setInitialProducts()async
   {
@@ -64,6 +66,7 @@ class WatchListViewModel
       {
         await watch.dependency.removeRequest(p);// check response
         items.remove(p);
+        notifyListeners();
         return true;
       }
       catch(e)
@@ -86,6 +89,7 @@ class WatchListViewModel
       {
         await watch.dependency.addRequest(p);// check response
         items.add(p);
+        notifyListeners();
         return true;
       }
       catch(e)
