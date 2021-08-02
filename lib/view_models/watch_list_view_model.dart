@@ -1,5 +1,6 @@
 import 'package:silicon_scraper/injectors/watch_list_service_injector.dart';
 import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/views/widgets/floating_product_widget.dart';
 import 'package:silicon_scraper/views/widgets/horizontal_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/views/widgets/vertical_product_widget.dart';
@@ -117,6 +118,17 @@ class WatchListViewModel
         itemBuilder: (_,index)
         {
           return VerticalProductWidget(item:items[index]);
+        }
+    );
+  }
+
+  ListView floatingProductListView(BuildContext context,items)
+  {
+    return ListView.builder(
+        itemCount:items.length ,
+        itemBuilder: (_,index)
+        {
+          return FloatingProductWidget(item:items[index]);
         }
     );
   }
