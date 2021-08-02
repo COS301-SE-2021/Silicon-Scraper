@@ -8,6 +8,8 @@ const pgp = require('pg-promise')({
     capSQL: true // capitalize all generated SQL
 });
 
+let today = new Date()
+
 const client = {
     host: env.host,
     user: env.user,
@@ -37,7 +39,7 @@ export const dataOps = (db=db_) => {
                 }
 
         })
-        return "Successful"
+         return "successful update"
     }
 
     getProducts().then(() => {
@@ -123,6 +125,36 @@ export const dataOps = (db=db_) => {
 
     }
 
+    const preCleaning = async (results: any, table:any) => {
+        let m = today.getMonth() + 1
+        let d = today.getDay()
+
+        for(const i in results){
+            if(results[i].availability === "Out of Stock") {
+                let currentDate = results[i].details.productDetails[0].datetime.split('-')[1]
+                let currDay = results[i].details.productDetails[0].datetime.split('-')[2]
+                let timeInDb = Math.abs(Number(m) - Number(currentDate)) * 30 + Number(currDay) + Number(d)
+
+                console.log(results[i].id + " timepassed =" + timeInDb)
+                await stailChecker(timeInDb, results[i], table)
+            }
+        }
+    }
+
+    const stailChecker = async (duration:number, product:any, table:any) => {
+        if (duration >= 90) {
+            //This item is stale and had its availability has not been updated, it must be removed from the database
+            await deleteProduct(product.id, table).then((error: any) => {
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log("Successful deletion from db: "+product.link)
+                }
+            })
+        }
+    }
+
+
     /**
      * The function get all products from the data base given a product type
      * This function will take in a list of products, query the database and compare the incoming data with
@@ -132,43 +164,43 @@ export const dataOps = (db=db_) => {
      * @param products
      */
     const updateProducts = async (results: any, products: Product[], table: string) => { //needs to be tested
-        for (const rkey in results) {
+        // console.log(results)
+        // console.log(products)
+        for (const pkey in products) {
             let contains = false
             let prod: any = {};
-            for (const pkey in products) {
+            for (const  rkey in  results) {
                 prod = products[pkey]
                 if (products[pkey].model === results[rkey].model && products[pkey].brand === results[rkey].brand && products[pkey].retailer === results[rkey].retailer) {
                     let avail = false;
                     contains = true;
                     //Update the availability and/or price if it changed
 
+                    console.log("FOUND PROD THAT MATCHES!!!!")
                     if (!(products[pkey].availability === results[rkey].availability)) {
+                        console.log("Availablity updated from: "+ results[rkey].availability + " to "+products[pkey].availability)
                         avail = true;
                         //call update
                         await updateDetails(table, "availability", products[pkey].availability, results[rkey].id)
 
                     } else if (!(products[pkey].price === results[rkey].price)) {
                         //call update
+                        console.log("price updated from: "+ results[rkey].price + " to "+products[pkey].price)
                         await updateDetails(table, "price", products[pkey].price, results[rkey].id)
 
                     }
                     if (!avail) {
                         //test the timestamp
-                        let currentDate = results[rkey].details.productDetails[0].datetime.split('-')[1]
-                        let newDate = products[pkey].details.productDetails[0].datetime.split('-')[1]
-                        let currDay = results[rkey].details.productDetails[0].datetime.split('-')[2]
-                        let newDay = products[pkey].details.productDetails[0].datetime.split('-')[2]
-                        let timeInDb = Math.abs(Number(newDate) - Number(currentDate)) * 3 + Number(currDay) + Number(newDay)
 
-                        if (timeInDb >= 90) {
-                            //This item is stale and had its availability has not been updated, it must be removed from the database
-                            await deleteProduct(results[rkey].id, table).then((error: any) => {
-                                if (error) {
-                                    console.log(error)
-                                } else {
-                                    console.log("Successful")
-                                }
-                            })
+                        if(results[rkey].availability === "Out of Stock") {
+                            let currentDate = results[rkey].details.productDetails[0].datetime.split('-')[1]
+                            let newDate = products[pkey].details.productDetails[0].datetime.split('-')[1]
+                            let currDay = results[rkey].details.productDetails[0].datetime.split('-')[2]
+
+                            let newDay = products[pkey].details.productDetails[0].datetime.split('-')[2]
+                            let timeInDb = Math.abs(Number(newDate) - Number(currentDate)) * 30 + Number(currDay) + Number(newDay)
+
+                            await stailChecker(timeInDb, results[rkey], table)
                         }
                     }
                 }
@@ -177,6 +209,9 @@ export const dataOps = (db=db_) => {
             if (!contains)
                 await insert(prod, table)
         }
+
+        console.log("IN THE UPDATE")
+        await preCleaning(results, table)
     }
 
     /**
@@ -203,3 +238,4 @@ export const dataOps = (db=db_) => {
     }
 }
 
+dataOps()
