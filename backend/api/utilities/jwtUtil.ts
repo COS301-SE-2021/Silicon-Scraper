@@ -1,4 +1,5 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
+
 const tokenSecret = "my-token-secret";
 
 const generateToken = (user) => {
@@ -24,7 +25,7 @@ const verifyToken = (req, res, next) => {
     })
 }
 
-module.exports = {
+export = {
     generateToken,
     verifyToken
 }
