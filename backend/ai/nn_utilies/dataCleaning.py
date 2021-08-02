@@ -31,3 +31,7 @@ def setBrand(data):
 
     return data
 
+def mergeTypes(gpu_data,cpu_data):
+    data = gpu_data.append(cpu_data, ignore_index = True)
+    data['type'] = [1 if x == 'gpu' else 0 for x in data['type']]
+    return data
