@@ -5,15 +5,15 @@ import * as jwtUtil from '../../utilities/jwtUtil';
 
 export = (watchRepo: any = watchlistRepo) => {
 
-    const addProduct = async(request, user) => {
+    const addProduct = async(request) => {
         if (!('type' in request) || !('productID' in request))
             throw new InvalidRequestError('missing parameter(s)');
         let result;
         if (request.type == "CPU") {
-            result = await watchRepo.addCPUToWatchlist(user.id, request.productID);
+            result = await watchRepo.addCPUToWatchlist(request.user.id, request.productID);
         }
         else if (request.type == "GPU") {
-            result = await watchRepo.addGPUToWatchlist(user.id, request.productID);
+            result = await watchRepo.addGPUToWatchlist(request.user.id, request.productID);
         }
 
         if (result == true)
@@ -34,10 +34,10 @@ export = (watchRepo: any = watchlistRepo) => {
         return result;
     }
 
-    const removeProduct = async(request, user) => {
+    const removeProduct = async(request) => {
         if (!('productID' in request))
             throw new InvalidRequestError('missing parameter(s)');
-        return await watchRepo.removeProduct(user.id, request.productID, request.type)
+        return await watchRepo.removeProduct(request.user.id, request.productID, request.type)
         .then(res => {
             return res;
         })
