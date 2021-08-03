@@ -1,18 +1,20 @@
-from flask import Flask, jsonify, request
 import pandas as pd
 import tensorflow as tf
 import keras
-from keras.models import load_model
 import os
 import numpy as np
-from pandas import json_normalize
 import logging
-from threading import Thread 
 import time 
+from keras.models import load_model
+from pandas import json_normalize
 from sklearn.preprocessing import MinMaxScaler
+from flask import Flask, jsonify, request
+
+# TODO: make api scalable
+# WARN: don't try to run, will not work
 
 PATH_TO_MODELS = "trained_models/"
-PRICE_PRED_MODEL_NAME = 'price_prediction.h5'
+PRICE_PRED_MODEL_NAME = 'ai_model.h5'
 AVAIL_PRED_MODEL_NAME = 'avail_prediction.h5'
 PATH_TO_CPU_MODEL_DATA = "model_data/cpuModels.csv"
 PATH_TO_GPU_MODEL_DATA = "model_data/models.csv"
@@ -20,13 +22,15 @@ PATH_TO_GPU_MODEL_DATA = "model_data/models.csv"
 price_model = None
 avail_model = None
 
-def prepare_params(params):
+def prepare_params(params, pred):
     data = json_normalize(params)
     
-    csv_path = PATH_TO_CPU_MODEL_DATA if data['type'] === cpu else PATH_TO_GPU_MODEL_DATA
+    csv_path = PATH_TO_CPU_MODEL_DATA if data['type'].item() == 'cpu' else PATH_TO_GPU_MODEL_DATA
 
     models = pd.read_csv(csv_path)
-    data = data.drop('type')
+
+    # whole  functions needs amending to work with both availability and price 
+    #data = data.drop('type')
     data['model'] = data['model'].str.upper()
     data['date'] = data['date'].str[:8]
     data['date'] = data['date'].astype(int)
@@ -38,7 +42,9 @@ def prepare_params(params):
             data['modelID'] = model.Index
             break
 
-    data = data[['brand','date','modelID', 'availability']]
+    #needs changing 
+    data = data[['brand','date','modelID', 'availability']] 
+    #if pred == 'price' else data[['brand','date','modelID', 'price']]
     use_data = np.array(data)
     scaler_x = MinMaxScaler()
     scaler_x.fit(use_data)
@@ -48,9 +54,7 @@ def prepare_params(params):
 
     
 
-# logging.basicConfig(filename="api_logs/api.log", 
-# level=logging.DEBUG,
-# format='{%(asctime)s}, {%(module)s}: %(message)s')
+logging.basicConfig(filename="api_logs/api.log", level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
 
 
 app = Flask(__name__)
@@ -71,13 +75,18 @@ def predict():
             params = request.args
         
         if params != None:
-            input_data = prepare_params(params)
+            input_data_price = prepare_params(params, "price")
+            input_data_avail = prepare_params(params, "availability")
+
             print("Start predcition ....")
-            price_preds = str(model(input_data))
-            avail_preds = str(model(params))
+            price_preds = str(price_model(input_data_price))
+            avail_preds = 'avail_preds'
+            #avail_preds = str(avail_model(input_data_avail)))
+
             #preds = str(scaler_y.inverse_transform(preds)) 
+            results['predictions'] = {'price': "", "availability": ''}
             results['predictions']['price'] = price_preds
-            results['predictiona']["availability"] = avail_preds
+            results['predictions']["availability"] = avail_preds
             print("Returned prediction ....")
                 
             results['success'] = True
