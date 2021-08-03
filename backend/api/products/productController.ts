@@ -99,19 +99,29 @@ const search = async (req, res) => {
 const getProducts = async (req, res) => {
     const query = req.query;
     const values: [string, number, number] = ['gpus', 1, 20];
-    if('type' in query) {
-        if(query.type === 'cpu' || query.type === 'gpu') { values[0] = query.type+'s'; }
-    }
-    if('page' in query) { 
-        let page = parseInt(query.page);
-        if(!isNaN(page))
-            values[1] = (page > 0) ? page : 1;
-    }
-    if('limit' in query) { 
-        let limit = parseInt(query.limit);
-        if(!isNaN(limit))
-            values[2] = (limit > 0) ? limit : 20; 
-    }
+
+    Object.keys(query).forEach((x) => {
+        switch(x) {
+            case 'type':
+                if(query.type === 'cpu' || query.type === 'gpu') { 
+                    values[0] = query.type+'s'; 
+                }
+                break;
+            case 'page':
+                let page = parseInt(query.page);
+                if(!isNaN(page))
+                    values[1] = (page > 0) ? page : 1;
+                break;
+            case 'limit':
+                let limit = parseInt(query.limit);
+                if(!isNaN(limit))
+                    values[2] = (limit > 0) ? limit : 20; 
+                break;
+            default:
+                break;
+        }
+    });
+    
     let offset = (values[1]-1)*values[2];
     let response: Response = {status: 200, products: []};
     const data = await fetchData(`SELECT * FROM ${values[0]} OFFSET ${offset} LIMIT ${values[2]}`);
