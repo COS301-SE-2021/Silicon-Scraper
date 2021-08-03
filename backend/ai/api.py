@@ -12,13 +12,21 @@ import time
 from sklearn.preprocessing import MinMaxScaler
 
 PATH_TO_MODELS = "trained_models/"
-model = None
-preds = None
-input_data = None
+PRICE_PRED_MODEL_NAME = 'price_prediction.h5'
+AVAIL_PRED_MODEL_NAME = 'avail_prediction.h5'
+PATH_TO_CPU_MODEL_DATA = "model_data/cpuModels.csv"
+PATH_TO_GPU_MODEL_DATA = "model_data/models.csv"
+
+price_model = None
+avail_model = None
 
 def prepare_params(params):
     data = json_normalize(params)
-    models = pd.read_csv("model_data/models.csv")
+    
+    csv_path = PATH_TO_CPU_MODEL_DATA if data['type'] === cpu else PATH_TO_GPU_MODEL_DATA
+
+    models = pd.read_csv(csv_path)
+    data = data.drop('type')
     data['model'] = data['model'].str.upper()
     data['date'] = data['date'].str[:8]
     data['date'] = data['date'].astype(int)
@@ -28,7 +36,6 @@ def prepare_params(params):
     for model in models.itertuples():
         if data['model'].item() == str(model.model):
             data['modelID'] = model.Index
-            #data.at[data.Index,'modelID'] = model.Index
             break
 
     data = data[['brand','date','modelID', 'availability']]
@@ -52,36 +59,33 @@ app = Flask(__name__)
 def predict():
     #app.logger.info("Endpoint reached")
     print("Loading model...")
-    model = load_model(os.path.join(PATH_TO_MODELS,'ai_model.h5'))
+    price_model = load_model(os.path.join(PATH_TO_MODELS, PRICE_PRED_MODEL_NAME))
+    avail_model = load_model(os.path.join(PATH_TO_MODELS, AVAIL_PRED_MODEL_NAME))
     print("* Model loaded *")
 
     results = {'success': False}
 
-    params = request.json
-    if params == None:
-        params = request.args
-    
-    if params != None:
-        input_data = prepare_params(params)
-        # with graph.as_default():
-        print("Start predcition ....")
-        preds = str(model(input_data))
-        #preds = str(scaler_y.inverse_transform(preds)) 
-        results['predictions'] = {"price": preds}
-        #data['prediction'] = {"availability": str(model.predict(params))}
-        print("Returned prediction ....")
-            
-        print("Prediction made successfully")
-        results['success'] = True
+    if request.method == "POST":
+        params = request.json
+        if params == None:
+            params = request.args
+        
+        if params != None:
+            input_data = prepare_params(params)
+            print("Start predcition ....")
+            price_preds = str(model(input_data))
+            avail_preds = str(model(params))
+            #preds = str(scaler_y.inverse_transform(preds)) 
+            results['predictions']['price'] = price_preds
+            results['predictiona']["availability"] = avail_preds
+            print("Returned prediction ....")
+                
+            results['success'] = True
 
     return jsonify(results)
         
  
 if __name__ == '__main__':
-    # print("Starting model service...")
-    # t = Thread(target=prediction_process, args=())
-    # t.daemon = True
-    # t.start()
 
     print("Starting web service...")
     app.run(host = '0.0.0.0', debug=True)
