@@ -102,7 +102,6 @@ const getProducts = async (req, res) => {
     if('type' in query) {
         if(query.type === 'cpu' || query.type === 'gpu') { values[0] = query.type+'s'; }
     }
-    else { values.push(''); }
     if('page' in query) { 
         let page = parseInt(query.page);
         if(!isNaN(page))
