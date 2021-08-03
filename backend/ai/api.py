@@ -7,7 +7,14 @@ import os
 import numpy as np
 from pandas import json_normalize
 import logging
+from threading import Thread 
+import time 
+from sklearn.preprocessing import MinMaxScaler
 
+PATH_TO_MODELS = "trained_models/"
+model = None
+preds = None
+input_data = None
 
 def prepare_params(params):
     data = json_normalize(params)
@@ -26,39 +33,55 @@ def prepare_params(params):
 
     data = data[['brand','date','modelID', 'availability']]
     use_data = np.array(data)
+    scaler_x = MinMaxScaler()
+    scaler_x.fit(use_data)
+    data_scale = scaler_x.transform(use_data)
 
-    return data 
+    return data_scale
 
-PATH_TO_MODELS = "trained_models/"
-global graph
-#graph = tf.compat.v1.get_default_graph()
-model = load_model(os.path.join(PATH_TO_MODELS,'ai_model.h5'))
+    
 
-logging.basicConfig(filename="api_logs/api.log", 
-level=logging.DEBUG,
-format='{%(asctime)s}, {%(module)s}: %(message)s')
+# logging.basicConfig(filename="api_logs/api.log", 
+# level=logging.DEBUG,
+# format='{%(asctime)s}, {%(module)s}: %(message)s')
 
 
 app = Flask(__name__)
 
 @app.route('/predict', methods = ["POST"])
 def predict():
-    app.logger.info("Endpoint reached")
+    #app.logger.info("Endpoint reached")
+    print("Loading model...")
+    model = load_model(os.path.join(PATH_TO_MODELS,'ai_model.h5'))
+    print("* Model loaded *")
+
     results = {'success': False}
-    
+
     params = request.json
     if params == None:
         params = request.args
     
     if params != None:
-        inp = prepare_params(params)
+        input_data = prepare_params(params)
         # with graph.as_default():
-        results['prediction'] = {"price": str(model.predict(inp))}
+        print("Start predcition ....")
+        preds = str(model(input_data))
+        #preds = str(scaler_y.inverse_transform(preds)) 
+        results['predictions'] = {"price": preds}
         #data['prediction'] = {"availability": str(model.predict(params))}
-        results['success'] = True 
-        
-    return jsonify({"prediction:": 23033})
+        print("Returned prediction ....")
+            
+        print("Prediction made successfully")
+        results['success'] = True
 
+    return jsonify(results)
+        
+ 
 if __name__ == '__main__':
+    # print("Starting model service...")
+    # t = Thread(target=prediction_process, args=())
+    # t.daemon = True
+    # t.start()
+
     print("Starting web service...")
     app.run(host = '0.0.0.0', debug=True)
