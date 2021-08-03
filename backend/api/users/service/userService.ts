@@ -35,7 +35,7 @@ export = (userRepository:any = userRepo, passwordEncod:any = passwordEncoder, jw
      * @returns {string} a jwt token which identifies a user uniquely
      */
 
-    const register = async(request) => {
+    const register = async (request) => {
         if (!('username' in request) || !('password' in request))
             throw new InvalidRequestError('missing paramater(s)');
         let user = await userRepository.getUser(request.username);
@@ -65,7 +65,7 @@ export = (userRepository:any = userRepo, passwordEncod:any = passwordEncoder, jw
      * @returns {string} JWT token
      */
 
-    const login = async(request) => {
+    const login = async (request) => {
         if (!('username' in request) || !('password' in request))
             throw new InvalidRequestError('missing parameter(s)');
         let user = await userRepository.getUser(request.username);

@@ -1,25 +1,5 @@
-import * as configs from '../../config';
 import { v4 } from 'uuid';
-import pgp from 'pg-promise';
-
-const pg = pgp({
-    capSQL: true
-});
-
-const client = {
-    host: configs.host,
-    user: configs.user,
-    database: configs.name,
-    password: configs.pw,
-    port: configs.port
-}
-
-const db = pg(
-    client
-)
-
-const cs = new pg.helpers.ColumnSet(['id', 'username', 'hash'], { table: 'users' })
-
+import pool from '../../database';
 
 /**
  * 
@@ -28,7 +8,7 @@ const cs = new pg.helpers.ColumnSet(['id', 'username', 'hash'], { table: 'users'
  *          & get (to retrieve auser from the database)
  */
 
-export = (dbase = db) => {
+export = () => {
 
     /**
      * This function handles adding a new user of the silicon scraper platform
@@ -40,22 +20,19 @@ export = (dbase = db) => {
      * @returns {boolean} determining whether the query was successful or not
      */
 
-    const addUser = async(username, password) => {
+    const addUser = async (username, password) => {
         const id = v4();
-        const user = {
-            id: id,
-            username: username,
-            hash: password
-        };
-        const query = pg.helpers.insert(user, cs);
-        return await dbase.none(query)
-        .then(res => {
+        const client = await pool.connect();
+        
+        try {
+            const sqlQuery = `INSERT INTO users VALUES ('${id}', ${username}, ${password})`;
+            const data = await client.query(sqlQuery);
             return id;
-        })
-        .catch(err => {
-            console.error(err);
-            return null;
-        })
+        } catch(error) {
+            return null;  
+        } finally {
+            client.release();
+        }
     }
     
     /**
@@ -71,17 +48,17 @@ export = (dbase = db) => {
      */
 
     const getUser = async (username) => {
-        const where = pg.as.format('WHERE username = $1', username);
-        let result = await dbase.oneOrNone("SELECT * FROM users $1:raw", where)
-        .then(user => {
-            return user;
-        })
-        .catch(err => {
-            console.log(err) 
+        const client = await pool.connect();
+        
+        try {
+            const sqlQuery = `SELECT * FROM users WHERE username = ${username}`;
+            const data = await client.query(sqlQuery);
+            return data.rows;  
+        } catch(error) {
             return null;
-        })
-
-        return result;
+        } finally {
+            client.release();
+        }
     }
 
     return {
