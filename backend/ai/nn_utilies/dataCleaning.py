@@ -3,17 +3,23 @@
 #
 #This function cleans the given data, by merging it with the model and getting rid of null rows
 #
-def setModel(data, models):
-    data['availability'] = [1 if x == 'In Stock' else 0 for x in data['availability']]
+def clean_data(data, modelsDir):
+
+    # Loading file with models
+    models = pd.read_csv(modelsDir)
+    models['model'] = models['model'].str.upper()
+
+    # Renaming product model for consistency
+    data['model'] = data['model'].str.upper()
+    data['brand'] = data['brand'].str.upper()
+    data['type'] = data['type'].str.upper()
+    data['availability'] = data['availability'].str.upper()
 
     for dt in data.itertuples():
         for model in models.itertuples():
             if dt.model.find(str(model.model)) != -1:
-                data.at[dt.Index,'modelID'] = model.Index
+                data.at[dt.Index, 'model'] = model.Index
                 continue
-
-
-    return data
 
 
 #
