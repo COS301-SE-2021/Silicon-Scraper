@@ -50,6 +50,9 @@ class _MainNavigatorState extends State<MainNavigator> {
 
         currentIndex: pageIndex,
         onTap: (value){
+          if(value == 0){
+            showSearch(context: context, delegate: ProductSearch());
+          }
           setState(() {
             pageIndex=value;
           });
