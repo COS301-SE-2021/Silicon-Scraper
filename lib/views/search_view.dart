@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:silicon_scraper/models/product_model.dart';
@@ -152,8 +153,6 @@ class ProductSearch extends SearchDelegate<String> {
                 this.products = snapshot.data;
                 this.originalProducts = snapshot.data;
               }
-              this.products = snapshot.data;
-              this.originalProducts = snapshot.data;
               return buildResultSuccess(context);
             }
         }
@@ -168,19 +167,19 @@ class ProductSearch extends SearchDelegate<String> {
       child: FutureBuilder<List<Product>>(
         future: search.getProductList(query),
         builder: (context, snapshot) {
-          if (query.isEmpty) return buildNoSuggestions();
+          if (query.isEmpty) return buildNoSuggestions(context);
 
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
             default:
               if (snapshot.hasError || snapshot.data.isEmpty) {
-                return buildNoSuggestions();
+                return buildNoSuggestions(context);
               } else {
                 List<String> productSuggestions =
                 search.getSuggestions(snapshot.data, query);
                 if (productSuggestions.isEmpty) {
-                  return buildNoSuggestions();
+                  return buildNoSuggestions(context);
                 }
                 return buildSuggestionsSuccess(productSuggestions);
               }
@@ -190,23 +189,8 @@ class ProductSearch extends SearchDelegate<String> {
     );
   }
 
-  Widget buildNoSuggestions() {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(25),
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            style: TextStyle(
-              color: Colors.black12,
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-            ),
-            text: 'NO SUGGESTIONS',
-          ),
-        ),
-      ),
-    );
+  Widget buildNoSuggestions(BuildContext context) {
+    return noProducts(context, "SUGGESTIONS");
   }
 
   Widget buildSuggestionsSuccess(List<String> suggestions) {
