@@ -1,5 +1,5 @@
 import express from 'express';
-import productRoutes from './routes/product';
+import productRoutes from './products/productRoutes';
 import userController from './users/controller/userController';
 import watchlistController from './watchlist/controller/watchlistController';
 

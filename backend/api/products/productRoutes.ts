@@ -1,5 +1,5 @@
 import express from 'express';
-import {controllers} from '../products/productController';
+import {controllers} from './productController';
 
 const router = express.Router();
 
@@ -9,8 +9,8 @@ const router = express.Router();
 //     next();
 // })
 
-router.get('/getProducts', controllers.getProducts);
-router.get('/getProductByID/:id', controllers.getProductByID);
+router.get('/', controllers.getProducts);
+router.get('/:id', controllers.getProductByID);
 router.get('/search', controllers.search);
 
 export default router;
