@@ -1,11 +1,10 @@
-import 'package:silicon_scraper/mocks/mock_explore_page_service.dart';
-import 'package:silicon_scraper/services/explore_page_service.dart';
+import 'package:silicon_scraper/mocks/mock_search_service.dart';
 import 'package:silicon_scraper/services/search_service.dart';
 import 'dependency_types.dart';
 
-class SearchSortFilterInjector
-{
-  static final SearchSortFilterInjector _singleton = SearchSortFilterInjector._internal();
+class SearchSortFilterInjector {
+  static final SearchSortFilterInjector _singleton =
+      SearchSortFilterInjector._internal();
 
   static DependencyType _type;
 
@@ -13,18 +12,29 @@ class SearchSortFilterInjector
     _type = depType;
   }
 
-  factory SearchSortFilterInjector(){
+  factory SearchSortFilterInjector() {
     return _singleton;
   }
 
-  SearchService get dependency{
-    switch(_type) {
+  DependencyType get dependencyType {
+    switch (_type) {
+      case DependencyType.PROD:
+        return DependencyType.PROD;
+      case DependencyType.MOCK:
+        return DependencyType.MOCK;
+      default:
+        return DependencyType.MOCK;
+    }
+  }
+
+  SearchService get dependency {
+    switch (_type) {
       case DependencyType.PROD:
         return SearchService();
       case DependencyType.MOCK:
-        //return MockExplorePageService();
+        return MockSearchService();
       default:
-        //return MockExplorePageService();
+        return MockSearchService();
     }
   }
 
