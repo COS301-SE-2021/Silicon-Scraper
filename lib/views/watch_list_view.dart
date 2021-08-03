@@ -10,10 +10,13 @@ class WatchList extends StatefulWidget
 
 class _WatchListState extends State<WatchList>
 {
-  WatchListViewModelSingleton watch= WatchListViewModelSingleton.getState();
+//  WatchListViewModelSingleton watch= WatchListViewModelSingleton.getState();
+
 
   @override
   Widget build(BuildContext context) {
+    WatchListViewModel watch=Provider.of<WatchListViewModel>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -37,31 +40,32 @@ class _WatchListState extends State<WatchList>
     bottomNavigationBar: BottomAppBar(
 
     ),
-      body: Consumer<WatchListViewModel>(
-        builder: (BuildContext context,WatchListViewModel w, Widget child)
-        {
-          return w.floatingProductListView(context, w.items);
-        },
-        child: Container(
-        child: FutureBuilder(
-        future: watch.setInitialProducts(),
-        builder: (BuildContext context,AsyncSnapshot snapshot){
-          if(snapshot.connectionState==ConnectionState.none)
-          {
-          return Center(child: CircularProgressIndicator());
-          }
-          else if(watch.items.isNotEmpty)
-          {
-           return watch.floatingProductListView(context, watch.items);
-          }
-          else
-          {
-            return Center(child: CircularProgressIndicator());
-          }
-    },
-        ),
-        ),
-      ),
+//      body: Consumer<WatchListViewModel>(
+//        builder: (BuildContext context,WatchListViewModel w, Widget child)
+//        {
+//          return w.floatingProductListView(context, w.items);
+//        },
+    body: watch.floatingProductListView(context, watch.items),
+//        child: Container(
+//        child: FutureBuilder(
+//        future: watch.setInitialProducts(),
+//        builder: (BuildContext context,AsyncSnapshot snapshot){
+//          if(snapshot.connectionState==ConnectionState.none)
+//          {
+//          return Center(child: CircularProgressIndicator());
+//          }
+//          else if(watch.items.isNotEmpty)
+//          {
+//           return watch.floatingProductListView(context, watch.items);
+//          }
+//          else
+//          {
+//            return Center(child: CircularProgressIndicator());
+//          }
+//    },
+//        ),
+//        ),
+//      ),
     );
   }
 }

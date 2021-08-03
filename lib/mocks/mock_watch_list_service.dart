@@ -2,7 +2,7 @@ import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/services/watch_list_service.dart';
 
-import 'json/productsjson.dart';
+import 'json/watch_list_products.dart';
 
 class MockWatchListService extends WatchListService
 {
@@ -17,7 +17,7 @@ class MockWatchListService extends WatchListService
   {
     if(_initialReq)
       {
-        return addProducts(JSONData());
+        return addProducts(WatchJSONData());
       }
     else
       {

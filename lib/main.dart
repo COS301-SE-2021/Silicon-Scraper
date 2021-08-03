@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:silicon_scraper/theme/colors.dart';
@@ -12,7 +11,7 @@ void main() {
   WatchListInjector.configure(DependencyType.MOCK);
 
   /// this sets the initial products for the watch list do not remove
-  WatchListViewModelSingleton.getState();
+  WatchListViewModelSingleton.getState().setInitialProducts();
 
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
@@ -24,7 +23,7 @@ void main() {
           providers: [
             // TODO: register other dependencies
             ChangeNotifierProvider<WatchListViewModel>(
-              create: (BuildContext context) => WatchListViewModelSingleton.getState(),
+              create: (_) => WatchListViewModelSingleton.getState(),
             ),
           ],
           child: MyApp()

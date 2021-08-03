@@ -7,11 +7,13 @@ class ProductViewModel
 {
   WatchListViewModelSingleton watch=WatchListViewModelSingleton.getState();
   final Product _item;
+
+  Product get item => _item;
   Icon save;
 
   ProductViewModel(this._item)
   {
-    if(_item.watch)
+    if(_item.watching)
       {
         save=Icon(Icons.bookmark,color: theOrange,);
       }
@@ -21,34 +23,40 @@ class ProductViewModel
     }
   }
 
-  void changeState(context)async
+  Future changeState(context)async
   {
-    if(_item.watch)
+    if(_item.watching)
       {
         try
         {
           print('remove watch');
-          _item.watch=!await watch.removeProduct(_item);
+          print('change state ${_item.id}');
+          watch.removeProduct(_item);
+          _item.watch=false;
           save=Icon(Icons.bookmark_outline,color: Colors.black ,);
           return;
         }
         catch(e)
         {
           ///push error screen
+          print(e.message);
         }
       }
     else
       {
         try
         {
-          print('put in watch');
-          _item.watch=await watch.addProduct(_item);
+          print('put in watch ${_item.id}');
+//          print('change state ${_item.id}');
+           watch.addProduct(_item);
+          _item.watch=true;
           save=Icon(Icons.bookmark,color: theOrange,);
           return;
         }
         catch(e)
         {
           ///push error screen
+          print(e.message);
         }
       }
   }
@@ -90,5 +98,4 @@ class ProductViewModel
     }
     return "not specified";
   }
-
 }

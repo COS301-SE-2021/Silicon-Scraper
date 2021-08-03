@@ -7,7 +7,6 @@ class Product
   final String brand;
   final String model;
   final double price;
-
   final String retailer;
 
   final String description;
@@ -17,7 +16,7 @@ class Product
   bool _watch;
   availability stockAvailability;
 
-  bool get watch => _watch;
+  bool get watching => _watch;
 
   set watch(bool value) {
     _watch = value;
@@ -26,16 +25,7 @@ class Product
   bool isTheSame(Product other)
   {
     return (
-        other.id==id &&
-        other.type==type &&
-        other.brand==brand &&
-        other.model==model &&
-        other.price==price &&
-        other.retailer==retailer &&
-        other.description==description &&
-        other.url==url &&
-        other.image==image&&
-        other.stockAvailability==stockAvailability
+        other.id==this.id
     );
   }
 

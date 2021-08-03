@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/watch_list_service.dart';
 import 'package:silicon_scraper/theme/colors.dart';
-import 'package:silicon_scraper/theme/colors.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,7 +20,7 @@ class ProductDetailWidget extends StatefulWidget
   get model => item.model;
   get desctiption => item.description;
   get url => item.url;
-  get watch=> item.watch;
+  get watch=> item.watching;
 
   @override
   _ProductDetailWidgetState createState() => _ProductDetailWidgetState(item);

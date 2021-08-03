@@ -1,5 +1,6 @@
 import 'package:silicon_scraper/injectors/watch_list_service_injector.dart';
 import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/floating_product_widget.dart';
 import 'package:silicon_scraper/views/widgets/horizontal_product_widget.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,7 @@ class WatchListViewModel extends ChangeNotifier
   WatchListInjector watch=WatchListInjector();
   List<Product> items=[];
 
-  WatchListViewModel(){
-    setInitialProducts();
-  }
+  WatchListViewModel();
 
   Future setInitialProducts()async
   {
@@ -38,18 +37,6 @@ class WatchListViewModel extends ChangeNotifier
   {
     for(var e in items)
     {
-      if(e==p)
-      {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  bool findProductStrict(Product p)
-  {
-    for(var e in items)
-    {
       if(e.isTheSame(p))
       {
         return true;
@@ -58,16 +45,18 @@ class WatchListViewModel extends ChangeNotifier
     return false;
   }
 
-  Future removeProduct(Product p)async
+
+  void removeProduct(Product p)async
   {
+    print('VM '+p.id);
     if(findProduct(p))
     {
       try
       {
         await watch.dependency.removeRequest(p);// check response
-        items.remove(p);
+        items.removeWhere((t){ return t.id==p.id;});
         notifyListeners();
-        return true;
+//        return true;
       }
       catch(e)
       {
@@ -81,16 +70,17 @@ class WatchListViewModel extends ChangeNotifier
     }
   }
 
-  Future addProduct(Product p)async
+  void addProduct(Product p)async
   {
-    if(!findProductStrict(p))
+    print('VM '+p.id);
+    if(!findProduct(p))
     {
       try
       {
         await watch.dependency.addRequest(p);// check response
         items.add(p);
         notifyListeners();
-        return true;
+//        return true;
       }
       catch(e)
       {
@@ -132,7 +122,7 @@ class WatchListViewModel extends ChangeNotifier
         itemCount:items.length ,
         itemBuilder: (_,index)
         {
-          return FloatingProductWidget(item:items[index]);
+          return FloatingProductWidget(state: ProductViewModel(items[index]));
         }
     );
   }
