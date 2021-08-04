@@ -46,7 +46,7 @@ class WatchListViewModel extends ChangeNotifier
   }
 
 
-  void removeProduct(Product p)async
+  Future removeProduct(Product p)async
   {
     print('VM '+p.id);
     if(findProduct(p))
@@ -70,7 +70,7 @@ class WatchListViewModel extends ChangeNotifier
     }
   }
 
-  void addProduct(Product p)async
+  Future addProduct(Product p)async
   {
     print('VM '+p.id);
     if(!findProduct(p))

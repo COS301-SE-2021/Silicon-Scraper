@@ -31,7 +31,7 @@ class ProductViewModel extends ChangeNotifier
         {
           print('remove watch');
           print('change state ${_item.id}');
-          watch.removeProduct(_item);
+          await watch.removeProduct(_item);
           _item.watch=false;
           save=Icon(Icons.bookmark_outline,color: Colors.black ,);
           notifyListeners();
@@ -49,7 +49,7 @@ class ProductViewModel extends ChangeNotifier
         {
           print('put in watch ${_item.id}');
 //          print('change state ${_item.id}');
-           watch.addProduct(_item);
+          await watch.addProduct(_item);
           _item.watch=true;
           save=Icon(Icons.bookmark,color: theOrange,);
           notifyListeners();
