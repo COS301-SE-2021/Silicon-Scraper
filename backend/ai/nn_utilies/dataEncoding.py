@@ -1,15 +1,17 @@
+import pandas as pd
+import sklearn.preprocessing as sp
+
 gpuModels = pd.read_csv("gpuModels.csv")
 cpuModels = pd.read_csv("cpuModels.csv")
 
-
 models = gpuModels.append(cpuModels)
 models = models.drop(columns = ['id'])
-label_encoder = LabelEncoder()
+label_encoder = sp.LabelEncoder()
 models['model_code'] = label_encoder.fit_transform(models['model'])
 enc_models= pd.get_dummies(models.model_code, prefix='m')
 models = pd.concat([models, enc_models], axis=1)
 
-label_encoder = LabelEncoder()
+label_encoder = sp.LabelEncoder()
 brands['brand_code'] = label_encoder.fit_transform(brands['brand'])
 enc_brands = pd.get_dummies(brands.brand_code, prefix='b')
 brands = pd.concat([brands, enc_brands], axis=1)
