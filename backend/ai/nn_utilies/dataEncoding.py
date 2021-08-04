@@ -3,6 +3,7 @@ import sklearn.preprocessing as sp
 
 gpuModels = pd.read_csv("gpuModels.csv")
 cpuModels = pd.read_csv("cpuModels.csv")
+brands = pd.read_csv("brands.csv")
 
 models = gpuModels.append(cpuModels)
 models = models.drop(columns = ['id'])
