@@ -24,18 +24,6 @@ class _WatchListState extends State<WatchList>
         // the App.build method, and use it to set our appbar title.
         title: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),),
         centerTitle: true,
-        actions: <Widget>[
-     Padding(
-      padding: EdgeInsets.only(right: 20.0),
-        child: GestureDetector(
-          onTap: () {setState(() {
-          }); },
-          child: Icon(
-            Icons.loop_sharp,
-            size: 26.0,
-          ),
-        )
-    ),],
       ),
     bottomNavigationBar: BottomAppBar(
 

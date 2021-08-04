@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/horizontal_product_widget.dart';
 import 'package:silicon_scraper/views/widgets/vertical_product_widget.dart';
 
@@ -27,6 +28,10 @@ List<Product> addProducts(List json)
           if(url==null)
             {
               url=json[i]['link'];
+            }
+          if(watch==null)
+            {
+              watch=false;
             }
           items.add(new Product(name, model, price, retailer, description, url, photo, sAvailability,id,type,watch));
         }
@@ -57,7 +62,7 @@ ListView productListView(BuildContext context,List<Product> items)
     itemCount:items.length ,
       itemBuilder: (_,index){
         return
-            HorizontalProductWidget( item:items[index]);
+            HorizontalProductWidget( state: ProductViewModel(items[index]));
       },
   );
 }
@@ -69,7 +74,7 @@ ListView productHorizontalListView(BuildContext context,List<Product> items)
       scrollDirection: Axis.horizontal,
       itemBuilder: (_,index){
         return
-          VerticalProductWidget( item:items[index]);
+          VerticalProductWidget( state: ProductViewModel(items[index]));
       }
   );
 }

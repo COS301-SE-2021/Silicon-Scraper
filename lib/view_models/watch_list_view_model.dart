@@ -100,7 +100,7 @@ class WatchListViewModel extends ChangeNotifier
         itemCount:items.length ,
         itemBuilder: (_,index)
         {
-          return HorizontalProductWidget(item:items[index]);
+          return HorizontalProductWidget(state: ProductViewModel(items[index]));
         }
     );
   }
@@ -111,7 +111,7 @@ class WatchListViewModel extends ChangeNotifier
         itemCount:items.length ,
         itemBuilder: (_,index)
         {
-          return VerticalProductWidget(item:items[index]);
+          return VerticalProductWidget(state: ProductViewModel(items[index]));
         }
     );
   }

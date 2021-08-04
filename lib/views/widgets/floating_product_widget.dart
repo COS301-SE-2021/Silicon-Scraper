@@ -22,12 +22,12 @@ class FloatingProductWidget extends StatelessWidget {
             child: InkWell(
               onTap: ()
               {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailWidget(state.item)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailWidget(state)));
               },
               child: Stack(
                 children: [
                   Positioned(
-                    bottom: 5,
+                    bottom: 30,
                     right:5,
                     child: Stack(
                         children: [
@@ -81,7 +81,7 @@ class FloatingProductWidget extends StatelessWidget {
                                             margin: EdgeInsets.only(top: 10),
                                             child: Column(
                                               children: [
-                                                Text("/*R${state.item.price}*/${state.item.id}", style: TextStyle(
+                                                Text("R${state.item.price}", style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.green)),

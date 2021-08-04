@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/product_detail_widget.dart';
 
 class HorizontalProductWidget extends StatefulWidget {
-  final Product item;
-  const HorizontalProductWidget({Key key, this.item}) : super(key: key);
+//  final Product item;
+  final ProductViewModel state;
+  const HorizontalProductWidget({Key key, this.state}) : super(key: key);
 
   @override
   _HorizontalProductWidgetState createState() => _HorizontalProductWidgetState();
@@ -27,7 +28,7 @@ class _HorizontalProductWidgetState extends State<HorizontalProductWidget> {
             onTap: ()
             {
               Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => ProductDetailWidget(widget.item)));
+                  builder: (context) => ProductDetailWidget(widget.state)));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -35,7 +36,7 @@ class _HorizontalProductWidgetState extends State<HorizontalProductWidget> {
               children: [
                 Container(
                   height: MediaQuery.of(context).size.height / 6,
-                  child: Image.network('${widget.item.image}',),
+                  child: Image.network('${widget.state.item.image}',),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width /1.5,
@@ -44,7 +45,7 @@ class _HorizontalProductWidgetState extends State<HorizontalProductWidget> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("${widget.item.brand+" "+widget.item.model}", textAlign: TextAlign.center,style: TextStyle(
+                      Text("${widget.state.item.brand+" "+widget.state.item.model}", textAlign: TextAlign.center,style: TextStyle(
                         fontSize: 15, fontWeight: FontWeight.bold,),),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -55,10 +56,10 @@ class _HorizontalProductWidgetState extends State<HorizontalProductWidget> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("${widget.item.retailer}", style: TextStyle(
+                                Text("${widget.state.item.retailer}", style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold,),
                                   textAlign: TextAlign.left,),
-                                widget.item.getAvailabilityText(15, TextAlign.center),
+                                widget.state.item.getAvailabilityText(15, TextAlign.center),
                               ],
                             ),
                           ),
@@ -66,7 +67,7 @@ class _HorizontalProductWidgetState extends State<HorizontalProductWidget> {
                             margin: EdgeInsets.only(top: 10),
                             child: Column(
                               children: [
-                                Text("R${widget.item.price}", style: TextStyle(
+                                Text("R${widget.state.item.price}", style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.green)),
