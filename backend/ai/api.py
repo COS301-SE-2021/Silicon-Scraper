@@ -67,7 +67,7 @@ def predict():
     avail_model = load_model(os.path.join(PATH_TO_MODELS, AVAIL_PRED_MODEL_NAME))
     print("* Model loaded *")
 
-    results = {'success': False}
+    results = {'status': failure}
 
     if request.method == "POST":
         params = request.json
@@ -89,7 +89,7 @@ def predict():
             results['predictions']["availability"] = avail_preds
             print("Returned prediction ....")
                 
-            results['success'] = True
+            results['status'] = 'success'
 
     return jsonify(results)
         
