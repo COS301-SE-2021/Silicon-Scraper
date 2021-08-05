@@ -1,7 +1,6 @@
 import pandas as pd
 import sklearn.preprocessing as sp
 
-
 def getModelData():
     gpuModels = pd.read_csv("gpuModels.csv")
     cpuModels = pd.read_csv("cpuModels.csv")
@@ -39,6 +38,7 @@ def getCode(data, code_pd, name):
             return code_pd[code_pd[name] == str(dt[1])]
 
 def encode_data(brand, model, availability_, price, type_d):
+    models, brands, type_, availability = getModelData()
     d1 = getCode(model, models, "model").drop(columns=["model", "model_code"])
     d2 = getCode(brand, brands, "brand").drop(columns=["brand", "brand_code"])
     d3 = type_[type_["type"] == type_d].drop(columns=["type", "type_code"])
