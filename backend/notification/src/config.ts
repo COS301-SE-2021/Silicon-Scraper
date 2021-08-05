@@ -1,7 +1,8 @@
-import dotenv from 'dotenv';
 import { createConnection } from 'typeorm';
+import { resolve } from 'path';
+import { config } from 'dotenv';
 
-const db_env = dotenv.config();
+config({ path: resolve(__dirname, "../.env") })
 
 export const connection = async () => {
     try {
@@ -19,6 +20,7 @@ export const connection = async () => {
             logging: false
         });
     } catch(error) {
+        console.log(error);
         console.log('Database connection error');
     }
 }
