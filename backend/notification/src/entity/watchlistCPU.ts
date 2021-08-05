@@ -1,6 +1,4 @@
-import { Entity, PrimaryColumn, JoinColumn, ManyToOne, Index } from "typeorm";
-import { CPU } from "./cpu";
-import { User } from "./user";
+import { Entity, PrimaryColumn, Index } from "typeorm";
 
 @Entity({name: 'watchlist_cpu', synchronize: false})
 @Index(['user_id', 'product_id'], {unique: true})
