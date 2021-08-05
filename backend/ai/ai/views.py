@@ -4,18 +4,15 @@ import keras
 import os
 import numpy as np
 import logging
-import time 
 from keras.models import load_model
 from pandas import json_normalize
 from sklearn.preprocessing import MinMaxScaler
 from flask import jsonify, request
 from ai import app
 
-# TODO: make api scalable
-# WARN: don't try to run, will not work
 
 PATH_TO_MODELS = "ai/trained_models/"
-PRICE_PRED_MODEL_NAME = 'ai_model.h5'
+PRICE_PRED_MODEL_NAME = 'price_prediction.h5'
 AVAIL_PRED_MODEL_NAME = 'avail_prediction.h5'
 PATH_TO_CPU_MODEL_DATA = "ai/model_data/cpuModels.csv"
 PATH_TO_GPU_MODEL_DATA = "ai/model_data/models.csv"
@@ -30,8 +27,6 @@ def prepare_params(params, pred):
 
     models = pd.read_csv(csv_path)
 
-    # whole  functions needs amending to work with both availability and price 
-    #data = data.drop('type')
     data['model'] = data['model'].str.upper()
     data['date'] = data['date'].str[:8]
     data['date'] = data['date'].astype(int)
@@ -59,8 +54,6 @@ parameters = [
     "brand", "model", "date", "type", "price", "availability"
 ]
 
-#app = Flask(__name__)
-app.config["DEBUG"] = True
 
 @app.route('/predict', methods = ["GET"])
 def predict():
@@ -73,10 +66,15 @@ def predict():
     results = {'success': False}
 
     params = request.json
-    missing_params = [str(x) for x in parameters if x not in params]
+    if params == None:
+        return {
+            'success': False,
+            'message': 'missing parameter(s)'
+        }, 400
     
+    missing_params = [str(x) for x in parameters if x not in params]
+
     if len(missing_params) == 0:
-        if params != None:
             
             input_data_price = prepare_params(params, "price")
             input_data_avail = prepare_params(params, "availability")
@@ -95,8 +93,8 @@ def predict():
     else:
         return {
             'success': False,
-            'message': f"missing parameters '{' and '.join(invalid_params)}'."
-        }, 401
+            'message': f"missing parameter(s): '{' and '.join(missing_params)}'."
+        }, 400
 
     #return jsonify(results)
         
