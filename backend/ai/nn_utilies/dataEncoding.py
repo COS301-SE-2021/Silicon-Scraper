@@ -1,33 +1,37 @@
 import pandas as pd
 import sklearn.preprocessing as sp
 
-gpuModels = pd.read_csv("gpuModels.csv")
-cpuModels = pd.read_csv("cpuModels.csv")
-brands = pd.read_csv("brands.csv")
 
-models = gpuModels.append(cpuModels)
-models = models.drop(columns = ['id'])
-label_encoder = sp.LabelEncoder()
-models['model_code'] = label_encoder.fit_transform(models['model'])
-enc_models= pd.get_dummies(models.model_code, prefix='m')
-models = pd.concat([models, enc_models], axis=1)
+def getModelData():
+    gpuModels = pd.read_csv("gpuModels.csv")
+    cpuModels = pd.read_csv("cpuModels.csv")
+    brands = pd.read_csv("brands.csv")
 
-label_encoder = sp.LabelEncoder()
-brands['brand_code'] = label_encoder.fit_transform(brands['brand'])
-enc_brands = pd.get_dummies(brands.brand_code, prefix='b')
-brands = pd.concat([brands, enc_brands], axis=1)
+    models = gpuModels.append(cpuModels)
+    models = models.drop(columns = ['id'])
+    label_encoder = sp.LabelEncoder()
+    models['model_code'] = label_encoder.fit_transform(models['model'])
+    enc_models= pd.get_dummies(models.model_code, prefix='m')
+    models = pd.concat([models, enc_models], axis=1)
 
-availability = pd.DataFrame(["Out of stock", "In stock"])
-availability = availability.rename(columns={0: "availability"})
-availability['availability_code'] = label_encoder.fit_transform(availability['availability'])
-enc_availability = pd.get_dummies(availability.availability_code, prefix='a')
-availability = pd.concat([availability, enc_availability], axis=1)
+    label_encoder = sp.LabelEncoder()
+    brands['brand_code'] = label_encoder.fit_transform(brands['brand'])
+    enc_brands = pd.get_dummies(brands.brand_code, prefix='b')
+    brands = pd.concat([brands, enc_brands], axis=1)
 
-type_ = pd.DataFrame(["cpu", "gpu"])
-type_ = type_.rename(columns={0: "type"})
-type_['type_code'] = label_encoder.fit_transform(type_['type'])
-enc_type = pd.get_dummies(type_.type_code, prefix='t')
-type_ = pd.concat([type_, enc_type], axis=1)
+    availability = pd.DataFrame(["Out of stock", "In stock"])
+    availability = availability.rename(columns={0: "availability"})
+    availability['availability_code'] = label_encoder.fit_transform(availability['availability'])
+    enc_availability = pd.get_dummies(availability.availability_code, prefix='a')
+    availability = pd.concat([availability, enc_availability], axis=1)
+
+    type_ = pd.DataFrame(["cpu", "gpu"])
+    type_ = type_.rename(columns={0: "type"})
+    type_['type_code'] = label_encoder.fit_transform(type_['type'])
+    enc_type = pd.get_dummies(type_.type_code, prefix='t')
+    type_ = pd.concat([type_, enc_type], axis=1)
+
+    return models, brands, availability, type_
 
 def getCode(data, code_pd, name):
     for dt in code_pd.itertuples():
