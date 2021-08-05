@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { connection } from './config';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 /**
  * Use listener and wait for changes to database

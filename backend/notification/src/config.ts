@@ -1,4 +1,4 @@
-import { createConnection } from 'typeorm';
+import { createConnection, getRepository } from 'typeorm';
 import { resolve } from 'path';
 import { config } from 'dotenv';
 import { User } from './entity/user';
