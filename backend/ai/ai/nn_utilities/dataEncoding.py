@@ -1,11 +1,11 @@
 import pandas as pd
 import sklearn.preprocessing as sp
-from dataCleaning import split_date
+from ai.nn_utilities.dataCleaning import split_date
 
 def getModelData():
-    gpuModels = pd.read_csv("gpuModels.csv")
-    cpuModels = pd.read_csv("cpuModels.csv")
-    brands = pd.read_csv("brands.csv")
+    gpuModels = pd.read_csv("ai/model_data/gpuModels.csv")
+    cpuModels = pd.read_csv("ai/model_data/cpuModels.csv")
+    brands = pd.read_csv("ai/model_data/brands.csv")
 
     models = gpuModels.append(cpuModels)
     models = models.drop(columns=['id'])
