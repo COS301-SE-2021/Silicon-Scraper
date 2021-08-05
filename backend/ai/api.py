@@ -54,10 +54,13 @@ def prepare_params(params, pred):
 
 logging.basicConfig(filename="api_logs/api.log", level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
 
+parameters = [
+    "brand", "model", "date", "type", "price", "availability"
+]
 
 app = Flask(__name__)
 
-@app.route('/predict', methods = ["POST"])
+@app.route('/predict', methods = ["GET"])
 def predict():
     #app.logger.info("Endpoint reached")
     print("Loading model...")
@@ -65,9 +68,10 @@ def predict():
     avail_model = load_model(os.path.join(PATH_TO_MODELS, AVAIL_PRED_MODEL_NAME))
     print("* Model loaded *")
 
-    results = {'status': failure}
+    results = {'success': False}
 
-    if request.method == "POST":
+    invalid_params = [str(x) for x in parameters if x not in request.json]
+    if len(invalid_params) == 0:
         params = request.json
         if params == None:
             params = request.args
@@ -87,9 +91,15 @@ def predict():
             results['predictions']["availability"] = avail_preds
             print("Returned prediction ....")
                 
-            results['status'] = 'success'
+            results['success'] = True
+            return jsonify(results), 200
+    else:
+        return {
+            'success': False,
+            'message': f"missing parameters '{' and '.join(invalid_params)}'."
+        }, 401
 
-    return jsonify(results)
+    #return jsonify(results)
         
  
 if __name__ == '__main__':
