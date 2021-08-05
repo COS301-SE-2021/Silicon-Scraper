@@ -38,6 +38,9 @@ def getCode(data, code_pd, name):
         if data.upper().find(str(dt[1])) != -1:
             return code_pd[code_pd[name] == str(dt[1])]
 
+#
+# This function takes in a json product data and encodes it for price and availability prediction
+#
 def encode_data(brand, model, availability_, price, type_d, timestamp):
     models, brands, type_, availability = getModelData()
     year, month, quarter, week, day_year, day_month, day_week = split_date(timestamp)
@@ -45,12 +48,21 @@ def encode_data(brand, model, availability_, price, type_d, timestamp):
     d2 = getCode(brand, brands, "brand").drop(columns=["brand", "brand_code"])
     d3 = type_[type_["type"] == type_d].drop(columns=["type", "type_code"])
     d4 = availability[availability["availability"] == availability_].drop(columns=["availability", "availability_code"])
-    data_ = pd.DataFrame([{"price":price}])
+    data_ = pd.DataFrame([{"price": price}])
     d1.reset_index(drop=True, inplace=True)
     d2.reset_index(drop=True, inplace=True)
     d3.reset_index(drop=True, inplace=True)
     d4.reset_index(drop=True, inplace=True)
-    data_2 = pd.concat([data_,d1, d2, d3], axis=1)
-    data_ = pd.concat([data_,d1, d2, d3, d4], axis=1)
+    data_2 = pd.concat([data_, d1, d2, d3], axis=1)
+    data_ = pd.concat([data_, d1, d2, d3, d4], axis=1)
     data_1 = data_.drop(columns=["price"])
+
+    data_1['year'], data_2['year'] = year
+    data_1['month'], data_2['month'] = month
+    data_1['quarter'], data_2['quarter'] = quarter
+    data_1['week'], data_2['week'] = week
+    data_1['day_year'], data_2['day_year'] = day_year
+    data_1['day_month'], data_2['day_month'] = day_month
+    data_1['day_week'], data_2['day_week'] = day_week
+
     return data_1, data_2
