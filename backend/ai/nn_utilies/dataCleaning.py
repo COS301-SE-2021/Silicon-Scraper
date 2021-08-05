@@ -35,19 +35,20 @@ def clean_data(data, modelsDir):
                 data.at[dt.Index, 'model'] = model.Index
                 continue
 
+
+def split_date(date):
+    year = int(date[:4])
+    month = int(date[4:6])
+    day_month = int(date[6:8])
+    week = datetime.date(year, month, day_month).isocalendar()[1]
+    day_week = datetime.date(year, month, day_month).isocalendar()[2]
+    day_year = day_week * week
+    quarter = math.ceil(float(month)/3)
+    return year, month, quarter, week, day_year, day_month, day_week
+
 def encode_data(data):
-    def split_date(date):
-        year = int(date[:4])
-        month = int(date[4:6])
-        day_month = int(date[6:8])
-        week = datetime.date(year, month, day_month).isocalendar()[1]
-        day_week = datetime.date(year, month, day_month).isocalendar()[2]
-        day_year = day_week * week
-        quarter = math.ceil(float(month)/3)
-        return year, month, quarter, week, day_year, day_month, day_week
 
     # Splitting data into diff components
-
     for dt in data.itertuples():
         year, month, quarter, week, day_year, day_month, day_week = split_date(str(dt.date))
         data.at[dt.Index, 'year'] = year

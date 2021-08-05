@@ -7,7 +7,7 @@ def getModelData():
     brands = pd.read_csv("brands.csv")
 
     models = gpuModels.append(cpuModels)
-    models = models.drop(columns = ['id'])
+    models = models.drop(columns=['id'])
     label_encoder = sp.LabelEncoder()
     models['model_code'] = label_encoder.fit_transform(models['model'])
     enc_models= pd.get_dummies(models.model_code, prefix='m')
