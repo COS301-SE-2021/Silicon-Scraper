@@ -50,9 +50,7 @@ def prepare_params(params, pred):
     scaler_x.fit(use_data)
     data_scale = scaler_x.transform(use_data)
 
-    return data_scale
-
-    
+    return data_scale  
 
 logging.basicConfig(filename="api_logs/api.log", level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
 
@@ -97,4 +95,4 @@ def predict():
 if __name__ == '__main__':
 
     print("Starting web service...")
-    app.run(host = '0.0.0.0', debug=True)
+    app.run(host = '0.0.0.0', debug=True,  port=int(os.environ.get('PORT', 5000)))
