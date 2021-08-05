@@ -8,16 +8,17 @@ import time
 from keras.models import load_model
 from pandas import json_normalize
 from sklearn.preprocessing import MinMaxScaler
-from flask import Flask, jsonify, request
+from flask import jsonify, request
+from ai import app
 
 # TODO: make api scalable
 # WARN: don't try to run, will not work
 
-PATH_TO_MODELS = "trained_models/"
+PATH_TO_MODELS = "ai/trained_models/"
 PRICE_PRED_MODEL_NAME = 'ai_model.h5'
 AVAIL_PRED_MODEL_NAME = 'avail_prediction.h5'
-PATH_TO_CPU_MODEL_DATA = "model_data/cpuModels.csv"
-PATH_TO_GPU_MODEL_DATA = "model_data/models.csv"
+PATH_TO_CPU_MODEL_DATA = "ai/model_data/cpuModels.csv"
+PATH_TO_GPU_MODEL_DATA = "ai/model_data/models.csv"
 
 price_model = None
 avail_model = None
@@ -52,13 +53,14 @@ def prepare_params(params, pred):
 
     return data_scale  
 
-logging.basicConfig(filename="api_logs/api.log", level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
+logging.basicConfig(filename="ai/api_logs/api.log", level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
 
 parameters = [
     "brand", "model", "date", "type", "price", "availability"
 ]
 
-app = Flask(__name__)
+#app = Flask(__name__)
+app.config["DEBUG"] = True
 
 @app.route('/predict', methods = ["GET"])
 def predict():
@@ -67,18 +69,18 @@ def predict():
     price_model = load_model(os.path.join(PATH_TO_MODELS, PRICE_PRED_MODEL_NAME))
     avail_model = load_model(os.path.join(PATH_TO_MODELS, AVAIL_PRED_MODEL_NAME))
     print("* Model loaded *")
-
+    
     results = {'success': False}
 
     params = request.json
     missing_params = [str(x) for x in parameters if x not in params]
+    
     if len(missing_params) == 0:
-        
         if params != None:
+            
             input_data_price = prepare_params(params, "price")
             input_data_avail = prepare_params(params, "availability")
-
-            print("Start predcition ....")
+        
             price_preds = str(price_model(input_data_price))
             avail_preds = 'avail_preds'
             #avail_preds = str(avail_model(input_data_avail)))
@@ -87,7 +89,6 @@ def predict():
             results['predictions'] = {'price': "", "availability": ''}
             results['predictions']['price'] = price_preds
             results['predictions']["availability"] = avail_preds
-            print("Returned prediction ....")
                 
             results['success'] = True
             return jsonify(results), 200
