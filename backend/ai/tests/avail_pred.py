@@ -11,3 +11,8 @@ def test_clean_data():
     clean_data(df_prod, '../mocks/cpuModelsMock.csv')
     assert df_prod.equals(df_prod_before) == False
 
+def test_encode_data():
+    df_prod = pd.read_csv('../mocks/cpuProductDataMockClean.csv')
+    df_prod_before = df_prod.copy()
+    df_prod = encode_data(df_prod)
+    assert df_prod.equals(df_prod_before) == False
