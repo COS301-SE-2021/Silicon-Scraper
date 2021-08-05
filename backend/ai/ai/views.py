@@ -9,6 +9,7 @@ from pandas import json_normalize
 from sklearn.preprocessing import MinMaxScaler
 from flask import jsonify, request
 from ai import app
+from dataEncoding import encode_data
 
 
 PATH_TO_MODELS = "ai/trained_models/"
@@ -76,8 +77,7 @@ def predict():
 
     if len(missing_params) == 0:
             
-            input_data_price = prepare_params(params, "price")
-            input_data_avail = prepare_params(params, "availability")
+            input_data_price, input_data_avail = encode_data(params['brand'], params['model'], params['availability'], params['price'], params['type'], params['date']) #prepare_params(params, "price")
         
             price_preds = str(price_model(input_data_price))
             avail_preds = 'avail_preds'
