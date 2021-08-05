@@ -1,18 +1,7 @@
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import tensorflow as tf
 import datetime
 import math
-import random
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import MinMaxScaler
-from tensorflow import keras
-from tensorflow.keras import layers
-from tensorflow.keras.layers.experimental import preprocessing
-from nn_utilies import train_test_split, dataCleaning
 
 #
 #This function cleans the given data, by merging it with the model and getting rid of null rows
@@ -45,6 +34,7 @@ def split_date(date):
     day_year = day_week * week
     quarter = math.ceil(float(month)/3)
     return year, month, quarter, week, day_year, day_month, day_week
+
 
 def encode_data(data):
 

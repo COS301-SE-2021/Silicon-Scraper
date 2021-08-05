@@ -1,5 +1,6 @@
 import pandas as pd
 import sklearn.preprocessing as sp
+from dataCleaning import split_date
 
 def getModelData():
     gpuModels = pd.read_csv("gpuModels.csv")
@@ -37,8 +38,9 @@ def getCode(data, code_pd, name):
         if data.upper().find(str(dt[1])) != -1:
             return code_pd[code_pd[name] == str(dt[1])]
 
-def encode_data(brand, model, availability_, price, type_d):
+def encode_data(brand, model, availability_, price, type_d, timestamp):
     models, brands, type_, availability = getModelData()
+    year, month, quarter, week, day_year, day_month, day_week = split_date(timestamp)
     d1 = getCode(model, models, "model").drop(columns=["model", "model_code"])
     d2 = getCode(brand, brands, "brand").drop(columns=["brand", "brand_code"])
     d3 = type_[type_["type"] == type_d].drop(columns=["type", "type_code"])
