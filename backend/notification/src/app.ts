@@ -1,4 +1,6 @@
 import express from 'express';
+import 'reflect-metadata';
+import { connection } from './config';
 
 const app = express();
 const port = 3000;
@@ -15,14 +17,20 @@ const port = 3000;
  * Then to retrieve, changes[productID] = product: Product
  */
 
-interface test {
-    [key: string]: number
-}
+// interface test {
+//     [key: string]: number
+// }
+
+/**
+ * Create connection to database
+ */
+
+connection();
 
 app.get('/', (req, res) => {
     res.send('Hello there');
 });
 
 app.listen(port, () => {
-    return console.log(`server is listening on ${port}`);
+    console.log(`server is listening on ${port}`);
 });
