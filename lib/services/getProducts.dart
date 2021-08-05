@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/view_models/product_view_model.dart';
+import 'package:silicon_scraper/views/widgets/floating_product_widget.dart';
 import 'package:silicon_scraper/views/widgets/horizontal_product_widget.dart';
 import 'package:silicon_scraper/views/widgets/vertical_product_widget.dart';
 
@@ -62,7 +63,7 @@ ListView productListView(BuildContext context,List<Product> items)
     itemCount:items.length ,
       itemBuilder: (_,index){
         return
-            HorizontalProductWidget( state: ProductViewModel(items[index]));
+            FloatingProductWidget( state: ProductViewModel(items[index]));
       },
   );
 }
