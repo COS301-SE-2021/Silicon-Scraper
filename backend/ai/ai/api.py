@@ -70,11 +70,9 @@ def predict():
 
     results = {'success': False}
 
-    invalid_params = [str(x) for x in parameters if x not in request.json]
-    if len(invalid_params) == 0:
-        params = request.json
-        if params == None:
-            params = request.args
+    params = request.json
+    missing_params = [str(x) for x in parameters if x not in params]
+    if len(missing_params) == 0:
         
         if params != None:
             input_data_price = prepare_params(params, "price")
