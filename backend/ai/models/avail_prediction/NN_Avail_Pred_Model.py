@@ -12,7 +12,6 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.layers.experimental import preprocessing
-from nn_utilies import train_test_split, dataCleaning
 
 def clean_data(data, modelsDir):
 
