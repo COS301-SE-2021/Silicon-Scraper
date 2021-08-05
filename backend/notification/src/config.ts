@@ -1,6 +1,11 @@
 import { createConnection } from 'typeorm';
 import { resolve } from 'path';
 import { config } from 'dotenv';
+import { User } from './entity/user';
+import { CPU } from './entity/cpu';
+import { GPU } from './entity/gpu';
+import { watchlistCPU } from './entity/watchlistCPU';
+import { watchlistGPU } from './entity/watchlistGPU';
 
 config({ path: resolve(__dirname, "../.env") })
 
@@ -14,7 +19,11 @@ export const connection = async () => {
             password: process.env.DB_PW,
             database: process.env.DB_NAME,
             entities: [
-                'entity/*.ts'
+                User,
+                CPU,
+                GPU,
+                watchlistCPU,
+                watchlistGPU
             ],
             synchronize: false,
             logging: false
