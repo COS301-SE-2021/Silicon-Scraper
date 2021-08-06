@@ -4,6 +4,7 @@ import keras
 import os
 import numpy as np
 import logging
+import json
 from keras.models import load_model
 from pandas import json_normalize
 from sklearn.preprocessing import MinMaxScaler

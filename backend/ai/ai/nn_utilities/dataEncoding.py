@@ -18,7 +18,7 @@ def getModelData():
     brands['brand_code'] = label_encoder.fit_transform(brands['brand'])
     enc_brands = pd.get_dummies(brands.brand_code, prefix='b')
     brands = pd.concat([brands, enc_brands], axis=1)
-
+   
     availability = pd.DataFrame(["Out of stock", "In stock"])
     availability = availability.rename(columns={0: "availability"})
     availability['availability_code'] = label_encoder.fit_transform(availability['availability'])
@@ -35,16 +35,18 @@ def getModelData():
 
 def getCode(data, code_pd, name):
     for dt in code_pd.itertuples():
-        if data.upper().find(str(dt[1])) != -1:
+        if data.str.upper().item() == str(dt[1]) != -1:
+            print(code_pd[code_pd[name] == str(dt[1])])
             return code_pd[code_pd[name] == str(dt[1])]
 
 #
 # This function takes in a json product data and encodes it for price and availability prediction
 #
 def encode_data(brand, model, availability_, price, type_d, timestamp):
-    models, brands, type_, availability = getModelData()
+    models, brands, availability, type_ = getModelData()
     year, month, quarter, week, day_year, day_month, day_week = split_date(timestamp)
     d1 = getCode(model, models, "model").drop(columns=["model", "model_code"])
+    print(brand)
     d2 = getCode(brand, brands, "brand").drop(columns=["brand", "brand_code"])
     d3 = type_[type_["type"] == type_d].drop(columns=["type", "type_code"])
     d4 = availability[availability["availability"] == availability_].drop(columns=["availability", "availability_code"])

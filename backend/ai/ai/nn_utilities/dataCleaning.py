@@ -26,9 +26,9 @@ def clean_data(data, modelsDir):
 
 
 def split_date(date):
-    year = int(date[:4])
-    month = int(date[4:6])
-    day_month = int(date[6:8])
+    year = int(date.str[:4])
+    month = int(date.str[4:6])
+    day_month = int(date.str[6:8])   
     week = datetime.date(year, month, day_month).isocalendar()[1]
     day_week = datetime.date(year, month, day_month).isocalendar()[2]
     day_year = day_week * week
