@@ -4,11 +4,11 @@ import { Pool } from 'pg';
 // create pool for connection
 
 const pool = new Pool({
-    // user: config.user,
-    // host: config.host,
-    // database: config.name,
-    // password: config.pw,
-    // port: config.port
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    user: process.env.DB_USER,
+    password: process.env.DB_PW,
+    database: process.env.DB_NAME,
 });
 
 export default pool;
