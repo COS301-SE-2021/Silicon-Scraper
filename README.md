@@ -59,9 +59,14 @@ _Team Leader_\
 > I aspire to be a catalyst for the growth of the tech community in africa. I enjoy reading up on social science related matters and binging on Tech-YouTube as well as anime
 
 
-**Thato Jadezwani**
-- [LinkedIn](#link)
-> Short description
+**Thato Jadezwani**\
+<img src="https://user-images.githubusercontent.com/68788251/128436108-51b60fb5-cf59-4297-b7e8-2835cc5598ba.jpg" width="250" height="250">
+- [LinkedIn](https://www.linkedin.com/in/thato-jadezweni/)
+- [Github](https://github.com/ThatoJadezweni)
+> Final year computer science student.\
+> Passion for software development.\
+> Aiming to contribute to the growth happening around me.\
+> Interests: painting, poems & anime.
 
 **Thato (Lesedi) Motoma**\
 <img src="https://media-exp1.licdn.com/dms/image/C4D03AQF5K6g5rPqE1A/profile-displayphoto-shrink_800_800/0/1622795047263?e=1628121600&v=beta&t=k6QHUpdZU20Sj0anYUiW8fRL3DgJdNcX85dNxOC30vw" width="250" height="250">
