@@ -1,21 +1,34 @@
-import dotenv from 'dotenv';
+import { createConnection } from 'typeorm';
+import { config } from 'dotenv';
+import { User } from './entity/user';
+import { CPU } from './entity/cpu';
+import { GPU } from './entity/gpu';
+import { watchlistCPU } from './entity/watchlistCPU';
+import { watchlistGPU } from './entity/watchlistGPU';
 
-dotenv.config();
+config();
 
-interface dbConfig {
-    port: number,
-    name: string,
-    host: string,
-    pw: string,
-    user: string
+export const connection = async () => {
+    try {
+        await createConnection({
+            type: 'postgres',
+            host: process.env.DB_HOST,
+            port: Number(process.env.DB_PORT),
+            username:process.env.DB_USER,
+            password: process.env.DB_PW,
+            database: process.env.DB_NAME,
+            entities: [
+                User,
+                CPU,
+                GPU,
+                watchlistCPU,
+                watchlistGPU
+            ],
+            synchronize: false,
+            logging: false
+        });
+    } catch(error) {
+        console.log(error);
+        console.log('Database connection error');
+    }
 }
-
-const config: dbConfig = {
-    port : Number(process.env.DB_PORT!),
-    name : process.env.DB_NAME!,
-    host : process.env.DB_HOST!,
-    pw : process.env.DB_PW!,
-    user : process.env.DB_USER!
-}
-
-export = config;
