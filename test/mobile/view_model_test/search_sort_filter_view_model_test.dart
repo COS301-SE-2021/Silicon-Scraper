@@ -161,12 +161,13 @@ void main() {
         bool contained = search.containsIgnoreCase("modelOrBrand", "blah");
         expect(contained, false);
       });
-      // test(
-      //     "testing if the query is contained in model or brand of an x item... to return false",
-      //     () {
-      //   bool contained = containsIgnoreCase("modelOrBrand", "tanaa");
-      //   expect(contained, false);
-      // });
+      test(
+          "test if (ignore case) second string is contained in second string (should be true)",
+          () {
+        bool contained = search.containsIgnoreCase("modelOrBrand", "MODELORBRAND");
+        expect(contained, true);
+      });
+
     });
   });
 
