@@ -101,7 +101,6 @@ void main() {
       });
     });
     group("test apply filters service", () {
-
       double min = search.priceMinMax(list, 0);
       double max = search.priceMinMax(list, 1);
       test("test no filters applied expect 7", () {
@@ -110,6 +109,14 @@ void main() {
       });
       test("test retailer filters 'evetech - retailer 1' applied expect 7", () {
         List<Product> res = search.applyFilters(list, false, false, min, max, true, false, false);
+        expect(res.length, 7);
+      });
+      test("test retailer filters 'other - retailer 2 & 3' applied expect 0", () {
+        List<Product> res = search.applyFilters(list, false, false, min, max, false, true, true);
+        expect(res.length, 0);
+      });
+      test("test all retailer filters applied expect 7", () {
+        List<Product> res = search.applyFilters(list, false, false, min, max, true, true, true);
         expect(res.length, 7);
       });
       test("", () {
