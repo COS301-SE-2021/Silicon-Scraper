@@ -149,7 +149,7 @@ class SearchViewModel {
     if (min0max1 == 0) {
       return 0.0;
     } else {
-      return 60000;
+      return 0.1;
     }
   }
 
