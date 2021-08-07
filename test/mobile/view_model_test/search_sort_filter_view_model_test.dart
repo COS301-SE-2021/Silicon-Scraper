@@ -71,6 +71,20 @@ void main() {
         double max = search.priceMinMax(list, 1);
         expect(max, 45999.0);
       });
+      test("test min price of products should be '13499.0'", (){
+        double min = search.priceMinMax(list, 0);
+        expect(min, 13499.0);
+      });
+      test("test max price of products when list is null", (){
+        var nullList;
+        double max = search.priceMinMax(nullList, 1);
+        expect(max, 0.1);
+      });
+      test("test max price of products when list is null", (){
+        var nullList;
+        double min = search.priceMinMax(nullList, 0);
+        expect(min, 0.0);
+      });
     });
 
   });
