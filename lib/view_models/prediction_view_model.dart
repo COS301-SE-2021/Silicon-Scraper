@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 
 class PredictionViewModel extends ChangeNotifier
 {
+  PredictionInjector predictor=PredictionInjector();
   Product _item;
   DateTime _date;
 
@@ -15,9 +17,10 @@ class PredictionViewModel extends ChangeNotifier
 
   PredictionViewModel.name(this._item, this._date);
 
-  predict()
+  Future predict()
   {
-
+    // todo receive response change UI
+    predictor.dependency.predictionRequest(_item, _date);
   }
 
 }
