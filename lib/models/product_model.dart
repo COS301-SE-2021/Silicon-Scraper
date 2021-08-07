@@ -7,9 +7,7 @@ class Product
   final String brand;
   final String model;
   final double price;
-
   final String retailer;
-
   final String description;
 
   final String url;
@@ -17,7 +15,7 @@ class Product
   bool _watch;
   availability stockAvailability;
 
-  bool get watch => _watch;
+  bool get watching => _watch;
 
   set watch(bool value) {
     _watch = value;
@@ -26,16 +24,7 @@ class Product
   bool isTheSame(Product other)
   {
     return (
-        other.id==id &&
-        other.type==type &&
-        other.brand==brand &&
-        other.model==model &&
-        other.price==price &&
-        other.retailer==retailer &&
-        other.description==description &&
-        other.url==url &&
-        other.image==image&&
-        other.stockAvailability==stockAvailability
+        other.id==this.id
     );
   }
 
@@ -84,9 +73,10 @@ class Product
       this.stockAvailability=availability.notSpecified;
     }
   }
-
+  //todo remove
   String getAvailability()
   {
+
     if(this.stockAvailability==availability.available)
       {
         return "available";
@@ -105,7 +95,7 @@ class Product
     }
     return "not specified";
   }
-
+  //todo remove
   Widget getAvailabilityText(double size,TextAlign align)
   {
     if(this.stockAvailability==availability.available)
@@ -126,6 +116,7 @@ class Product
 
 enum availability
 {
+  //todo
   available,
   limitedStock,//remove
   outOfStock,

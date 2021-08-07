@@ -7,7 +7,7 @@ import 'package:silicon_scraper/mocks/json/productsjson.dart';
 
 
 void main() {
-  var data = JSONData();
+ /* var data = JSONData();
   Product item=new Product(data[0]['brand'], data[0]['model'], data[0]['price'], data[0]['retailer'], data[0]['description'], data[0]['url'], data[0]['image'], data[0]['availability'],data[0]['id'],data[0]['type'],data[0]['watch']);
   group("test ProductDetail widget", () {
     testWidgets('should properly mock Image.network and not crash',
@@ -46,8 +46,8 @@ void main() {
 //      final titleFinder = find.text(data[0]['description']);
 //      expect(titleFinder, findsOneWidget);
 //    });
-    /**
+    *//**
      * can't test url launcher within flutter because it is handled by the operating system and not flutter
-     ***/
-  });
+     ***//*
+  });*/
 }

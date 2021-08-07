@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
+import 'package:provider/provider.dart';
 
 class WatchList extends StatefulWidget
 {
@@ -9,10 +10,13 @@ class WatchList extends StatefulWidget
 
 class _WatchListState extends State<WatchList>
 {
-  WatchListViewModelSingleton watch= WatchListViewModelSingleton.getState();
+//  WatchListViewModelSingleton watch= WatchListViewModelSingleton.getState();
+
 
   @override
   Widget build(BuildContext context) {
+    WatchListViewModel watch=Provider.of<WatchListViewModel>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -20,41 +24,36 @@ class _WatchListState extends State<WatchList>
         // the App.build method, and use it to set our appbar title.
         title: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),),
         centerTitle: true,
-        actions: <Widget>[
-     Padding(
-      padding: EdgeInsets.only(right: 20.0),
-        child: GestureDetector(
-          onTap: () {setState(() {
-          }); },
-          child: Icon(
-            Icons.loop_sharp,
-            size: 26.0,
-          ),
-        )
-    ),],
       ),
     bottomNavigationBar: BottomAppBar(
 
     ),
-      body: Container(
-      child: FutureBuilder(
-      future: watch.setInitialProducts(),
-      builder: (BuildContext context,AsyncSnapshot snapshot){
-        if(snapshot.connectionState==ConnectionState.none)
-        {
-        return Center(child: CircularProgressIndicator());
-        }
-        else if(watch.items.isNotEmpty)
-        {
-          return watch.floatingProductListView(context, watch.items);
-        }
-        else
-        {
-          return Center(child: CircularProgressIndicator());
-        }
-    },
-      ),
-      ),
+//      body: Consumer<WatchListViewModel>(
+//        builder: (BuildContext context,WatchListViewModel w, Widget child)
+//        {
+//          return w.floatingProductListView(context, w.items);
+//        },
+    body: watch.floatingProductListView(context, watch.items),
+//        child: Container(
+//        child: FutureBuilder(
+//        future: watch.setInitialProducts(),
+//        builder: (BuildContext context,AsyncSnapshot snapshot){
+//          if(snapshot.connectionState==ConnectionState.none)
+//          {
+//          return Center(child: CircularProgressIndicator());
+//          }
+//          else if(watch.items.isNotEmpty)
+//          {
+//           return watch.floatingProductListView(context, watch.items);
+//          }
+//          else
+//          {
+//            return Center(child: CircularProgressIndicator());
+//          }
+//    },
+//        ),
+//        ),
+//      ),
     );
   }
 }

@@ -15,7 +15,18 @@ MaterialColor theOrange = const MaterialColor(
   },
 );
 
+MaterialColor red = const MaterialColor(
+  0xffFF0000,
+  const <int, Color>{
+    500: const Color(0xffFF0000),
+  },
+);
 //test swatch1
+
+Color crimson=Color(0xffB90E0A);
+Color rose=Color(0xffE3242B);
+Color candy=Color(0xffD21404);
+
 
 Color darkBlue=Color(0xff011627);
 Color brightWhite=Color(0xffFDFFFC);

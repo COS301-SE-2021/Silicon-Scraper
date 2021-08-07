@@ -1,11 +1,12 @@
 import 'package:silicon_scraper/injectors/watch_list_service_injector.dart';
 import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/floating_product_widget.dart';
 import 'package:silicon_scraper/views/widgets/horizontal_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/views/widgets/vertical_product_widget.dart';
 
-class WatchListViewModel
+class WatchListViewModel extends ChangeNotifier
 {
   WatchListInjector watch=WatchListInjector();
   List<Product> items=[];
@@ -36,18 +37,6 @@ class WatchListViewModel
   {
     for(var e in items)
     {
-      if(e==p)
-      {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  bool findProductStrict(Product p)
-  {
-    for(var e in items)
-    {
       if(e.isTheSame(p))
       {
         return true;
@@ -56,15 +45,18 @@ class WatchListViewModel
     return false;
   }
 
+
   Future removeProduct(Product p)async
   {
+    print('VM '+p.id);
     if(findProduct(p))
     {
       try
       {
         await watch.dependency.removeRequest(p);// check response
-        items.remove(p);
-        return true;
+        items.removeWhere((t){ return t.id==p.id;});
+        notifyListeners();
+//        return true;
       }
       catch(e)
       {
@@ -80,13 +72,15 @@ class WatchListViewModel
 
   Future addProduct(Product p)async
   {
-    if(!findProductStrict(p))
+    print('VM '+p.id);
+    if(!findProduct(p))
     {
       try
       {
         await watch.dependency.addRequest(p);// check response
         items.add(p);
-        return true;
+        notifyListeners();
+//        return true;
       }
       catch(e)
       {
@@ -106,7 +100,7 @@ class WatchListViewModel
         itemCount:items.length ,
         itemBuilder: (_,index)
         {
-          return HorizontalProductWidget(item:items[index]);
+          return HorizontalProductWidget(state: ProductViewModel(items[index]));
         }
     );
   }
@@ -117,7 +111,7 @@ class WatchListViewModel
         itemCount:items.length ,
         itemBuilder: (_,index)
         {
-          return VerticalProductWidget(item:items[index]);
+          return VerticalProductWidget(state: ProductViewModel(items[index]));
         }
     );
   }
@@ -128,7 +122,7 @@ class WatchListViewModel
         itemCount:items.length ,
         itemBuilder: (_,index)
         {
-          return FloatingProductWidget(item:items[index]);
+          return FloatingProductWidget(state: ProductViewModel(items[index]));
         }
     );
   }
