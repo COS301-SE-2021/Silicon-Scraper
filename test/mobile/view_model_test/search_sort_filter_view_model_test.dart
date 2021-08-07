@@ -10,7 +10,6 @@ void main() {
 
   SearchPageViewModelSingleton search = SearchPageViewModelSingleton.getState();
   var list = addProducts(JSONData());
-
   group("testing search, sort and filter view model", (){
     group("test search injector", () {
       // injector returns mock service for the tests
@@ -66,30 +65,11 @@ void main() {
         expect(res[0], "Radeon RX 6900");
       });
     });
-    group("test max/min price helper service", () {
-      test("test max price of products should be '45999.0'", (){
-        double max = search.priceMinMax(list, 1);
-        expect(max, 45999.0);
-      });
-      test("test min price of products should be '13499.0'", (){
-        double min = search.priceMinMax(list, 0);
-        expect(min, 13499.0);
-      });
-      test("test max price of products when list is null", (){
-        var nullList;
-        double max = search.priceMinMax(nullList, 1);
-        expect(max, 0.1);
-      });
-      test("test max price of products when list is null", (){
-        var nullList;
-        double min = search.priceMinMax(nullList, 0);
-        expect(min, 0.0);
-      });
-    });
     group("test apply sort service", () {
+      //print(list.elementAt(0).id);
       test("test when no sort is applied", (){
         List<Product> res = search.applySort(list, "SORT");
-        expect(res[0].price, 45999.0);
+        expect(res[0].id, "1");
       });
       test("test when sort 'price high to low' is applied", (){
         List<Product> res = search.applySort(list, "Price (high to low)");
@@ -148,6 +128,31 @@ void main() {
       //   expect(res.length, 7);
       // });
     });
+    group("test max/min price helper service", () {
+      test("test max price of products should be '45999.0'", (){
+        double max = search.priceMinMax(list, 1);
+        expect(max, 45999.0);
+      });
+      test("test min price of products should be '13499.0'", (){
+        double min = search.priceMinMax(list, 0);
+        expect(min, 13499.0);
+      });
+      test("test max price of products when list is null", (){
+        var nullList;
+        double max = search.priceMinMax(nullList, 1);
+        expect(max, 0.1);
+      });
+      test("test max price of products when list is null", (){
+        var nullList;
+        double min = search.priceMinMax(nullList, 0);
+        expect(min, 0.0);
+      });
+    });
+    group("test 'numberOfItems' helper function", () {
+      test("test that the number is a string", (){
+        expect(search.numberOfItems(1), "1");
+      });
+    });
     group("test 'containsIgnoreCase' helper function", () {
       test(
           "test if second string is contained in second string (should be true)",
@@ -173,9 +178,6 @@ void main() {
         bool contained = search.containsIgnoreCase("modelOrBrand", "");
         expect(contained, true);
       });
-
     });
   });
-
-  //   });
 }
