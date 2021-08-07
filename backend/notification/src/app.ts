@@ -1,6 +1,9 @@
 import express from 'express';
 import 'reflect-metadata';
+import { getRepository } from 'typeorm';
 import { connection } from './config';
+import { User } from './entity/user';
+import connectClient from './listener/listener';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -26,9 +29,13 @@ const port = process.env.PORT || 3000;
  */
 
 connection();
+// start listener
+connectClient();
 
-app.get('/', (req, res) => {
-    res.send('Hello there');
+app.get('/', async (req, res) => {
+    const user = getRepository(User);
+    
+    res.send(await user.find());
 });
 
 app.listen(port, () => {
