@@ -9,8 +9,6 @@ import 'package:silicon_scraper/services/search_service.dart';
 
 void main() {
 
-  SearchSortFilterInjector.configure(DependencyType.MOCK);
-
   group("testing search service", (){
 
   });
