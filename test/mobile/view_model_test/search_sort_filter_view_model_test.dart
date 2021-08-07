@@ -86,7 +86,12 @@ void main() {
         expect(min, 0.0);
       });
     });
-
+    group("test apply sort service", () {
+      test("test when no sort is applied", (){
+        List<Product> res = search.applySort(list, "SORT");
+        expect(res[0].price, 45999.0);
+      });
+    });
   });
 
   // var list=addProducts(JSONData());
