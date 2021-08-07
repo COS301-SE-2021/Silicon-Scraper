@@ -119,6 +119,10 @@ void main() {
         List<Product> res = search.applyFilters(list, false, false, min, max, true, true, true);
         expect(res.length, 7);
       });
+      test("test applying price range filter", () {
+        List<Product> res = search.applyFilters(list, false, false, min + 1.0, max, false, false, false);
+        expect(res.length, 6);
+      });
       test("", () {
 
       });
