@@ -45,6 +45,10 @@ void main() {
         List<String> res = search.getSuggestions(list, "rtx");
         expect(res.length, 6);
       });
+      test("should find 0 (testing lower bound)", () {
+        List<String> res = search.getSuggestions(list, "blah blah blah");
+        expect(res.length, 0);
+      });
     });
   });
 
