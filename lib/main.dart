@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:silicon_scraper/theme/colors.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   WatchListInjector.configure(DependencyType.MOCK);
+  PredictionInjector.configure(DependencyType.MOCK,fail: false);
 
   /// this sets the initial products for the watch list do not remove
   WatchListViewModelSingleton.getState().setInitialProducts();
