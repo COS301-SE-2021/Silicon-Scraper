@@ -66,45 +66,17 @@ void main() {
         expect(res[0], "Radeon RX 6900");
       });
     });
+    group("test max/min price helper service", () {
+      test("test max price of products should be '45999.0'", (){
+        double max = search.priceMinMax(list, 1);
+        expect(max, 45999.0);
+      });
+    });
 
   });
 
   // var list=addProducts(JSONData());
   // group("testing search service",(){
-  //   group("testing getSuggestions",(){
-  //     test("should find 6 results",(){
-  //       List<String>res=getSuggestions(list, "rtx");
-  //       expect(res.length, 6);
-  //     });
-  //     test("should find 0",(){
-  //       List<String>res=getSuggestions(list, "blah blah");
-  //       expect(res.length, 0);
-  //     });
-  //     test("should find 1 (testing upper bound)",(){
-  //       List<String>res=getSuggestions(list, "OC 12GB GDDR6");
-  //       expect(res.length, 1);
-  //     });
-  //     test("should find 1 (testing uppercase)",(){
-  //       List<String>res=getSuggestions(list, "OC 12GB GDDR6");
-  //       expect(res.length, 1);
-  //     });
-  //     test("should find 1 (testing lowercase)",(){
-  //       List<String>res=getSuggestions(list, "oc 12gb gddr6");
-  //       expect(res.length, 1);
-  //     });
-  //     test("should find 1 (testing lower bound)",(){
-  //       List<String>res=getSuggestions(list, "SUPRIM X 24GB");
-  //       expect(res.length, 1);
-  //     });
-  //     test("test return value string upper bound",(){
-  //       List<String>res=getSuggestions(list, "OC 12GB GDDR6");
-  //       expect(res[0], "OC 12GB GDDR6 Graphics Card");
-  //     });
-  //     test("test return value string Lower bound",(){
-  //       List<String>res=getSuggestions(list, "SUPRIM X 24GB");
-  //       expect(res[0], "SUPRIM X 24GB GDDR6X Graphics Card");
-  //     });
-  //   });
   //   group("containsIgnoreCase tests", (){
   //     test("testing if the query is contained in model or brand of an x item... to return true",(){
   //       bool contained = containsIgnoreCase("modelOrBrand", "or");
