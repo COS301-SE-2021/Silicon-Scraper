@@ -20,8 +20,12 @@ void main() {
         expect(res.length, 0);
       });
       test("should find 7 (testing upper bound)",(){
-        List<Product>res= search.getResults(list, "");
+        List<Product> res = search.getResults(list, "");
         expect(res.length, 7);
+      });
+      test("should find 4 (testing case)",(){
+        List<Product> res = search.getResults(list, "gefORcE RtX 3090");
+        expect(res.length, 4);
       });
     });
   });
