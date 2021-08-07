@@ -49,6 +49,10 @@ void main() {
         List<String> res = search.getSuggestions(list, "blah blah blah");
         expect(res.length, 0);
       });
+      test("should find 7 (testing upper bound)",(){
+        List<String> res = search.getSuggestions(list, "");
+        expect(res.length, 7);
+      });
     });
   });
 
