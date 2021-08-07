@@ -108,7 +108,10 @@ void main() {
         List<Product> res = search.applyFilters(list, false, false, min, max, false, false, false);
         expect(res.length, 7);
       });
-
+      test("test retailer filters 'evetech - retailer 1' applied expect 7", () {
+        List<Product> res = search.applyFilters(list, false, false, min, max, true, false, false);
+        expect(res.length, 7);
+      });
       test("", () {
 
       });
