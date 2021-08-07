@@ -25,17 +25,18 @@ const port = process.env.PORT || 3000;
 // }
 
 /**
- * Create connection to database
+ * Create connection to database for typeorm
  */
 
 connection();
-// start listener
+
+/**
+ * Start database listener
+ */
 connectClient();
 
 app.get('/', async (req, res) => {
-    const user = getRepository(User);
-    
-    res.send(await user.find());
+    res.send('Hello there');
 });
 
 app.listen(port, () => {
