@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:silicon_scraper/injectors/dependency_types.dart';
+import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.dart';
 import 'package:silicon_scraper/mocks/json/productsjson.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
@@ -6,6 +8,13 @@ import 'package:silicon_scraper/services/search_service.dart';
 
 
 void main() {
+
+  SearchSortFilterInjector.configure(DependencyType.MOCK);
+
+  group("testing search service", (){
+
+  });
+
   // var list=addProducts(JSONData());
   // group("testing search service",(){
   //   group("get results service",(){
