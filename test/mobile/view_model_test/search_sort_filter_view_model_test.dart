@@ -53,6 +53,10 @@ void main() {
         List<String> res = search.getSuggestions(list, "");
         expect(res.length, 7);
       });
+      test("should find 4 (testing case)",(){
+        List<String> res = search.getSuggestions(list, "gefORcE RtX 3090");
+        expect(res.length, 4);
+      });
     });
   });
 
