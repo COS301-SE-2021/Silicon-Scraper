@@ -146,7 +146,7 @@ class ProductSearch extends SearchDelegate<String> {
               if (snapshot.data == null) {
                 return buildNoResults();
               }
-              if (search.mockSearchService()){
+              if (search.isMockSearchService()){
                 this.products = search.getResults(snapshot.data, query);
                 this.originalProducts = search.getResults(snapshot.data, query);
               } else {

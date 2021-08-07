@@ -9,7 +9,7 @@ class SearchViewModel {
 
   // check if this is a mock service for getting results
   // cause mock results need to use an extra function to get search results
-  bool mockSearchService(){
+  bool isMockSearchService(){
     return search.dependencyType == DependencyType.MOCK;
   }
 

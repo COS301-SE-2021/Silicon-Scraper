@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:silicon_scraper/injectors/dependency_types.dart';
+import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.dart';
 import 'package:silicon_scraper/mocks/json/productsjson.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
@@ -10,6 +12,16 @@ void main() {
   var list = addProducts(JSONData());
 
   group("testing search, sort and filter view model", (){
+    group("test search injector", () {
+      // injector returns mock service for the tests
+      test("should find true", (){
+        expect(search.isMockSearchService(), true);
+      });
+      test("should find false", (){
+        SearchSortFilterInjector.configure(DependencyType.PROD);
+        expect(search.isMockSearchService(), false);
+      });
+    });
     group("get results service (only for mock data)", () {
       test("Should find 6 results", () {
         List<Product> res = search.getResults(list, "rtx");
@@ -28,37 +40,11 @@ void main() {
         expect(res.length, 4);
       });
     });
+
   });
 
   // var list=addProducts(JSONData());
   // group("testing search service",(){
-  //   group("get results service",(){
-  //
-  //      test("should find 6 results",(){
-  //       List<Product>res=getResults(list, "rtx");
-  //       expect(res.length, 6);
-  //     });
-  //      test("should find 0",(){
-  //        List<Product>res=getResults(list, "blah blah");
-  //        expect(res.length, 0);
-  //      });
-  //      test("should find 1 (testing upper bound)",(){
-  //        List<Product>res=getResults(list, "OC 12GB GDDR6");
-  //        expect(res.length, 1);
-  //      });
-  //      test("should find 1 (testing uppercase)",(){
-  //        List<Product>res=getResults(list, "OC 12GB GDDR6");
-  //        expect(res.length, 1);
-  //      });
-  //     test("should find 1 (testing lowercase)",(){
-  //       List<Product>res=getResults(list, "oc 12gb gddr6");
-  //       expect(res.length, 1);
-  //     });
-  //      test("should find 1 (testing lower bound)",(){
-  //        List<Product>res=getResults(list, "SUPRIM X 24GB");
-  //        expect(res.length, 1);
-  //      });
-  //   });
   //   group("testing getSuggestions",(){
   //     test("should find 6 results",(){
   //       List<String>res=getSuggestions(list, "rtx");
