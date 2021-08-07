@@ -41,20 +41,20 @@ class SearchViewModel {
 
   List<Product> applySort(List<Product> products, String sortValue) {
     List<Product> sortedProducts = products;
-
     if (sortValue.compareTo("SORT") == 0) {
-      return products;
+      sortedProducts.sort((a, b) => a.id.compareTo(b.id));
+      return sortedProducts;
     }
     if (products.isNotEmpty) {
-      if (sortValue.compareTo("Price (low to high)") == 0) {
-        sortedProducts.sort((a, b) => a.price.compareTo(b.price));
-        return sortedProducts;
-      } else if (sortValue.compareTo("Price (high to low)") == 0) {
+      if (sortValue.compareTo("Price (high to low)") == 0) {
         sortedProducts.sort((a, b) => b.price.compareTo(a.price));
+        return sortedProducts;
+      } else if (sortValue.compareTo("Price (low to high)") == 0) {
+        sortedProducts.sort((a, b) => a.price.compareTo(b.price));
         return sortedProducts;
       }
     }
-    return products;
+    return sortedProducts;
   }
 
   List<Product> applyFilters(
