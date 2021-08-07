@@ -18,8 +18,8 @@ void main()
     });
     test("testing that the data is correct for the first element",(){
       var list=addProducts(JSONData());
-      expect(list[0].brand,"MSI GeForce RTX 3090");
-      expect(list[0].model,"SUPRIM X 24GB GDDR6X Graphics Card");
+      expect(list[0].brand,"MSI ");
+      expect(list[0].model," GeForce RTX 3090");
       expect(list[0].price,45999.0);
       expect(list[0].retailer,"evetech");
       expect(list[0].description,"/ 10496 Cuda Cores / Boost Clock: 1860 MHz / Triple Fan / Sturdy Brushed-finish Metal Backplate / 3x DisplayPort / 1x HDMI 2.1 / 912-V388-010 + FREE DELIVERY !");
@@ -29,8 +29,8 @@ void main()
     });
     test("testing that the data is correct for the last element",(){
       var list=addProducts(JSONData());
-      expect(list[6].brand,"ASUS TUF Gaming GeForce RTX 3060");
-      expect(list[6].model,"OC 12GB GDDR6 Graphics Card");
+      expect(list[6].brand,"ASUS ");
+      expect(list[6].model,"TUF Gaming GeForce RTX 3060");
       expect(list[6].price,13499.0);
       expect(list[6].retailer,"evetech");
       expect(list[6].description,"/ 3584 Cuda Cores / Boost: **** MHz / Axial-tech Fan Design / All-Aluminum Shroud and Metal Backplate / Dual Ball Fan Bearings / Three Powerful Axial-tech Fans / 2.7-slot Design / 90YV0GC0-M0NA00 + FREE DELIVERY !\n");

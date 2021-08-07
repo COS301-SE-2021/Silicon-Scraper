@@ -3,7 +3,7 @@ JSONData(){
     {
       "id": "1",
       "type": "gpu",
-      "brand":"MSI" ,
+      "brand":"MSI " ,
       "model":" GeForce RTX 3090" ,
       "price": 45999.0,
       "retailer": "evetech",
