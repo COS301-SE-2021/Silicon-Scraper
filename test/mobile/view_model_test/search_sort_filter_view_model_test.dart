@@ -1,9 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:silicon_scraper/mocks/json/productsjson.dart';
+import 'package:silicon_scraper/models/product_model.dart';
+import 'package:silicon_scraper/services/getProducts.dart';
+import 'package:silicon_scraper/view_models/search_sort_filter_view_model.dart';
 
 void main() {
 
-  group("testing search, sort and filter view model", (){
+  SearchPageViewModelSingleton search = SearchPageViewModelSingleton.getState();
+  var list = addProducts(JSONData());
 
+  group("testing search, sort and filter view model", (){
+    group("get results service (for mock data)", (){
+      test("Should find 6 results", (){
+        List<Product> res = search.getResults(list, "rtx");
+        expect(res.length, 6);
+      });
+    });
   });
 
   // var list=addProducts(JSONData());

@@ -7,6 +7,8 @@ class SearchViewModel {
   SearchSortFilterInjector search = SearchSortFilterInjector();
   SearchViewModel();
 
+  // check if this is a mock service for getting results
+  // cause mock results need to use an extra function to get search results
   bool mockSearchService(){
     return search.dependencyType == DependencyType.MOCK;
   }
