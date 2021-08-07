@@ -40,7 +40,12 @@ void main() {
         expect(res.length, 4);
       });
     });
-
+    group("get suggestions service", (){
+      test("should find 6 results", () {
+        List<String> res = search.getSuggestions(list, "rtx");
+        expect(res.length, 6);
+      });
+    });
   });
 
   // var list=addProducts(JSONData());
