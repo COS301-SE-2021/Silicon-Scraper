@@ -91,6 +91,10 @@ void main() {
         List<Product> res = search.applySort(list, "SORT");
         expect(res[0].price, 45999.0);
       });
+      test("test when sort 'price high to low' is applied", (){
+        List<Product> res = search.applySort(list, "Price (high to low)");
+        expect(res[0].price, 45999.0);
+      });
     });
   });
 
