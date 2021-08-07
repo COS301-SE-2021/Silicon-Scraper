@@ -57,7 +57,16 @@ void main() {
         List<String> res = search.getSuggestions(list, "gefORcE RtX 3090");
         expect(res.length, 4);
       });
+      test("test return value upper bound string",(){
+        List<String> res = search.getSuggestions(list, "RX 6900");
+        expect(res[0], "Radeon RX 6900");
+      });
+      test("test return value lower bound string",(){
+        List<String> res = search.getSuggestions(list, "Radeon");
+        expect(res[0], "Radeon RX 6900");
+      });
     });
+
   });
 
   // var list=addProducts(JSONData());
