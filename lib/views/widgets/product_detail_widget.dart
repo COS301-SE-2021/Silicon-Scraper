@@ -4,7 +4,7 @@ import 'package:silicon_scraper/theme/colors.dart';
 import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+//import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 
 class ProductDetailWidget extends StatefulWidget
@@ -89,14 +89,14 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                           Text("${widget.state.item.description}"),
                           ///date time picker
                           TextButton(onPressed: (){
-                            DatePicker.showDatePicker(context,
+                            /*DatePicker.showDatePicker(context,
                             showTitleActions: true,
                             minTime: DateTime.now(),
                             maxTime: DateTime.now().add(Duration(days: 365)), onChanged: (date) {
                             print('change $date');
                             }, onConfirm: (date) {
                             print('confirm $date');
-                            }, currentTime: DateTime.now(),);}
+                            }, currentTime: DateTime.now(),);*/}
                           ,
                             child: Text('Predict the Future',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.resolveWith<Color>(

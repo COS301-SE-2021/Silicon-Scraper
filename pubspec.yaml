@@ -55,7 +55,7 @@ dev_dependencies:
   #for state management
   provider: ^5.0.0
   #for date picker
-  flutter_datetime_picker: ^1.5.1
+#  flutter_datetime_picker: ^1.5.1
 
 
 # For information on the generic Dart part of this file, see the
