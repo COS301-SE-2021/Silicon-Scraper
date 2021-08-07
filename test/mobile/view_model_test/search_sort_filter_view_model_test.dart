@@ -167,6 +167,12 @@ void main() {
         bool contained = search.containsIgnoreCase("modelOrBrand", "MODELORBRAND");
         expect(contained, true);
       });
+      test(
+          "test empty (second string) aka query (should be true)",
+          () {
+        bool contained = search.containsIgnoreCase("modelOrBrand", "");
+        expect(contained, true);
+      });
 
     });
   });
