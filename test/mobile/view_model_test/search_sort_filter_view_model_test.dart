@@ -100,20 +100,23 @@ void main() {
         expect(res[0].price, 13499.0);
       });
     });
+    group("test apply filters service", () {
+
+      double min = search.priceMinMax(list, 0);
+      double max = search.priceMinMax(list, 1);
+      test("test no filters applied expect 7", () {
+        List<Product> res = search.applyFilters(list, false, false, min, max, false, false, false);
+        expect(res.length, 7);
+      });
+
+      test("", () {
+
+      });
+    });
   });
 
   // var list=addProducts(JSONData());
   // group("testing search service",(){
-  //   group("containsIgnoreCase tests", (){
-  //     test("testing if the query is contained in model or brand of an x item... to return true",(){
-  //       bool contained = containsIgnoreCase("modelOrBrand", "or");
-  //       expect(contained, true);
-  //     });
-  //     test("testing if the query is contained in model or brand of an x item... to return false",(){
-  //       bool contained = containsIgnoreCase("modelOrBrand", "tanaa");
-  //       expect(contained, false);
-  //     });
-  //   });
   //   group("applyFilters testing",(){
   //     test("get available should be 2",(){
   //       List<Product> p=applyFilters(list,true,false,0.0,0.000,false,false,false);
@@ -152,5 +155,15 @@ void main() {
   //       expect(p.length, 0);
   //     });
   //   });
+  // group("containsIgnoreCase tests", (){
+    //     test("testing if the query is contained in model or brand of an x item... to return true",(){
+    //       bool contained = containsIgnoreCase("modelOrBrand", "or");
+    //       expect(contained, true);
+    //     });
+    //     test("testing if the query is contained in model or brand of an x item... to return false",(){
+    //       bool contained = containsIgnoreCase("modelOrBrand", "tanaa");
+    //       expect(contained, false);
+    //     });
+    //   });
   //   });
 }
