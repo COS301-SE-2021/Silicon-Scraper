@@ -10,14 +10,18 @@ void main() {
   var list = addProducts(JSONData());
 
   group("testing search, sort and filter view model", (){
-    group("get results service (for mock data)", () {
+    group("get results service (only for mock data)", () {
       test("Should find 6 results", () {
         List<Product> res = search.getResults(list, "rtx");
         expect(res.length, 6);
       });
-      test("should find 0", () {
-        List<Product> res = search.getResults(list, "blah blah");
+      test("should find 0 (testing lower bound)", () {
+        List<Product> res = search.getResults(list, "blah blah blah");
         expect(res.length, 0);
+      });
+      test("should find 7 (testing upper bound)",(){
+        List<Product>res= search.getResults(list, "");
+        expect(res.length, 7);
       });
     });
   });
