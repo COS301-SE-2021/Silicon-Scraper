@@ -10,10 +10,14 @@ void main() {
   var list = addProducts(JSONData());
 
   group("testing search, sort and filter view model", (){
-    group("get results service (for mock data)", (){
-      test("Should find 6 results", (){
+    group("get results service (for mock data)", () {
+      test("Should find 6 results", () {
         List<Product> res = search.getResults(list, "rtx");
         expect(res.length, 6);
+      });
+      test("should find 0", () {
+        List<Product> res = search.getResults(list, "blah blah");
+        expect(res.length, 0);
       });
     });
   });
