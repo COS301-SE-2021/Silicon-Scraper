@@ -127,61 +127,48 @@ void main() {
         List<Product> res = search.applyFilters(list, false, false, min, max - 1.0, false, false, false);
         expect(res.length, 5);
       });
-      test("", () {
-
+      test("test applying price range filter in the range 0 - 10000 (should be 0)", () {
+        List<Product> res = search.applyFilters(list, false, false, 0, 10000, false, false, false);
+        expect(res.length, 0);
       });
+      // test("test applying availability 'in stock' filter (should be 2)", () {
+      //   List<Product> res = search.applyFilters(list, true, false, min, max, false, false, false);
+      //   expect(res.length, 2);
+      // });
+      // test("test applying availability 'out of stock' filter (should be 5)", () {
+      //   List<Product> res = search.applyFilters(list, false, true, min, max, false, false, false);
+      //   expect(res.length, 5);
+      // });
+      // test("test applying all availability filters (should be 7)", () {
+      //   List<Product> res = search.applyFilters(list, true, true, min, max, false, false, false);
+      //   expect(res.length, 7);
+      // });
+      // test("test applying no availability filters (should be 7)", () {
+      //   List<Product> res = search.applyFilters(list, false, false, min, max, false, false, false);
+      //   expect(res.length, 7);
+      // });
+    });
+    group("test 'containsIgnoreCase' helper function", () {
+      test(
+          "test if second string is contained in second string (should be true)",
+          () {
+        bool contained = search.containsIgnoreCase("modelOrBrand", "model");
+        expect(contained, true);
+      });
+      test(
+          "test if second string is contained in second string (should be false)",
+          () {
+        bool contained = search.containsIgnoreCase("modelOrBrand", "blah");
+        expect(contained, false);
+      });
+      // test(
+      //     "testing if the query is contained in model or brand of an x item... to return false",
+      //     () {
+      //   bool contained = containsIgnoreCase("modelOrBrand", "tanaa");
+      //   expect(contained, false);
+      // });
     });
   });
 
-  // var list=addProducts(JSONData());
-  // group("testing search service",(){
-  //   group("applyFilters testing",(){
-  //     test("get available should be 2",(){
-  //       List<Product> p=applyFilters(list,true,false,0.0,0.000,false,false,false);
-  //       expect(p.length, 2);
-  //     });
-  //     test("get limit stock should be 0",(){
-  //       List<Product> p=applyFilters(list,false,true,0.0,0.0,false,false,false);
-  //       expect(p.length, 0);
-  //     });
-  //     test("get out of stock should be 4",(){
-  //       List<Product> p=applyFilters(list,false,false,0.0,0.0,false,false,false);
-  //       expect(p.length, 4);
-  //     });
-  //     test("get not specified should be 1",(){
-  //       List<Product> p=applyFilters(list,false,false,0.0,0.0,false,false,false);
-  //       expect(p.length, 1);
-  //     });
-  //     test("get in range 0 to 1000000 should be 7",(){
-  //       List<Product> p=applyFilters(list,false,false,0.0,1000000.0,false,false,false);
-  //       expect(p.length, 7);
-  //     });
-  //     test("get in range 0 to 10000 should be 0",(){
-  //       List<Product> p=applyFilters(list,false,false,0.0,10000.0,false,false,false);
-  //       expect(p.length, 0);
-  //     });
-  //     test("get in range 0 to 10000 should be 7",(){
-  //       List<Product> p=applyFilters(list,false,false,0.0,15000.0,false,false,false);
-  //       expect(p.length, 1);
-  //     });
-  //     test("get relaiter evetech be 7",(){
-  //       List<Product> p=applyFilters(list,false,false,0.0,0.0,true,false,false);
-  //       expect(p.length, 7);
-  //     });
-  //     test("get relaiter other be 0",(){
-  //       List<Product> p=applyFilters(list,false,false,0.0,0.0,false,true,false);
-  //       expect(p.length, 0);
-  //     });
-  //   });
-  // group("containsIgnoreCase tests", (){
-    //     test("testing if the query is contained in model or brand of an x item... to return true",(){
-    //       bool contained = containsIgnoreCase("modelOrBrand", "or");
-    //       expect(contained, true);
-    //     });
-    //     test("testing if the query is contained in model or brand of an x item... to return false",(){
-    //       bool contained = containsIgnoreCase("modelOrBrand", "tanaa");
-    //       expect(contained, false);
-    //     });
-    //   });
   //   });
 }

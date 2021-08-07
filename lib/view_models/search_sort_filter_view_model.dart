@@ -161,9 +161,9 @@ class SearchViewModel {
     return modelOrBrand.toLowerCase().contains(query.toLowerCase());
   }
 
-  List<Product> getSortedFilteredProducts(List<Product> products) {
-    return products;
-  }
+  // List<Product> getSortedFilteredProducts(List<Product> products) {
+  //   return products;
+  // }
 }
 
 class SearchPageViewModelSingleton extends SearchViewModel {
