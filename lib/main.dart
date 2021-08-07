@@ -9,7 +9,7 @@ import 'injectors/watch_list_service_injector.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  WatchListInjector.configure(DependencyType.MOCK);
+  WatchListInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
 
   /// this sets the initial products for the watch list do not remove

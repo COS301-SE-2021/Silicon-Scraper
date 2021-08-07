@@ -4,8 +4,9 @@ import 'package:silicon_scraper/models/product_model.dart';
 
 void main()
 {
-group("product class test",(){
-  group("product constructor parameter test", () {
+group("product class test",()
+{
+/*  group("product constructor parameter test", () {
     test('availability is null attribute should be notspecified', (){
       Product gpu=new Product("", "", 0, "", "", "", "", null,"1","gpu",true);
       expect( gpu.stockAvailability,availability.notSpecified);
@@ -45,6 +46,7 @@ group("product class test",(){
       Product gpu=new Product("", "", 0, "", "", "", "", null,"1","gpu",true);
       expect(gpu.getAvailability(),"not specified");
     });
+    */
   });
-});
+
 }

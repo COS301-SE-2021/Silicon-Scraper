@@ -8,6 +8,9 @@ class PredictionViewModel extends ChangeNotifier
   Product _item;
   DateTime _date;
 
+  double price;
+  String availability;
+
   set item(Product value) {
     _item = value;
   }
@@ -15,12 +18,20 @@ class PredictionViewModel extends ChangeNotifier
     _date = value;
   }
 
-  PredictionViewModel.name(this._item, this._date);
+  PredictionViewModel(this._item, this._date);
 
-  Future predict()
+  Future predict(context)
   {
     // todo receive response change UI
-    predictor.dependency.predictionRequest(_item, _date);
+    try
+    {
+      predictor.dependency.predictionRequest(_item, _date);
+      notifyListeners();
+    }
+    catch(e)
+    {
+      // todo push error screen
+    }
   }
 
 }

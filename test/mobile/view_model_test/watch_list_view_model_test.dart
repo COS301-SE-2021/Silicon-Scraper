@@ -7,7 +7,7 @@ import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 @TestOn('vm')
 void main()
 {
-  WatchListInjector.configure(DependencyType.MOCK);
+  /*WatchListInjector.configure(DependencyType.MOCK);
   WatchListViewModel wlvm;
 
   group("watch list view model test when all services complete successfully", ()
@@ -100,7 +100,7 @@ void main()
           expect(wlvm.items.length, 6);
         });
         //this test is invalid it may remove the item if all the properties are the same
-        /*test('remove item of the same attributes should throw exception', ()async{
+        *//*test('remove item of the same attributes should throw exception', ()async{
           Product p=Product.fromJson(JSONData()[0]);
 
           expect(()async=>
@@ -110,7 +110,7 @@ void main()
               throwsA(predicate((e) => e.message == "can't remove a product that is not in your watch list"))
           );
 
-        });*/
+        });*//*
 
         test('remove item of the same attributes items size should be 7', ()async{
           Product p=Product.fromJson(JSONData()[0]);
@@ -153,7 +153,7 @@ void main()
           expect(wlvm.items.length, 7);
         });
         //this test is invalid it may remove the item if all the properties are the same
-        /*test('remove item of the same attributes should throw exception', ()async{
+        *//*test('remove item of the same attributes should throw exception', ()async{
           Product p=Product.fromJson(JSONData()[0]);
 
           expect(()async=>
@@ -162,7 +162,7 @@ void main()
           },
               throwsA(predicate((e) => e.message == "can't remove a product that is not in your watch list"))
           );
-        });*/
+        });*//*
 
         test('remove item of the same attributes items size should be 7', ()async{
           Product p=Product.fromJson(JSONData()[0]);
@@ -368,5 +368,5 @@ void main()
           });
     });
 
-  });
+  });*/
 }

@@ -28,7 +28,7 @@ class WatchListInjector
     switch(_type)
     {
       case DependencyType.PROD:
-        return WatchListService();
+        return WatchListSingleton.getState();
       case DependencyType.MOCK:
         return MockWatchListService(_initialReq,_removeReq,_addReq);
       default:
