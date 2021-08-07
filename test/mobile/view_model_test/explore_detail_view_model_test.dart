@@ -9,6 +9,9 @@ void main(){
       test("test for cpu product type", (){
         expect(explore.getTitle("cpu"), "CPUs");
       });
+      test("test for gpu product type", (){
+        expect(explore.getTitle("gpu"), "GPUs");
+      });
     });
   });
 }
