@@ -117,10 +117,9 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                 bottom: buttonHeight,
                 child: FloatingActionButton(
                   backgroundColor: Colors.white,
-                  child: state.save, onPressed: (){
-                    setState(() {
-                      state.changeState(context);
-                    });
+                  child: state.save, onPressed: ()async{
+                  await state.changeState(context);// first complete future
+                    setState((){});// then set state
                 },
                 )
             ),
