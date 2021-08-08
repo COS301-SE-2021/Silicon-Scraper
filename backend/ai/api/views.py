@@ -38,9 +38,12 @@ def prepare_params(params):
     data_avail = np.array(data_avail)
 
     with open('api/trained_models/scalar_avail', 'rb') as f:
-            scaler_y_avail = pickle.load(f)
+        scaler_y_avail = pickle.load(f)
 
-    return data_price, scaler_y_avail.transform(data_avail), scaler_y_avail 
+    with open('api/trained_models/scalar_price', 'rb') as f:
+        scalar_y_price = pickle.load(f)
+
+    return scalar_y_price.transform(data_price), scaler_y_avail.transform(data_avail), scaler_y_avail, scalar_y_price
 
 
 
@@ -72,13 +75,13 @@ def predict():
 
     if len(missing_params) == 0:
       
-        input_data_price, input_data_avail, scaler_y_avail = prepare_params(params)
+        input_data_price, input_data_avail, scaler_y_avail, scalar_y_price = prepare_params(params)
     
         price_preds = price_model(input_data_price) #np.argmax(price_model(input_data_price), axis = 1) #(model.predict(x) > 0.5).astype("int32")
         avail_preds = avail_model(input_data_avail) #np.argmax(avail_model(input_data_avail), axis = 1)
 
         results['predictions'] = {'price': "", "availability": ''}
-        results['predictions']['price'] = price_preds.numpy().tolist()#scaler_y_price.inverse_transform(price_preds).tolist()
+        results['predictions']['price'] = scalar_y_price.inverse_transform(price_preds).tolist()#scaler_y_price.inverse_transform(price_preds).tolist()
         results['predictions']["availability"] = np.argmax(scaler_y_avail.inverse_transform(avail_preds)).tolist()
             
         results['success'] = True
