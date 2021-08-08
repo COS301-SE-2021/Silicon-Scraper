@@ -1,4 +1,12 @@
 import pg from 'pg';
+import { CPU } from '../entity/cpu';
+import { GPU } from '../entity/gpu';
+
+type Notification = {
+    processId: number,
+    channel: string,
+    payload?: CPU | GPU
+}
 
 const connectClient = () => {
     const client = new pg.Client({
@@ -12,7 +20,7 @@ const connectClient = () => {
     
     client.query('LISTEN table_modified');
 
-    client.on('notification' ,(msg) => {
+    client.on('notification' ,(msg: Notification) => {
         console.log(msg.payload);
     })
 
