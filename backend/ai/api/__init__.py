@@ -1,8 +1,7 @@
 from flask import Flask
+import os
 
-import api.views
-
-def create_app(test_config = True):
+def create_app(test_config = None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY = 'dev'
@@ -18,4 +17,9 @@ def create_app(test_config = True):
     except OSError:
         pass
 
+    from . import views
+    app.register_blueprint(views.bp)
+
     return app
+
+#import api.views

@@ -8,8 +8,8 @@ import json
 import pickle
 from keras.models import load_model
 from pandas import json_normalize
-from flask import jsonify, request
-from api import app
+from flask import jsonify, request, Blueprint
+from api import create_app
 from api.nn_utilities.dataEncoding import encode_data
 
 
@@ -52,9 +52,12 @@ parameters = [
     "brand", "model", "date", "type", "price", "availability"
 ]
 
+bp = Blueprint('predict', __name__, url_prefix='/predict')
 
-@app.route('/predict', methods = ["GET"])
-def predict():
+app = create_app()
+
+@bp.route('/price-and-availability', methods = ["GET"])
+def price_and_availability():
     #app.logger.info("Endpoint reached")
     print("Loading model...")
     price_model = load_model(os.path.join(PATH_TO_MODELS, PRICE_PRED_MODEL_NAME))
@@ -97,3 +100,4 @@ if __name__ == '__main__':
 
     print("Starting web service...")
     app.run(host = '0.0.0.0', debug=True,  port=int(os.environ.get('PORT', 5000)))
+    print(f"[server] running on {host}")
