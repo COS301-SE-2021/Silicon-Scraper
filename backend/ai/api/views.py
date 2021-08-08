@@ -58,11 +58,10 @@ app = create_app()
 
 @bp.route('/price-and-availability', methods = ["GET"])
 def price_and_availability():
-    #app.logger.info("Endpoint reached")
-    print("Loading model...")
+    app.logger.info("Loading models ....")
     price_model = load_model(os.path.join(PATH_TO_MODELS, PRICE_PRED_MODEL_NAME))
     avail_model = load_model(os.path.join(PATH_TO_MODELS, AVAIL_PRED_MODEL_NAME))
-    print("* Model loaded *")
+    app.logger.info("Models loaded ....")
     
     results = {'success': False}
 
@@ -79,11 +78,11 @@ def price_and_availability():
       
         input_data_price, input_data_avail, scaler_y_avail, scalar_y_price = prepare_params(params)
     
-        price_preds = price_model(input_data_price) #np.argmax(price_model(input_data_price), axis = 1) #(model.predict(x) > 0.5).astype("int32")
-        avail_preds = avail_model(input_data_avail) #np.argmax(avail_model(input_data_avail), axis = 1)
+        price_preds = price_model(input_data_price) 
+        avail_preds = avail_model(input_data_avail) 
 
-        results['predictions'] = {'price': "", "availability": ''}
-        results['predictions']['price'] = np.round(scalar_y_price.inverse_transform(price_preds), 2).tolist()#scaler_y_price.inverse_transform(price_preds).tolist()
+        results['predictions'] = {'price': '', 'availability': ''}
+        results['predictions']['price'] = np.round(scalar_y_price.inverse_transform(price_preds)[0], 2).tolist()[0]
         results['predictions']["availability"] = np.argmax(scaler_y_avail.inverse_transform(avail_preds)).tolist()
             
         results['success'] = True
