@@ -158,5 +158,7 @@ if __name__ == '__main__':
     )
 
     metrics = model.evaluate(x_test, y_test)
+    with open('../nn_utilities/scalar_avail', 'wb') as f:
+        pickle.dump(scaler_y, f)
     model.save('../../trained_models/avail_prediction.h5')
     print('Accuracy on test set:', metrics[1])
