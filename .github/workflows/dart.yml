@@ -31,7 +31,7 @@ jobs:
           flutter-version: '2.0.5'
 
       - name: Set directory
-          working-directory: frontend
+          run: cd frontend
 
       - name: Install dependencies
         run: flutter pub get
