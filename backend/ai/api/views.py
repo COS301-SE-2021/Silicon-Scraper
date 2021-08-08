@@ -81,7 +81,7 @@ def predict():
         avail_preds = avail_model(input_data_avail) #np.argmax(avail_model(input_data_avail), axis = 1)
 
         results['predictions'] = {'price': "", "availability": ''}
-        results['predictions']['price'] = scalar_y_price.inverse_transform(price_preds).tolist()#scaler_y_price.inverse_transform(price_preds).tolist()
+        results['predictions']['price'] = np.round(scalar_y_price.inverse_transform(price_preds), 2).tolist()#scaler_y_price.inverse_transform(price_preds).tolist()
         results['predictions']["availability"] = np.argmax(scaler_y_avail.inverse_transform(avail_preds)).tolist()
             
         results['success'] = True
