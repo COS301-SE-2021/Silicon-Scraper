@@ -30,6 +30,9 @@ jobs:
         with:
           flutter-version: '2.0.5'
 
+      - name: Set directory
+          working-directory: frontend
+
       - name: Install dependencies
         run: flutter pub get
 
@@ -45,5 +48,4 @@ jobs:
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
       - name: Run tests
-        working-directory: frontend
         run: flutter test
