@@ -15,3 +15,5 @@ eggs/
 # Miscellaneous
 api_logs
 *.log
+
+venv/

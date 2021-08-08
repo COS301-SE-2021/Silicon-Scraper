@@ -36,10 +36,10 @@ def prepare_params(params):
     data_price = np.array(data_price)
     data_avail = np.array(data_avail)
 
-    with open('api/trained_models/scalar_avail', 'rb') as f:
+    with open('api/nn_utilities/scalar_avail', 'rb') as f:
         scaler_y_avail = pickle.load(f)
 
-    with open('api/trained_models/scalar_price', 'rb') as f:
+    with open('api/nn_utilities/scalar_price', 'rb') as f:
         scalar_y_price = pickle.load(f)
 
     return scalar_y_price.transform(data_price), scaler_y_avail.transform(data_avail), scaler_y_avail, scalar_y_price
