@@ -7,7 +7,7 @@ name: Dart
 
 on:
   push:
-    branches: [ master,develop ]
+    branches: [ master,develop,refactor-folder-structure]
   pull_request:
     branches: [ master,develop ]
 
@@ -45,4 +45,6 @@ jobs:
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
       - name: Run tests
-        run: flutter test
+      - run: |
+          cd frontend
+          flutter test
