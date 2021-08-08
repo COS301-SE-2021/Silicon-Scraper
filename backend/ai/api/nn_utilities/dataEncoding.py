@@ -1,8 +1,6 @@
 import pandas as pd
 import sklearn.preprocessing as sp
 from api.nn_utilities.dataCleaning import split_date
-from sklearn.preprocessing import MinMaxScaler
-import numpy as np
 
 def getModelData():
     gpuModels = pd.read_csv("api/model_data/gpuModels.csv")

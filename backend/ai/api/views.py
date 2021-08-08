@@ -8,7 +8,6 @@ import json
 import pickle
 from keras.models import load_model
 from pandas import json_normalize
-from sklearn.preprocessing import MinMaxScaler
 from flask import jsonify, request
 from api import app
 from api.nn_utilities.dataEncoding import encode_data
