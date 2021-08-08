@@ -18,3 +18,4 @@ api_logs
 *.log
 
 venv/
+src/
