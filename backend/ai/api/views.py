@@ -5,6 +5,7 @@ import os
 import numpy as np
 import logging
 import json
+import pickle
 from keras.models import load_model
 from pandas import json_normalize
 from sklearn.preprocessing import MinMaxScaler
@@ -31,28 +32,17 @@ def prepare_params(params):
 
     data['model'] = data['model'].str.upper()
 
-    # for model in models.itertuples():
-    #     if data['model'].item() == str(model.model):
-    #         data['model'] = model.Index
-    #         break
-
-    data_price, data_avail = encode_data(data['brand'], data['model'], data['availability'], data['price'], data['type'], data['date'])
-    #print(data_price)
-    #needs changing 
-    #if pred == 'price' else data[['brand','date','modelID', 'price']]
+    data_price, data_avail, scaler_y_price = encode_data(data['brand'], data['model'], data['availability'], data['price'], data['type'], data['date'])
+    
     data_price = np.array(data_price)
     data_avail = np.array(data_avail)
-    scaler_x_price = MinMaxScaler()
-    scaler_y_price = MinMaxScaler()
-    scaler_y = MinMaxScaler()
-    scaler_x = MinMaxScaler()
 
-    scaler_x.fit(data_avail)
-    scaler_x_price.fit(data_price)
+    with open('api/trained_models/scalar_avail', 'rb') as f:
+            scaler_y_avail = pickle.load(f)
 
-    data_avail_scale = scaler_x.transform(data_avail)
-    data_price_scale = scaler_x_price.transform(data_price)
-    return data_price_scale, data_avail_scale 
+    return data_price, scaler_y_avail.transform(data_avail), scaler_y_avail 
+
+
 
 logging.basicConfig(filename="api/api_logs/api.log", level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
 
@@ -81,26 +71,24 @@ def predict():
     missing_params = [str(x) for x in parameters if x not in params]
 
     if len(missing_params) == 0:
-        input_data_price, input_data_avail = prepare_params(params)
+      
+        input_data_price, input_data_avail, scaler_y_avail = prepare_params(params)
     
-        price_preds = price_model(input_data_price)
-        avail_preds = 'avail_preds'
-        #avail_preds = str(avail_model(input_data_avail)))
+        price_preds = price_model(input_data_price) #np.argmax(price_model(input_data_price), axis = 1) #(model.predict(x) > 0.5).astype("int32")
+        avail_preds = avail_model(input_data_avail) #np.argmax(avail_model(input_data_avail), axis = 1)
 
-        #preds = str(scaler_y.inverse_transform(preds)) 
         results['predictions'] = {'price': "", "availability": ''}
-        results['predictions']['price'] = price_preds
-        results['predictions']["availability"] = avail_preds
+        results['predictions']['price'] = price_preds.numpy().tolist()#scaler_y_price.inverse_transform(price_preds).tolist()
+        results['predictions']["availability"] = np.argmax(scaler_y_avail.inverse_transform(avail_preds)).tolist()
             
         results['success'] = True
         return jsonify(results), 200
+
     else:
         return {
             'success': False,
             'message': f"missing parameter(s): '{' and '.join(missing_params)}'."
         }, 400
-
-    #return jsonify(results)
         
  
 if __name__ == '__main__':
