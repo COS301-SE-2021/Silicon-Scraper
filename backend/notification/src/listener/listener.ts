@@ -1,4 +1,5 @@
 import pg from 'pg';
+import Broadcast from '../broadcast/broadcast';
 import { CPU } from '../entity/cpu';
 import { GPU } from '../entity/gpu';
 
@@ -8,10 +9,12 @@ type Notification = {
     payload?: CPU | GPU
 }
 
+const broadcaster = new Broadcast();
+
 const connectClient = () => {
     const client = new pg.Client({
         host: process.env.DB_HOST,
-        port: parseInt(process.env.DB_PORT),
+        port: Number(process.env.DB_PORT),
         user: process.env.DB_USER,
         password: process.env.DB_PW,
         database: process.env.DB_NAME
@@ -20,8 +23,9 @@ const connectClient = () => {
     
     client.query('LISTEN table_modified');
 
-    client.on('notification' ,(msg: Notification) => {
+    client.on('notification', (msg: Notification) => {
         console.log(msg.payload);
+        broadcaster.broadcast(msg.payload);
     })
 
     client.on('error', (err: Error) => {
