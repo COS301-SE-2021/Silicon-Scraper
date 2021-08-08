@@ -2,7 +2,7 @@ name: API CI
 
 on: 
   push:
-    branches: [master,develop, feature-api,refactor-folder-structure]
+    branches: [master,develop, feature-api]
   pull_request: 
     branches: [master,develop, feature-api]
 
