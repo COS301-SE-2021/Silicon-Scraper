@@ -54,7 +54,7 @@ def encode_data(brand, model, availability_, price, type_d, timestamp):
     d3 = type_.loc[type_["type"].isin( type_d)].drop(columns=["type", "type_code"])
     d4 = availability.loc[availability["availability"].str.upper().isin(availability_.str.upper())].drop(columns=["availability", 'availability_code'])
     data_ = pd.DataFrame([{"price": price}])
-    
+
     d1.reset_index(drop=True, inplace=True)
     d2.reset_index(drop=True, inplace=True)
     d3.reset_index(drop=True, inplace=True)
@@ -63,16 +63,7 @@ def encode_data(brand, model, availability_, price, type_d, timestamp):
     data_2 = pd.concat([data_, d1, d2, d3], axis=1)
     data_ = pd.concat([data_, d1, d2, d3, d4], axis=1)
 
-    scaler_y_price = MinMaxScaler()
-    scaler_y = MinMaxScaler()
-    y_data_1 = data_.pop('price')
-    
-    y_data_1 = np.array(y_data_1)
-    y_data_1_scale = np.reshape(y_data_1, (1, -1))
-    scaler_y_price.fit(y_data_1_scale)
-    y_data_1_scale = scaler_y_price.transform(y_data_1_scale)
-
-    data_1 = data_#.drop(columns=["price"])
+    data_1 = data_.drop(columns=["price"])
 
     data_1['year'] =  data_2['year'] = year
     data_1['month'] = data_2['month'] = month
@@ -82,4 +73,4 @@ def encode_data(brand, model, availability_, price, type_d, timestamp):
     data_1['day_month'] = data_2['day_month'] = day_month
     data_1['day_week'] = data_2['day_week'] = day_week
 
-    return data_1, data_2, scaler_y_price
+    return data_1, data_2

@@ -32,7 +32,7 @@ def prepare_params(params):
 
     data['model'] = data['model'].str.upper()
 
-    data_price, data_avail, scaler_y_price = encode_data(data['brand'], data['model'], data['availability'], data['price'], data['type'], data['date'])
+    data_price, data_avail = encode_data(data['brand'], data['model'], data['availability'], data['price'], data['type'], data['date'])
     
     data_price = np.array(data_price)
     data_avail = np.array(data_avail)
