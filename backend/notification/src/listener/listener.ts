@@ -12,8 +12,18 @@ const connectClient = () => {
     
     client.query('LISTEN table_modified');
 
-    client.on('notification' ,msg => {
+    client.on('notification' ,(msg) => {
         console.log(msg.payload);
+    })
+
+    client.on('error', (err: Error) => {
+        console.error('client error: ',err.stack)
+    })
+
+    client.on('end', () => {
+        console.log('Client disconnected')
+        // reconnect client after disconnecting
+        client.connect();
     })
 }
 
