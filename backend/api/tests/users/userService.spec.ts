@@ -1,7 +1,7 @@
 import { Repository } from "typeorm"
 import { User } from "../../src/entity/user";
-import { CreateUserRequest } from "../../src/types/Requests";
-import { CreateUserResponse } from "../../src/types/Responses";
+import { CreateUserRequest, LoginUserRequest } from "../../src/types/Requests";
+import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
 import UserService from "../../src/users/service/userService";
 
 type MockType<T> = {
@@ -137,90 +137,128 @@ describe('UserService unit tests', () => {
             expect(error).toBeInstanceOf(Error);
         }
     });
-})
 
-// describe('register', () => {
+    it('login user with missing username request property', async() => {
+        expect.hasAssertions();
 
-//     afterEach(() => {
-//         jest.clearAllMocks();
-//     });
+        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
+        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
+        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
+            save: save,
+            findOne: findOne
+        }));
+        const userService: UserService = new UserService(
+            mockUserRepository() as unknown as Repository<User>
+        )
 
-//     it('missing request properties', async() => {
-//         const request = {}
-//         expect(true).toBe(true)
-//     })
+        try {
+            
+            let request: LoginUserRequest = {
+                username: undefined!,
+                password: "password"
+            }
+            const response = await userService.loginUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
 
-    // it('successful register of a user', async() => {
-    //     const request = {
-    //         username: "TestUser",
-    //         password: "Password"
-    //     };
-    //     let response = await userService.register(request)
-    //     expect(response).not.toBe(null)
-    //     expect(getUser.mock.calls.length).toBe(1)
-    //     expect(getUser.mock.calls[0][0]).toBe(request.username)
-    //     expect(addUser.mock.calls[0][0]).toBe(request.username)
-    //     expect(response.statusCode).toBe(201);
-    // });
+    it('login user with missing password request property', async() => {
+        expect.hasAssertions();
 
-    // it('check for if user exists', async() => {
-    //     database.getUser = jest.fn((user) => { return user })
-    //     const request = {
-    //         username: "username",
-    //         password: "password"
-    //     }
-    //     let response = await userService.register(request)
-    //     expect(response).not.toBe(null)
-    //     expect(addUser.mock.calls.length).toBe(0)
-    //     //expect(getUser.mock.calls.length).toBe(1) 
-    //     //expect(getUser.mock.calls[0][0]).toBe(request.username)
-    //     expect(response.statusCode).toBe(200)
-    // })
-    
-//});
+        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
+        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
+        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
+            save: save,
+            findOne: findOne
+        }));
+        const userService: UserService = new UserService(
+            mockUserRepository() as unknown as Repository<User>
+        )
 
-// describe('login test', () => {
+        try {
+            
+            let request: LoginUserRequest = {
+                username: "username",
+                password: undefined!
+            }
+            const response = await userService.loginUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
 
-//     beforeEach(() => {
-//         jest.clearAllMocks();
-//     })
+    it('login user with no request properties', async() => {
+        expect.hasAssertions();
 
-//     it('test for missing request properties', async() => {
-//         const request = {}
-//         let response = await userService.login(request)
-//     })
+        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
+        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
+        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
+            save: save,
+            findOne: findOne
+        }));
+        const userService: UserService = new UserService(
+            mockUserRepository() as unknown as Repository<User>
+        )
 
-    // it('test for non-found user', async() => {
-    //     database.getUser = jest.fn(user => { return null })
-    //     const request = {
-    //         username: "username",
-    //         password: "password"
-    //     }
-    //     let response = await userService.login(request)
-    //     expect(response).not.toBe(null)
-    //     //expect(getUser.mock.calls.length).toBe(1)
-    //     //expect(getUser.mock.calls[0][0]).toBe(request.username)
-    //     expect(response.statusCode).toBe(200)
-    // })
+        try {
+            
+            let request: LoginUserRequest = {
+                username: undefined!,
+                password: undefined!
+            }
+            const response = await userService.loginUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
 
-    // it('test for if password is invalid', async() => {
-    //     const request = {
-    //         username: "username",
-    //         password: "password1"
-    //     }
-    //     let response = await userService.login(request)
-    //     expect(response).not.toBe(null)
-    //     //expect(passwordEncoder.mock.calls.length).toBe(1)
-    //     expect(response.statusCode).toBe(200)
-    // })
+    it('login user that does not exist', async() => {
+        expect.hasAssertions();
 
-    // it('test for if password is valid', async() => {
-    //     const request = {
-    //         username: "username",
-    //         password: "password"
-    //     }
-    //     let response = await userService.login(request)
-    //     expect(response).not.toBe(null)
-    //     expect(response.statusCode).toBe(200)
-    // })
-//})
+        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
+        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
+        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
+            save: save,
+            findOne: findOne
+        }));
+        const userService: UserService = new UserService(
+            mockUserRepository() as unknown as Repository<User>
+        )
+
+        try {
+            
+            let request: LoginUserRequest = {
+                username: undefined!,
+                password: undefined!
+            }
+            const response = await userService.loginUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('login user that exists', async() => {
+        // let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
+        // let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
+        // const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
+        //     save: save,
+        //     findOne: findOne
+        // }));
+        // const userService: UserService = new UserService(
+        //     mockUserRepository() as unknown as Repository<User>
+        // )
+        // let request: LoginUserRequest = {
+        //     username: "Tats",
+        //     password: "password"
+        // };
+        // const response: LoginUserResponse = await userService.loginUser(request);
+        // expect(response.token).not.toBeNull();
+        // expect(save.call.length).toBe(1);
+        // expect(findOne.call.length).toBe(1);
+    });
+});
