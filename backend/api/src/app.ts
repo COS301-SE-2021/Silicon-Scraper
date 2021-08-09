@@ -6,6 +6,8 @@ import userController from './users/controller/userController';
 import watchlistController from './watchlist/controller/watchlistController';
 
 const app = express();
+
+// set environment variables and connect typeorm to db
 connection();
 
 app.use(express.json());

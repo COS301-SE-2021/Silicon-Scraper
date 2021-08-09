@@ -1,3 +1,5 @@
+import { getRepository } from "typeorm";
+import { CPU } from "../entity/cpu";
 import fetchData from "./repo";
 
 interface Response {
@@ -35,6 +37,13 @@ function genSQLQuery(query: any) {
 const getProductByID = async (req, res) => {
     let id = req.params.id;
     const response: Response = {status: 200, products: []};
+
+    // example typeorm fetch
+    // retrieve repository
+    const cpu = getRepository(CPU);
+    // retrieve rows from table
+    console.log(await cpu.find());
+
     const data = await fetchData(`SELECT * FROM (SELECT * FROM gpus UNION SELECT * FROM cpus) AS tbl WHERE id = '${id}'`);
     if(data.length !== 0) {
         response.products = data;
