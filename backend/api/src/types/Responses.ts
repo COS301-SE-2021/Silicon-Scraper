@@ -1,3 +1,5 @@
+import { CPU } from "../entity/cpu";
+import { GPU } from "../entity/gpu";
 import { User } from "../entity/user";
 
 export interface CreateUserResponse {
@@ -7,4 +9,8 @@ export interface CreateUserResponse {
 
 export interface LoginUserResponse {
     token: string
+}
+
+export interface RetrieveWatchlistResponse {
+    products: any[]
 }
