@@ -5,9 +5,6 @@ import { User } from '../../entity/user';
 import { CreateUserRequest, LoginUserRequest } from '../../types/Requests';
 import { CreateUserResponse, LoginUserResponse } from '../../types/Responses';
 
-//Look for cleaner way to do this
-//My exception handling is messy
-
 export default class UserController {
 
     private router: Router;
