@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { randomUUID } from "crypto";
+import { Entity, Column, PrimaryColumn, BeforeInsert } from "typeorm";
 
 @Entity({name: 'users', synchronize: false})
 export class User {
@@ -10,4 +11,9 @@ export class User {
 
     @Column()
     hash!: string;
+
+    @BeforeInsert() 
+    generate() {
+        this.id = randomUUID();
+    }
 }
