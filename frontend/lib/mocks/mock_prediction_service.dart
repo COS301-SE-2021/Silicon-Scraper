@@ -1,3 +1,4 @@
+import 'package:silicon_scraper/models/prediction_model.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/prediction_service.dart';
 
@@ -8,15 +9,15 @@ class MockPredictionService extends PredictionService
   MockPredictionService(this.fail);
 
   @override
-  Future predictionRequest(Product p, DateTime t)
+  Future predictionRequest(Product p, DateTime t)async
   {
     if(fail)
       {
-        // todo throw exception
+        throw Exception("Could not receive a response from the server");
       }
     else
       {
-       // todo return object
+       return Prediction(true, 35000.0);
       }
   }
 }

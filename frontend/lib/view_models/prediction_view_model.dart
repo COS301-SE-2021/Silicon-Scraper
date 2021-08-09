@@ -5,12 +5,14 @@ import 'package:silicon_scraper/models/product_model.dart';
 
 class PredictionViewModel extends ChangeNotifier
 {
-  PredictionInjector predictor=PredictionInjector();
+  PredictionInjector _predictor=PredictionInjector();
   Product _item;
   DateTime _date;
 
   Prediction _predict;
   Icon _arrow;
+
+  DateTime get date => _date;
 
   Icon get arrow => _arrow;
   Prediction get predict => _predict;
@@ -27,7 +29,7 @@ class PredictionViewModel extends ChangeNotifier
     // todo receive response change UI
     try
     {
-      _predict=await predictor.dependency.predictionRequest(_item, _date);
+      _predict=await _predictor.dependency.predictionRequest(_item, _date);
       if(_predict.price==_item.price)
         {
           _arrow=null;
@@ -41,6 +43,7 @@ class PredictionViewModel extends ChangeNotifier
           _arrow=Icon(Icons.arrow_downward,color: Colors.green,);
         }
       notifyListeners();
+      return;
     }
     catch(e)
     {

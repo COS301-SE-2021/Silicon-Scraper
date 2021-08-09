@@ -8,6 +8,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 
 class ProductDetailWidget extends StatefulWidget
@@ -89,15 +90,18 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                       padding: EdgeInsets.fromLTRB(20, 90, 20, 0),
                       child: Column(
                         children: [
-                          Text("${widget.state.item.description}"),
+//                          Text("${widget.state.item.description}"),
+                          bulletListWidget(widget.state.item.description),
                           ///date time picker
                           TextButton(onPressed: ()async
                           {
                               DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
                               widget.state.predict.date=date;
+                              setState((){});
                               final DateFormat format=DateFormat('yyyMMddHHmmss');
                               final String dates=format.format(date);
                               print(dates);
+                              await widget.state.predict.prediction(context);
                           }
                           ,
                             child: Text('Predict the Future',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
@@ -108,7 +112,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                                 return candy; // Use the component's default.
                               },
                             ),
-                          ),)
+                          ),),
+                          predictionWidget(widget.state.predict,context)
                         ],
                       )
                   ),
@@ -178,3 +183,81 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
 }
 
+Widget predictionWidget(PredictionViewModel p,BuildContext context)
+{
+  final DateFormat f=DateFormat("yyy-MM-dd");
+  return ChangeNotifierProvider<PredictionViewModel>(
+    create: (_)=> p,
+    child: Consumer<PredictionViewModel >(
+      builder: (context,p,Widget child)
+          {
+                return Container(
+                  child: p.predict !=null ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                             Text("${f.format(p.date)}",style: TextStyle(fontSize: 20),)
+                        ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            Text('Prediction')
+                          ],
+                        ),
+                        Column()
+                        ],
+                      ),
+                  ],
+                  ) :
+                  Container(
+//                      child: CircularProgressIndicator(),
+                    ),
+            );
+          }
+    ),
+  );
+}
+
+Widget bulletListWidget(String l)
+{
+  List listItems=l.split('/');
+  listItems.removeAt(0);
+
+  return ListView.builder(
+    physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+    shrinkWrap: true,
+      itemCount: listItems.length,
+    itemBuilder: (_,index){
+      return bulletListItem(listItems[index]);
+    },
+  );
+
+}
+
+Widget bulletListItem(String l)
+{
+  return Row(
+    children: [
+      MyBullet(),
+      Text(l,style: TextStyle(fontSize: 17),)
+    ],
+  );
+}
+
+class MyBullet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      height: 5.0,
+      width: 5.0,
+      decoration: new BoxDecoration(
+        color: Colors.black,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+}
