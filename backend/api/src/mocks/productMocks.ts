@@ -1,7 +1,9 @@
+import { CPU } from "../entity/cpu";
+
 /**
  * @constant {Object} - Contains data from db to be used for testing
  */
-const mockData = [
+export const mockData: CPU[] = [
     {
         id: "1b6d0e22-ca06-414a-80b8-1ca634f29d6e",
         image: "https://www.evetech.co.za/repository/components/asus-rog-strix-rtx-3090-oc-24gb-white-gaming-300px-v1_sml.jpg",
@@ -20,6 +22,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -40,6 +43,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -60,6 +64,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -80,6 +85,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -100,6 +106,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -120,6 +127,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -140,6 +148,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -160,6 +169,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -180,6 +190,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -200,6 +211,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -220,6 +232,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -240,6 +253,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -260,6 +274,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -280,6 +295,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -300,6 +316,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -320,6 +337,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -340,6 +358,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -360,6 +379,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -380,6 +400,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     },
     {
@@ -400,8 +421,7 @@ const mockData = [
                 }
             ]
         },
+        description: "",
         type: "gpu"
     }
 ];
-
-module.exports = mockData;

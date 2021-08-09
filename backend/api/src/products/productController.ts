@@ -38,12 +38,6 @@ const getProductByID = async (req, res) => {
     let id = req.params.id;
     const response: Response = {status: 200, products: []};
 
-    // example typeorm fetch
-    // retrieve repository
-    const cpu = getRepository(CPU);
-    // retrieve rows from table
-    console.log(await cpu.find());
-
     const data = await fetchData(`SELECT * FROM (SELECT * FROM gpus UNION SELECT * FROM cpus) AS tbl WHERE id = '${id}'`);
     if(data.length !== 0) {
         response.products = data;
@@ -84,9 +78,9 @@ const search = async (req, res) => {
         }
     });
 
-    const result: string[] = [];
+    const result: CPU[] = [];
     if(queryObj.key !== '') {
-        const data = await fetchData('SELECT * FROM gpus UNION SELECT * FROM cpus');
+        const data: CPU[] = await fetchData('SELECT * FROM gpus UNION SELECT * FROM cpus');
         data.forEach((x) => {
             let value = (x.brand+' '+x.model).toLowerCase();
             if(value.includes(queryObj.key)) {
