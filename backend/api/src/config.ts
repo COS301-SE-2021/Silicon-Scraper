@@ -30,8 +30,6 @@ export const connection = async () => {
             synchronize: false,
             logging: false
         });
-        const ur = getRepository(User);
-        console.log(await ur.count());
         console.log('Database connection established')
     } catch(error) {
         console.log(error);
