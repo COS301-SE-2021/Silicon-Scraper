@@ -8,8 +8,8 @@ class PredictionViewModel extends ChangeNotifier
   Product _item;
   DateTime _date;
 
-  double price;
-  String availability;
+  double _price;
+  String _availability;
 
   set item(Product value) {
     _item = value;
@@ -25,7 +25,7 @@ class PredictionViewModel extends ChangeNotifier
     // todo receive response change UI
     try
     {
-      predictor.dependency.predictionRequest(_item, _date);
+      var json=predictor.dependency.predictionRequest(_item, _date);
       notifyListeners();
     }
     catch(e)

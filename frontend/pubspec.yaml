@@ -105,4 +105,4 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "lib/theme/silicon_scraper_logo.png"
+  image_path: "assets/images/silicon_scraper_logo.png"
