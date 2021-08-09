@@ -1,11 +1,13 @@
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/theme/colors.dart';
+import 'package:silicon_scraper/view_models/prediction_view_model.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ProductViewModel extends ChangeNotifier
 {
   WatchListViewModelSingleton watch=WatchListViewModelSingleton.getState();
+  PredictionViewModel predict;
   final Product _item;
 
   Product get item => _item;
@@ -13,6 +15,7 @@ class ProductViewModel extends ChangeNotifier
 
   ProductViewModel(this._item)
   {
+    predict=PredictionViewModel.initial(_item);
     if(_item.watching)
       {
         save=Icon(Icons.bookmark,color: theOrange,);

@@ -12,16 +12,17 @@ class PredictionViewModel extends ChangeNotifier
   Prediction _predict;
   Icon _arrow;
 
-  set item(Product value) {
-    _item = value;
-  }
+  Icon get arrow => _arrow;
+  Prediction get predict => _predict;
+
   set date(DateTime value) {
     _date = value;
   }
 
+  PredictionViewModel.initial(this._item);
   PredictionViewModel(this._item, this._date);
 
-  Future predict(context)async
+  Future prediction(context)async
   {
     // todo receive response change UI
     try
@@ -29,7 +30,7 @@ class PredictionViewModel extends ChangeNotifier
       _predict=await predictor.dependency.predictionRequest(_item, _date);
       if(_predict.price==_item.price)
         {
-
+          _arrow=null;
         }
       else if(_predict.price>_item.price)
         {
@@ -43,8 +44,7 @@ class PredictionViewModel extends ChangeNotifier
     }
     catch(e)
     {
-      // todo push error screen
+      //todo display error message
     }
   }
-
 }

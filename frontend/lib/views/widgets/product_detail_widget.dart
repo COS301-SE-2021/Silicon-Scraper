@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/models/prediction_model.dart';
 import 'package:silicon_scraper/theme/colors.dart';
+import 'package:silicon_scraper/view_models/prediction_view_model.dart';
 import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -88,15 +90,11 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                         children: [
                           Text("${widget.state.item.description}"),
                           ///date time picker
-                          TextButton(onPressed: (){
-                            /*DatePicker.showDatePicker(context,
-                            showTitleActions: true,
-                            minTime: DateTime.now(),
-                            maxTime: DateTime.now().add(Duration(days: 365)), onChanged: (date) {
-                            print('change $date');
-                            }, onConfirm: (date) {
-                            print('confirm $date');
-                            }, currentTime: DateTime.now(),);*/}
+                          TextButton(onPressed: ()async
+                          {
+                              DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
+                              widget.state.predict.date=date;
+                          }
                           ,
                             child: Text('Predict the Future',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.resolveWith<Color>(
