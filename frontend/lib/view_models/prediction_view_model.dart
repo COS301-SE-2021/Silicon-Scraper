@@ -36,11 +36,11 @@ class PredictionViewModel extends ChangeNotifier
         }
       else if(_predict.price>_item.price)
         {
-          _arrow=Icon(Icons.arrow_upward,color: Colors.red,);
+          _arrow=Icon(Icons.arrow_upward,color: Colors.red,size: 25,);
         }
       else
         {
-          _arrow=Icon(Icons.arrow_downward,color: Colors.green,);
+          _arrow=Icon(Icons.arrow_downward,color: Colors.green,size: 25);
         }
       notifyListeners();
       return;

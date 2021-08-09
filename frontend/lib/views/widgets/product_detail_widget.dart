@@ -197,19 +197,27 @@ Widget predictionWidget(PredictionViewModel p,BuildContext context)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                             Text("${f.format(p.date)}",style: TextStyle(fontSize: 20),)
+                             Text("${f.format(p.date)}",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,))
                         ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Column(
                       children: [
-                        Column(
-                          children: [
-                            Text('Prediction')
-                          ],
+                        Text('Prediction',style:TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.grey),)
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          child: p.arrow,
                         ),
-                        Column()
-                        ],
+                        Container(
+                          child: Text('R ${p.predict.price.toStringAsFixed(2)}',style:TextStyle(fontWeight: FontWeight.normal,fontSize: 17)),
+                        ),
+                        Container(
+                          child: p.predict.availability?Text('Available',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.green)):Text('Out of Stock',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red)),
+                        ),
+                      ],
                       ),
                   ],
                   ) :
@@ -240,12 +248,13 @@ Widget bulletListWidget(String l)
 
 Widget bulletListItem(String l)
 {
-  return Row(
-    children: [
-      MyBullet(),
-      Text(l,style: TextStyle(fontSize: 17),)
-    ],
-  );
+  return Wrap(
+    crossAxisAlignment: WrapCrossAlignment.center,
+  children: [
+    MyBullet(),
+    Text(l,style: TextStyle(fontSize: 17),)
+  ],
+    );
 }
 
 class MyBullet extends StatelessWidget {
