@@ -1,4 +1,4 @@
-import { createConnection } from 'typeorm';
+import { createConnection, getRepository } from 'typeorm';
 import { config } from 'dotenv';
 import { User } from './entity/user';
 import { CPU } from './entity/cpu';
@@ -24,9 +24,15 @@ export const connection = async () => {
                 watchlistCPU,
                 watchlistGPU
             ],
+            cli: {
+                entitiesDir: 'entity'
+            },
             synchronize: false,
             logging: false
         });
+        const ur = getRepository(User);
+        console.log(await ur.count());
+        console.log('Database connection established')
     } catch(error) {
         console.log(error);
         console.log('Database connection error');
