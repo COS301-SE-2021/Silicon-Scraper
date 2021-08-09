@@ -7,6 +7,7 @@ import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 
 
 class ProductDetailWidget extends StatefulWidget
@@ -94,6 +95,9 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                           {
                               DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
                               widget.state.predict.date=date;
+                              final DateFormat format=DateFormat('yyyMMddHHmmss');
+                              final String dates=format.format(date);
+                              print(dates);
                           }
                           ,
                             child: Text('Predict the Future',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
