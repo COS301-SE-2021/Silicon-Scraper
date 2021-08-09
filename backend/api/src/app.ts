@@ -27,6 +27,10 @@ const connect = async () => {
             error: 'Not Found'
         });
     });
+
+    app.use((err, req, res, next) => {
+        res.status(500);
+    }) 
 }
 
 connect();
