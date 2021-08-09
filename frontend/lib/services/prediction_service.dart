@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:silicon_scraper/models/prediction_model.dart';
 import 'package:silicon_scraper/models/product_model.dart';
 
 class PredictionService
@@ -21,12 +22,15 @@ class PredictionService
 
      if(response.statusCode==200)
      {
-       //todo check return object
-       return responseData;
+       return Prediction.fromJson(responseData);
      }
+     else if(responseData.success==false)
+       {
+         throw Exception(responseData.message);
+       }
      else
      {
-//        todo    throw
+       throw Exception("Could not receive a response from the server");
      }
    }
 }
