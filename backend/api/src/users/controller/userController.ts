@@ -15,7 +15,9 @@ const userService = UserService();
 
 router.post('/', async (req, res) => {
     try {
+        console.log('before');
         const result = await userService.register(req.body);
+        console.log('after');
         res.status(201).json({token: result});
     } catch(error) {
         let errorMessage = '';

@@ -25,10 +25,11 @@ export = () => {
         const client = await pool.connect();
         
         try {
-            const sqlQuery = `INSERT INTO users VALUES ('${id}', ${username}, ${password})`;
+            const sqlQuery = `INSERT INTO users VALUES ('${id}', '${username}', '${password}')`;
             const data = await client.query(sqlQuery);
             return id;
         } catch(error) {
+            console.log(error)
             return null;  
         } finally {
             client.release();
@@ -51,7 +52,7 @@ export = () => {
         const client = await pool.connect();
         
         try {
-            const sqlQuery = `SELECT * FROM users WHERE username = ${username}`;
+            const sqlQuery = `SELECT * FROM users WHERE username = '${username}'`;
             const data = await client.query(sqlQuery);
             return data.rows;  
         } catch(error) {

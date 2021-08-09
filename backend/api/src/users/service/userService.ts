@@ -38,18 +38,24 @@ export = (userRepository:any = userRepo, passwordEncod:any = passwordEncoder, jw
     const register = async (request) => {
         if (!('username' in request) || !('password' in request))
             throw new InvalidRequestError('missing paramater(s)');
+        console.log("woo - before");
         let user = await userRepository.getUser(request.username);
+        console.log("woo - after")
         if (user != null)
             throw new RegisterError("Invalid username");
+        console.log('after - user');
         const passwordHash = await passwordEncod.encode(request.password);
         let result = await userRepository.addUser(request.username, passwordHash);
+        console.log('before - user');
         if (result == null)
-            throw new Error()
+            throw new Error('an error occurred')
+        console.log('im here')
         user = {
             id: result,
             username: request.username,
             password: passwordHash
         }
+        console.log('almost')
         return jwtUtility.generateToken(user);
     }
 
