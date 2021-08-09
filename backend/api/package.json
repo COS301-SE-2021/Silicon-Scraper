@@ -23,6 +23,7 @@
     "@types/node": "^16.4.10",
     "@types/pg": "^8.6.1",
     "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.4",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   },
@@ -34,6 +35,7 @@
   },
   "jest": {
     "testEnvironment": "node",
+    "preset": "ts-jest",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
