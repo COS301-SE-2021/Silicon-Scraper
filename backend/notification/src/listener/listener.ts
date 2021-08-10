@@ -3,40 +3,40 @@ import Broadcast from '../broadcast/broadcast';
 import { CPU } from '../entity/cpu';
 import { GPU } from '../entity/gpu';
 
-type Notification = {
-    processId: number,
-    channel: string,
-    payload?: CPU | GPU
+interface notification {
+    processId: number;
+    channel: string;
+    payload?: CPU | GPU;
 }
 
-const broadcaster = new Broadcast();
+export default class Listener {
+    constructor() {
+        const client = new pg.Client({
+            host: process.env.DB_HOST,
+            port: Number(process.env.DB_PORT),
+            user: process.env.DB_USER,
+            password: process.env.DB_PW,
+            database: process.env.DB_NAME
+        });
 
-const connectClient = () => {
-    const client = new pg.Client({
-        host: process.env.DB_HOST,
-        port: Number(process.env.DB_PORT),
-        user: process.env.DB_USER,
-        password: process.env.DB_PW,
-        database: process.env.DB_NAME
-    });
-    client.connect();
-    
-    client.query('LISTEN table_modified');
-
-    client.on('notification', (msg: Notification) => {
-        console.log(msg.payload);
-        broadcaster.broadcast(msg.payload);
-    })
-
-    client.on('error', (err: Error) => {
-        console.error('client error: ',err.stack)
-    })
-
-    client.on('end', () => {
-        console.log('Client disconnected')
-        // reconnect client after disconnecting
         client.connect();
-    })
-}
+        client.query('LISTEN table_modified');
+        
+        const broadcaster = new Broadcast();
 
-export default connectClient;
+        client.on('notification', (msg: notification) => {
+            console.log(msg.payload);
+            broadcaster.broadcast(msg.payload);
+        });
+    
+        client.on('error', (err: Error) => {
+            console.error('client error: ',err.stack);
+        });
+    
+        client.on('end', () => {
+            console.log('Client disconnected');
+            // reconnect client after disconnecting
+            client.connect();
+        });
+    }
+}
