@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import UserService from '../service/userService';
-import { CreateUserRequest, LoginUserRequest } from '../../types/Requests';
+import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from '../../types/Requests';
 import { CreateUserResponse, LoginUserResponse } from '../../types/Responses';
 
 export default class UserController {
@@ -18,13 +18,17 @@ export default class UserController {
     }
 
     async loginRoute(request: LoginUserRequest): Promise<LoginUserResponse> {
-        return this.userService.loginUser(request);
+        return await this.userService.loginUser(request);
+    }
+
+    async deleteRoute(request: RemoveUserRequest): Promise<void> {
+        return await this.userService.removeUser(request);
     }
 
     routes(): Router {
         this.router.post('/', async(req, res, next) => res.status(201).json(await this.signUpRoute(<CreateUserRequest>req.body).catch(err => next(err))));
-        this.router.post('/login', async(req, res, next) => res.status(200).json(await this.userService.loginUser(<LoginUserRequest>req.body).catch(err => next(err))));
-        this.router.delete('/', async(req, res) => res.status(501));
+        this.router.post('/login', async(req, res, next) => res.status(200).json(await this.loginRoute(<LoginUserRequest>req.body).catch(err => next(err))));
+        this.router.delete('/', async(req, res, next) => {await this.deleteRoute(<RemoveUserRequest>req.body).catch(err => next(err)); res.status(204)});
         return this.router;
     }
 
