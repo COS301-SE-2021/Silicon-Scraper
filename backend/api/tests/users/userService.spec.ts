@@ -1,28 +1,19 @@
-import { Repository } from "typeorm"
-import { User } from "../../src/entity/user";
 import { CreateUserRequest, LoginUserRequest } from "../../src/types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
 import UserService from "../../src/users/service/userService";
+import {MockUserRepositoryFactory} from '../../src/mocks/RepositoryFactory';
 
-type MockType<T> = {
-    [P in keyof T]?: jest.Mock<{}>;
-}
+const mockUserRepositoryFactory: MockUserRepositoryFactory = new MockUserRepositoryFactory();
 
 describe('UserService unit tests', () => {
 
     it('create a user with valid details', async() => {
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(undefined)));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
-        )
+            mockUserRepositoryFactory.create(false, false)
+        );
         let request: CreateUserRequest = {
-            username: "Tats",
-            password: "password"
+            username: "test",
+            password: "pass"
         };
         const response: CreateUserResponse = await userService.createUser(request);
         expect(response.token).not.toBeNull();
@@ -30,27 +21,18 @@ describe('UserService unit tests', () => {
         expect(response.user.username).not.toBeNull();
         expect(response.user.hash).not.toBeNull();
         expect(response.user.username).toEqual(request.username);
-        expect(save.call.length).toBe(1);
-        expect(findOne.call.length).toBe(1);
     });
 
     it('create user with missing password request property', async() => {
         expect.hasAssertions();
-
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
+            mockUserRepositoryFactory.create(false, true)
         )
 
         try {
             
             let request: CreateUserRequest = {
-                username: "Tats",
+                username: "test",
                 password: undefined!
             }
             const response = await userService.createUser(request);
@@ -62,22 +44,15 @@ describe('UserService unit tests', () => {
 
     it('create user with missing username request property', async() => {
         expect.hasAssertions();
-
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
+            mockUserRepositoryFactory.create(false, true)
         )
 
         try {
             
             let request: CreateUserRequest = {
                 username: undefined!,
-                password: "password"
+                password: "pass"
             }
             const response = await userService.createUser(request);
         }
@@ -88,15 +63,8 @@ describe('UserService unit tests', () => {
 
     it('create user with no request properties', async() => {
         expect.hasAssertions();
-
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
+            mockUserRepositoryFactory.create(false, true)
         )
 
         try {
@@ -114,22 +82,15 @@ describe('UserService unit tests', () => {
 
     it('create user that already exists', async() => {
         expect.hasAssertions();
-
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
+            mockUserRepositoryFactory.create(false, true)
         )
 
         try {
             
             let request: CreateUserRequest = {
-                username: "Tats",
-                password: "password"
+                username: "test",
+                password: "pass"
             }
             const response = await userService.createUser(request);
         }
@@ -140,22 +101,15 @@ describe('UserService unit tests', () => {
 
     it('login user with missing username request property', async() => {
         expect.hasAssertions();
-
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
+            mockUserRepositoryFactory.create(false, true)
         )
 
         try {
             
             let request: LoginUserRequest = {
                 username: undefined!,
-                password: "password"
+                password: "pass"
             }
             const response = await userService.loginUser(request);
         }
@@ -166,21 +120,14 @@ describe('UserService unit tests', () => {
 
     it('login user with missing password request property', async() => {
         expect.hasAssertions();
-
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
+            mockUserRepositoryFactory.create(false, true)
         )
 
         try {
             
             let request: LoginUserRequest = {
-                username: "username",
+                username: "test",
                 password: undefined!
             }
             const response = await userService.loginUser(request);
@@ -192,15 +139,8 @@ describe('UserService unit tests', () => {
 
     it('login user with no request properties', async() => {
         expect.hasAssertions();
-
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
+            mockUserRepositoryFactory.create(false, true)
         )
 
         try {
@@ -218,15 +158,8 @@ describe('UserService unit tests', () => {
 
     it('login user that does not exist', async() => {
         expect.hasAssertions();
-
-        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-            save: save,
-            findOne: findOne
-        }));
         const userService: UserService = new UserService(
-            mockUserRepository() as unknown as Repository<User>
+            mockUserRepositoryFactory.create(false, true)
         )
 
         try {
