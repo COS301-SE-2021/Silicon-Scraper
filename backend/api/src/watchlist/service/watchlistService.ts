@@ -52,25 +52,20 @@ export default class WatchlistService {
     }
 
     async retrieveWatchlist(request: RetrieveWatchlistRequest): Promise<RetrieveWatchlistResponse> {
+        if (request.userID === undefined)
+            throw new Error('Missing parameter(s) in request body');
         let cpus: any[];
         let gpus: any[];
-        try {
-            cpus = await this.cpuWatchlistRepository.find({
-                where: {
-                    user_id: request.userID
-                }
-            });
-            gpus = await this.gpuWatchlistRepository.find({
-                where: {
-                    user_id: request.userID
-                }
-            });
-            
-        }
-        catch (error) {
-            throw error;
-        }
-
+        cpus = await this.cpuWatchlistRepository.find({
+            where: {
+                user_id: request.userID
+            }
+        });
+        gpus = await this.gpuWatchlistRepository.find({
+            where: {
+                user_id: request.userID
+            }
+        });
         const products: any[] = [];
         products.push(...cpus);
         products.push(...gpus);

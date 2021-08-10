@@ -155,3 +155,8 @@ describe('Add product unit tests', () => {
         await watchlistService.addProduct(request);
     });
 });
+
+describe('Retrieve watchlist unit tests', () => {
+
+    //it('')
+});
