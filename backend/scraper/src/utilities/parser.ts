@@ -1,6 +1,7 @@
 
 
 var j = "/web/";
+let url = require("../utilities/url.ts");
 /**
  * This function concatenates the given url to the base url of the specific Website
  * @param urlRES
@@ -45,6 +46,10 @@ export const trimPrice = (price: string) =>{
 
 /**
  * get the name , model and brand from the title
+ * \\R
+ *
+ *
+ *
  * @return {object}
  */
 
@@ -92,7 +97,5 @@ export const availability = (availability:string) => {
 }
 
 export const date = (d:string)=>{
-
-    //return "2021-01-27"
     return d
 }

@@ -1,4 +1,5 @@
 import * as scraper  from "../../src/main/scraper";
+import * as parser from "../../src/utilities/parser"
 import { urls } from "../../__mocks__/urlMock";
 import axios from "axios"
 import { selectorsArray } from "../../src/utilities/selectors";
@@ -28,8 +29,8 @@ describe("scraperTest()", () => {
         jest.resetModules();
         jest.clearAllMocks();
         title = "MSI GeForce RTX 3090 SUPRIM X 24GB GDDR6X"
-        parsedTitle = scraper.titleParser(title) ;
-        trimedPrice = scraper.trimPrice("from R 50000");
+        parsedTitle = parser.titleParser(title) ;
+        trimedPrice = parser.trimPrice("from R 50000");
       });
     
     afterAll(done => {
@@ -52,24 +53,24 @@ describe("scraperTest()", () => {
 
     test("Returns trimed price", () => {
         expect(trimedPrice).toEqual(50000)
-        expect(scraper.trimPrice("50000")).toEqual(undefined);
+        expect(parser.trimPrice("50000")).toEqual(undefined);
     })
 
     test("Should concatenate base url", () => {
         let urlOld = "../collections/gpus"
         const base = "https://baseUrl.com/"
         let expected = base+"collections/gpus"
-        const concat = scraper.concatUrl(urlOld, base);
+        const concat = parser.concatUrl(urlOld, base);
         expect(concat).toBe(expected);
 
         urlOld = "/p/collections"
         expected = base+urlOld
-        expect(scraper.concatUrl(urlOld, base)).toBe(expected)
+        expect(parser.concatUrl(urlOld, base)).toBe(expected)
     })
 
     test("Should produce concatenation error", () => { // this should fail
-        expect(scraper.concatUrl("", "")).toBe("");
-        expect(scraper.concatUrl(undefined, "baseurl")).toBe("https://www.evetech.co.za/")
+        expect(parser.concatUrl("", "")).toBe("");
+        expect(parser.concatUrl(undefined, "baseurl")).toBe("https://www.evetech.co.za/")
     })
     
     test('Should return array of products', async () =>{

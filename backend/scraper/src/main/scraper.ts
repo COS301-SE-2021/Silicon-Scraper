@@ -41,14 +41,22 @@ export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl
     const $ = await cheerio.load(html);
     let b = 0;
 
-    //Number of pages = number of times a request is going to happen at a specific site
-    $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
-        $(row).each((k: any, col: any) => {
-            addToProducts(b++, $, selector, baseUrl, type, col);
-        })
-    })
 
-    return products;
+
+
+    //Number of pages = number of times a request is going to happen at a specific site
+
+
+        $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
+
+            console.log(row)
+            $(row).each((k: any, col: any) => {
+
+                addToProducts(b++, $, selector, baseUrl, type, col);
+            })
+        })
+
+        return products;
 }
 
 /**
@@ -60,9 +68,11 @@ export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl
  */
 export const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string,  data?: any) =>{
 
+
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
     let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())
 
+    console.log(title)
     if(price === undefined)
         return
 
@@ -111,6 +121,7 @@ export const scrape = async () => {
         for (const url of urls) {          
             for(const url_ of url.urls) {
 
+
                 await scrapeSilon(url_, selector, selector.getBaseUrl(), url.type);
 
             }
@@ -120,7 +131,6 @@ export const scrape = async () => {
     return products;
 }
 
-
-
+scrape().then(r => {console.log(r)})
 
 
