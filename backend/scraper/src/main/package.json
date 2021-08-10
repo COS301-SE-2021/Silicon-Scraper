@@ -5,6 +5,7 @@
   "main": "scraperDbOp.ts",
   "scripts": {
     "start": "ts-node scraperDbOp.ts",
+    "schedule": "ts-node scraper_scheduler.ts",
     "test": "jest",
     "build": "tsc"
   },

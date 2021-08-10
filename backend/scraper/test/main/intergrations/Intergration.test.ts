@@ -42,34 +42,34 @@ describe("scraper database operations", () =>{
 
      test("Testing the intergration between scraper and scraperDataOperations", async () => {
         const response = await dataOps(db).getProducts()
-        expect(response).toEqual("Successful")
+        expect(response).toEqual("successful update")
      })
 
-   //
-   //
-   //  test("Getproducts should call scrape only once", async () => {
-   //      const scraper_ = jest.spyOn(scraper,'scrape')
-   //      const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
-   //      await dataOps(db).getProducts()
-   //      expect(scraper_).toHaveBeenCalled()
-   //  })
-   //
-   //  test("Scrape should return the correct data when called by getProducts", async () => {
-   //
-   //      const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
-   //      const scraper_ = jest.spyOn(scraper,'scrape')
-   //      return await dataOps(db).getProducts().then(async () => {
-   //          await expect(scraper_).toHaveBeenCalledTimes(3)
-   //      })
-   //
-   // })
-   //
-   //  test("If the scrape return data when called by the get products", async () =>{
-   //      const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
-   //      const scraper_ = jest.spyOn(scraper,'scrape')
-   //      return await dataOps(db).getProducts().then(async () => {
-   //      expect(scraper_).toHaveReturned()
-   //      })
-   //  })
+
+
+    test("Getproducts should call scrape only once", async () => {
+        const scraper_ = jest.spyOn(scraper,'scrape')
+        const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
+        await dataOps(db).getProducts()
+        expect(scraper_).toHaveBeenCalled()
+    })
+
+    test("Scrape should return the correct data when called by getProducts", async () => {
+
+        const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
+        const scraper_ = jest.spyOn(scraper,'scrape')
+        return await dataOps(db).getProducts().then(async () => {
+            await expect(scraper_).toHaveBeenCalledTimes(3)
+        })
+
+   })
+
+    test("If the scrape return data when called by the get products", async () =>{
+        const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
+        const scraper_ = jest.spyOn(scraper,'scrape')
+        return await dataOps(db).getProducts().then(async () => {
+        expect(scraper_).toHaveReturned()
+        })
+    })
 
 })

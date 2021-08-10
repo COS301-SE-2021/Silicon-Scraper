@@ -46,7 +46,7 @@ describe("scraperTest()", () => {
     test("Returns parsed title", () => {
         const expected = {
             'brand': 'MSI',
-            'model': 'GeForce RTX 3090 SUPRIM X 24GB'// GDDR6X'
+            'model': 'GeForce RTX 3090 SUPRIM X 24GB GDDR6X'
         }
         expect(parsedTitle).toEqual(expected);
     })
