@@ -8,7 +8,8 @@ export default class Broadcast {
      * Send notification to client
      */
     public broadcast = (product: CPU | GPU) => {
-        // for every subscribed user, fetch watclist and check if product is in their watchlist
+        // for every subscribed user, fetch watchlist and check if product is in their watchlist
         // if contained in watchlist, send notification
     }
+    
 }
