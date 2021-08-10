@@ -38,7 +38,7 @@ export const dataOps = (db=db_) => {
                     
                 }
 
-        }).catch((e) => {console.log(e)})
+        }).catch((e) => { })
          return "successful update"
     }
 

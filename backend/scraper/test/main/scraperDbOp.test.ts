@@ -1,5 +1,6 @@
 import {dataOps} from "../../src/main/scraperDbOp";
-import axios from "axios";
+// import axios from "axios";
+import axios, * as x from 'axios';
 import { scrape, scrapeSilon } from "../../src/main/scraper";
 import { Product } from "../../src/utilities/productsModel";
 

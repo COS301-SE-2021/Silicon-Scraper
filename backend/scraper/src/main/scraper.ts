@@ -73,7 +73,7 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
     let title = titleParser($(data).find(selector.getTitleSelector(index)).text().trim())
     let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())
 
-    console.log(title)
+    //console.log(title)
     if(price === undefined)
         return
 
