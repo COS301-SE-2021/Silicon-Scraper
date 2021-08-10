@@ -36,27 +36,28 @@ let jk = 0;
  * @returns {array} An array of products
  */
 export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
-    //console.log(axios)
     const html = await axios.get(webToScrape);
+    return getWebData(html.data, selector, baseUrl, type)
+}
+/**
+ *
+ * @returns {*[]}
+ * @param html
+ */
+
+const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:string) => {
+
     const $ = await cheerio.load(html);
     let b = 0;
 
-
-
-
     //Number of pages = number of times a request is going to happen at a specific site
-
-
-        $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
-
-            console.log(row)
-            $(row).each((k: any, col: any) => {
-
-                addToProducts(b++, $, selector, baseUrl, type, col);
-            })
+    $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
+        $(row).each((k: any, col: any) => {
+            addToProducts(b++, $, selector, baseUrl, type, col);
         })
+    })
 
-        return products;
+    return products;
 }
 
 /**
@@ -131,6 +132,6 @@ export const scrape = async () => {
     return products;
 }
 
-scrape().then(r => {console.log(r)})
+ // scrape().then(r => {console.log(r)})
 
 
