@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
 
     jwt.verify(token.split(" ")[1], tokenSecret, (err, value) => {
         if (err) res.status(403).send()
-        req.user = value.data;
+        req.body.userID = value.data.id;
         next();
     })
 }
