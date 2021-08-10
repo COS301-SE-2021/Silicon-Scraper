@@ -9,10 +9,8 @@
     "rootDir": "src",
     "outDir": "build",
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
   },
-  "exclude": [
-    "test"
-  ],
+  "include": ["src"],
   "lib": ["es2015"]
 }
