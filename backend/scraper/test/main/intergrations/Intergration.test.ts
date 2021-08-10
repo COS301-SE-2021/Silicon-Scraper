@@ -1,10 +1,10 @@
 import {dataOps} from "../../../src/main/scraperDbOp";
-import axios from "axios";
+
 const eve = require("../../../__mocks__/mockUrl")
 import * as scraper from "../../../src/main/scraper"
 // Mock axios
 jest.mock("axios")
-
+import axios from "axios";
 let d: string = eve.getMockData()
 
 const mockAxios = axios as jest.Mocked<typeof axios>;
