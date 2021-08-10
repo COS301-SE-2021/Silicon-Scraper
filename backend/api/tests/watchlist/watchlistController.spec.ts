@@ -1,10 +1,11 @@
 import { MockType } from '../../src/mocks/MockType';
 import WatchlistService from '../../src/watchlist/service/watchlistService';
 import WatchlistController from '../../src/watchlist/controller/watchlistController';
-import { MockUserRepositoryFactory } from '../../src/mocks/RepositoryFactory';
+import { MockCPURepository, MockGPURepository, MockUserRepositoryFactory, MockWatchCPURepositoryFactory, MockWatchGPURepositoryFactory } from '../../src/mocks/RepositoryFactory';
 import { AddProductRequest, RemoveProductRequest, RetrieveWatchlistRequest } from '../../src/types/Requests';
 import UserController from '../../src/users/controller/userController';
 import { RetrieveWatchlistResponse } from '../../src/types/Responses';
+import { request } from 'express';
 
 let addToWatchlist = jest.fn((request) => new Promise((res, rej) => res('woo')));
 const emptyWList: any[] = [];
@@ -57,4 +58,175 @@ describe('WatchlistController unit tests', () => {
         await watchlistController.removeFromWatchlist(request);
         expect(removeFromWatchlist.call.length).toBe(1);
     });
+});
+
+let watchlistService: WatchlistService;
+const mockCPURepository: MockCPURepository = new MockCPURepository();
+const mockGPURepository: MockGPURepository = new MockGPURepository();
+const mockWatchCPURepositoryFactory: MockWatchCPURepositoryFactory = new MockWatchCPURepositoryFactory();
+const mockWatchGPURepositoryFactory: MockWatchGPURepositoryFactory = new MockWatchGPURepositoryFactory();
+
+describe('WatchlistController add to watchlist route integration tests', () => {
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('fails when missing all properties in param object', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(false),
+                mockGPURepository.create(false)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: AddProductRequest = {productID: undefined!, userID: undefined!, type: undefined!};
+            await watchlistController.addToWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing productID property in param object', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: AddProductRequest = {productID: undefined!, userID: 'test', type: 'cpu'};
+            await watchlistController.addToWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing userID property in param object', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: AddProductRequest = {productID: 'test', userID: undefined!, type: 'cpu'};
+            await watchlistController.addToWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing type property in param object', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: AddProductRequest = {productID: 'test', userID: 'test', type: undefined!};
+            await watchlistController.addToWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when providing invalid type', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: AddProductRequest = {productID: 'test', userID: 'test', type: 'test'};
+            await watchlistController.addToWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when cpu doesnt exist', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(false),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: AddProductRequest = {productID: 'test', userID: 'test', type: 'cpu'};
+            await watchlistController.addToWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when gpu doesnt exist', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(false)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: AddProductRequest = {productID: 'test', userID: 'test', type: 'gpu'};
+            await watchlistController.addToWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('successful adding of a cpu', async() => {
+        watchlistService = new WatchlistService(
+            mockWatchGPURepositoryFactory.create(false),
+            mockWatchCPURepositoryFactory.create(false),
+            mockCPURepository.create(true),
+            mockGPURepository.create(false)
+        );
+        watchlistController = new WatchlistController(watchlistService);
+        const request: AddProductRequest = {productID: 'test', userID: 'test', type: 'cpu'};
+        await watchlistController.addToWatchlist(request);
+    });
+
+    it('sucessful adding of a gpu', async() => {
+        watchlistService = new WatchlistService(
+            mockWatchGPURepositoryFactory.create(false),
+            mockWatchCPURepositoryFactory.create(false),
+            mockCPURepository.create(false),
+            mockGPURepository.create(true)
+        );
+        watchlistController = new WatchlistController(watchlistService);
+        const request: AddProductRequest = {productID: 'test', userID: 'test', type: 'gpu'};
+        await watchlistController.addToWatchlist(request);
+    });
+});
+
+describe('WatchlistController get watchlist route integration tests', () => {
+
+});
+
+describe('WatchlistController remove route integration test', () => {
+
 });
