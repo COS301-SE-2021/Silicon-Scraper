@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 
 void main() {
   WatchListInjector.configure(DependencyType.MOCK);
-  ExplorePageInjector.configure(DependencyType.PROD);
-  SearchSortFilterInjector.configure(DependencyType.PROD);
+  ExplorePageInjector.configure(DependencyType.MOCK);
+  SearchSortFilterInjector.configure(DependencyType.MOCK);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
 
   /// this sets the initial products for the watch list do not remove

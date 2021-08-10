@@ -19,7 +19,6 @@ class ExploreViewModel {
         if (snapshot.connectionState == ConnectionState.none) {
           return noConnection(context);
         } else if (snapshot.data != null) {
-          print("gets data");
           unprocessedProducts = snapshot.data;
           if (productType.compareTo("all") != 0) {
             for (int i = 0; i < unprocessedProducts.length; i++) {
@@ -52,7 +51,6 @@ class ExploreViewModel {
             }
           }
         } else {
-          print("ERROR: not getting data");
           return Center(child: CircularProgressIndicator());
         }
       },

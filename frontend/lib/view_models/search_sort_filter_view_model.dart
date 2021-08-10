@@ -93,16 +93,16 @@ class SearchViewModel {
         for (int i = 0; i < filters.length; i++) {
           if (i < 2) {
             if (filters[i]) {
-              print(filters[i]);
+              //print(filters[i]);
+              print(products
+                  .elementAt(p)
+                  .getAvailability());
               if (products
                       .elementAt(p)
                       .getAvailability()
                       .toLowerCase()
                       .compareTo(filterString[i]) ==
                   0) {
-                // print(products
-                //     .elementAt(p)
-                //     .getAvailability()); // returns a boolean i think?
                 add = true;
               } else {
                 add = false;
