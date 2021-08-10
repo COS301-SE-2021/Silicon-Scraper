@@ -9,6 +9,8 @@ import { watchlistGPU } from './entity/watchlistGPU';
 import productRoutes from './products/productRoutes';
 import UserController from './users/controller/userController';
 import UserService from './users/service/userService';
+import jwtUtil from './utilities/jwtUtil';
+import passwordEncoder from './utilities/passwordEncoder';
 import WatchlistController from './watchlist/controller/watchlistController';
 import WatchlistService from './watchlist/service/watchlistService';
 
@@ -17,7 +19,7 @@ const app = express();
 const connect = async () => {
     await connection();
     const userRepository: Repository<User> = getRepository(User);
-    const userService: UserService = new UserService(userRepository);
+    const userService: UserService = new UserService(userRepository, jwtUtil, passwordEncoder);
     const userController: UserController = new UserController(userService);
 
     const watchGPURepository: Repository<watchlistGPU> = getRepository(watchlistGPU);

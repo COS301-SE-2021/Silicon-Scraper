@@ -2,10 +2,7 @@ import { CreateUserRequest, LoginUserRequest } from "../../src/types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
 import UserController from "../../src/users/controller/userController";
 import UserService from "../../src/users/service/userService";
-
-type MockType<T> = {
-    [P in keyof T]?: jest.Mock<{}>;
-}
+import {MockType} from '../../src/mocks/MockType';
 
 let createUser = jest.fn(() => new Promise((res, rej) => res({
     token: "token",
@@ -45,5 +42,9 @@ describe('UserController unit tests', () => {
         expect(response).not.toBeNull();
         expect(response.token).not.toBeNull();
         expect(response.token).toEqual("token");
-    })
-})
+    });
+});
+
+describe('UserController integration tests>', () => {
+
+});

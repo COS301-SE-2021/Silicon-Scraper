@@ -1,12 +1,6 @@
 import { Repository } from "typeorm";
 import { User } from "../entity/user";
-
-export type MockType<T> = {
-    [P in keyof T]?: jest.Mock<{}>;
-}
-
-let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-let findOne = jest.fn(() => new Promise((res, rej) => res(undefined)));
+import {MockType} from './MockType';
 
 abstract class MockRepositoryFactory {
 

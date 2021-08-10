@@ -1,7 +1,5 @@
-import express, { Router } from 'express';
+import { Router } from 'express';
 import UserService from '../service/userService';
-import { getRepository, Repository } from 'typeorm';
-import { User } from '../../entity/user';
 import { CreateUserRequest, LoginUserRequest } from '../../types/Requests';
 import { CreateUserResponse, LoginUserResponse } from '../../types/Responses';
 

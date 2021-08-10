@@ -1,5 +1,3 @@
-import jwtUtil from '../../utilities/jwtUtil';
-import passwordEncoder from '../../utilities/passwordEncoder';
 import { Repository } from "typeorm";
 import { User } from "../../entity/user";
 import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../types/Requests";
@@ -8,7 +6,9 @@ import { CreateUserResponse, LoginUserResponse } from "../../types/Responses";
 export default class UserService {
 
     constructor(
-        private readonly userRepository: Repository<User>
+        private readonly userRepository: Repository<User>,
+        private readonly jwtUtil: any,
+        private readonly passEnc: any
         ) {}
 
     async createUser(request: CreateUserRequest): Promise<CreateUserResponse> {
@@ -21,13 +21,13 @@ export default class UserService {
         });
         if (existingUser !== undefined)
             throw new Error('Username already exists');
-        const passwordHash = await passwordEncoder.encode(request.password);
+        const passwordHash = await this.passEnc.encode(request.password);
         const user: User = new User();
         user.username = request.username;
         user.hash = passwordHash;
         const result: User = await this.userRepository.save(user);
         const response: CreateUserResponse = <CreateUserResponse>{};
-        response.token = jwtUtil.generateToken(user);
+        response.token = this.jwtUtil.generateToken(user);
         response.user = result;
         return response;
     }
@@ -42,11 +42,11 @@ export default class UserService {
         });
         if (user === undefined)
             throw new Error('Username does not exist');
-        let result = await passwordEncoder.compare(request.password, user.hash);
+        let result = await this.passEnc.compare(request.password, user.hash);
         if (result === false)
             throw new Error('Invalid login details');
         const response: LoginUserResponse = <LoginUserResponse>{};
-        response.token = jwtUtil.generateToken(user);
+        response.token = this.jwtUtil.generateToken(user);
         return response;
     }
 
@@ -60,7 +60,7 @@ export default class UserService {
         });
         if (user === undefined)
             throw new Error('Username does not exist');
-        let result = await passwordEncoder.compare(request.password, user.hash);
+        let result = await this.passEnc.compare(request.password, user.hash);
         if (result === false)
             throw new Error('Invalid details provided');
     }

@@ -1,197 +1,328 @@
-import { CreateUserRequest, LoginUserRequest } from "../../src/types/Requests";
+import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../src/types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
 import UserService from "../../src/users/service/userService";
 import {MockUserRepositoryFactory} from '../../src/mocks/RepositoryFactory';
 
 const mockUserRepositoryFactory: MockUserRepositoryFactory = new MockUserRepositoryFactory();
 
-describe('UserService unit tests', () => {
+const genPass = jest.fn((user) => { return "token"; });
+const genFail = jest.fn((user) => { throw new Error() });
 
-    it('create a user with valid details', async() => {
+const jwt = {
+    generateToken: jest.fn((user) => { return "token"; })
+};
+
+const compTrue = jest.fn((pass, hash) => new Promise((res, rej) => { res(true) }));
+const compFalse = jest.fn((pass, hash) => new Promise((res, rej) => { res(false) }));
+const compFail = jest.fn((pass, hash) => new Promise((res, rej) => { rej('Error occurred') }));
+
+const encPass = jest.fn((password) => new Promise((res, rej) => { return res(password) }));
+const encFail = jest.fn((password) => new Promise((res, rej) => { return rej('Error occurred') }))
+
+const passEnc = {
+    encode: encPass,
+    compare: compTrue
+}
+
+describe('Create User unit tests>', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('fails when no parameter properties are present', async() => {
+        expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false)
-        );
-        let request: CreateUserRequest = {
-            username: "test",
-            password: "pass"
-        };
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
+        )
+        try {
+            
+            const request: CreateUserRequest = { username: undefined!, password: undefined!};
+            const response: CreateUserResponse = await userService.createUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when no username parameter property is present', async() => {
+        expect.hasAssertions();
+        const userService: UserService = new UserService(
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
+        )
+        try {
+            
+            const request: CreateUserRequest = { username: undefined!, password: 'pass'};
+            const response: CreateUserResponse = await userService.createUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when no password parameter property is present', async() => {
+        expect.hasAssertions();
+        const userService: UserService = new UserService(
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
+        )
+        try {
+            
+            const request: CreateUserRequest = { username: 'test', password: undefined!};
+            const response: CreateUserResponse = await userService.createUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when user already exists', async() => {
+        expect.hasAssertions();
+        const userService: UserService = new UserService(
+            mockUserRepositoryFactory.create(false, true),
+            jwt,
+            passEnc
+        )
+        try {
+            
+            const request: CreateUserRequest = { username: 'test', password: 'pass'};
+            const response: CreateUserResponse = await userService.createUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('successfull creation of user', async() => {
+        const userService: UserService = new UserService(
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
+        )
+        const request: CreateUserRequest = { username: 'test', password: 'pass'};
         const response: CreateUserResponse = await userService.createUser(request);
-        expect(response.token).not.toBeNull();
+        expect(response).not.toBeNull();
+        expect(response.token).toEqual('token');
         expect(response.user).not.toBeNull();
-        expect(response.user.username).not.toBeNull();
-        expect(response.user.hash).not.toBeNull();
         expect(response.user.username).toEqual(request.username);
+        expect(response.user.hash).toEqual(request.password);
+    });
+});
+
+describe('Login User unit tests>', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    it('create user with missing password request property', async() => {
+    it('fails when no parameter properties are present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true)
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
         )
-
         try {
             
-            let request: CreateUserRequest = {
-                username: "test",
-                password: undefined!
-            }
-            const response = await userService.createUser(request);
+            const request: LoginUserRequest = { username: undefined!, password: undefined!};
+            const response: LoginUserResponse = await userService.loginUser(request);
         }
         catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
 
-    it('create user with missing username request property', async() => {
+    it('fails when no username parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true)
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
         )
-
         try {
             
-            let request: CreateUserRequest = {
-                username: undefined!,
-                password: "pass"
-            }
-            const response = await userService.createUser(request);
+            const request: LoginUserRequest = { username: undefined!, password: 'pass'};
+            const response: LoginUserResponse = await userService.loginUser(request);
         }
         catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
 
-    it('create user with no request properties', async() => {
+    it('fails when no password parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true)
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
         )
-
         try {
             
-            let request: CreateUserRequest = {
-                username: undefined!,
-                password: undefined!
-            }
-            const response = await userService.createUser(request);
+            const request: LoginUserRequest = { username: 'test', password: undefined!};
+            const response: LoginUserResponse = await userService.loginUser(request);
         }
         catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
 
-    it('create user that already exists', async() => {
+    it('fails when user doesnt exist', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true)
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
         )
-
         try {
             
-            let request: CreateUserRequest = {
-                username: "test",
-                password: "pass"
-            }
-            const response = await userService.createUser(request);
+            const request: LoginUserRequest = { username: 'test', password: 'pass'};
+            const response: LoginUserResponse = await userService.loginUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error.message).toEqual('Username does not exist');
+        }
+    });
+
+    it('fails when passwords dont match', async() => {
+        expect.hasAssertions();
+        const pse = {
+            compare: compFalse
+        }
+        const userService: UserService = new UserService(
+            mockUserRepositoryFactory.create(false, true),
+            jwt,
+            pse
+        )
+        try {
+            
+            const request: LoginUserRequest = { username: 'test', password: 'pass'};
+            const response: LoginUserResponse = await userService.loginUser(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error.message).toEqual('Invalid login details');
+        }
+    });
+
+    it('successful login of user', async() => {
+        const userService: UserService = new UserService(
+            mockUserRepositoryFactory.create(false, true),
+            jwt,
+            passEnc
+        )
+        const request: LoginUserRequest = {username: 'test', password: 'pass'};
+        const response: LoginUserResponse = await userService.loginUser(request);
+        expect(response.token).not.toBeNull();
+        expect(response.token).toEqual('token');
+    });
+});
+
+describe('Remove user unit tests>', () => {
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('fails when no parameter properties are present', async() => {
+        expect.hasAssertions();
+        const userService: UserService = new UserService(
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
+        )
+        try {
+            
+            const request: RemoveUserRequest = { username: undefined!, password: undefined!};
+            await userService.removeUser(request);
         }
         catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
 
-    it('login user with missing username request property', async() => {
+    it('fails when no username parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true)
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
         )
-
         try {
             
-            let request: LoginUserRequest = {
-                username: undefined!,
-                password: "pass"
-            }
-            const response = await userService.loginUser(request);
+            const request: RemoveUserRequest = { username: undefined!, password: 'pass'};
+            await userService.removeUser(request);
         }
         catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
 
-    it('login user with missing password request property', async() => {
+    it('fails when no password parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true)
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
         )
-
         try {
             
-            let request: LoginUserRequest = {
-                username: "test",
-                password: undefined!
-            }
-            const response = await userService.loginUser(request);
+            const request: RemoveUserRequest = { username: 'test', password: undefined!};
+            await userService.removeUser(request);
         }
         catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
 
-    it('login user with no request properties', async() => {
+    it('fails when user doesnt exist', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true)
+            mockUserRepositoryFactory.create(false, false),
+            jwt,
+            passEnc
         )
-
         try {
             
-            let request: LoginUserRequest = {
-                username: undefined!,
-                password: undefined!
-            }
-            const response = await userService.loginUser(request);
+            const request: RemoveUserRequest = { username: 'test', password: 'pass'};
+            await userService.removeUser(request);
         }
         catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
 
-    it('login user that does not exist', async() => {
+    it('fails when password doesnt match', async() => {
         expect.hasAssertions();
+        const pse = {
+            compare: compFalse
+        }
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true)
+            mockUserRepositoryFactory.create(false, true),
+            jwt,
+            pse
         )
-
         try {
             
-            let request: LoginUserRequest = {
-                username: undefined!,
-                password: undefined!
-            }
-            const response = await userService.loginUser(request);
+            const request: RemoveUserRequest = { username: 'test', password: 'pass'};
+            await userService.removeUser(request);
         }
         catch (error) {
             expect(error).toBeInstanceOf(Error);
         }
     });
 
-    it('login user that exists', async() => {
-        // let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
-        // let findOne = jest.fn(() => new Promise((res, rej) => res(new User())));
-        // const mockUserRepository: () => MockType<Repository<any>> = jest.fn(() => ({
-        //     save: save,
-        //     findOne: findOne
-        // }));
-        // const userService: UserService = new UserService(
-        //     mockUserRepository() as unknown as Repository<User>
-        // )
-        // let request: LoginUserRequest = {
-        //     username: "Tats",
-        //     password: "password"
-        // };
-        // const response: LoginUserResponse = await userService.loginUser(request);
-        // expect(response.token).not.toBeNull();
-        // expect(save.call.length).toBe(1);
-        // expect(findOne.call.length).toBe(1);
-    });
+    it('successful remove of user', async() => {
+        expect.assertions(0);
+        const userService: UserService = new UserService(
+            mockUserRepositoryFactory.create(false, true),
+            jwt,
+            passEnc
+        )
+        const request: RemoveUserRequest = { username: 'test', password: 'pass'};
+        await userService.removeUser(request);
+    })
 });
