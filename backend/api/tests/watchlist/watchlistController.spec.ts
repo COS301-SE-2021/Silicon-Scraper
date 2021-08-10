@@ -266,4 +266,121 @@ describe('WatchlistController get watchlist route integration tests', () => {
 
 describe('WatchlistController remove route integration test', () => {
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('fails when missing all properties in param object', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(false),
+                mockGPURepository.create(false)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: RemoveProductRequest = {productID: undefined!, userID: undefined!, type: undefined!};
+            await watchlistController.removeFromWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing productID property in param object', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: RemoveProductRequest = {productID: undefined!, userID: 'test', type: 'cpu'};
+            await watchlistController.removeFromWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing userID property in param object', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: RemoveProductRequest = {productID: 'test', userID: undefined!, type: 'cpu'};
+            await watchlistController.removeFromWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing type property in param object', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: RemoveProductRequest = {productID: 'test', userID: 'test', type: undefined!};
+            await watchlistController.removeFromWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when providing invalid type', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(true),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: RemoveProductRequest = {productID: 'test', userID: 'test', type: 'test'};
+            await watchlistController.removeFromWatchlist(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('successful removal of a product', async() => {
+        watchlistService = new WatchlistService(
+            mockWatchGPURepositoryFactory.create(false),
+            mockWatchCPURepositoryFactory.create(false),
+            mockCPURepository.create(true),
+            mockGPURepository.create(true)
+        );
+        watchlistController = new WatchlistController(watchlistService);
+        const request: RemoveProductRequest = {productID: 'test', userID: 'test', type: 'cpu'};
+        await watchlistController.removeFromWatchlist(request);
+    });
+
+    it('successful removal of a gpu', async() => {
+        watchlistService = new WatchlistService(
+            mockWatchGPURepositoryFactory.create(false),
+            mockWatchCPURepositoryFactory.create(false),
+            mockCPURepository.create(true),
+            mockGPURepository.create(true)
+        );
+        watchlistController = new WatchlistController(watchlistService);
+        const request: RemoveProductRequest = {productID: 'test', userID: 'test', type: 'gpu'};
+        await watchlistController.removeFromWatchlist(request);
+    });
 });
