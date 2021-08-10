@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 const tokenSecret = "my-token-secret";
 
 const generateToken = (user) => {
-    return jwt.sign({data: user}, tokenSecret, {expiresIn: '365d'});
+    return jwt.sign({data: user.id}, tokenSecret, {expiresIn: '365d'});
 }
 
 const verifyToken = (req, res, next) => {
@@ -20,7 +20,7 @@ const verifyToken = (req, res, next) => {
 
     jwt.verify(token.split(" ")[1], tokenSecret, (err, value) => {
         if (err) res.status(403).send()
-        req.body.userID = value.data.id;
+        req.body.userID = value.data;
         next();
     })
 }
