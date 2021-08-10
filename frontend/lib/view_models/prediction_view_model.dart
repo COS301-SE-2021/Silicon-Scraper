@@ -21,8 +21,7 @@ class PredictionViewModel extends ChangeNotifier
     _date = value;
   }
 
-  PredictionViewModel.initial(this._item);
-  PredictionViewModel(this._item, this._date);
+  PredictionViewModel(this._item);
 
   Future prediction(context)async
   {
