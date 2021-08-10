@@ -100,7 +100,8 @@ export class MockWatchGPURepositoryFactory extends MockRepositoryFactory {
         const mockWatchGPURepository: () => MockType<Repository<any>> = jest.fn(() => ({
             save: save,
             findOne: findOne,
-            find: jest.fn(() => new Promise((res, rej) => res([{}])))
+            find: jest.fn(() => new Promise((res, rej) => res([{}]))),
+            delete: jest.fn(() => new Promise((res, rej) => res('woo')))
         }));
         return mockWatchGPURepository() as unknown as Repository<watchlistGPU>;
     }
@@ -124,7 +125,8 @@ export class MockWatchCPURepositoryFactory extends MockRepositoryFactory {
         const mockWatchCPURepository: () => MockType<Repository<any>> = jest.fn(() => ({
             save: save,
             findOne: findOne,
-            find: jest.fn(() => new Promise((res, rej) => res([{}])))
+            find: jest.fn(() => new Promise((res, rej) => res([{}]))),
+            delete: jest.fn(() => new Promise((res, rej) => res('woo')))
         }));
         return mockWatchCPURepository() as unknown as Repository<watchlistCPU>;
     }

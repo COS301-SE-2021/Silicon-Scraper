@@ -16,7 +16,7 @@ export default class WatchlistService {
     ) {}
 
     async addProduct(request: AddProductRequest): Promise<void> {
-        if (request.productID === undefined || request.type === undefined)
+        if (request.productID === undefined || request.type === undefined || request.userID === undefined)
             throw new Error('Missing parameter(s) in request body');
         switch (request.type.toUpperCase()) {
             case 'CPU':
