@@ -10,47 +10,44 @@ export default class WatchlistService {
 
     constructor(
         private readonly gpuWatchlistRepository: Repository<watchlistGPU>,
-        private readonly cpuWatchlistRepository: Repository<watchlistCPU>
+        private readonly cpuWatchlistRepository: Repository<watchlistCPU>,
+        private readonly cpuRepository: Repository<CPU>,
+        private readonly gpuRepository: Repository<GPU>
     ) {}
 
     async addProduct(request: AddProductRequest): Promise<void> {
         if (request.productID === undefined || request.type === undefined)
             throw new Error('Missing parameter(s) in request body');
-        try {
-            switch (request.type) {
-                case 'CPU':
-                    const cpu: CPU | undefined = await getRepository(CPU).findOne({
-                        where: {
-                            id: request.productID
-                        }
-                    });
-                    if (cpu === undefined)
-                        throw new Error('Invalid product ID');
-                    const watchCPU: watchlistCPU = new watchlistCPU();
-                    watchCPU.user_id = request.userID;
-                    watchCPU.product_id = request.productID;
-                    getRepository(watchlistCPU).save(watchCPU);
-                    break;
-                case 'GPU':
-                    const gpu: GPU | undefined = await getRepository(GPU).findOne({
-                        where: {
-                            id: request.productID
-                        }
-                    });
-                    if (gpu === undefined)
-                        throw new Error('Invalid product ID');
-                    const watchGPU: watchlistGPU = new watchlistGPU();
-                    watchGPU.user_id = request.userID;
-                    watchGPU.product_id = request.productID;
-                    getRepository(watchlistGPU).save(watchGPU);
-                    break;
-                default:
-                    throw new Error('Invalid product type');
-                    
-            }
-        }
-        catch (error) {
-            throw error;
+        switch (request.type.toUpperCase()) {
+            case 'CPU':
+                const cpu: CPU | undefined = await this.cpuRepository.findOne({
+                    where: {
+                        id: request.productID
+                    }
+                });
+                if (cpu === undefined)
+                    throw new Error('Invalid product ID');
+                const watchCPU: watchlistCPU = new watchlistCPU();
+                watchCPU.user_id = request.userID;
+                watchCPU.product_id = request.productID;
+                this.cpuWatchlistRepository.save(watchCPU);
+                break;
+            case 'GPU':
+                const gpu: GPU | undefined = await this.gpuRepository.findOne({
+                    where: {
+                        id: request.productID
+                    }
+                });
+                if (gpu === undefined)
+                    throw new Error('Invalid product ID');
+                const watchGPU: watchlistGPU = new watchlistGPU();
+                watchGPU.user_id = request.userID;
+                watchGPU.product_id = request.productID;
+                this.gpuWatchlistRepository.save(watchGPU);
+                break;
+            default:
+                throw new Error('Invalid product type');
+                
         }
     }
 
@@ -58,12 +55,12 @@ export default class WatchlistService {
         let cpus: any[];
         let gpus: any[];
         try {
-            cpus = await getRepository(watchlistCPU).find({
+            cpus = await this.cpuWatchlistRepository.find({
                 where: {
                     user_id: request.userID
                 }
             });
-            gpus = await getRepository(watchlistGPU).find({
+            gpus = await this.gpuWatchlistRepository.find({
                 where: {
                     user_id: request.userID
                 }
@@ -85,15 +82,15 @@ export default class WatchlistService {
     async removeProduct(request: RemoveProductRequest): Promise<void> {
         if (request.productID === undefined || request.type === undefined || request.userID === undefined)
             throw new Error('Missing parameter(s)');
-        switch (request.type) {
+        switch (request.type.toUpperCase()) {
             case 'CPU':
-                await getRepository(watchlistCPU).delete({
+                await this.cpuWatchlistRepository.delete({
                     product_id: request.productID,
                     user_id: request.userID
                 });
                 break;
             case 'GPU':
-                await getRepository(watchlistGPU).delete({
+                await this.gpuWatchlistRepository.delete({
                     product_id: request.productID,
                     user_id: request.userID
                 });

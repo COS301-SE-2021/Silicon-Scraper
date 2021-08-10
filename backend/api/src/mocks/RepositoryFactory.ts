@@ -33,6 +33,55 @@ export class MockUserRepositoryFactory extends MockRepositoryFactory {
     }
 }
 
+export class MockGPURepository extends MockRepositoryFactory {
+
+    public create(findOneFound: boolean): Repository<GPU> {
+        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
+        let findOne;
+        if (findOneFound === false)
+            findOne = jest.fn(() => new Promise((res, rej) => res(undefined)));
+        else
+        {
+            let gpu = new GPU();
+            gpu.type = 'gpu';
+            gpu.brand = 'test';
+            gpu.brand = 'test';
+            gpu.description = 'test';
+            findOne = jest.fn(() => new Promise((res, rej) => res(gpu)));
+        }
+
+        const mockGPURepository: () => MockType<Repository<any>> = jest.fn(() => ({
+            save: save,
+            findOne: findOne
+        }));
+        return mockGPURepository() as unknown as Repository<GPU>;
+    }
+}
+
+export class MockCPURepository extends MockRepositoryFactory {
+    public create(findOneFound: boolean): Repository<CPU> {
+        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
+        let findOne;
+        if (findOneFound === false)
+            findOne = jest.fn(() => new Promise((res, rej) => res(undefined)));
+        else
+        {
+            let cpu = new CPU();
+            cpu.type = 'gpu';
+            cpu.brand = 'test';
+            cpu.brand = 'test';
+            cpu.description = 'test';
+            findOne = jest.fn(() => new Promise((res, rej) => res(cpu)));
+        }
+
+        const mockCPURepository: () => MockType<Repository<any>> = jest.fn(() => ({
+            save: save,
+            findOne: findOne
+        }));
+        return mockCPURepository() as unknown as Repository<CPU>;
+    }
+}
+
 export class MockWatchGPURepositoryFactory extends MockRepositoryFactory {
 
     public create(findOneFound: boolean): Repository<watchlistGPU> {
@@ -42,7 +91,7 @@ export class MockWatchGPURepositoryFactory extends MockRepositoryFactory {
             findOne = jest.fn(() => new Promise((res, rej) => res(undefined)));
         else if (findOneFound === true) {
             let gpu = new GPU();
-            gpu.type = 'cpu';
+            gpu.type = 'gpu';
             gpu.brand = 'test';
             gpu.description = 'test';
             findOne = jest.fn(() => new Promise((res, rej) => res(gpu)));

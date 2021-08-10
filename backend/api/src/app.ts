@@ -2,6 +2,8 @@ import express from 'express';
 import 'reflect-metadata';
 import { getRepository, Repository } from 'typeorm';
 import { connection } from './config';
+import { CPU } from './entity/cpu';
+import { GPU } from './entity/gpu';
 import { User } from './entity/user';
 import { watchlistCPU } from './entity/watchlistCPU';
 import { watchlistGPU } from './entity/watchlistGPU';
@@ -24,7 +26,9 @@ const connect = async () => {
 
     const watchGPURepository: Repository<watchlistGPU> = getRepository(watchlistGPU);
     const watchCPURepository: Repository<watchlistCPU> = getRepository(watchlistCPU);
-    const watchlistService: WatchlistService = new WatchlistService(watchGPURepository, watchCPURepository);
+    const gpuRepository: Repository<GPU> = getRepository(GPU);
+    const cpuRepository: Repository<CPU> = getRepository(CPU);
+    const watchlistService: WatchlistService = new WatchlistService(watchGPURepository, watchCPURepository, cpuRepository, gpuRepository);
     const watchlistController: WatchlistController = new WatchlistController(watchlistService);
 
     app.use(express.json());
