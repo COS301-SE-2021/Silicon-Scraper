@@ -97,12 +97,15 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                           TextButton(onPressed: ()async
                           {
                               DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
-                              widget.state.predict.date=date;
-                              setState((){});
-                              final DateFormat format=DateFormat('yyyMMddHHmmss');
-                              final String dates=format.format(date);
-                              print(dates);
-                              await widget.state.predict.prediction(context);
+                              if(date!=null)
+                                {
+                                  widget.state.predict.date=date;
+                                  setState((){});
+                                  await widget.state.predict.prediction(context);
+                                }
+
+
+
                           }
                           ,
                             child: Text('Predict the Future',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(

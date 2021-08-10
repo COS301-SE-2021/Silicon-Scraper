@@ -17,7 +17,7 @@ class MockPredictionService extends PredictionService
       }
     else
       {
-       return Prediction(true, 35000.0);
+       return Prediction(true, 100000.0);
       }
   }
 }
