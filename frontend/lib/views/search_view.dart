@@ -130,6 +130,8 @@ class ProductSearch extends SearchDelegate<String> {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Center(child: CircularProgressIndicator());
+          case ConnectionState.none:
+            return noConnection(context);
           default:
             if (snapshot.hasError) {
               print("Snapshot error:");
@@ -172,6 +174,8 @@ class ProductSearch extends SearchDelegate<String> {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Center(child: CircularProgressIndicator());
+            case ConnectionState.none:
+              return noConnection(context);
             default:
               if (snapshot.hasError || snapshot.data.isEmpty) {
                 return buildNoSuggestions(context);

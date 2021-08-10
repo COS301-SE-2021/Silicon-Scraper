@@ -17,8 +17,7 @@ class ExploreViewModel {
       future: explore.dependency.setItems(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
-          print("problem with connection");
-          return Center(child: CircularProgressIndicator());
+          return noConnection(context);
         } else if (snapshot.data != null) {
           print("gets data");
           unprocessedProducts = snapshot.data;
