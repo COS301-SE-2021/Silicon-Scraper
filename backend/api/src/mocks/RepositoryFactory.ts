@@ -1,7 +1,9 @@
 import { Repository } from "typeorm";
 import { CPU } from "../entity/cpu";
+import { GPU } from "../entity/gpu";
 import { User } from "../entity/user";
 import { watchlistCPU } from "../entity/watchlistCPU";
+import { watchlistGPU } from "../entity/watchlistGPU";
 import {MockType} from './MockType';
 
 abstract class MockRepositoryFactory {
@@ -28,6 +30,29 @@ export class MockUserRepositoryFactory extends MockRepositoryFactory {
             findOne: findOne
         }));
         return mockUserRepository() as unknown as Repository<User>;
+    }
+}
+
+export class MockWatchGPURepositoryFactory extends MockRepositoryFactory {
+
+    public create(findOneFound: boolean): Repository<watchlistGPU> {
+        let save = jest.fn(entity => new Promise((res, rej) => res(entity)));
+        let findOne;
+        if (findOneFound === false)
+            findOne = jest.fn(() => new Promise((res, rej) => res(undefined)));
+        else if (findOneFound === true) {
+            let gpu = new GPU();
+            gpu.type = 'cpu';
+            gpu.brand = 'test';
+            gpu.description = 'test';
+            findOne = jest.fn(() => new Promise((res, rej) => res(gpu)));
+        }
+
+        const mockWatchGPURepository: () => MockType<Repository<any>> = jest.fn(() => ({
+            save: save,
+            findOne: findOne
+        }));
+        return mockWatchGPURepository() as unknown as Repository<watchlistGPU>;
     }
 }
 
