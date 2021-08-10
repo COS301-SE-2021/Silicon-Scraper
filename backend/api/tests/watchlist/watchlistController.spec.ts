@@ -224,7 +224,44 @@ describe('WatchlistController add to watchlist route integration tests', () => {
 });
 
 describe('WatchlistController get watchlist route integration tests', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
+    it('fails when missing all request properties', async() => {
+        expect.hasAssertions();
+        try {
+            watchlistService = new WatchlistService(
+                mockWatchGPURepositoryFactory.create(false),
+                mockWatchCPURepositoryFactory.create(false),
+                mockCPURepository.create(false),
+                mockGPURepository.create(true)
+            );
+            watchlistController = new WatchlistController(watchlistService);
+            const request: RetrieveWatchlistRequest = {userID: undefined!};
+            const response: RetrieveWatchlistResponse = await watchlistController.getWatchlist(request);
+        }
+        catch(error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('successful retrievel of user"s watchlist', async() => {
+        watchlistService = new WatchlistService(
+            mockWatchGPURepositoryFactory.create(false),
+            mockWatchCPURepositoryFactory.create(false),
+            mockCPURepository.create(false),
+            mockGPURepository.create(true)
+        );
+        watchlistController = new WatchlistController(watchlistService);
+        const request: RetrieveWatchlistRequest = {userID: 'test'};
+        const response: RetrieveWatchlistResponse = await watchlistController.getWatchlist(request);
+        expect(response.products).not.toBeNull();
+        expect(response.products.length).toBe(2);
+        expect(response.products[0]).toStrictEqual({})
+        expect(response.products[1]).toStrictEqual({})
+
+    });
 });
 
 describe('WatchlistController remove route integration test', () => {
