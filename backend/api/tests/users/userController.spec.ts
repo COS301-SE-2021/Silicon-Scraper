@@ -84,7 +84,7 @@ describe('UserController signup route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -101,7 +101,7 @@ describe('UserController signup route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -118,7 +118,7 @@ describe('UserController signup route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -135,7 +135,7 @@ describe('UserController signup route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, true),
+                mockUserRepositoryFactory.create( true),
                 jwt,
                 passEnc
             );
@@ -151,7 +151,7 @@ describe('UserController signup route integration tests>', () => {
 
     it('successful signup of user', async() => {
         userService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         );
@@ -177,7 +177,7 @@ describe('UserController login route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -194,7 +194,7 @@ describe('UserController login route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -211,7 +211,7 @@ describe('UserController login route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -228,7 +228,7 @@ describe('UserController login route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -248,7 +248,7 @@ describe('UserController login route integration tests>', () => {
         }
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, true),
+                mockUserRepositoryFactory.create( true),
                 jwt,
                 pse
             );
@@ -263,7 +263,7 @@ describe('UserController login route integration tests>', () => {
 
     it('successful signup of user', async() => {
         userService = new UserService(
-            mockUserRepositoryFactory.create(false, true),
+            mockUserRepositoryFactory.create( true),
             jwt,
             passEnc
         );
@@ -285,7 +285,7 @@ describe('UserController delete route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -302,7 +302,7 @@ describe('UserController delete route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -319,7 +319,7 @@ describe('UserController delete route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -336,7 +336,7 @@ describe('UserController delete route integration tests>', () => {
         expect.assertions(1);
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, false),
+                mockUserRepositoryFactory.create( false),
                 jwt,
                 passEnc
             );
@@ -356,7 +356,7 @@ describe('UserController delete route integration tests>', () => {
         }
         try {
             userService = new UserService(
-                mockUserRepositoryFactory.create(false, true),
+                mockUserRepositoryFactory.create( true),
                 jwt,
                 pse
             );
@@ -372,7 +372,7 @@ describe('UserController delete route integration tests>', () => {
     it('successful signup of user', async() => {
         expect.assertions(0);
         userService = new UserService(
-            mockUserRepositoryFactory.create(false, true),
+            mockUserRepositoryFactory.create( true),
             jwt,
             passEnc
         );

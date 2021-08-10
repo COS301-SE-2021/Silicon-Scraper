@@ -26,7 +26,7 @@ describe('Create User unit tests>', () => {
     it('fails when no parameter properties are present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         )
@@ -43,7 +43,7 @@ describe('Create User unit tests>', () => {
     it('fails when no username parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         )
@@ -60,7 +60,7 @@ describe('Create User unit tests>', () => {
     it('fails when no password parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         )
@@ -77,7 +77,7 @@ describe('Create User unit tests>', () => {
     it('fails when user already exists', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true),
+            mockUserRepositoryFactory.create( true),
             jwt,
             passEnc
         )
@@ -93,7 +93,7 @@ describe('Create User unit tests>', () => {
 
     it('successfull creation of user', async() => {
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         )
@@ -115,7 +115,7 @@ describe('Login User unit tests>', () => {
     it('fails when no parameter properties are present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         )
@@ -132,7 +132,7 @@ describe('Login User unit tests>', () => {
     it('fails when no username parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         )
@@ -149,7 +149,7 @@ describe('Login User unit tests>', () => {
     it('fails when no password parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         )
@@ -166,7 +166,7 @@ describe('Login User unit tests>', () => {
     it('fails when user doesnt exist', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create( false),
             jwt,
             passEnc
         )
@@ -187,7 +187,7 @@ describe('Login User unit tests>', () => {
             compare: compFalse
         }
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true),
+            mockUserRepositoryFactory.create( true),
             jwt,
             pse
         )
@@ -204,7 +204,7 @@ describe('Login User unit tests>', () => {
 
     it('successful login of user', async() => {
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true),
+            mockUserRepositoryFactory.create( true),
             jwt,
             passEnc
         )
@@ -224,7 +224,7 @@ describe('Remove user unit tests>', () => {
     it('fails when no parameter properties are present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create(false),
             jwt,
             passEnc
         )
@@ -241,7 +241,7 @@ describe('Remove user unit tests>', () => {
     it('fails when no username parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create(false),
             jwt,
             passEnc
         )
@@ -258,7 +258,7 @@ describe('Remove user unit tests>', () => {
     it('fails when no password parameter property is present', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create(false),
             jwt,
             passEnc
         )
@@ -275,7 +275,7 @@ describe('Remove user unit tests>', () => {
     it('fails when user doesnt exist', async() => {
         expect.hasAssertions();
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, false),
+            mockUserRepositoryFactory.create(false),
             jwt,
             passEnc
         )
@@ -295,7 +295,7 @@ describe('Remove user unit tests>', () => {
             compare: compFalse
         }
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true),
+            mockUserRepositoryFactory.create(true),
             jwt,
             pse
         )
@@ -312,7 +312,7 @@ describe('Remove user unit tests>', () => {
     it('successful remove of user', async() => {
         expect.assertions(0);
         const userService: UserService = new UserService(
-            mockUserRepositoryFactory.create(false, true),
+            mockUserRepositoryFactory.create(true),
             jwt,
             passEnc
         )

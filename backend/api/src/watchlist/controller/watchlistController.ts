@@ -24,7 +24,7 @@ export default class WatchlistController {
     }
 
     async removeFromWatchlist(request: RemoveProductRequest): Promise<void> {
-        return this.watchlistService.removeProduct(request);
+        return await this.watchlistService.removeProduct(request);
     }
 
     routes(): Router {
