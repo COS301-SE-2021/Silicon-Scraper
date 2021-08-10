@@ -38,7 +38,7 @@ export const dataOps = (db=db_) => {
                     
                 }
 
-        })
+        }).catch((e) => {console.log(e)})
          return "successful update"
     }
 
@@ -52,6 +52,7 @@ export const dataOps = (db=db_) => {
      const exeQuery = async (query: any) => {
         await db.none(query).then((err: any) => {
             if (err) {
+                //console.log(err)
                 throw new Error(err);
             } else {
                 console.log(200, " ok")
@@ -238,5 +239,5 @@ export const dataOps = (db=db_) => {
     }
 }
 
-// dataOps()
-console.log("Run scraper")
+dataOps()
+//console.log("Run scraper")
