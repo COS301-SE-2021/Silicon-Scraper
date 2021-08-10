@@ -166,3 +166,218 @@ describe('UserController signup route integration tests>', () => {
     });
 
 });
+
+describe('UserController login route integration tests>', () => {
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('fails when missing properties in param', async() => {
+        expect.assertions(1);
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, false),
+                jwt,
+                passEnc
+            );
+            userController = new UserController(userService);
+            const request: LoginUserRequest = {username: undefined!, password: undefined!};
+            const response: LoginUserResponse = await userController.loginRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing username property in param', async() => {
+        expect.assertions(1);
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, false),
+                jwt,
+                passEnc
+            );
+            userController = new UserController(userService);
+            const request: LoginUserRequest = {username: undefined!, password: "pass"};
+            const response: LoginUserResponse = await userController.loginRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing password property in param', async() => {
+        expect.assertions(1);
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, false),
+                jwt,
+                passEnc
+            );
+            userController = new UserController(userService);
+            const request: LoginUserRequest = {username: 'test', password: undefined!};
+            const response: LoginUserResponse = await userController.loginRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when user doesnt exist', async() => {
+        expect.assertions(1);
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, false),
+                jwt,
+                passEnc
+            );
+            userController = new UserController(userService);
+            const request: LoginUserRequest = {username: 'test', password: 'pass'};
+            const response: LoginUserResponse = await userController.loginRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when passwords dont match', async() => {
+        expect.assertions(1);
+        const pse = {
+            compare: compFalse
+        }
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, true),
+                jwt,
+                pse
+            );
+            userController = new UserController(userService);
+            const request: LoginUserRequest = {username: 'test', password: 'pass'};
+            const response: LoginUserResponse = await userController.loginRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('successful signup of user', async() => {
+        userService = new UserService(
+            mockUserRepositoryFactory.create(false, true),
+            jwt,
+            passEnc
+        );
+        userController = new UserController(userService);
+        const request: LoginUserRequest = {username: 'test', password: 'pass'};
+        const response: LoginUserResponse = await userController.loginRoute(request);
+        expect(response.token).not.toBeNull();
+        expect(response.token).toEqual('token');
+    });
+});
+
+describe('UserController delete route integration tests>', () => {
+
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('fails when missing properties in param', async() => {
+        expect.assertions(1);
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, false),
+                jwt,
+                passEnc
+            );
+            userController = new UserController(userService);
+            const request: RemoveUserRequest = {username: undefined!, password: undefined!};
+            await userController.deleteRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing username property in param', async() => {
+        expect.assertions(1);
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, false),
+                jwt,
+                passEnc
+            );
+            userController = new UserController(userService);
+            const request: RemoveUserRequest = {username: undefined!, password: undefined!};
+            await userController.deleteRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when missing password property in param', async() => {
+        expect.assertions(1);
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, false),
+                jwt,
+                passEnc
+            );
+            userController = new UserController(userService);
+            const request: RemoveUserRequest = {username: undefined!, password: undefined!};
+            await userController.deleteRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when user doesnt exist', async() => {
+        expect.assertions(1);
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, false),
+                jwt,
+                passEnc
+            );
+            userController = new UserController(userService);
+            const request: RemoveUserRequest = {username: 'test', password: 'pass'};
+            await userController.deleteRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('fails when passwords dont match', async() => {
+        expect.assertions(1);
+        const pse = {
+            compare: compFalse
+        }
+        try {
+            userService = new UserService(
+                mockUserRepositoryFactory.create(false, true),
+                jwt,
+                pse
+            );
+            userController = new UserController(userService);
+            const request: RemoveUserRequest = {username: 'test', password: 'pass'};
+            await userController.deleteRoute(request);
+        }
+        catch (error) {
+            expect(error).toBeInstanceOf(Error);
+        }
+    });
+
+    it('successful signup of user', async() => {
+        expect.assertions(0);
+        userService = new UserService(
+            mockUserRepositoryFactory.create(false, true),
+            jwt,
+            passEnc
+        );
+        userController = new UserController(userService);
+        const request: RemoveUserRequest = {username: 'test', password: 'pass'};
+        await userController.deleteRoute(request);
+    });
+});
