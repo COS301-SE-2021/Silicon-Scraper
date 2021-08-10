@@ -5,19 +5,13 @@ import {MockUserRepositoryFactory} from '../../src/mocks/RepositoryFactory';
 
 const mockUserRepositoryFactory: MockUserRepositoryFactory = new MockUserRepositoryFactory();
 
-const genPass = jest.fn((user) => { return "token"; });
-const genFail = jest.fn((user) => { throw new Error() });
-
 const jwt = {
     generateToken: jest.fn((user) => { return "token"; })
 };
 
 const compTrue = jest.fn((pass, hash) => new Promise((res, rej) => { res(true) }));
 const compFalse = jest.fn((pass, hash) => new Promise((res, rej) => { res(false) }));
-const compFail = jest.fn((pass, hash) => new Promise((res, rej) => { rej('Error occurred') }));
-
 const encPass = jest.fn((password) => new Promise((res, rej) => { return res(password) }));
-const encFail = jest.fn((password) => new Promise((res, rej) => { return rej('Error occurred') }))
 
 const passEnc = {
     encode: encPass,
