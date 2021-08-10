@@ -4,10 +4,15 @@
     "esModuleInterop": true,
     "target": "es6",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "sourceMap": true,
+    "rootDir": "src",
     "outDir": "build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
   },
+  "exclude": [
+    "test"
+  ],
   "lib": ["es2015"]
 }
