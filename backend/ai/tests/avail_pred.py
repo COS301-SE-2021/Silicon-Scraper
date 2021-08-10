@@ -2,7 +2,7 @@ import pytest
 import sys
 import pandas as pd
 sys.path.insert(1, '../models')
-from avail_prediction.NN_Avail_Pred_Model import clean_data, encode_data
+from api.models.avail_prediction.NN_Avail_Pred_Model import clean_data, encode_data
 
 
 def test_clean_data():
