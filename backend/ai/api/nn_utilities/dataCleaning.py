@@ -3,6 +3,7 @@ import datetime
 import math
 from sklearn.preprocessing import LabelEncoder
 
+
 #
 #This function cleans the given data, by merging it with the model and getting rid of null rows
 #
