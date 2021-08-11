@@ -243,4 +243,6 @@ plt.hist(error, bins=25)
 plt.xlabel('Prediction Error [PRICE]')
 _ = plt.ylabel('Count')
 
-# model.save('price_prediction.h5')
+# with open('../../nn_utilities/scalar_price', 'wb') as f:
+#         pickle.dump(scaler_y, f)
+# model.save('../../trained_models/price_prediction.h5')
