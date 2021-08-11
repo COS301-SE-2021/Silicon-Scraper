@@ -6,6 +6,10 @@ import { watchlistCPU } from "../../src/entity/watchlistCPU";
 import { watchlistGPU } from "../../src/entity/watchlistGPU";
 import {MockType} from './MockType';
 
+//const getMany = jest.fn(() => {return [{}]});
+const innerJoinAndSelect = jest.fn(() => []);
+const createQueryBuilder = jest.fn(() => new Promise((res, rej) => res(jest.fn(() => {innerJoinAndSelect: innerJoinAndSelect}))))
+
 abstract class MockRepositoryFactory {
 
     public abstract create(findOne: boolean): Repository<any>;
@@ -52,7 +56,8 @@ export class MockGPURepository extends MockRepositoryFactory {
 
         const mockGPURepository: () => MockType<Repository<any>> = jest.fn(() => ({
             save: save,
-            findOne: findOne
+            findOne: findOne,
+            createQueryBuilder: createQueryBuilder
         }));
         return mockGPURepository() as unknown as Repository<GPU>;
     }
@@ -76,7 +81,8 @@ export class MockCPURepository extends MockRepositoryFactory {
 
         const mockCPURepository: () => MockType<Repository<any>> = jest.fn(() => ({
             save: save,
-            findOne: findOne
+            findOne: findOne,
+            createQueryBuilder: createQueryBuilder
         }));
         return mockCPURepository() as unknown as Repository<CPU>;
     }

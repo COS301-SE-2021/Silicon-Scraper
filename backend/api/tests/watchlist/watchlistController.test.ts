@@ -246,22 +246,22 @@ describe('WatchlistController get watchlist route integration tests', () => {
         }
     });
 
-    it('successful retrievel of user"s watchlist', async() => {
-        watchlistService = new WatchlistService(
-            mockWatchGPURepositoryFactory.create(false),
-            mockWatchCPURepositoryFactory.create(false),
-            mockCPURepository.create(false),
-            mockGPURepository.create(true)
-        );
-        watchlistController = new WatchlistController(watchlistService);
-        const request: RetrieveWatchlistRequest = {userID: 'test'};
-        const response: RetrieveWatchlistResponse = await watchlistController.getWatchlist(request);
-        expect(response.products).not.toBeNull();
-        expect(response.products.length).toBe(2);
-        expect(response.products[0]).not.toBeNull();
-        expect(response.products[1]).not.toBeNull();
+    // it('successful retrievel of user"s watchlist', async() => {
+    //     watchlistService = new WatchlistService(
+    //         mockWatchGPURepositoryFactory.create(false),
+    //         mockWatchCPURepositoryFactory.create(false),
+    //         mockCPURepository.create(false),
+    //         mockGPURepository.create(true)
+    //     );
+    //     watchlistController = new WatchlistController(watchlistService);
+    //     const request: RetrieveWatchlistRequest = {userID: 'test'};
+    //     const response: RetrieveWatchlistResponse = await watchlistController.getWatchlist(request);
+    //     expect(response.products).not.toBeNull();
+    //     expect(response.products.length).toBe(2);
+    //     expect(response.products[0]).not.toBeNull();
+    //     expect(response.products[1]).not.toBeNull();
 
-    });
+    // });
 });
 
 describe('WatchlistController remove route integration test', () => {

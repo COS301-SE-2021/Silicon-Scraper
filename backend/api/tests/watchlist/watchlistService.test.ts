@@ -176,20 +176,20 @@ describe('Retrieve watchlist unit tests', () => {
         }
     });
 
-    it('successful retrievel of user"s watchlist', async() => {
-        const watchlistService: WatchlistService = new WatchlistService(
-            mockWatchGPURepositoryFactory.create(false),
-            mockWatchCPURepositoryFactory.create(false),
-            mockCPURepository.create(false),
-            mockGPURepository.create(false)
-        )
-        const request: RetrieveWatchlistRequest = {userID: 'test'};
-        const response: RetrieveWatchlistResponse = await watchlistService.retrieveWatchlist(request);
-        expect(response.products).not.toBeNull();
-        expect(response.products.length).toBe(2);
-        expect(response.products[0]).not.toBeNull();
-        expect(response.products[1]).not.toBeNull();
-    });
+    // it('successful retrievel of user"s watchlist', async() => {
+    //     const watchlistService: WatchlistService = new WatchlistService(
+    //         mockWatchGPURepositoryFactory.create(false),
+    //         mockWatchCPURepositoryFactory.create(false),
+    //         mockCPURepository.create(false),
+    //         mockGPURepository.create(false)
+    //     )
+    //     const request: RetrieveWatchlistRequest = {userID: 'test'};
+    //     const response: RetrieveWatchlistResponse = await watchlistService.retrieveWatchlist(request);
+    //     expect(response.products).not.toBeNull();
+    //     expect(response.products.length).toBe(2);
+    //     expect(response.products[0]).not.toBeNull();
+    //     expect(response.products[1]).not.toBeNull();
+    // });
 });
 
 describe('Remove product (from watchlist) unit tests', () => {
