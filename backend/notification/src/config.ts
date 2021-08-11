@@ -6,6 +6,7 @@ import { CPU } from './entity/cpu';
 import { GPU } from './entity/gpu';
 import { watchlistCPU } from './entity/watchlistCPU';
 import { watchlistGPU } from './entity/watchlistGPU';
+import { deviceToken } from './entity/deviceToken';
 
 config({ path: resolve(__dirname, "../.env") })
 
@@ -23,7 +24,8 @@ export const connection = async () => {
                 CPU,
                 GPU,
                 watchlistCPU,
-                watchlistGPU
+                watchlistGPU,
+                deviceToken
             ],
             synchronize: false,
             logging: false
