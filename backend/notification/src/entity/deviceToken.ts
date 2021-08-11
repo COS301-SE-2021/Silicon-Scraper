@@ -6,7 +6,7 @@ export class deviceToken {
     @PrimaryColumn()
     token: string;
 
-    @OneToOne(() => User) 
+    @OneToOne(type => User) 
     @JoinColumn({name: 'user_id'})
-    user: User
+    user: User;
 }

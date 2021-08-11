@@ -1,11 +1,15 @@
-import { Entity, PrimaryColumn, Index } from "typeorm";
+import { Entity, PrimaryColumn, Index, OneToMany, OneToOne, JoinColumn } from "typeorm";
+import { CPU } from "./cpu";
+import { User } from "./user";
 
 @Entity({name: 'watchlist_cpu', synchronize: false})
-@Index(['user_id', 'product_id'], {unique: true})
+@Index(['user', 'cpu'], {unique: true})
 export class watchlistCPU {
-    @PrimaryColumn('uuid')
-    user_id: string;
+    @OneToOne(type => User, user => user.id, {primary: true, eager: true})
+    @JoinColumn({name: 'user_id'})
+    user: User;
 
-    @PrimaryColumn('uuid')
-    product_id: string;
+    @OneToOne(type => CPU, cpu => cpu.id, {primary: true, eager: true})
+    @JoinColumn({name: 'product_id'})
+    cpu: CPU;
 }
