@@ -258,8 +258,8 @@ describe('WatchlistController get watchlist route integration tests', () => {
         const response: RetrieveWatchlistResponse = await watchlistController.getWatchlist(request);
         expect(response.products).not.toBeNull();
         expect(response.products.length).toBe(2);
-        expect(response.products[0]).toStrictEqual({})
-        expect(response.products[1]).toStrictEqual({})
+        expect(response.products[0]).not.toBeNull();
+        expect(response.products[1]).not.toBeNull();
 
     });
 });

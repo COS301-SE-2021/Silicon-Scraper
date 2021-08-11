@@ -69,6 +69,9 @@ export default class WatchlistService {
         const products: any[] = [];
         products.push(...cpus);
         products.push(...gpus);
+        products.map((product) => {
+            product.watch = true;
+        });
         const response: RetrieveWatchlistResponse = <RetrieveWatchlistResponse>{};
         response.products = products;
         return response;
