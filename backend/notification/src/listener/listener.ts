@@ -37,6 +37,7 @@ export default class Listener {
             console.log('Client disconnected');
             // reconnect client after disconnecting
             client.connect();
+            client.query('LISTEN table_modified');
         });
     }
 }
