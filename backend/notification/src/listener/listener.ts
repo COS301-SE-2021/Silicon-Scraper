@@ -30,7 +30,7 @@ export default class Listener {
         });
     
         client.on('error', (err: Error) => {
-            console.error('client error: ',err.stack);
+            console.error('client error: ', err.stack);
         });
     
         client.on('end', () => {
