@@ -26,7 +26,7 @@ initialise();
 /**
  * Start database listener
  */
-// const listener = new Listener();
+const listener = new Listener();
 
 app.use(express.json());
 app.use(subscribe);
