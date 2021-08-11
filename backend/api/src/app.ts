@@ -32,7 +32,7 @@ const connect = async () => {
     const watchlistService: WatchlistService = new WatchlistService(watchGPURepository, watchCPURepository, cpuRepository, gpuRepository);
     const watchlistController: WatchlistController = new WatchlistController(watchlistService);
 
-    app.use(express.json());
+    app.use(express.json({limit: '2kb'}));
     app.use(helmet());
     app.use('/products', productRoutes);
     app.use('/users', userController.routes());
