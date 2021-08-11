@@ -7,6 +7,6 @@ export class deviceToken {
     token: string;
 
     @OneToOne(() => User) 
-    @JoinColumn()
+    @JoinColumn({name: 'user_id'})
     user: User
 }
