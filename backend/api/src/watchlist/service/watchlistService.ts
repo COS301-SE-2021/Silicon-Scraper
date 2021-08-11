@@ -56,16 +56,14 @@ export default class WatchlistService {
             throw new Error('Missing parameter(s) in request body');
         let cpus: any[];
         let gpus: any[];
-        cpus = await this.cpuWatchlistRepository.find({
-            where: {
-                user_id: request.userID
-            }
-        });
-        gpus = await this.gpuWatchlistRepository.find({
-            where: {
-                user_id: request.userID
-            }
-        });
+        cpus = []
+        cpus = await this.cpuRepository.createQueryBuilder("cpu")
+        .innerJoinAndSelect(watchlistCPU, "wcpu", "wcpu.product_id = cpu.id")
+        .getMany();
+
+        gpus = await this.gpuRepository.createQueryBuilder("gpu")
+        .innerJoinAndSelect(watchlistGPU, "wgpu", " wgpu.product_id = gpu.id")
+        .getMany();
         const products: any[] = [];
         products.push(...cpus);
         products.push(...gpus);
