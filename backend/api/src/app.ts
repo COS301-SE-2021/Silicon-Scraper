@@ -1,6 +1,7 @@
 import express from 'express';
 import 'reflect-metadata';
 import { getRepository, Repository } from 'typeorm';
+import helmet from 'helmet';
 import { connection } from './config';
 import { CPU } from './entity/cpu';
 import { GPU } from './entity/gpu';
@@ -32,6 +33,7 @@ const connect = async () => {
     const watchlistController: WatchlistController = new WatchlistController(watchlistService);
 
     app.use(express.json());
+    app.use(helmet());
     app.use('/products', productRoutes);
     app.use('/users', userController.routes());
     app.use('/watchlist', watchlistController.routes());
