@@ -13,7 +13,7 @@ const router = express.Router();
  */
 router.post('/subscribe', async (req: express.Request, res: express.Response) => {
     if(!('userID' in req.body) || !('token' in req.body)) {
-        res.json({status: 400});
+        res.json({status: 400})
     }
     try {
         const tokens = getRepository(deviceToken);
@@ -23,7 +23,7 @@ router.post('/subscribe', async (req: express.Request, res: express.Response) =>
         device.user.id = req.body.userID;
         await tokens.save(device);
     } catch(error) {
-        console.log(error);
+        console.error(error);
     } finally {
         res.json({status: 200});
     }
