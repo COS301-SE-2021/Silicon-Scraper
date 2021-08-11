@@ -26,6 +26,7 @@ export default class UserService {
         user.username = request.username;
         user.hash = passwordHash;
         const result: User = await this.userRepository.save(user);
+        result.hash = request.password;
         const response: CreateUserResponse = <CreateUserResponse>{};
         response.token = this.jwtUtil.generateToken(user);
         response.user = result;
