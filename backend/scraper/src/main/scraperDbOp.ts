@@ -27,12 +27,12 @@ export const dataOps = (db=db_) => {
 
      const getProducts = async () => { //needs to be tested
 
-        await scraper.scrape().then((products: any) => {
+        await scraper.scrape().then( async (products: any) => {
                 if (products.gpu.length == 0 || products.cpu.length == 0) {
                     throw new Error("Empty products");
 
                 } else {
-                    update(products).then(async (res) => {
+                    await update(products).then(async (res) => {
                         console.log("200 ok")
                     }).catch((e) => {})
                     
@@ -42,7 +42,7 @@ export const dataOps = (db=db_) => {
          return "successful update"
     }
 
-    getProducts().then(() => {
+    getProducts().then( () => {
         console.log("Successful")
     }).catch((e) => {})
 

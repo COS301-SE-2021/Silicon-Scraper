@@ -81,6 +81,8 @@ describe("Database operations tests", () => {
         any: jest.fn().mockReturnValue((query: any) => Promise.resolve([]))
     }))
 
+    db = pg();
+
     beforeEach(() =>{
         jest.resetModules();
         jest.resetAllMocks();
@@ -97,7 +99,7 @@ describe("Database operations tests", () => {
         })
     
     })
-    db = pg();
+
 
     test("database updated with valid product", async () =>{
         return dbOps.getProducts().then(async () => {

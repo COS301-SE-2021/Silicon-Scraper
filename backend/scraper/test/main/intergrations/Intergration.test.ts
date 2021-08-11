@@ -1,23 +1,36 @@
 import {dataOps} from "../../../src/main/scraperDbOp";
-
-const eve = require("../../../__mocks__/mockUrl")
 import * as scraper from "../../../src/main/scraper"
 // Mock axios
-jest.mock("axios")
+
+jest.mock("axios", () => {
+    const eve = require("../../../__mocks__/mockUrl")
+    let d: string = eve.getMockData()
+
+    const mockedResponse = {
+        data: d,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+    }
+
+    return Object.assign(jest.fn(), {
+        get: jest.fn().mockResolvedValue(mockedResponse)
+    })
+})
 import axios from "axios";
-let d: string = eve.getMockData()
 
-const mockAxios = axios as jest.Mocked<typeof axios>;
+jest.mock('cheerio', () => {
+    return Object.assign(jest.fn(), {
+        load: jest.fn().mockImplementation()
+    })
+})
+import cheerio from 'cheerio'
 
-const mockedResponse = {
-    data: d,
-    status: 200,
-    statusText: "OK",
-    headers: {},
-    config: {},
-}
 
-mockAxios.get = jest.fn().mockResolvedValue(mockedResponse)
+//const mockAxios = axios as jest.Mocked<typeof axios>;
+
+//mockAxios.get = jest.fn().mockResolvedValue(mockedResponse)
 
 let pgp = jest.fn(() => ({
     none: jest.fn(() => Promise.resolve()) ,
@@ -35,6 +48,11 @@ let pgp = jest.fn(() => ({
 let db = pgp()
 
 describe("scraper database operations", () =>{
+    let mockAxios:any = undefined
+    beforeAll(() => {
+        mockAxios = jest.spyOn(axios, 'get')
+        jest.spyOn(cheerio, 'load')
+    })
     beforeEach(() => {
         jest.resetModules();
         jest.clearAllMocks();
@@ -43,32 +61,36 @@ describe("scraper database operations", () =>{
      test("Testing the intergration between scraper and scraperDataOperations", async () => {
         const response = await dataOps(db).getProducts()
         expect(response).toEqual("successful update")
+        expect(mockAxios).toBeCalled()
      })
 
 
 
-    test("Getproducts should call scrape only once", async () => {
+    test.skip("Get products should call scrape only once", async (done) => {
         const scraper_ = jest.spyOn(scraper,'scrape')
         const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
         await dataOps(db).getProducts()
         expect(scraper_).toHaveBeenCalled()
+        done()
     })
 
-    test("Scrape should return the correct data when called by getProducts", async () => {
+    test.skip("Scrape should return the correct data when called by getProducts", async (done) => {
 
         const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
         const scraper_ = jest.spyOn(scraper,'scrape')
-        return await dataOps(db).getProducts().then(async () => {
+        await dataOps(db).getProducts().then(async () => {
             await expect(scraper_).toHaveBeenCalledTimes(3)
+            done()
         })
 
    })
 
-    test("If the scrape return data when called by the get products", async () =>{
+    test.skip("If the scrape return data when called by the get products", async (done) =>{
         const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
         const scraper_ = jest.spyOn(scraper,'scrape')
-        return await dataOps(db).getProducts().then(async () => {
-        expect(scraper_).toHaveReturned()
+        await dataOps(db).getProducts().then(async () => {
+            expect(scraper_).toHaveReturned()
+            done()
         })
     })
 

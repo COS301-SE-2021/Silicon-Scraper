@@ -2,7 +2,8 @@ import {Selectors} from "../utilities/selectors";
 import {Product} from "../utilities/productsModel";
 import {concatUrl, titleParser, availability, date, trimPrice} from "../utilities/parser";
 const cheerio = require("cheerio");
-const axios = require("axios");
+//import cheerio from 'cheerio'
+import axios from 'axios'
 
 
 let url = require("../utilities/url.ts");
