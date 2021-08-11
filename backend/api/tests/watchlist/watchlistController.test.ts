@@ -1,7 +1,7 @@
-import { MockType } from '../../src/mocks/MockType';
+import { MockType } from '../mocks/MockType';
 import WatchlistService from '../../src/watchlist/service/watchlistService';
 import WatchlistController from '../../src/watchlist/controller/watchlistController';
-import { MockCPURepository, MockGPURepository, MockUserRepositoryFactory, MockWatchCPURepositoryFactory, MockWatchGPURepositoryFactory } from '../../src/mocks/RepositoryFactory';
+import { MockCPURepository, MockGPURepository, MockUserRepositoryFactory, MockWatchCPURepositoryFactory, MockWatchGPURepositoryFactory } from '../mocks/RepositoryFactory';
 import { AddProductRequest, RemoveProductRequest, RetrieveWatchlistRequest } from '../../src/types/Requests';
 import UserController from '../../src/users/controller/userController';
 import { RetrieveWatchlistResponse } from '../../src/types/Responses';

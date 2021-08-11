@@ -1,7 +1,7 @@
 import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../src/types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
 import UserService from "../../src/users/service/userService";
-import {MockUserRepositoryFactory} from '../../src/mocks/RepositoryFactory';
+import {MockUserRepositoryFactory} from '../mocks/RepositoryFactory';
 
 const mockUserRepositoryFactory: MockUserRepositoryFactory = new MockUserRepositoryFactory();
 

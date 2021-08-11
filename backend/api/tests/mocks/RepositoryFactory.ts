@@ -1,9 +1,9 @@
 import { Repository } from "typeorm";
-import { CPU } from "../entity/cpu";
-import { GPU } from "../entity/gpu";
-import { User } from "../entity/user";
-import { watchlistCPU } from "../entity/watchlistCPU";
-import { watchlistGPU } from "../entity/watchlistGPU";
+import { CPU } from "../../src/entity/cpu";
+import { GPU } from "../../src/entity/gpu";
+import { User } from "../../src/entity/user";
+import { watchlistCPU } from "../../src/entity/watchlistCPU";
+import { watchlistGPU } from "../../src/entity/watchlistGPU";
 import {MockType} from './MockType';
 
 abstract class MockRepositoryFactory {

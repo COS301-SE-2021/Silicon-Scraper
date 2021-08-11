@@ -1,4 +1,4 @@
-import { MockCPURepository, MockGPURepository, MockWatchCPURepositoryFactory, MockWatchGPURepositoryFactory } from "../../src/mocks/RepositoryFactory";
+import { MockCPURepository, MockGPURepository, MockWatchCPURepositoryFactory, MockWatchGPURepositoryFactory } from "../mocks/RepositoryFactory";
 import { AddProductRequest, RemoveProductRequest, RetrieveWatchlistRequest } from "../../src/types/Requests";
 import { RetrieveWatchlistResponse } from "../../src/types/Responses";
 import WatchlistService from "../../src/watchlist/service/watchlistService";

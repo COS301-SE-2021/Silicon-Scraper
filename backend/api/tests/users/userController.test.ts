@@ -2,8 +2,8 @@ import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../sr
 import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
 import UserController from "../../src/users/controller/userController";
 import UserService from "../../src/users/service/userService";
-import {MockType} from '../../src/mocks/MockType';
-import { MockUserRepositoryFactory } from "../../src/mocks/RepositoryFactory";
+import {MockType} from '../mocks/MockType';
+import { MockUserRepositoryFactory } from "../mocks/RepositoryFactory";
 
 let createUser = jest.fn(() => new Promise((res, rej) => res({
     token: "token",
