@@ -43,8 +43,9 @@ class WatchListService
       "type":item.type
     };
 
-    var send=jsonEncode(vars);
-    final response = await http.delete(url,headers: headers,body:send);
+    var send=jsonEncode(vars);//todo fix delete method
+//    final response = await http.delete(url,headers: headers,body:send);
+    final response = await http.delete(url,headers: headers);
     print(response.statusCode);
     var responseData = json.decode(response.body);
     print(responseData);
