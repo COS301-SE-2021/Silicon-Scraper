@@ -5,7 +5,7 @@ import subscribe from './controller/subscribe.controller';
 import { initialise } from './firebase/firebase.initialise';
 import Listener from './listener/listener';
 
-const app = express();
+export const app = express();
 const port = process.env.PORT || 3000;
 
 /**
@@ -30,7 +30,3 @@ const listener = new Listener();
 
 app.use(express.json());
 app.use(subscribe);
-
-app.listen(port, () => {
-    console.log(`server is listening on ${port}`);
-});
