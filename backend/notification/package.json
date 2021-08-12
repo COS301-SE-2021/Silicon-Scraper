@@ -4,8 +4,9 @@
   "description": "",
   "main": "build/app.js",
   "scripts": {
-    "start": "tsc && node build/app.js",
-    "test": "jest --verbose"
+    "start": "npm run build && node build/app.js",
+    "test": "jest --verbose",
+    "build": "tsc -p tsconfig.build.json"
   },
   "keywords": [],
   "author": "",

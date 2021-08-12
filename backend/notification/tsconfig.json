@@ -6,11 +6,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "sourceMap": true,
-    "rootDir": "src",
-    "outDir": "build",
+    "outDir": "./build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "skipLibCheck": true,
   },
-  "exclude": ["test"],
   "lib": ["es2015"]
 }
