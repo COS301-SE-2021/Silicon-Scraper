@@ -29,7 +29,10 @@
     "pg-mem": "^1.9.9",
     "pg-promise": "^10.10.2",
     "shelljs": "^0.8.4",
-    "source-map-loader": "^3.0.0"
+    "source-map-loader": "^3.0.0",
+    "typescript": "^3.9.9",
+    "@types/node": "^15.12.4",
+    "@types/pg-promise": "^5.4.3"
   },
   "devDependencies": {
     "@types/node": "^15.12.4",
