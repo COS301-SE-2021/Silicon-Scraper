@@ -10,7 +10,7 @@ export default class Broadcast {
     /**
      * Send notification to client
      */
-    async broadcast(product: CPU | GPU) {
+    public async broadcast(product: CPU | GPU) {
         // for every subscribed user, fetch watchlist and check if product is in their watchlist
         // if contained in watchlist, send notification
         const devices: deviceToken[] = [];
@@ -31,7 +31,7 @@ export default class Broadcast {
             default:
                 return;
         }
-        let messages = [];
+        let messages: admin.messaging.TokenMessage[] = [];
         devices.forEach((device) => {
             if(messages.length === 500) {
                 // max messages allowed in batch send
@@ -51,7 +51,7 @@ export default class Broadcast {
             this.send(messages);
     }
 
-    send(messages: admin.messaging.TokenMessage[]) {
+    public send(messages: admin.messaging.TokenMessage[]) {
         admin.messaging().sendAll(messages)
         .then((response) => {
             console.log(response);
