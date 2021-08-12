@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 const axios = require("axios");
 
 
-let url = require("../utilities/url.ts");
+let url = require("../utilities/url");
 let selectors = require("../utilities/selectors.ts").selectorsArray;
 let array1 : Product[] = [];
 let array2 : Product[] = [];
@@ -132,6 +132,6 @@ export const scrape = async () => {
     return products;
 }
 
- // scrape().then(r => {console.log(r)})
+  scrape().then(r => {console.log(r)})
 
 
