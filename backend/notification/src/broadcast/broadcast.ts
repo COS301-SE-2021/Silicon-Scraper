@@ -51,7 +51,7 @@ export default class Broadcast {
             this.send(messages);
     }
 
-    private send(messages: admin.messaging.TokenMessage[]) {
+    send(messages: admin.messaging.TokenMessage[]) {
         admin.messaging().sendAll(messages)
         .then((response) => {
             console.log(response);
