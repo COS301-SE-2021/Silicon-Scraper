@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Index, OneToOne, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, JoinColumn, ManyToOne } from "typeorm";
 import { GPU } from "./gpu";
 import { User } from "./user";
 
