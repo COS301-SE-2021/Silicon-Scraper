@@ -42,6 +42,10 @@ backend/scraper/dist/
 # API related
 node_modules/
 
+# Notification related
+backend/notification/build
+backend/notification/*.json
+
 # Web related
 lib/generated_plugin_registrant.dart
 
