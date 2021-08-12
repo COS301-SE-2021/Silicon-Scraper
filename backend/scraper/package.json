@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "",
+    "start": "cd backend/scraper/src/main && npm start",
     "test": "jest --runInBand --detectOpenHandles"
   },
   "keywords": [],
