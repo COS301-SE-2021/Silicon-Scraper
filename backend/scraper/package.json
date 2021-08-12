@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd backend/scraper/src/main && npm start",
-    "test": "jest --runInBand --detectOpenHandles"
+    "start": "npm run build && node build/main/scraper_scheduler.js",
+    "test": "jest --runInBand --detectOpenHandles",
+    "build": "tsc -p tsconfig.json",
+    "start-dev": "cd src/main && ts-node scraper_scheduler.ts"
+
   },
   "keywords": [],
   "author": "",
@@ -20,9 +23,11 @@
     "axios": "^0.21.1",
     "babel-jest": "^27.0.2",
     "cheerio": "^1.0.0-rc.9",
+    "cron": "^1.8.2",
     "dotenv": "^10.0.0",
     "pg-mem": "^1.9.9",
     "pg-promise": "^10.10.2",
+    "shelljs": "^0.8.4",
     "source-map-loader": "^3.0.0"
   },
   "devDependencies": {
