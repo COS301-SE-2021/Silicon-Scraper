@@ -1,7 +1,7 @@
 import {Product} from "../utilities/productsModel";
 const env = require('../../config')
 //const scraper = require("./scraper.ts");
-import * as scraper from "../../src/main/scraper"
+import * as scraper from "../main/scraper"
 
 const pgp = require('pg-promise')({
     /* initialization options */

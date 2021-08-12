@@ -6,15 +6,15 @@ let cronJob: CronJob;
 let cron_time = '0 0,6,12,18 * * *'
 cron_time = '* * * * * *'
 let dev_script = 'ts-node scraperDbOp.ts'
-let prod_script = 'node scraperDbOp.js'
+let prod_script = 'node build/main/scraperDbOp.js'
 let environment = env.scraper_env
 
 cronJob = new CronJob(cron_time, () => {
     console.log("______Webscraper running______")
     if(environment === dev_script){
-        exec('ts-node scraperDbOp.ts')
+        exec(dev_script)
     }else{
-        exec('node scraperDbOp.js')
+        exec(prod_script)
     }
 })
 
