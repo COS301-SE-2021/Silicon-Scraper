@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
+//import 'package:silicon_scraper/services/firebase_notification_services.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/injectors/explore_service_injector.dart';
 import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.dart';
@@ -22,10 +23,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await Firebase.initializeApp();
-
   WatchListInjector.configure(DependencyType.MOCK);
   ExplorePageInjector.configure(DependencyType.PROD);
   SearchSortFilterInjector.configure(DependencyType.PROD);
