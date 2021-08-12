@@ -8,7 +8,6 @@
     "test": "jest --runInBand --detectOpenHandles",
     "build": "tsc -p tsconfig.json",
     "start-dev": "cd src/main && ts-node scraper_scheduler.ts"
-
   },
   "keywords": [],
   "author": "",

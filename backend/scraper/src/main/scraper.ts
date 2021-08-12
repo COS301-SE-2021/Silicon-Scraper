@@ -36,6 +36,7 @@ let jk = 0;
  * @returns {array} An array of products
  */
 export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
+
     const html = await axios.get(webToScrape);
     return getWebData(html.data, selector, baseUrl, type)
 }
@@ -132,6 +133,6 @@ export const scrape = async () => {
     return products;
 }
 
-  scrape().then(r => {console.log(r)})
+  //scrape().then(r => {console.log(r)})
 
 

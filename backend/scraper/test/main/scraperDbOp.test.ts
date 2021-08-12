@@ -1,12 +1,29 @@
 import {dataOps} from "../../src/main/scraperDbOp";
 // import axios from "axios";
-import axios, * as x from 'axios';
+// import axios, * as x from 'axios';
 import { scrape, scrapeSilon } from "../../src/main/scraper";
 import { Product } from "../../src/utilities/productsModel";
 
 const eve = require("../../__mocks__/mockUrl")
 // Mock axios
-jest.mock("axios")
+jest.mock("axios", () => {
+    const eve = require("../../__mocks__/mockUrl")
+    let d: string = eve.getMockData()
+
+    const mockedResponse = {
+        data: d,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+    }
+
+    return Object.assign(jest.fn(), {
+        get: jest.fn().mockResolvedValue(mockedResponse)
+    })
+})
+
+import axios from "axios";
 
 let d: string = eve.getMockData()
 
@@ -105,8 +122,8 @@ describe("Database operations tests", () => {
         return dbOps.getProducts().then(async () => {
             await expect(scrape).toBeCalled();
            // await expect(scrape).toHaveBeenCalledTimes(1);
-            expect(db.any).toBeCalled();
-            expect(db.any.mock.calls[0]).not.toBeNull();
+            await expect(db.any).toBeCalled();
+            await expect(db.any.mock.calls[0]).not.toBeNull();
         }).catch((e: any) => {})
         
     })
@@ -121,19 +138,19 @@ describe("Database operations tests", () => {
         await expect(Promise.reject(dbOps.getProducts())).rejects.not.toThrow('octopus').catch((e)=>{});
 
         return dbOps.getProducts().then(async () => {
-            expect(scrape).toBeCalled();
-            expect(db.any).toBeCalled();
-            expect(db.any.mock.calls.length).toBe(1);
+            await expect(scrape).toBeCalled();
+            await expect(db.any).toBeCalled();
+            await  expect(db.any.mock.calls.length).toBe(1);
         }).catch((e: any) => {})
            
         
     })
 
     test("update with valid product", async () => {
-        return dbOps.update({gpu: gpus, cpu: cpus}).then(() => {
-            expect(db.any.mock.calls.length).toBe(1);
-            expect(db.any.mock.calls[0]).not.toBeNull();
-            expect(db.none.mock.calls.length).toBe(1);
+        return dbOps.update({gpu: gpus, cpu: cpus}).then(async () => {
+            await expect(db.any.mock.calls.length).toBe(1);
+            await expect(db.any.mock.calls[0]).not.toBeNull();
+            await expect(db.none.mock.calls.length).toBe(1);
         }).catch((e: any) => {})
         
     })
@@ -141,9 +158,9 @@ describe("Database operations tests", () => {
 
     test("Execute query fails", async () => {
         db.none = jest.fn(() => Promise.reject())
-        await dbOps.exeQuery("").then(() => {
-            expect(db.none).toBeCalled();
-            expect(db.none.mock.calls.length).toBe(1);
+        await dbOps.exeQuery("").then(async () => {
+            await expect(db.none).toBeCalled();
+            await expect(db.none.mock.calls.length).toBe(1);
         }).catch((e: any) => {})            
         
     })
