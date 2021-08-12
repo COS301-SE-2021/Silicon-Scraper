@@ -1,6 +1,7 @@
+import { Forbidden } from "http-errors";
 import { Repository } from "typeorm";
 import { User } from "../../entity/user";
-import { RequestError } from "../../types/CustomErrors";
+import { InvalidCredentials, RequestError, UsernameNotFound } from "../../types/CustomErrors";
 import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../types/Responses";
 
@@ -21,7 +22,7 @@ export default class UserService {
             }
         });
         if (existingUser !== undefined)
-            throw new Error('Username already exists');
+            throw new Forbidden('Username already in use');
         const passwordHash = await this.passEnc.encode(request.password);
         const user: User = new User();
         user.username = request.username;
@@ -43,10 +44,10 @@ export default class UserService {
             }
         });
         if (user === undefined)
-            throw new Error('Username does not exist');
+            throw new UsernameNotFound();
         let result = await this.passEnc.compare(request.password, user.hash);
         if (result === false)
-            throw new Error('Invalid login details');
+            throw new InvalidCredentials();
         const response: LoginUserResponse = <LoginUserResponse>{};
         response.token = this.jwtUtil.generateToken(user);
         return response;
@@ -61,10 +62,10 @@ export default class UserService {
             }
         });
         if (user === undefined)
-            throw new Error('Username does not exist');
+            throw new UsernameNotFound();
         let result = await this.passEnc.compare(request.password, user.hash);
         if (result === false)
-            throw new Error('Invalid details provided');
+            throw new InvalidCredentials();
     }
 
 }

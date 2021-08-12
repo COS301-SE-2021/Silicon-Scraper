@@ -6,6 +6,8 @@ import { AddProductRequest, RemoveProductRequest, RetrieveWatchlistRequest } fro
 import UserController from '../../src/users/controller/userController';
 import { RetrieveWatchlistResponse } from '../../src/types/Responses';
 import { request } from 'express';
+import { ProductNotFound, RequestError } from '../../src/types/CustomErrors';
+import { BadRequest, NotFound } from 'http-errors';
 
 let addToWatchlist = jest.fn((request) => new Promise((res, rej) => res('woo')));
 const emptyWList: any[] = [];
@@ -86,7 +88,7 @@ describe('WatchlistController add to watchlist route integration tests', () => {
             await watchlistController.addToWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -104,7 +106,7 @@ describe('WatchlistController add to watchlist route integration tests', () => {
             await watchlistController.addToWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -122,7 +124,7 @@ describe('WatchlistController add to watchlist route integration tests', () => {
             await watchlistController.addToWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -140,7 +142,7 @@ describe('WatchlistController add to watchlist route integration tests', () => {
             await watchlistController.addToWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -158,7 +160,7 @@ describe('WatchlistController add to watchlist route integration tests', () => {
             await watchlistController.addToWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -176,7 +178,7 @@ describe('WatchlistController add to watchlist route integration tests', () => {
             await watchlistController.addToWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(NotFound);
         }
     });
 
@@ -194,7 +196,7 @@ describe('WatchlistController add to watchlist route integration tests', () => {
             await watchlistController.addToWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(NotFound);
         }
     });
 
@@ -242,7 +244,7 @@ describe('WatchlistController get watchlist route integration tests', () => {
             const response: RetrieveWatchlistResponse = await watchlistController.getWatchlist(request);
         }
         catch(error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -284,7 +286,7 @@ describe('WatchlistController remove route integration test', () => {
             await watchlistController.removeFromWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -302,7 +304,7 @@ describe('WatchlistController remove route integration test', () => {
             await watchlistController.removeFromWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -320,7 +322,7 @@ describe('WatchlistController remove route integration test', () => {
             await watchlistController.removeFromWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -338,7 +340,7 @@ describe('WatchlistController remove route integration test', () => {
             await watchlistController.removeFromWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -356,7 +358,7 @@ describe('WatchlistController remove route integration test', () => {
             await watchlistController.removeFromWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 

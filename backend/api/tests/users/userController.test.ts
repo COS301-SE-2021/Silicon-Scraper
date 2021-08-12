@@ -1,3 +1,5 @@
+import { BadRequest, Forbidden, NotFound, Unauthorized } from "http-errors";
+import { InvalidCredentials, RequestError, UsernameNotFound } from "../../src/types/CustomErrors";
 import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../src/types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
 import UserController from "../../src/users/controller/userController";
@@ -93,7 +95,7 @@ describe('UserController signup route integration tests>', () => {
             const response: CreateUserResponse = await userController.signUpRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -110,7 +112,7 @@ describe('UserController signup route integration tests>', () => {
             const response: CreateUserResponse = await userController.signUpRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -127,7 +129,7 @@ describe('UserController signup route integration tests>', () => {
             const response: CreateUserResponse = await userController.signUpRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -144,7 +146,7 @@ describe('UserController signup route integration tests>', () => {
             const response: CreateUserResponse = await userController.signUpRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(Forbidden);
         }
     });
 
@@ -186,7 +188,7 @@ describe('UserController login route integration tests>', () => {
             const response: LoginUserResponse = await userController.loginRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -203,7 +205,7 @@ describe('UserController login route integration tests>', () => {
             const response: LoginUserResponse = await userController.loginRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -220,7 +222,7 @@ describe('UserController login route integration tests>', () => {
             const response: LoginUserResponse = await userController.loginRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -237,7 +239,7 @@ describe('UserController login route integration tests>', () => {
             const response: LoginUserResponse = await userController.loginRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(NotFound);
         }
     });
 
@@ -257,7 +259,7 @@ describe('UserController login route integration tests>', () => {
             const response: LoginUserResponse = await userController.loginRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(Unauthorized);
         }
     });
 
@@ -294,7 +296,7 @@ describe('UserController delete route integration tests>', () => {
             await userController.deleteRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -311,7 +313,7 @@ describe('UserController delete route integration tests>', () => {
             await userController.deleteRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -328,7 +330,7 @@ describe('UserController delete route integration tests>', () => {
             await userController.deleteRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -345,7 +347,7 @@ describe('UserController delete route integration tests>', () => {
             await userController.deleteRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(NotFound);
         }
     });
 
@@ -365,7 +367,7 @@ describe('UserController delete route integration tests>', () => {
             await userController.deleteRoute(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(Unauthorized);
         }
     });
 

@@ -2,8 +2,8 @@ import { BadRequest, NotFound, Unauthorized } from "http-errors";
 
 export class RequestError extends BadRequest {
 
-    constructor() {
-        super('Missing parameter(s) in request body');
+    constructor(message?: string) {
+        super(message || 'Missing parameter(s) in request body');
     }
 }
 

@@ -3,7 +3,7 @@ import { CPU } from "../../entity/cpu";
 import { GPU } from "../../entity/gpu";
 import { watchlistCPU } from "../../entity/watchlistCPU";
 import { watchlistGPU } from "../../entity/watchlistGPU";
-import { RequestError } from "../../types/CustomErrors";
+import { ProductNotFound, RequestError } from "../../types/CustomErrors";
 import { AddProductRequest, RemoveProductRequest, RetrieveWatchlistRequest } from "../../types/Requests";
 import { RetrieveWatchlistResponse } from "../../types/Responses";
 
@@ -27,7 +27,7 @@ export default class WatchlistService {
                     }
                 });
                 if (cpu === undefined)
-                    throw new Error('Invalid product ID');
+                    throw new ProductNotFound();
                 const watchCPU: watchlistCPU = new watchlistCPU();
                 watchCPU.user_id = request.userID;
                 watchCPU.product_id = request.productID;
@@ -40,14 +40,14 @@ export default class WatchlistService {
                     }
                 });
                 if (gpu === undefined)
-                    throw new Error('Invalid product ID');
+                    throw new ProductNotFound();
                 const watchGPU: watchlistGPU = new watchlistGPU();
                 watchGPU.user_id = request.userID;
                 watchGPU.product_id = request.productID;
                 this.gpuWatchlistRepository.save(watchGPU);
                 break;
             default:
-                throw new Error('Invalid product type');
+                throw new RequestError('Invalid product type');
                 
         }
     }
@@ -93,7 +93,7 @@ export default class WatchlistService {
                 });
                 break;
             default:
-                throw new Error('Invalid product type');
+                throw new RequestError('Invalid product type');
         }
     }
 }

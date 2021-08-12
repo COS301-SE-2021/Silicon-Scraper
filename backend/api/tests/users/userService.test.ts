@@ -1,3 +1,5 @@
+import { BadRequest, Forbidden, NotFound, Unauthorized } from "http-errors";
+import { InvalidCredentials, RequestError, UsernameNotFound } from "../../src/types/CustomErrors";
 import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../src/types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
 import UserService from "../../src/users/service/userService";
@@ -36,7 +38,7 @@ describe('Create User unit tests>', () => {
             const response: CreateUserResponse = await userService.createUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -53,7 +55,7 @@ describe('Create User unit tests>', () => {
             const response: CreateUserResponse = await userService.createUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -70,7 +72,7 @@ describe('Create User unit tests>', () => {
             const response: CreateUserResponse = await userService.createUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -87,7 +89,7 @@ describe('Create User unit tests>', () => {
             const response: CreateUserResponse = await userService.createUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(Forbidden);
         }
     });
 
@@ -125,7 +127,7 @@ describe('Login User unit tests>', () => {
             const response: LoginUserResponse = await userService.loginUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -142,7 +144,7 @@ describe('Login User unit tests>', () => {
             const response: LoginUserResponse = await userService.loginUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -159,7 +161,7 @@ describe('Login User unit tests>', () => {
             const response: LoginUserResponse = await userService.loginUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -176,8 +178,7 @@ describe('Login User unit tests>', () => {
             const response: LoginUserResponse = await userService.loginUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
-            expect(error.message).toEqual('Username does not exist');
+            expect(error).toBeInstanceOf(NotFound);
         }
     });
 
@@ -197,8 +198,7 @@ describe('Login User unit tests>', () => {
             const response: LoginUserResponse = await userService.loginUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
-            expect(error.message).toEqual('Invalid login details');
+            expect(error).toBeInstanceOf(Unauthorized);
         }
     });
 
@@ -234,7 +234,7 @@ describe('Remove user unit tests>', () => {
             await userService.removeUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -251,7 +251,7 @@ describe('Remove user unit tests>', () => {
             await userService.removeUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -268,7 +268,7 @@ describe('Remove user unit tests>', () => {
             await userService.removeUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -285,7 +285,7 @@ describe('Remove user unit tests>', () => {
             await userService.removeUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(NotFound);
         }
     });
 
@@ -305,7 +305,7 @@ describe('Remove user unit tests>', () => {
             await userService.removeUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(Unauthorized);
         }
     });
 

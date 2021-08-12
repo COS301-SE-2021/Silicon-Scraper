@@ -2,6 +2,8 @@ import { MockCPURepository, MockGPURepository, MockWatchCPURepositoryFactory, Mo
 import { AddProductRequest, RemoveProductRequest, RetrieveWatchlistRequest } from "../../src/types/Requests";
 import { RetrieveWatchlistResponse } from "../../src/types/Responses";
 import WatchlistService from "../../src/watchlist/service/watchlistService";
+import { ProductNotFound, RequestError } from "../../src/types/CustomErrors";
+import { BadRequest, NotFound } from "http-errors";
 
 const mockWatchCPURepositoryFactory: MockWatchCPURepositoryFactory = new MockWatchCPURepositoryFactory();
 const mockWatchGPURepositoryFactory: MockWatchGPURepositoryFactory = new MockWatchGPURepositoryFactory();
@@ -28,7 +30,7 @@ describe('Add product unit tests', () => {
 
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -45,7 +47,7 @@ describe('Add product unit tests', () => {
             await watchlistService.addProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -62,7 +64,7 @@ describe('Add product unit tests', () => {
             await watchlistService.addProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -79,7 +81,7 @@ describe('Add product unit tests', () => {
             await watchlistService.addProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -96,7 +98,7 @@ describe('Add product unit tests', () => {
             await watchlistService.addProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -113,7 +115,7 @@ describe('Add product unit tests', () => {
             await watchlistService.addProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(NotFound);
         }
     });
 
@@ -130,7 +132,7 @@ describe('Add product unit tests', () => {
             await watchlistService.addProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(NotFound);
         }
     });
 
@@ -172,7 +174,7 @@ describe('Retrieve watchlist unit tests', () => {
             const response: RetrieveWatchlistResponse = await watchlistService.retrieveWatchlist(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -207,7 +209,7 @@ describe('Remove product (from watchlist) unit tests', () => {
             await watchlistService.removeProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -224,7 +226,7 @@ describe('Remove product (from watchlist) unit tests', () => {
             await watchlistService.removeProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -241,7 +243,7 @@ describe('Remove product (from watchlist) unit tests', () => {
             await watchlistService.removeProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -258,7 +260,7 @@ describe('Remove product (from watchlist) unit tests', () => {
             await watchlistService.removeProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
@@ -275,7 +277,7 @@ describe('Remove product (from watchlist) unit tests', () => {
             await watchlistService.removeProduct(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Error);
+            expect(error).toBeInstanceOf(BadRequest);
         }
     });
 
