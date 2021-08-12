@@ -239,5 +239,5 @@ export const dataOps = (db=db_) => {
     }
 }
 
-dataOps()
-//console.log("Run scraper")
+//dataOps()
+console.log("Run scraper")

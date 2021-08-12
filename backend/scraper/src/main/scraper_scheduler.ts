@@ -7,7 +7,7 @@ cron_time = '* * * * * *'
 
 cronJob = new CronJob(cron_time, () => {
     console.log("______Webscraper running______")
-    exec('npm start')
+    exec('ts-node scraperDbOp.ts')
 })
 
 cronJob.start()
