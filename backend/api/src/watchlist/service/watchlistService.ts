@@ -3,6 +3,7 @@ import { CPU } from "../../entity/cpu";
 import { GPU } from "../../entity/gpu";
 import { watchlistCPU } from "../../entity/watchlistCPU";
 import { watchlistGPU } from "../../entity/watchlistGPU";
+import { RequestError } from "../../types/CustomErrors";
 import { AddProductRequest, RemoveProductRequest, RetrieveWatchlistRequest } from "../../types/Requests";
 import { RetrieveWatchlistResponse } from "../../types/Responses";
 
@@ -17,7 +18,7 @@ export default class WatchlistService {
 
     async addProduct(request: AddProductRequest): Promise<void> {
         if (request.productID === undefined || request.type === undefined || request.userID === undefined)
-            throw new Error('Missing parameter(s) in request body');
+            throw new RequestError();
         switch (request.type.toUpperCase()) {
             case 'CPU':
                 const cpu: CPU | undefined = await this.cpuRepository.findOne({
@@ -53,7 +54,7 @@ export default class WatchlistService {
 
     async retrieveWatchlist(request: RetrieveWatchlistRequest): Promise<RetrieveWatchlistResponse> {
         if (request.userID === undefined)
-            throw new Error('Missing parameter(s) in request body');
+            throw new RequestError();
         let cpus: any[];
         let gpus: any[];
         cpus = []
@@ -77,7 +78,7 @@ export default class WatchlistService {
 
     async removeProduct(request: RemoveProductRequest): Promise<void> {
         if (request.productID === undefined || request.type === undefined || request.userID === undefined)
-            throw new Error('Missing parameter(s)');
+            throw new RequestError();
         switch (request.type.toUpperCase()) {
             case 'CPU':
                 await this.cpuWatchlistRepository.delete({

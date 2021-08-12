@@ -1,5 +1,6 @@
 import { Repository } from "typeorm";
 import { User } from "../../entity/user";
+import { RequestError } from "../../types/CustomErrors";
 import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../types/Responses";
 
@@ -13,7 +14,7 @@ export default class UserService {
 
     async createUser(request: CreateUserRequest): Promise<CreateUserResponse> {
         if (request.username === undefined || request.password === undefined)
-            throw new Error('Missing parameter(s) in request body');
+            throw new RequestError();
         let existingUser: User | undefined = await this.userRepository.findOne({
             where: {
                 username: request.username
@@ -35,7 +36,7 @@ export default class UserService {
 
     async loginUser(request: LoginUserRequest): Promise<LoginUserResponse> {
         if (request.username === undefined || request.password === undefined)
-            throw new Error('Missing parameter(s) in request body');
+            throw new RequestError();
         let user: User | undefined = await this.userRepository.findOne({
             where: {
                 username: request.username
@@ -53,7 +54,7 @@ export default class UserService {
 
     async removeUser(request: RemoveUserRequest): Promise<void> {
         if (request.username === undefined || request.password === undefined)
-            throw new Error('Missing parameter(s) in request body');
+            throw new RequestError();
         let user: User | undefined = await this.userRepository.findOne({
             where: {
                 username: request.username
