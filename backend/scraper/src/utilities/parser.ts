@@ -1,7 +1,7 @@
 
 
 var j = "/web/";
-let url = require("../utilities/url.ts");
+let url = require("../utilities/url");
 /**
  * This function concatenates the given url to the base url of the specific Website
  * @param urlRES
