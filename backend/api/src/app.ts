@@ -38,14 +38,20 @@ const connect = async () => {
     app.use('/users', userController.routes());
     app.use('/watchlist', watchlistController.routes());
     app.use((req, res, next) => {
-        res.json({
+        res.status(404).json({
             status: 404,
             error: 'Not Found'
         });
     });
 
     app.use((err, req, res, next) => {
-        res.status(500).json({message: 'An error occurred'})
+        let msg: string = 'An error occurred';
+        let status: number = 500;
+        if (err instanceof Object || typeof err === 'object') {
+            msg = err.message || msg;
+            status = err.status || status;
+        } 
+        res.status(status).json({error: msg})
     }) 
 }
 

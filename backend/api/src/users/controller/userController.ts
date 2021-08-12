@@ -28,7 +28,7 @@ export default class UserController {
     routes(): Router {
         this.router.post('/', async(req, res, next) => res.status(201).json(await this.signUpRoute(<CreateUserRequest>req.body).catch(err => next(err))));
         this.router.post('/login', async(req, res, next) => res.status(200).json(await this.loginRoute(<LoginUserRequest>req.body).catch(err => next(err))));
-        this.router.delete('/', async(req, res, next) => {await this.deleteRoute(<RemoveUserRequest>req.body).catch(err => next(err)); res.status(204)});
+        this.router.delete('/', async(req, res, next) => {await this.deleteRoute(<RemoveUserRequest>req.body).catch(err => next(err)); res.status(204).send()});
         return this.router;
     }
 
