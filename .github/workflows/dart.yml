@@ -7,7 +7,7 @@ name: Dart
 
 on:
   push:
-    branches: [ master,develop ]
+    branches: [ master,develop,refactor-folder-structure]
   pull_request:
     branches: [ master,develop ]
 
@@ -31,6 +31,7 @@ jobs:
           flutter-version: '2.0.5'
 
       - name: Install dependencies
+        working-directory: frontend
         run: flutter pub get
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
@@ -45,4 +46,5 @@ jobs:
       # package:test for this step to succeed. Note that Flutter projects will
       # want to change this to 'flutter test'.
       - name: Run tests
+        working-directory: frontend
         run: flutter test
