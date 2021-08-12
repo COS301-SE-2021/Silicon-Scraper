@@ -6,7 +6,7 @@ const axios = require("axios");
 
 
 let url = require("../utilities/url");
-let selectors = require("../utilities/selectors.ts").selectorsArray;
+let selectors = require("../utilities/selectors").selectorsArray;
 let array1 : Product[] = [];
 let array2 : Product[] = [];
 let products = {
