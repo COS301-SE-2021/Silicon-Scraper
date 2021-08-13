@@ -1,11 +1,14 @@
 import pandas as pd
+import os
 import sklearn.preprocessing as sp
 from api.nn_utilities.dataCleaning import split_date
 
+cwd = os.path.dirname(__file__)
+
 def getModelData():
-    gpuModels = pd.read_csv("api/model_data/gpuModels.csv")
-    cpuModels = pd.read_csv("api/model_data/cpuModels.csv")
-    brands = pd.read_csv("api/model_data/brands.csv")
+    gpuModels = pd.read_csv(os.path.join(cwd,"../model_data/gpuModels.csv"))
+    cpuModels = pd.read_csv(os.path.join(cwd,"../model_data/cpuModels.csv"))
+    brands = pd.read_csv(os.path.join(cwd,"../model_data/brands.csv"))
 
 
     models = gpuModels.append(cpuModels)

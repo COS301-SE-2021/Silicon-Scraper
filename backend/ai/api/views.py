@@ -12,12 +12,12 @@ from flask import jsonify, request, Blueprint
 from api import create_app
 from api.nn_utilities.dataEncoding import encode_data
 
+cwd = os.path.dirname(__file__)
 
-PATH_TO_MODELS = "api/trained_models/"
-PRICE_PRED_MODEL_NAME = 'price_prediction.h5'
-AVAIL_PRED_MODEL_NAME = 'avail_prediction.h5'
-PATH_TO_CPU_MODEL_DATA = "api/model_data/cpuModels.csv"
-PATH_TO_GPU_MODEL_DATA = "api/model_data/gpuModels.csv"
+PATH_TO_PRICE_PRED_MODEL = 'trained_models/price_prediction.h5'
+PATH_TO_AVAIL_PRED_MODEL = 'trained_models/avail_prediction.h5'
+PATH_TO_CPU_MODEL_DATA = os.path.join(cwd, "model_data/cpuModels.csv")
+PATH_TO_GPU_MODEL_DATA = os.path.join(cwd, "model_data/gpuModels.csv")
 
 price_model = None
 avail_model = None
@@ -36,17 +36,17 @@ def prepare_params(params):
     data_price = np.array(data_price)
     data_avail = np.array(data_avail)
 
-    with open('api/nn_utilities/scalar_avail', 'rb') as f:
+    with open(os.path.join(cwd,'nn_utilities/scalar_avail'), 'rb') as f:
         scaler_y_avail = pickle.load(f)
 
-    with open('api/nn_utilities/scalar_price', 'rb') as f:
+    with open(os.path.join(cwd,'nn_utilities/scalar_price'), 'rb') as f:
         scalar_y_price = pickle.load(f)
 
     return scalar_y_price.transform(data_price), scaler_y_avail.transform(data_avail), scaler_y_avail, scalar_y_price
 
 
 
-logging.basicConfig(filename="api/api_logs/api.log", level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
+logging.basicConfig(filename=os.path.join(cwd,"api_logs/api.log"), level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
 
 parameters = [
     "brand", "model", "date", "type", "price", "availability"
@@ -59,8 +59,9 @@ app = create_app()
 @bp.route('/price-and-availability', methods = ["GET"])
 def price_and_availability():
     app.logger.info("Loading models ....")
-    price_model = load_model(os.path.join(PATH_TO_MODELS, PRICE_PRED_MODEL_NAME))
-    avail_model = load_model(os.path.join(PATH_TO_MODELS, AVAIL_PRED_MODEL_NAME))
+    print(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
+    price_model = load_model(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
+    avail_model = load_model(os.path.join(cwd, PATH_TO_AVAIL_PRED_MODEL))
     app.logger.info("Models loaded ....")
     
     results = {'success': False}
@@ -99,4 +100,3 @@ if __name__ == '__main__':
 
     print("Starting web service...")
     app.run(host = '0.0.0.0', debug=True,  port=int(os.environ.get('PORT', 5000)))
-    print(f"[server] running on {host}")
