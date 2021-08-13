@@ -85,8 +85,8 @@ class SearchViewModel {
       "in stock",
       "out of stock",
       "cpu",
-      "gpu"
-          "evetech",
+      "gpu",
+      "evetech",
       "dreamware",
       "amptek"
     ];
