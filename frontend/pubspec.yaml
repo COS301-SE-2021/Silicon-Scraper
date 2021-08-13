@@ -63,7 +63,10 @@ dev_dependencies:
   firebase_messaging: ^10.0.0
 #  firebase_core:
   firebase_analytics:
-# "^7.0.1"
+# for app open notifications
+  flutter_local_notifications:
+
+
 
 
 
