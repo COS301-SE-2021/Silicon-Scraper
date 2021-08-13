@@ -111,22 +111,22 @@ void main() {
         List<Product> res = search.applyFilters(list, false, false, 0, 10000, false, false, false);
         expect(res.length, 0);
       });
-      // test("test applying availability 'in stock' filter (should be 2)", () {
-      //   List<Product> res = search.applyFilters(list, true, false, min, max, false, false, false);
-      //   expect(res.length, 2);
-      // });
-      // test("test applying availability 'out of stock' filter (should be 5)", () {
-      //   List<Product> res = search.applyFilters(list, false, true, min, max, false, false, false);
-      //   expect(res.length, 5);
-      // });
-      // test("test applying all availability filters (should be 7)", () {
-      //   List<Product> res = search.applyFilters(list, true, true, min, max, false, false, false);
-      //   expect(res.length, 7);
-      // });
-      // test("test applying no availability filters (should be 7)", () {
-      //   List<Product> res = search.applyFilters(list, false, false, min, max, false, false, false);
-      //   expect(res.length, 7);
-      // });
+      test("test applying availability 'in stock' filter (should be 3)", () {
+        List<Product> res = search.applyFilters(list, true, false, min, max, false, false, false);
+        expect(res.length, 3);
+      });
+      test("test applying availability 'out of stock' filter (should be 4)", () {
+        List<Product> res = search.applyFilters(list, false, true, min, max, false, false, false);
+        expect(res.length, 4);
+      });
+      test("test applying all availability filters (should be 7)", () {
+        List<Product> res = search.applyFilters(list, true, true, min, max, false, false, false);
+        expect(res.length, 7);
+      });
+      test("test applying no availability filters (should be 7)", () {
+        List<Product> res = search.applyFilters(list, false, false, min, max, false, false, false);
+        expect(res.length, 7);
+      });
     });
     group("test max/min price helper service", () {
       test("test max price of products should be '45999.0'", (){

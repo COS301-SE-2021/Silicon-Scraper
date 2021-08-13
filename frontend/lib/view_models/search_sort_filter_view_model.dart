@@ -94,27 +94,16 @@ class SearchViewModel {
           if (i < 2) {
             if (filters[i]) {
               //print(filters[i]);
-              print(products
-                  .elementAt(p)
-                  .getAvailability());
-              if (products
-                      .elementAt(p)
-                      .getAvailability()
-                      .toLowerCase()
-                      .compareTo(filterString[i]) ==
-                  0) {
+              print("availability:" + products.elementAt(p).getAvailability());
+              if (products.elementAt(p).getAvailability().toLowerCase().compareTo(filterString[i]) == 0) {
                 add = true;
               } else {
-                add = false;
+                //add = false;
               }
             }
           } else {
             if (filters[i]) {
-              if (products
-                      .elementAt(p)
-                      .retailer
-                      .toLowerCase()
-                      .compareTo(filterString[i]) ==
+              if (products.elementAt(p).retailer.toLowerCase().compareTo(filterString[i]) ==
                   0) {
                 add = true;
               }
