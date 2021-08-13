@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:silicon_scraper/models/product_model.dart';
@@ -57,14 +56,16 @@ class SearchPage extends StatelessWidget {
 }
 
 class ProductSearch extends SearchDelegate<String> {
-
   SearchPageViewModelSingleton search = SearchPageViewModelSingleton.getState();
   List<Product> products = [];
-  List<Product> originalProducts = []; //so we can always be working with original search results
+  List<Product> originalProducts =
+      []; //so we can always be working with original search results
 
   String sortValue = 'SORT';
   bool inStock = false;
   bool outOfStock = false;
+  bool cpuFilter = false;
+  bool gpuFilter = false;
   bool retailer1 = false;
   bool retailer2 = false;
   bool retailer3 = false;
@@ -148,7 +149,7 @@ class ProductSearch extends SearchDelegate<String> {
               if (snapshot.data == null) {
                 return buildNoResults();
               }
-              if (search.isMockSearchService()){
+              if (search.isMockSearchService()) {
                 this.products = search.getResults(snapshot.data, query);
                 this.originalProducts = search.getResults(snapshot.data, query);
               } else {
@@ -181,7 +182,7 @@ class ProductSearch extends SearchDelegate<String> {
                 return buildNoSuggestions(context);
               } else {
                 List<String> productSuggestions =
-                search.getSuggestions(snapshot.data, query);
+                    search.getSuggestions(snapshot.data, query);
                 if (productSuggestions.isEmpty) {
                   return buildNoSuggestions(context);
                 }
@@ -253,7 +254,7 @@ class ProductSearch extends SearchDelegate<String> {
               TextSpan(text: 'Couldn\'t find "' + query + '". \n\n'),
               TextSpan(
                   text:
-                  'Check your spelling or try searching with a different keyword.',
+                      'Check your spelling or try searching with a different keyword.',
                   style: TextStyle(
                       color: Colors.grey[700],
                       fontWeight: FontWeight.bold,
@@ -272,7 +273,8 @@ class ProductSearch extends SearchDelegate<String> {
 
     return StatefulBuilder(builder: (context, _setState) {
       ListView productsWidget() {
-        List<Product> sortedProducts = search.applySort(this.products, sortValue);
+        List<Product> sortedProducts =
+            search.applySort(this.products, sortValue);
         if (sortedProducts != null) {
           return productListView(context, sortedProducts);
         }
@@ -282,7 +284,7 @@ class ProductSearch extends SearchDelegate<String> {
       }
 
       return Container(
-        //width: MediaQuery.of(context).size.width,
+          //width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: Colors.grey, width: 0.3),
@@ -294,249 +296,299 @@ class ProductSearch extends SearchDelegate<String> {
                 /// sort and filter row
                 Container(
                     child: Row(children: [
-                      /// sort
-                      Container(
-                          width: MediaQuery.of(context).size.width / 2 - 0.3,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              right: BorderSide(width: 0.3, color: Colors.grey),
-                            ),
-                          ),
-                          child: Center(
-                              child: DropdownButton<String>(
-                                value: sortValue,
-                                icon: const Icon(Icons.arrow_drop_down_sharp),
-                                iconSize: 30,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                ),
-                                underline: Container(
-                                  height: 0,
-                                  color: Colors.white,
-                                ),
-                                onChanged: (String newValue) {
-                                  _setState(() {
-                                    sortValue = newValue;
-                                  });
-                                },
-                                items: <String>[
-                                  'SORT',
-                                  'Price (low to high)',
-                                  'Price (high to low)'
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  );
-                                }).toList(),
-                              ))),
-
-                      /// filter button
-                      Container(
-                          width: MediaQuery.of(context).size.width / 2 - 0.3,
-                          child: TextButton(
+                  /// sort
+                  Container(
+                      width: MediaQuery.of(context).size.width / 2 - 0.3,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(width: 0.3, color: Colors.grey),
+                        ),
+                      ),
+                      child: Center(
+                          child: DropdownButton<String>(
+                        value: sortValue,
+                        icon: const Icon(Icons.arrow_drop_down_sharp),
+                        iconSize: 30,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                        ),
+                        underline: Container(
+                          height: 0,
+                          color: Colors.white,
+                        ),
+                        onChanged: (String newValue) {
+                          _setState(() {
+                            sortValue = newValue;
+                          });
+                        },
+                        items: <String>[
+                          'SORT',
+                          'Price (low to high)',
+                          'Price (high to low)'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
                             child: Text(
-                              'FILTER',
-                              style: TextStyle(fontSize: 14.0, color: Colors.black),
+                              value,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            style: TextButton.styleFrom(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          );
+                        }).toList(),
+                      ))),
+
+                  /// filter button
+                  Container(
+                      width: MediaQuery.of(context).size.width / 2 - 0.3,
+                      child: TextButton(
+                        child: Text(
+                          'FILTER',
+                          style: TextStyle(fontSize: 14.0, color: Colors.black),
+                        ),
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          backgroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              //barrierColor: Colors.deepOrangeAccent,
+                              isDismissible: false,
+                              enableDrag: false,
                               backgroundColor: Colors.white,
-                            ),
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  //barrierColor: Colors.deepOrangeAccent,
-                                  isDismissible: false,
-                                  enableDrag: false,
-                                  backgroundColor: Colors.white,
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(10.0),
-                                      )),
-                                  builder: (BuildContext context) {
-                                    return StatefulBuilder(builder:
-                                        (BuildContext context,
+                              elevation: 10,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(10.0),
+                              )),
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(builder:
+                                    (BuildContext context,
                                         StateSetter filterState) {
-                                      return Container(
-                                        height: MediaQuery.of(context).size.height,
-                                        child: Center(
-                                            child: ListView(children: <Widget>[
-                                              Padding(
-                                                padding:
-                                                EdgeInsets.fromLTRB(20, 5, 0, 5),
-                                                child: RichText(
-                                                  textAlign: TextAlign.left,
-                                                  text: TextSpan(
-                                                      text: "Filter",
-                                                      style: TextStyle(
-                                                        fontSize: 24,
-                                                        fontWeight: FontWeight.w500,
-                                                        color: Colors.black,
-                                                      )),
-                                                ),
+                                  return Container(
+                                    height: MediaQuery.of(context).size.height,
+                                    child: Center(
+                                        child: ListView(children: <Widget>[
+                                      Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(20, 5, 5, 10),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              RichText(
+                                                textAlign: TextAlign.left,
+                                                text: TextSpan(
+                                                    text: "Filter",
+                                                    style: TextStyle(
+                                                      fontSize: 24,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Colors.black,
+                                                    )),
                                               ),
-                                              /// availability checkboxes
-                                              ExpansionTile(
-                                                  title: Text(
-                                                    'Availability',
-                                                    style: TextStyle(fontSize: 18),
-                                                  ),
-                                                  childrenPadding:
-                                                  EdgeInsets.fromLTRB(20, 0, 30, 0),
-                                                  children: <Widget>[
-                                                    CheckboxListTile(
-                                                      title: const Text('In Stock'),
-                                                      value: this.inStock,
-                                                      onChanged: (bool value) {
-                                                        filterState(() {
-                                                          this.inStock = value;
-                                                        });
-                                                      },
-                                                    ),
-                                                    CheckboxListTile(
-                                                      title: const Text('Out of Stock'),
-                                                      value: this.outOfStock,
-                                                      onChanged: (bool value) {
-                                                        filterState(() {
-                                                          this.outOfStock = value;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ]),
-                                              /// price range slide
-                                              ExpansionTile(
-                                                  title: Text(
-                                                    'Price',
-                                                    style: TextStyle(fontSize: 18),
-                                                  ),
-                                                  childrenPadding:
-                                                  EdgeInsets.fromLTRB(20, 0, 30, 0),
-                                                  children: <Widget>[
-                                                    RangeSlider(
-                                                      values: _priceRangeValues,
-                                                      min: minPrice,
-                                                      max: maxPrice,
-                                                      divisions: 20,
-                                                      labels: RangeLabels(
-                                                        _priceRangeValues.start
-                                                            .round()
-                                                            .toString(),
-                                                        _priceRangeValues.end
-                                                            .round()
-                                                            .toString(),
-                                                      ),
-                                                      onChanged: (RangeValues values) {
-                                                        filterState(() {
-                                                          _priceRangeValues = values;
-                                                        });
-                                                      },
-                                                    )
-                                                  ]),
-                                              /// retailer checkboxes
-                                              ExpansionTile(
-                                                  title: Text(
-                                                    'Retailer',
-                                                    style: TextStyle(fontSize: 18),
-                                                  ),
-                                                  childrenPadding:
-                                                  EdgeInsets.fromLTRB(20, 0, 30, 0),
-                                                  children: <Widget>[
-                                                    CheckboxListTile(
-                                                      title: const Text('EveTech'),
-                                                      value: this.retailer1,
-                                                      onChanged: (bool value) {
-                                                        filterState(() {
-                                                          this.retailer1 = value;
-                                                        });
-                                                      },
-                                                    ),
-                                                    CheckboxListTile(
-                                                      title: const Text('Dreamware'),
-                                                      value: this.retailer2,
-                                                      onChanged: (bool value) {
-                                                        filterState(() {
-                                                          this.retailer2 = value;
-                                                        });
-                                                      },
-                                                    ),
-                                                    CheckboxListTile(
-                                                      title: const Text('Amptek'),
-                                                      value: this.retailer3,
-                                                      onChanged: (bool value) {
-                                                        filterState(() {
-                                                          this.retailer3 = value;
-                                                        });
-                                                      },
-                                                    ),
-                                                  ]),
-                                              Padding(
-                                                  padding: EdgeInsets.all(20),
-                                                  child: new ButtonBar(
-                                                    mainAxisSize: MainAxisSize.min,
-                                                    children: [
-                                                      OutlinedButton(
-                                                        child: Text(
-                                                          "Cancel",
-                                                          style: TextStyle(
-                                                              fontSize: 20.0,
-                                                              color: Colors.grey),
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.pop(context, this.products);
-                                                        },
-                                                      ),
-                                                      TextButton(
-                                                        child: Text(
-                                                          'Apply',
-                                                          style: TextStyle(
-                                                              fontSize: 20.0,
-                                                              color: Colors.white),
-                                                        ),
-                                                        style: TextButton.styleFrom(
-                                                          padding:
-                                                          const EdgeInsets.fromLTRB(
-                                                              20, 0, 20, 0),
-                                                          backgroundColor:
-                                                          Colors.deepOrangeAccent,
-                                                        ),
-                                                        onPressed: () {
-                                                          List<Product>
-                                                          filteredProducts =
-                                                          search.applyFilters(
-                                                              this.originalProducts,
-                                                              inStock,
-                                                              outOfStock,
-                                                              _priceRangeValues.start,
-                                                              _priceRangeValues.end,
-                                                              retailer1,
-                                                              retailer2,
-                                                              retailer3);
-                                                          Navigator.pop(context,
-                                                              filteredProducts);
-                                                        },
-                                                      ),
-                                                    ],
-                                                  )),
-                                            ])),
-                                      );
-                                    });
-                                  })
-                                ..then(
-                                      (value) {
-                                    _setState(() {
-                                      this.products = value;
-                                    });
-                                  },
-                                );
-                            },
-                          ))
-                    ])),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.pop(
+                                                      context, this.products);
+                                                },
+                                                icon:
+                                                    Icon(Icons.cancel_outlined),
+                                                color: Colors.grey,
+                                              )
+                                            ],
+                                          )),
+
+                                      /// availability checkboxes
+                                      ExpansionTile(
+                                          title: Text(
+                                            'Availability',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          childrenPadding:
+                                              EdgeInsets.fromLTRB(20, 0, 30, 0),
+                                          children: <Widget>[
+                                            CheckboxListTile(
+                                              title: const Text('In Stock'),
+                                              value: this.inStock,
+                                              onChanged: (bool value) {
+                                                filterState(() {
+                                                  this.inStock = value;
+                                                });
+                                              },
+                                            ),
+                                            CheckboxListTile(
+                                              title: const Text('Out of Stock'),
+                                              value: this.outOfStock,
+                                              onChanged: (bool value) {
+                                                filterState(() {
+                                                  this.outOfStock = value;
+                                                });
+                                              },
+                                            ),
+                                          ]),
+
+                                          /// product type checkboxes
+                                          ExpansionTile(
+                                              title: Text(
+                                                'Type',
+                                                style: TextStyle(fontSize: 18),
+                                              ),
+                                              childrenPadding:
+                                              EdgeInsets.fromLTRB(20, 0, 30, 0),
+                                              children: <Widget>[
+                                                CheckboxListTile(
+                                                  title: const Text('CPU'),
+                                                  value: this.cpuFilter,
+                                                  onChanged: (bool value) {
+                                                    filterState(() {
+                                                      this.cpuFilter = value;
+                                                    });
+                                                  },
+                                                ),
+                                                CheckboxListTile(
+                                                  title: const Text('GPU'),
+                                                  value: this.gpuFilter,
+                                                  onChanged: (bool value) {
+                                                    filterState(() {
+                                                      this.gpuFilter = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ]),
+
+                                      /// price range slide
+                                      ExpansionTile(
+                                          title: Text(
+                                            'Price',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          childrenPadding:
+                                              EdgeInsets.fromLTRB(20, 0, 30, 0),
+                                          children: <Widget>[
+                                            RangeSlider(
+                                              values: _priceRangeValues,
+                                              min: minPrice,
+                                              max: maxPrice,
+                                              divisions: 20,
+                                              labels: RangeLabels(
+                                                _priceRangeValues.start
+                                                    .round()
+                                                    .toString(),
+                                                _priceRangeValues.end
+                                                    .round()
+                                                    .toString(),
+                                              ),
+                                              onChanged: (RangeValues values) {
+                                                filterState(() {
+                                                  _priceRangeValues = values;
+                                                });
+                                              },
+                                            )
+                                          ]),
+
+                                      /// retailer checkboxes
+                                      ExpansionTile(
+                                          title: Text(
+                                            'Retailer',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          childrenPadding:
+                                              EdgeInsets.fromLTRB(20, 0, 30, 0),
+                                          children: <Widget>[
+                                            CheckboxListTile(
+                                              title: const Text('EveTech'),
+                                              value: this.retailer1,
+                                              onChanged: (bool value) {
+                                                filterState(() {
+                                                  this.retailer1 = value;
+                                                });
+                                              },
+                                            ),
+                                            CheckboxListTile(
+                                              title: const Text('Dreamware'),
+                                              value: this.retailer2,
+                                              onChanged: (bool value) {
+                                                filterState(() {
+                                                  this.retailer2 = value;
+                                                });
+                                              },
+                                            ),
+                                            CheckboxListTile(
+                                              title: const Text('Amptek'),
+                                              value: this.retailer3,
+                                              onChanged: (bool value) {
+                                                filterState(() {
+                                                  this.retailer3 = value;
+                                                });
+                                              },
+                                            ),
+                                          ]),
+                                      Padding(
+                                          padding: EdgeInsets.all(20),
+                                          child: new ButtonBar(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              OutlinedButton(
+                                                child: Text(
+                                                  "Cancel",
+                                                  style: TextStyle(
+                                                      fontSize: 20.0,
+                                                      color: Colors.grey),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(
+                                                      context, this.products);
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: Text(
+                                                  'Apply',
+                                                  style: TextStyle(
+                                                      fontSize: 20.0,
+                                                      color: Colors.white),
+                                                ),
+                                                style: TextButton.styleFrom(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          20, 0, 20, 0),
+                                                  backgroundColor:
+                                                      Colors.deepOrangeAccent,
+                                                ),
+                                                onPressed: () {
+                                                  List<
+                                                          Product>
+                                                      filteredProducts =
+                                                      search.applyFilters(
+                                                          this.originalProducts,
+                                                          inStock,
+                                                          outOfStock, cpuFilter, gpuFilter,
+                                                          _priceRangeValues
+                                                              .start,
+                                                          _priceRangeValues.end,
+                                                          retailer1,
+                                                          retailer2,
+                                                          retailer3);
+                                                  Navigator.pop(context,
+                                                      filteredProducts);
+                                                },
+                                              ),
+                                            ],
+                                          )),
+                                    ])),
+                                  );
+                                });
+                              })
+                            ..then(
+                              (value) {
+                                _setState(() {
+                                  this.products = value;
+                                });
+                              },
+                            );
+                        },
+                      ))
+                ])),
 
                 /// number of items
                 Container(
@@ -551,7 +603,10 @@ class ProductSearch extends SearchDelegate<String> {
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                        text: search.numberOfItems(this.products == null ? 0 : this.products.length) + " items",
+                        text: search.numberOfItems(this.products == null
+                                ? 0
+                                : this.products.length) +
+                            " items",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
@@ -565,5 +620,4 @@ class ProductSearch extends SearchDelegate<String> {
               ]));
     });
   }
-
 }
