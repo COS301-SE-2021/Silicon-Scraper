@@ -25,12 +25,12 @@ const setQueryReturnValue = (newValue: deviceToken[]) => {
     });
 }
 
-beforeEach(() => {
-    const mockSend = jest.fn();
-    Broadcast.prototype.send = mockSend;
-})
-
 describe('Broadcast functionality', () => {
+    beforeEach(() => {
+        const mockSend = jest.fn();
+        Broadcast.prototype.send = mockSend;
+    })
+
     const broadcaster = new Broadcast();
     const mockSend = jest.fn();
     Broadcast.prototype.send = mockSend;
@@ -58,5 +58,37 @@ describe('Broadcast functionality', () => {
         setQueryReturnValue([]);
         await broadcaster.broadcast(cpu);
         expect(broadcaster.send).toBeCalledTimes(0);
+    })
+})
+
+describe('createNotification unit test', () => {
+    const broadcaster = new Broadcast();
+    const product: CPU = {
+        id: 'id',
+        image: 'imageURL',
+        link: 'link',
+        retailer: 'retailer',
+        type: 'cpu',
+        description: '',
+        details: {},
+        brand: 'brand',
+        model: 'model',
+        price: 5000,
+        availability: 'in stock',
+
+    }
+    const device = {
+        token: '1',
+        user: null
+    }
+    it('should return an object of type admin.messaging.TokenMessage', () => {
+        const message = broadcaster.createNotification(product, device);
+        expect(message).toEqual({
+            token: '1',
+            notification: {
+                title: `${product.brand} ${product.model} update`,
+                body: `R${product.price} ${product.availability}`
+            }
+        })
     })
 })

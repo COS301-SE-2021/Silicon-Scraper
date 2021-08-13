@@ -31,24 +31,32 @@ export default class Broadcast {
             default:
                 return;
         }
+
         let messages: admin.messaging.TokenMessage[] = [];
+        
         devices.forEach((device) => {
             if(messages.length === 500) {
                 // max messages allowed in batch send
                 this.send(messages);
                 messages = [];
             }
-            const message: admin.messaging.TokenMessage = {
-                notification: {
-                    title: `${product.brand} ${product.model} update`,
-                    body: `R${product.price} ${product.availability}`
-                },
-                token: device.token
-            }
+            const message = this.createNotification(product, device);
             messages.push(message);
         });
+
         if(messages.length > 0)
             this.send(messages);
+    }
+
+    public createNotification(product: CPU | GPU, device: deviceToken) {
+        const message: admin.messaging.TokenMessage = {
+            notification: {
+                title: `${product.brand} ${product.model} update`,
+                body: `R${product.price} ${product.availability}`
+            },
+            token: device.token
+        }
+        return message;
     }
 
     public send(messages: admin.messaging.TokenMessage[]) {
