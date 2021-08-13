@@ -39,7 +39,8 @@ dev_dependencies:
   #code coverage
   coverage: ^1.0.3
   #for opening links
-  url_launcher: ^5.7.5
+#  url_launcher: ^5.7.5
+  url_launcher:
   #for testing with network images
   #image_test_utils:
   #for search bar
@@ -59,7 +60,7 @@ dev_dependencies:
   #for date formats
   intl: ^0.17.0
   #for push notification
-  firebase_messaging: ^8.0.0-dev.11
+  firebase_messaging: ^10.0.0
 #  firebase_core:
   firebase_analytics:
 # "^7.0.1"

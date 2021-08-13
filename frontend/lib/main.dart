@@ -21,12 +21,16 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
 
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  String t=await FirebaseMessaging.instance.getToken();
+
+  print("|||||||||||||||||||||||||||||||||||||||||||||||||||||||"+t);
+
+
   WatchListInjector.configure(DependencyType.MOCK);
   ExplorePageInjector.configure(DependencyType.PROD);
   SearchSortFilterInjector.configure(DependencyType.PROD);
