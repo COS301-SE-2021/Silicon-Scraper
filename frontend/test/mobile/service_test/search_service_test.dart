@@ -10,7 +10,9 @@ import 'package:silicon_scraper/services/search_service.dart';
 void main() {
 
   group("testing search service", (){
+    test("", (){
 
+    });
   });
 
   // var list=addProducts(JSONData());

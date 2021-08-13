@@ -68,39 +68,39 @@ class ProductViewModel extends ChangeNotifier
 
   Widget getAvailabilityText(double size,TextAlign align)
   {
-    if(_item.stockAvailability==availability.available)
+    if(_item.stockAvailability==availability.inStock)
     {
       return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.green),textAlign: align,);
     }
-    else if(_item.stockAvailability==availability.notSpecified)
-    {
-      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.grey),textAlign: align);
-    }
-    else if(_item.stockAvailability==availability.outOfStock||_item.stockAvailability==availability.limitedStock)
-    {
-      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.red),textAlign: align);
-    }
+    // else if(_item.stockAvailability==availability.notSpecified)
+    // {
+    //   return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.grey),textAlign: align);
+    // }
+    // else if(_item.stockAvailability==availability.outOfStock||_item.stockAvailability==availability.limitedStock)
+    // {
+    //   return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.red),textAlign: align);
+    // }
     return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,),textAlign: align);
   }
 
   String getAvailability()
   {
-    if(_item.stockAvailability==availability.available)
+    if(_item.stockAvailability==availability.inStock)
     {
-      return "available";
+      return "in stock";
     }
-    else if(_item.stockAvailability==availability.limitedStock)
-    {
-      return "limited stock";
-    }
+    // else if(_item.stockAvailability==availability.limitedStock)
+    // {
+    //   return "limited stock";
+    // }
     else if(_item.stockAvailability==availability.outOfStock)
     {
       return "out of stock";
     }
-    else if(_item.stockAvailability==availability.notSpecified)
-    {
-      return "not specified";
-    }
-    return "not specified";
+    // else if(_item.stockAvailability==availability.notSpecified)
+    // {
+    //   return "not specified";
+    // }
+    return "out of stock";
   }
 }
