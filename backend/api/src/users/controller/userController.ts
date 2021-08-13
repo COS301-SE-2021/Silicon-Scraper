@@ -1,59 +1,60 @@
-import express from 'express';
+import { Router } from 'express';
 import UserService from '../service/userService';
-import ErrorTypes from '../../errors/ErrorTypes';
+import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from '../../types/Requests';
+import { CreateUserResponse, LoginUserResponse } from '../../types/Responses';
 
-const InvalidRequestError = ErrorTypes.InvalidRequestError;
-const RegisterError = ErrorTypes.RegisterError;
-const LoginError = ErrorTypes.LoginError;
-const UsernameNotFoundError = ErrorTypes.UsernameNotFoundError;
+export default class UserController {
 
-const router: express.Router = express.Router();
-const userService = UserService();
+    private router: Router;
 
-//Look for cleaner way to do this
-//My exception handling is messy
-
-router.post('/', async (req, res) => {
-    try {
-        const result = await userService.register(req.body);
-        res.status(201).json({token: result});
-    } catch(error) {
-        let errorMessage = '';
-        if (error instanceof InvalidRequestError) {
-            res.status(400);
-            errorMessage = "Missing parameters";
-        }
-        else if (error instanceof RegisterError) {
-            res.status(200);
-            errorMessage = "Username already exists";
-        }
-        else if (error instanceof Error) {
-            res.status(500);
-        }
-        res.json({message: errorMessage});
+    constructor(
+        private readonly userService: UserService
+    ){
+        this.router = Router();
     }
-});
 
-router.post('/login', async (req, res) => {
-    try {
-        const result = await userService.login(req.body);
-        res.status(200).json({token: result});
-    } catch(error) {
-        let errorMessage = '';
-        if (error instanceof InvalidRequestError) {
-            res.status(400);
-            errorMessage = "Missing parameters";
-        }
-        else if (error instanceof LoginError || error instanceof UsernameNotFoundError) {
-            res.status(200);
-            errorMessage = "Invalid credentials";
-        }
-        res.json({message: errorMessage});
+    async signUpRoute(request: CreateUserRequest): Promise<CreateUserResponse> {
+        return await this.userService.createUser(request);
     }
-});
 
-router.delete('/', (req, res) => {
-    res.status(501).send()
-});
+    async loginRoute(request: LoginUserRequest): Promise<LoginUserResponse> {
+        return await this.userService.loginUser(request);
+    }
 
-export default router;
+    async deleteRoute(request: RemoveUserRequest): Promise<void> {
+        return await this.userService.removeUser(request);
+    }
+
+    routes(): Router {
+        this.router.post('/', async(req, res, next) => res.status(201).json(await this.signUpRoute(<CreateUserRequest>req.body).catch(err => next(err))));
+        this.router.post('/login', async(req, res, next) => res.status(200).json(await this.loginRoute(<LoginUserRequest>req.body).catch(err => next(err))));
+        this.router.delete('/', async(req, res, next) => {await this.deleteRoute(<RemoveUserRequest>req.body).catch(err =>  {next(err); return}); res.status(204).send()});
+        return this.router;
+    }
+
+
+}
+
+// router.post('/', async (req, res) => {
+//     try {
+//         const result: CreateUserResponse = await userService.createUser(<CreateUserRequest>req.body);
+//         res.status(201).json(result);
+//     } catch(error) {
+//         res.status(500).json(error.message);
+//     }
+// });
+
+// router.post('/login', async (req, res) => {
+//     try {
+//         const result: LoginUserResponse = await userService.loginUser(<LoginUserRequest>req.body);
+//         res.status(200).json(result);
+//     } catch(error) {
+//         res.status(500).json(error);
+//     }
+// });
+
+// router.delete('/', (req, res) => {
+//     res.status(501).send()
+// });
+
+// export default router;

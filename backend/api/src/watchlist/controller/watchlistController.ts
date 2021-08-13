@@ -1,48 +1,37 @@
-import express from "express";
-import ErrorTypes from "../../errors/ErrorTypes";
-import jwtUtil from '../../utilities/jwtUtil';
+import express, { Router } from "express";
+import { AddProductRequest, RemoveProductRequest, RetrieveWatchlistRequest } from "../../types/Requests";
+import { RetrieveWatchlistResponse } from "../../types/Responses";
+import jwtUtil from "../../utilities/jwtUtil";
 import WatchlistService from "../service/watchlistService";
 
-const watchlistService = WatchlistService();
-const InvalidRequestError = ErrorTypes.InvalidRequestError;
-const router: express.Router = express.Router();
+export default class WatchlistController {
 
-// router.use(jwtUtil.verifyToken);
+    private router: Router;
 
-router.post('/', async(req, res) => {
-    try {
-        const result = await watchlistService.addProduct(req.body);
-        res.status(201).json({message: "Success"});
-    } catch(error) {
-        let errorMessage: string;
-        if (error instanceof InvalidRequestError) {
-            res.status(400)
-            errorMessage = "Missing parameters"
-        }
-        else {
-            res.status(500)
-            errorMessage = "Failed"
-        }
-        res.json({message: errorMessage});
+    constructor(
+        private readonly watchlistService: WatchlistService
+    ) {
+        this.router = Router();
     }
-})
 
-router.get('/', async(req, res) => {
-    try {
-        const resp = await watchlistService.getWatchlist(req.body.user);
-        res.status(200).json(resp);
-    } catch(error) {
-        res.status(500).json({message: "An error occurred"})
+    async addToWatchlist(request: AddProductRequest): Promise<void> {
+        return await this.watchlistService.addProduct(request);
     }
-})
 
-router.delete('/', async(req, res) => {
-    try {
-        await watchlistService.removeProduct(req.body);
-        res.status(200).json({message: "Success"});
-    } catch(error) {
-        res.status(500).json({message: "Failed"});
+    async getWatchlist(request: RetrieveWatchlistRequest): Promise<RetrieveWatchlistResponse> {
+        return await this.watchlistService.retrieveWatchlist(request);
     }
-})
 
-export default router;
+    async removeFromWatchlist(request: RemoveProductRequest): Promise<void> {
+        return await this.watchlistService.removeProduct(request);
+    }
+
+    routes(): Router {
+        this.router.use(jwtUtil.verifyToken);
+        this.router.post('/', async(req, res, next) => res.status(201).json(await this.addToWatchlist(<AddProductRequest>req.body).catch(err => next(err))));
+        this.router.get('/', async(req, res, next) => res.status(200).json(await this.getWatchlist(<RetrieveWatchlistRequest>req.body).catch(err => next(err))));
+        this.router.delete('/', async(req, res, next) => { 
+             await this.removeFromWatchlist(<RemoveProductRequest>req.body).catch(err => {next(err); return}); res.status(204).send()});
+        return this.router;
+    }
+}
