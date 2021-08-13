@@ -75,7 +75,7 @@ def price_and_availability():
     missing_params = [str(x) for x in parameters if x not in params]
     incorrect_params = [str(x) for x in params if x not in parameters]
 
-    if len(incorrect_params) >= 0:
+    if len(incorrect_params) > 0:
         return {
             'success': False,
             'message': f"invalid paramter(s): '{' , '.join(incorrect_params)}'."
