@@ -9,7 +9,7 @@ class WatchListService
 
   Future<List<Product>> watchListRequest()async
   {
-        var url = Uri.parse("http://10.0.2.2:3000/watchlist");
+        var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
         Map <String,String> headers=
         {
           "Content-Type":"application/json; charset=utf-8",
@@ -19,7 +19,7 @@ class WatchListService
         var responseData = json.decode(response.body);
 
 //        print(response.statusCode);
-//        print(responseData);
+        print(responseData);
 
         if(response.statusCode==200)
          {
@@ -62,7 +62,8 @@ class WatchListService
 
   Future addRequest(Product item)async
   {
-    var url = Uri.parse("http://10.0.2.2:3000/watchlist");
+    print("==============================================");
+    var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/");
     Map <String,String> headers={
       "Content-Type":"application/json; charset=utf-8",
       'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI4MTY5MDY3LCJleHAiOjE2NTk3MDUwNjd9.LzjoAKcGmYrwf-27ZFPtCxWAxnDuSSYlBMgIfA6nW1g',
