@@ -32,8 +32,6 @@ describe('Broadcast functionality', () => {
     })
 
     const broadcaster = new Broadcast();
-    const mockSend = jest.fn();
-    Broadcast.prototype.send = mockSend;
 
     const cpu = new CPU();
     cpu.type = 'cpu';
