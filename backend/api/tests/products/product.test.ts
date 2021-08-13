@@ -3,8 +3,16 @@ import app from "../../src/app";
 import { mockData } from '../../src/mocks/productMocks';
 import fetchData from '../../src/products/repo';
 
+jest.mock('../../src/config')
 jest.mock('../../src/products/repo')
 jest.mock('pg');
+jest.mock('typeorm', () => {
+    const actual = jest.requireActual('typeorm');
+    return {
+        ...actual,
+        getRepository: jest.fn()
+    }
+});
 const mockedFetch = fetchData as jest.Mock;
 
 describe('Incorrect route', () => {
