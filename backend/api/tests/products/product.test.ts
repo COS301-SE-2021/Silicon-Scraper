@@ -4,6 +4,7 @@ import { mockData } from '../../src/mocks/productMocks';
 import fetchData from '../../src/products/repo';
 
 jest.mock('../../src/products/repo')
+jest.mock('pg');
 const mockedFetch = fetchData as jest.Mock;
 
 describe('Incorrect route', () => {
