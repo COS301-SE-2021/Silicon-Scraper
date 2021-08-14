@@ -6,9 +6,13 @@ import { watchlistCPU } from "../entity/watchlistCPU";
 import { watchlistGPU } from "../entity/watchlistGPU";
 import { deviceToken } from '../entity/deviceToken';
 
+/**
+ * Class used to send notifications to devices
+ */
 export default class Broadcast {
     /**
-     * Send notification to client
+     * Fetch device tokens of users who have added the relevant product to their watchlist and send the notification
+     * @param {string} product - Product update received by the database
      */
     public async broadcast(product: string) {
         // for every subscribed user, fetch watchlist and check if product is in their watchlist
@@ -49,6 +53,12 @@ export default class Broadcast {
             this.send(messages);
     }
 
+    /**
+     * Contructs the notification to be sent via firebase messaging using the product and device token
+     * @param {CPU | GPU} product - Updated or newly inserted product
+     * @param {deviceToken} device - Device token of the user
+     * @returns {admin.messaging.TokenMessage} Newly constructed message including the device token and notification
+     */
     public createNotification(product: CPU | GPU, device: deviceToken) {
         const message: admin.messaging.TokenMessage = {
             notification: {
@@ -60,6 +70,10 @@ export default class Broadcast {
         return message;
     }
 
+    /**
+     * Sends the notification to all relevant users using firebase messaging
+     * @param {admin.messaging.TokenMessage[]} messages - Array of messages to be sent as a batch 
+     */
     public send(messages: admin.messaging.TokenMessage[]) {
         admin.messaging().sendAll(messages)
         .then((response) => {

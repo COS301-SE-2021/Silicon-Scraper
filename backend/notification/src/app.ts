@@ -8,24 +8,13 @@ import Listener from './listener/listener';
 export const app = express();
 const port = process.env.PORT || 3000;
 
-/**
- * Use listener and wait for changes to database
- * When a change is discovered, check if any users have the product in their watchlist
- * Use broadcast to send messages to devices
-
-/**
- * Create connection to database for typeorm and load environment variables
- */
+// Create connection to database for typeorm and load environment variables
 connection();
 
-/**
- * Intitialise firebase app
- */
+// Intitialise firebase app
 initialise();
 
-/**
- * Start database listener
- */
+// Start database listener
 const listener = new Listener();
 
 app.use(express.json());
