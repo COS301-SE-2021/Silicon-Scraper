@@ -6,7 +6,7 @@ import { GPU } from '../entity/gpu';
 interface notification {
     processId: number;
     channel: string;
-    payload?: CPU | GPU;
+    payload?: string;
 }
 
 export default class Listener {

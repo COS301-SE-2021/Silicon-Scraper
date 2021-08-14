@@ -10,22 +10,23 @@ export default class Broadcast {
     /**
      * Send notification to client
      */
-    public async broadcast(product: CPU | GPU) {
+    public async broadcast(product: string) {
         // for every subscribed user, fetch watchlist and check if product is in their watchlist
         // if contained in watchlist, send notification
         const devices: deviceToken[] = [];
         const tokens = getRepository(deviceToken);
-        switch(product.type.toLowerCase()) {
+        const prod = JSON.parse(product);
+        switch(prod.type.toLowerCase()) {
             case 'gpu':
                 let gpuResult = await tokens.createQueryBuilder('deviceToken')
                 .innerJoinAndSelect(watchlistGPU, 'watchlistGPU', 'watchlistGPU.user.id = deviceToken.user.id')
-                .where('watchlistGPU.gpu.id = :productId', {productId: product.id}).getMany();
+                .where('watchlistGPU.gpu.id = :productId', {productId: prod.id}).getMany();
                 devices.push(...gpuResult);
                 break;
             case 'cpu':
                 let cpuResult = await tokens.createQueryBuilder('deviceToken')
                 .innerJoinAndSelect(watchlistCPU, 'watchlistCPU', 'watchlistCPU.user.id = deviceToken.user.id')
-                .where('watchlistCPU.cpu.id = :productId', {productId: product.id}).getMany();
+                .where('watchlistCPU.cpu.id = :productId', {productId: prod.id}).getMany();
                 devices.push(...cpuResult);
                 break;
             default:
@@ -40,7 +41,7 @@ export default class Broadcast {
                 this.send(messages);
                 messages = [];
             }
-            const message = this.createNotification(product, device);
+            const message = this.createNotification(prod, device);
             messages.push(message);
         });
 

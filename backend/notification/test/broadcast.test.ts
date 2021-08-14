@@ -38,7 +38,7 @@ describe('Broadcast functionality', () => {
 
     it('should call send once', async () => {
         setQueryReturnValue([{token: '1', user: null}]);
-        await broadcaster.broadcast(cpu);
+        await broadcaster.broadcast(JSON.stringify(cpu));
         expect(broadcaster.send).toBeCalledTimes(1);
     })
 
@@ -48,13 +48,13 @@ describe('Broadcast functionality', () => {
             newArray.push({token: i.toString(), user: null});
         }
         setQueryReturnValue(newArray);
-        await broadcaster.broadcast(cpu);
+        await broadcaster.broadcast(JSON.stringify(cpu));
         expect(broadcaster.send).toBeCalledTimes(2);
     })
 
     it('should not call send because no device tokens were found', async () => {
         setQueryReturnValue([]);
-        await broadcaster.broadcast(cpu);
+        await broadcaster.broadcast(JSON.stringify(cpu));
         expect(broadcaster.send).toBeCalledTimes(0);
     })
 })
