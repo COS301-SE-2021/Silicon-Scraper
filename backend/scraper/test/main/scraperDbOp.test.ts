@@ -93,12 +93,12 @@ describe("Database operations tests", () => {
     let dbOps: any;
     let pgp;
     let db: any;
-    pgp = jest.fn(() => ({
+    pgp = jest.fn((connection) => ({
         none: jest.fn().mockResolvedValue(Promise.resolve()),
         any: jest.fn().mockReturnValue((query: any) => Promise.resolve([]))
     }))
 
-    db = pgp();
+    db = pgp("client_string");
 
     beforeEach(() =>{
         jest.resetModules();
