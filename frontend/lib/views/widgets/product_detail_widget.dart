@@ -43,6 +43,19 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
         child: Stack(
           children: [
             ///image
+//            Container(
+//              decoration: BoxDecoration(
+//                gradient: LinearGradient(
+//                  colors: [
+//                    Colors.black,
+//                    Colors.blue
+//                  ],
+//                  begin: Alignment.topLeft,
+//                  end: Alignment.bottomRight,
+//                  stops: [0, 1],
+//                ),
+//              ),
+//            ),
             Container(
               alignment: Alignment.topCenter,
               height: MediaQuery.of(context).size.height/2,
