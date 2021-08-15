@@ -1,8 +1,6 @@
-import 'package:silicon_scraper/models/product_model.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:silicon_scraper/services/login_service.dart';
 
-class MockLoginService
+class MockLoginService extends LoginService
 {
   bool success;
 
