@@ -100,6 +100,7 @@ class SearchViewModel {
     // check if its in the price range then add it to the filtered array
     bool add = true;
     for (int p = 0; p < products.length; p++) {
+      print(p.toString() + " " + products.elementAt(p).type.toLowerCase());
       if (inStock ||
           outOfStock ||
           cpu ||
@@ -122,8 +123,7 @@ class SearchViewModel {
             }
           } else if (i < 4) {
             if (filters[i]) {
-              if (containsIgnoreCase(
-                  products.elementAt(p).type, filterString[i])) {
+              if (products.elementAt(p).type.toLowerCase().compareTo(filterString[i]) == 0) {
                 add = true;
               }
             }
