@@ -3,9 +3,14 @@ const env = require('../../config')
 //const scraper = require("./scraper.ts");
 import * as scraper from "../main/scraper"
 
-const pgp = require('pg-promise')({
-    /* initialization options */
-    capSQL: true // capitalize all generated SQL
+// const pgp = require('pg-promise')({
+//     /* initialization options */
+//     capSQL: true // capitalize all generated SQL
+// });
+
+import pgPromise from 'pg-promise';
+const pgp = pgPromise({
+    capSQL: true
 });
 
 let today = new Date()
