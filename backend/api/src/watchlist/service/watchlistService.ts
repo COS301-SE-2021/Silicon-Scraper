@@ -60,10 +60,12 @@ export default class WatchlistService {
         cpus = []
         cpus = await this.cpuRepository.createQueryBuilder("cpu")
         .innerJoinAndSelect(watchlistCPU, "wcpu", "wcpu.product_id = cpu.id")
+        .where('wcpu.user_id = :id', {id: request.userID})
         .getMany();
 
         gpus = await this.gpuRepository.createQueryBuilder("gpu")
         .innerJoinAndSelect(watchlistGPU, "wgpu", " wgpu.product_id = gpu.id")
+        .where('wgpu.user_id = :id', {id: request.userID})
         .getMany();
         const products: any[] = [];
         products.push(...cpus);
