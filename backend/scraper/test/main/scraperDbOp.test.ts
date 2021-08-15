@@ -91,14 +91,14 @@ jest.mock("pg-promise")
 describe("Database operations tests", () => {
     let products: any;
     let dbOps: any;
-    let pg; 
+    let pgp;
     let db: any;
-    pg = jest.fn(() => ({
+    pgp = jest.fn(() => ({
         none: jest.fn().mockResolvedValue(Promise.resolve()),
         any: jest.fn().mockReturnValue((query: any) => Promise.resolve([]))
     }))
 
-    db = pg();
+    db = pgp();
 
     beforeEach(() =>{
         jest.resetModules();
