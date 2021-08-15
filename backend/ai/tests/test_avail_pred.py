@@ -3,7 +3,7 @@ import sys
 import os
 import pandas as pd
 cwd = os.path.dirname(__file__)
-sys.path.insert(1, os.path.join(cwd,'../models'))
+sys.path.insert(1, os.path.join(cwd,'../'))
 from api.models.avail_prediction.NN_Avail_Pred_Model import clean_data, encode_data
 
 def test_clean_data():
