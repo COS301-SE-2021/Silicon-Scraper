@@ -188,4 +188,4 @@ const evetechSelector: Selectors = new EvetechSelectors("Evetech")
 const amptekSelector: Selectors = new AmpTekSelectors("Amptek")
 const dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
 const siliconwebSelector: Selectors = new SiliconwebSelectors("Siliconweb")
-export const selectorsArray: Selectors[] = [evetechSelector, amptekSelector,dreamwareSelector, siliconwebSelector ]
+export const selectorsArray: Selectors[] = [siliconwebSelector, evetechSelector, amptekSelector,dreamwareSelector ]
