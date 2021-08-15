@@ -1,7 +1,6 @@
 import pytest
 import numpy as np
 from api import create_app
-from api.views import price_model
 from flask import json
 
 @pytest.fixture
