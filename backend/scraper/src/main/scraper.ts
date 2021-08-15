@@ -21,6 +21,7 @@ let today = new Date()
  * @type {string[]} specific url to scrape
  */
 let urls = [
+     url.getSiliconWebUrl(),
      url.getEveTecGpuUrl(),
      url.getEveTecCpuUrl(),
      url.getAmpTekGpuUrl(),
