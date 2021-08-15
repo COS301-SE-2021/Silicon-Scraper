@@ -5,7 +5,6 @@ import 'dart:convert';
 
 class WatchListService
 {
-  WatchListService();
 
   Future<List<Product>> watchListRequest()async
   {
@@ -53,7 +52,6 @@ class WatchListService
 
   Future addRequest(Product item)async
   {
-
     var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
     Map <String,String> headers={
       "Content-Type":"application/json; charset=utf-8",

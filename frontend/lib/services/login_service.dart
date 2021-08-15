@@ -1,75 +1,38 @@
 import 'package:silicon_scraper/models/product_model.dart';
-import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class LoginService
 {
-  LoginService();
 
-  Future<bool> LoginRequest()async
+  Future<bool> LoginRequest(String username,password)async
   {
-    var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
+    var url = Uri.parse("https://api-silicon-scraper/users/login");
     Map <String,String> headers=
     {
       "Content-Type":"application/json; charset=utf-8",
       'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ',
     };
-    final response = await http.get(url,headers: headers);
+
+    Map <String,String> data={
+      "username": username,
+      "password": password
+    };
+
+    final response = await http.post(url,headers: headers,body: data);
     print(response.statusCode);
     if(response.statusCode==200)
     {
-
+        return true;
+    }
+    else if(response.statusCode==404||response.statusCode==500)
+    {
+        var responseData=jsonDecode(response.body);
+        throw Exception("${responseData["message"]}");
     }
     throw Exception('Unable to get products from the server');
   }
-
-  Future removeRequest(Product item)async
-  {
-    var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
-    Map <String,String> headers={
-      "Content-Type":"application/json; charset=utf-8",
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ',
-    };
-    Map vars={
-      "productID":item.id,
-      "type":item.type
-    };
-    print(vars);
-
-    var send=jsonEncode(vars);
-    final response = await http.delete(url,headers: headers,body:send);
-
-    print(response.statusCode);
-    if(response.statusCode==204)
-    {
-      return true;
-    }
-    throw Exception("could not remove item from the watch list");
-  }
-
-  Future addRequest(Product item)async
-  {
-
-    var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
-    Map <String,String> headers={
-      "Content-Type":"application/json; charset=utf-8",
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ',
-    };
-    Map vars={
-      "productID":item.id,
-      "type":item.type
-    };
-    var send=jsonEncode(vars);
-    final response = await http.post(url,headers: headers,body:send );
-    print(response.statusCode);
-    if(response.statusCode==201)
-    {
-      return true;
-    }
-
-    throw Exception("add item to the watch lis");
-  }
+  
 }
 
 class LoginSingleton extends LoginService
