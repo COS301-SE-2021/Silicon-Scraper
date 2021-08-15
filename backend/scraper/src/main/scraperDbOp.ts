@@ -26,7 +26,7 @@ const client = {
 let db_ = pgp(client)
 //let db_:any = undefined
 
-export const dataOps = (db=db_) => {
+export const dataOps = (db:any =db_) => {
 
 
     const cs = new pgp.helpers.ColumnSet(['brand', 'model', 'price', 'retailer', 'image', 'link', 'availability', 'details', 'type', 'description'], {table: 'gpus'})

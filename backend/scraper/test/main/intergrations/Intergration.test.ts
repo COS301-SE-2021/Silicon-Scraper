@@ -36,7 +36,7 @@ const mockedResponse = {
 
 mockAxios.get = jest.fn().mockResolvedValue(mockedResponse)
 
-let pgp = jest.fn(() => ({
+let pgp = jest.fn((connection) => ({
     none: jest.fn(() => Promise.resolve()) ,
     any: jest.fn(() => Promise.resolve([])),
     as: jest.fn(() => {
@@ -49,7 +49,7 @@ let pgp = jest.fn(() => ({
     })
 }))
 
-let db = pgp()
+let db = pgp("connection")
 
 describe("scraper database operations", () =>{
     beforeEach(() => {
