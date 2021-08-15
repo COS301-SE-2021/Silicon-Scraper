@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
-//import 'package:silicon_scraper/services/firebase_notification_services.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/injectors/explore_service_injector.dart';
 import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.dart';
+import 'package:silicon_scraper/views/login_view.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:silicon_scraper/theme/colors.dart';
 import 'injectors/dependency_types.dart';
@@ -166,7 +166,7 @@ class _MyAppState extends State<MyApp> {
               color: myLightBlue,
         )
       ),
-      home: MainNavigator(),
+      home: /*MainNavigator()*/ LoginView(),
     );
   }
 }
