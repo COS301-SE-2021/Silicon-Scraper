@@ -76,7 +76,7 @@ void main() async{
   });
 
   WatchListInjector.configure(DependencyType.PROD);
-  ExplorePageInjector.configure(DependencyType.PROD);
+  ExplorePageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
 

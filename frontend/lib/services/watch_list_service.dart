@@ -48,14 +48,14 @@ class WatchListService
     print(response.statusCode);
     if(response.statusCode==204)
     {
-      return false;
+      return true;
     }
-    return true;
+    throw Exception("could not remove item from the watch list");
   }
 
   Future addRequest(Product item)async
   {
-    print("==============================================");
+
     var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
     Map <String,String> headers={
       "Content-Type":"application/json; charset=utf-8",
@@ -74,7 +74,7 @@ class WatchListService
     {
         return true;
     }
-    return false;
+    throw Exception("add item to the watch lis");
   }
 
 }
