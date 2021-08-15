@@ -8,6 +8,7 @@ import 'package:silicon_scraper/views/login_view.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:silicon_scraper/theme/colors.dart';
 import 'injectors/dependency_types.dart';
+import 'injectors/login_service_injector.dart';
 import 'injectors/watch_list_service_injector.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -31,6 +32,15 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 void main() async{
+  WatchListInjector.configure(DependencyType.PROD);
+  ExplorePageInjector.configure(DependencyType.MOCK);
+  SearchSortFilterInjector.configure(DependencyType.PROD);
+  PredictionInjector.configure(DependencyType.MOCK,fail: false);
+  LoginInjector.configure(DependencyType.MOCK,success: false);
+
+  /// this sets the initial products for the watch list do not remove
+  WatchListViewModelSingleton.getState().setInitialProducts();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -74,14 +84,6 @@ void main() async{
           ));
     }
   });
-
-  WatchListInjector.configure(DependencyType.PROD);
-  ExplorePageInjector.configure(DependencyType.MOCK);
-  SearchSortFilterInjector.configure(DependencyType.PROD);
-  PredictionInjector.configure(DependencyType.MOCK,fail: false);
-
-  /// this sets the initial products for the watch list do not remove
-  WatchListViewModelSingleton.getState().setInitialProducts();
 
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(

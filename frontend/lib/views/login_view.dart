@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/services/login_service.dart';
+import 'package:silicon_scraper/view_models/login_view_model.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  LoginViewModelSingleton login=LoginViewModelSingleton.getState();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -74,9 +76,10 @@ class _LoginViewState extends State<LoginView> {
                         textColor: Colors.white,
                         color: Colors.blue,
                         child: Text('Login'),
-                        onPressed: () {
+                        onPressed: () async{
                           print(nameController.text);
                           print(passwordController.text);
+                          await login.login(nameController.text, passwordController.text, context);
                         },
                       )),
                   Container(
