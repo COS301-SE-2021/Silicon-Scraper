@@ -43,7 +43,7 @@ void main() async{
 
 //  var initializationSettingsAndroid = new AndroidInitializationSettings('app_icon.png');
 
-  var initializationSettingsAndroid = AndroidInitializationSettings('mipmap-mdpi/ic_launcher.png');
+  var initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
 
   var initSetttings = InitializationSettings(android:initializationSettingsAndroid);
   flutterLocalNotificationsPlugin.initialize(initSetttings);
