@@ -36,7 +36,7 @@ void main() async{
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   String t=await FirebaseMessaging.instance.getToken();
 
-  print("|||||||||||||||||||||||||||||||||||||||||||||||||||||||"+t);
+  print("your token is:"+t);
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
