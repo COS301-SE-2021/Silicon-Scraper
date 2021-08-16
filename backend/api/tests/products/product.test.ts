@@ -32,24 +32,23 @@ describe('retrieve products', () => {
         expect(res.body).toEqual(mockRes);
     }) 
 
-    // it('should retrieve only 5 products', async () => {
-    //     mockedFetch.mockReturnValue(mockData.slice(0,5))
-    //     const mockRes = {status: 200, products: mockData.slice(0,5)};
-    //     const res = await request(app)
-    //     .get('/products/?limit=5');
-    //     expect(res.body).toEqual(mockRes);
-    // })
-
-    // it('should retrieve products 6 to 10', async () => {
-    //     mockedFetch.mockReturnValue(mockData.slice(5,10))
-    //     const mockRes = {products: mockData.slice(5,10)};
-    //     const res = await request(app)
-    //     .get('/products/?page=2&limit=5');
-    //     expect(res.body).toEqual(mockRes);
-    // })
+    it('should retrieve all products including a watch field indicating if the product is in the user\'s watchlist', async () => {
+        const mockedData = mockData.map((x) => {
+            x.watch = null;
+            return x;
+        });
+        mockedFetch.mockReturnValue(mockedData);
+        const mockRes = mockedData.map((x) => {
+            x.watch = false;
+            return x;
+        })
+        const res = await request(app)
+        .get('/products?userId=user_id');
+        expect(res.body).toEqual({products: mockRes});
+    })
 })
 
-describe('getProductByID test', () => {
+describe('fetch product by id', () => {
     it('should return the product with the specified ID', async () => {
         mockedFetch.mockReturnValue(mockData[0])
         const mockRes = {products: mockData[0]};
@@ -64,9 +63,20 @@ describe('getProductByID test', () => {
         .get('/products/id/10');
         expect(res.body).toEqual({products: []});
     })
+
+    it('should return the product with the specified ID and a watch field indicating the product is in the user\'s watchlist', async () => {
+        const mockedData = mockData[0];
+        mockedData.watch = null;
+        mockedFetch.mockReturnValue([mockedData]);
+        const mockRes = mockedData;
+        mockRes.watch = false;
+        const res = await request(app)
+        .get('/products/id/1b6d0e22-ca06-414a-80b8-1ca634f29d6e?userId=user_id');
+        expect(res.body).toEqual({products: [mockRes]});
+    })
 })
 
-describe('search test', () => {
+describe('search for product(s)', () => {
     it('should return the products with the specified brand or model, i.e. Nvidia', async () => {
         const mocks = [mockData[2], mockData[9], mockData[15]];
         mockedFetch.mockReturnValue(mocks)
@@ -75,27 +85,21 @@ describe('search test', () => {
         expect(res.body).toEqual({products: mocks});
     })
 
-    it('should return the products with the specified brand or model but limited to 2, i.e. Nvidia', async () => {
-        const mocks = [mockData[2], mockData[9]];
-        mockedFetch.mockReturnValue(mocks)
+    it('should return the products with the specified brand or model, i.e. ROG Strix', async () => {
+        const mocks = [mockData[0], mockData[3], mockData[4], mockData[19]];
+        mockedFetch.mockReturnValue(mocks);
         const res = await request(app)
-        .get('/products/search?key=nvidia&limit=2');
+        .get('/products/search?key=ROG Strix');
         expect(res.body).toEqual({products: mocks});
     })
 
-    it('should return the products with the specified brand or model but limited to 5, i.e. Nvidia', async () => {
+    it('should return the products with the specified brand or model with a watch field indicating whether or not the product is in the user\'s watchlist', async () => {
         const mocks = [mockData[2], mockData[9], mockData[15]];
+        mocks.forEach(x => x.watch = null);
         mockedFetch.mockReturnValue(mocks)
+        mocks.forEach(x => x.watch = false);
         const res = await request(app)
-        .get('/products/search?key=nvidia&page=1&limit=5');
-        expect(res.body).toEqual({products: mocks});
-    })
-
-    it('should return no product since there are no further products, i.e. Nvidia', async () => {
-        const mocks = [];
-        mockedFetch.mockReturnValue(mocks)
-        const res = await request(app)
-        .get('/products/search?key=nvidia&limit=2&page=5');
+        .get('/products/search?key=nvidia&userId=user_id');
         expect(res.body).toEqual({products: mocks});
     })
 
