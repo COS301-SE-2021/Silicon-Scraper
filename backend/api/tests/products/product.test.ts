@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app from "../../src/app";
-import { mockData } from '../../src/mocks/productMocks';
+import { mockData } from '../mocks/productMocks';
 import fetchData from '../../src/products/repo';
 
 jest.mock('../../src/config')
@@ -23,8 +23,8 @@ describe('Incorrect route', () => {
     })
 })
 
-describe('getProducts test', () => {
-    it('should retrieve all products', async () => {
+describe('retrieve products', () => {
+    it('should retrieve all products i.e. cpus and gpus', async () => {
         mockedFetch.mockReturnValue(mockData)
         const mockRes = {products: mockData};
         const res = await request(app)
