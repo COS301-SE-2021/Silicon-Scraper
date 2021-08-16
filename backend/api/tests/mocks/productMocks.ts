@@ -1,7 +1,24 @@
+import { CPU } from "../../src/entity/cpu";
+
 /**
  * @constant {Object} - Contains data from db to be used for testing
  */
-const mockData = [
+
+interface Product {
+    id: string,
+    image: string,
+    brand: string,
+    model: string,
+    price: number,
+    availability: string,
+    retailer: string,
+    link: string,
+    description: string,
+    type: string
+    watch?: null | boolean
+}
+
+export const mockData: Product[] = [
     {
         id: "1b6d0e22-ca06-414a-80b8-1ca634f29d6e",
         image: "https://www.evetech.co.za/repository/components/asus-rog-strix-rtx-3090-oc-24gb-white-gaming-300px-v1_sml.jpg",
@@ -11,15 +28,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/asus-rog-strix-rtx-3090-oc-24gb-white-gaming/best-deal/11400.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 45999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -31,15 +40,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/asus-tuf-rtx-3090-oc-24gb-gaming/best-deal/9698.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 44999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -51,15 +52,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/nvidia-quadro-rtx-a6000-48gb-gddr6/best-deal/10457.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 44999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -71,15 +64,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/asus-rog-strix-rtx-3090-oc-24gb-gaming/best-deal/9696.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 44499,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -91,15 +76,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/asus-rog-strix-rtx-3090-24gb-gaming/best-deal/9697.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 44499,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -111,15 +88,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/gigabyte-rtx-3090-gaming-oc-24gb-graphics-card/best-deal/10547.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 43999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -131,15 +100,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/aorus-geforce-rtx-3090-xtreme-24gb-graphics-card/best-deal/10559.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 41999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -151,15 +112,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/asus-tuf-rtx-3090-24gb-gaming/best-deal/9699.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 40699,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -171,15 +124,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/msi-geforce-rtx-3090-ventus-3x-24gb-oc/best-deal/9657.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 39999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -191,15 +136,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/leadtek-nvidia-quadro-rtx5000-16gb-gddr6/best-deal/6993.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 39999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -211,15 +148,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/asus-tuf-gaming-radeon-rx-6900-xt-oc-16gb-gaming/best-deal/11304.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 39999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -231,15 +160,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/gigabyte-rtx-3090-vision-oc-24gb-graphics-card/best-deal/10557.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 39499,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -251,15 +172,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/gigabyte-radeon-rx-6900-xt-gaming-oc-16gb-gddr6/best-deal/11555.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 34999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -271,15 +184,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/msi-radeon-rx-6800-xt-gaming-x-trio-16gb/best-deal/11302.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 22999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -291,15 +196,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/sapphire-nitro-amd-radeon-rx-6800-oc-graphics-card/best-deal/11198.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 19999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -311,15 +208,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/nvidia-quadro-rtx4000-8gb-gddr6/best-deal/6992.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 18999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -331,15 +220,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/msi-radeon-rx-6700-xt-gaming-x-12gb/best-deal/11605.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 17499,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -351,15 +232,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/msi-rx-6700-xt-mech-2x-12gb/best-deal/11712.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 16999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -371,15 +244,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/msi-radeon-rx-6700-xt-12gb/best-deal/11606.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 15999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     },
     {
@@ -391,17 +256,7 @@ const mockData = [
         availability: "Out of Stock",
         retailer: "Evetech",
         link: "https://www.evetech.co.za/asus-rog-strix-rx-5700-oc-8gb-gddr6-graphics-card/best-deal/6906.aspx",
-        details: {
-            productDetails: [
-                {
-                    price: 10999,
-                    datetime: "2021-6-18",
-                    availability: "Out of Stock"
-                }
-            ]
-        },
+        description: "",
         type: "gpu"
     }
 ];
-
-module.exports = mockData;
