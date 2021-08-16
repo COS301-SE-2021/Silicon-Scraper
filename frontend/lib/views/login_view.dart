@@ -93,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                               style: TextStyle(fontSize: 20),
                             ),
                             onPressed: () {
-                              //signup screen
+                              login.goToSignUp(context);
                             },
                           )
                         ],

@@ -104,6 +104,7 @@ class FloatingProductWidget extends StatelessWidget {
                             child: Container(
                               height: 40,
                               child: FloatingActionButton(
+                                heroTag: state.item.id,
                                 backgroundColor: Colors.white,
                                 child: state.save, onPressed: (){
                                 print('widget: ${state.item.id}');

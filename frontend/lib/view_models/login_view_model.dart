@@ -3,6 +3,7 @@ import 'package:silicon_scraper/injectors/login_service_injector.dart';
 import 'package:silicon_scraper/views/login_view.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:silicon_scraper/views/sign_up_view.dart';
 
 class LoginViewModel extends ChangeNotifier
 {
@@ -35,7 +36,7 @@ class LoginViewModel extends ChangeNotifier
 
     goToSignUp(context)
     {
-        // todo push home screen
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => SignUpView()),(Route<dynamic> route)  => false);
     }
 
     forgotPassword(context,String email)
