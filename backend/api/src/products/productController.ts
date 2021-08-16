@@ -38,8 +38,8 @@ const getProductByID = async (req: express.Request, res: express.Response) => {
     const response: Response = {products: []};
     if(req.query.userId) {
         let data = await fetchData(`select * from (select * from gpus union all select * from cpus) as tbl left join
-        (select product_id as watch from watchlist_gpu where user_id = '${req.query.userId}'))
-        as watchlist on tbl.id = watchlist.watch where id = '${id}'`);
+        (select product_id as watch from (select * from watchlist_gpu union all select * from watchlist_cpu) as wl 
+        where wl.user_id = '${req.query.userId}') as watchlist on tbl.id = watchlist.watch where id = '${id}'`);
         response.products = data;
     }
     else {
@@ -84,15 +84,17 @@ const search = async (req: express.Request, res: express.Response) => {
 
     const result: any[] = [];
     const response: Response = {products: []};
-    if(queryObj.key !== '') {
+    if(query.key !== '') {
         if(req.query.userId) {
-            const data = await fetchData(`select * from (select * from gpus union all select * from cpus) as tbl
-            where concat(lower(tbl.brand),lower(tbl.model)) like '%${queryObj.key}%'`);
+            const data = await fetchData(`select * from (select * from (select * from gpus union all select * from cpus) as tbl
+                where concat(lower(tbl.brand),lower(tbl.model)) like '%${query.key}%') as res left join 
+                (select product_id as watch from (select * from watchlist_gpu union all select * from watchlist_cpu) as wl 
+                where wl.user_id = '${query.userId}') as wl2 on wl2.watch = res.id`);
             response.products = data;
         } 
         else {
             const data = await fetchData(`select * from (select * from gpus union all select * from cpus) as tbl
-            where concat(lower(tbl.brand),lower(tbl.model)) like '%${queryObj.key}%'`);
+            where concat(lower(tbl.brand),lower(tbl.model)) like '%${query.key}%'`);
             response.products = data;
         }
     }
