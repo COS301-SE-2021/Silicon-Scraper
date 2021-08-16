@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/services/login_service.dart';
-import 'package:silicon_scraper/view_models/login_view_model.dart';
+import 'package:silicon_scraper/view_models/sign_up_view_model.dart';
 
 class SignUpView extends StatefulWidget {
   @override
@@ -8,7 +7,7 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  LoginViewModelSingleton login=LoginViewModelSingleton.getState();
+  SignUpViewModelSingleton signUp=SignUpViewModelSingleton.getState();
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -73,7 +72,7 @@ class _SignUpViewState extends State<SignUpView> {
                       onPressed: () async{
                         print(nameController.text);
                         print(passwordController.text);
-                        //todo signup request
+                        signUp.signUp(nameController.text,passwordController.text,context);
                       },
                     )),
                 Container(
@@ -87,7 +86,7 @@ class _SignUpViewState extends State<SignUpView> {
                             style: TextStyle(fontSize: 20),
                           ),
                           onPressed: () {
-                            //todo goto login
+                            signUp.goToLogin(context);
                           },
                         )
                       ],
