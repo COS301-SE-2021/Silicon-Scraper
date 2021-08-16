@@ -18,4 +18,6 @@ api_logs
 *.log
 
 venv/
+dist/
 src/
+build/
