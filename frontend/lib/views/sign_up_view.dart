@@ -73,9 +73,26 @@ class _SignUpViewState extends State<SignUpView> {
                       onPressed: () async{
                         print(nameController.text);
                         print(passwordController.text);
-                        await login.login(nameController.text, passwordController.text, context);
+                        //todo signup request
                       },
                     )),
+                Container(
+                    child: Row(
+                      children: <Widget>[
+                        Text('Already have an account ?'),
+                        FlatButton(
+                          textColor: Colors.blue,
+                          child: Text(
+                            'Log In',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          onPressed: () {
+                            //todo goto login
+                          },
+                        )
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ))
               ],
             )));
   }
