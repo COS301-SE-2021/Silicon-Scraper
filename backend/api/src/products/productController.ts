@@ -37,13 +37,20 @@ const getProductByID = async (req: express.Request, res: express.Response) => {
     const id = req.params.id;
     const response: Response = {products: []};
     if(req.query.userId) {
-        let data = await fetchData(`select * from (select * from gpus union all select * from cpus) as tbl left join
+        let data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description, watch from 
+        (select * from gpus union all select * from cpus) as tbl left join
         (select product_id as watch from (select * from watchlist_gpu union all select * from watchlist_cpu) as wl 
         where wl.user_id = '${req.query.userId}') as watchlist on tbl.id = watchlist.watch where id = '${id}'`);
+        data.forEach((x) => {
+            if(x.watch === null)
+                x.watch = false;
+            else 
+                x.watch = true;
+        })
         response.products = data;
     }
     else {
-        let data = await fetchData(`select * from (select * from gpus union all select * FROM cpus) AS tbl WHERE id = '${id}'`);
+        let data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description from (select * from gpus union all select * FROM cpus) AS tbl WHERE id = '${id}'`);
         response.products = data;
     }
     res.status(200).json(response);
@@ -86,14 +93,22 @@ const search = async (req: express.Request, res: express.Response) => {
     const response: Response = {products: []};
     if(query.key !== '') {
         if(req.query.userId) {
-            const data = await fetchData(`select * from (select * from (select * from gpus union all select * from cpus) as tbl
+            const data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description, watch from 
+                (select * from (select * from gpus union all select * from cpus) as tbl
                 where concat(lower(tbl.brand),lower(tbl.model)) like '%${query.key}%') as res left join 
                 (select product_id as watch from (select * from watchlist_gpu union all select * from watchlist_cpu) as wl 
                 where wl.user_id = '${query.userId}') as wl2 on wl2.watch = res.id`);
+            data.forEach((x) => {
+                if(x.watch === null)
+                    x.watch = false;
+                else 
+                    x.watch = true;
+            })
             response.products = data;
         } 
         else {
-            const data = await fetchData(`select * from (select * from gpus union all select * from cpus) as tbl
+            const data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description from 
+            (select * from gpus union all select * from cpus) as tbl
             where concat(lower(tbl.brand),lower(tbl.model)) like '%${query.key}%'`);
             response.products = data;
         }
@@ -137,13 +152,20 @@ const getProducts = async (req: express.Request, res: express.Response) => {
     // let offset = (values[1]-1)*values[2];
     let response: Response = {products: []};
     if(query.userId) {
-        const data = await fetchData(`select * from (select * from gpus union all select * from cpus) as tbl 
+        const data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description, watch from (select * from gpus union all select * from cpus) as tbl 
         left join (select product_id as watch from (select * from watchlist_cpu union all select * from watchlist_gpu)
         as wl where wl.user_id = '${query.userId}') as watchlist on tbl.id = watchlist.watch`);
+        data.forEach((x) => {
+            if(x.watch === null)
+                 x.watch = false;
+            else 
+                x.watch = true;
+        })
         response.products = data;
     }
     else {
-        const data = await fetchData(`select * from (select * from gpus union all select * from cpus) as tbl`);
+        const data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description from 
+        (select * from gpus union all select * from cpus) as tbl`);
         response.products = data;
     }
     res.status(200).json(response);
