@@ -8,19 +8,15 @@ class SearchService {
 
   Future searchRequest(String query) async {
     Uri uri = Uri.parse("https://api-silicon-scraper.herokuapp.com/products/?search?key=" +
-        query +
-        "&page=1&limit=20");
-    print(uri.toString());
+        query);
+    //print(uri.toString());
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=utf-8",
       'Authorization':
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ'};
     final response = await http.get(uri, headers: headers);
-    print(response.statusCode);
+    //print(response.statusCode);
 
-    final jsonResponse = jsonDecode(response.body);
-    // print(response.body);
-    print(jsonResponse);
     Map<String, dynamic> map = json.decode(response.body);
     List<dynamic> responseData = map["products"];
 
