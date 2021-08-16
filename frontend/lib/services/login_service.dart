@@ -1,12 +1,13 @@
-import 'package:silicon_scraper/models/product_model.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class LoginService
 {
 
-  Future<bool> LoginRequest(String username,password)async
+  Future LoginRequest(String username,password)async
   {
+
     var url = Uri.parse("https://api-silicon-scraper/users/login");
     Map <String,String> headers=
     {
@@ -23,7 +24,9 @@ class LoginService
     print(response.statusCode);
     if(response.statusCode==200)
     {
-        return true;
+      var responseData=jsonDecode(response.body);
+
+        return responseData;
     }
     else if(response.statusCode==404||response.statusCode==500)
     {

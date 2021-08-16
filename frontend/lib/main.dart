@@ -36,12 +36,13 @@ void main() async{
   ExplorePageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
-  LoginInjector.configure(DependencyType.MOCK,success: false);
+  LoginInjector.configure(DependencyType.MOCK,success: true);
 
   /// this sets the initial products for the watch list do not remove
   WatchListViewModelSingleton.getState().setInitialProducts();
-
   WidgetsFlutterBinding.ensureInitialized();
+
+  /// below this line is firebase implementations
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   String t=await FirebaseMessaging.instance.getToken();

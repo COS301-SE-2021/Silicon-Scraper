@@ -65,6 +65,8 @@ dev_dependencies:
   firebase_analytics:
 # for app open notifications
   flutter_local_notifications:
+  #for saving bearer tokens
+  shared_preferences: ^2.0.5
 
 
 

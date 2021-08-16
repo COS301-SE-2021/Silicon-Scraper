@@ -5,14 +5,18 @@ class MockLoginService extends LoginService
   bool success;
 
   MockLoginService(this.success);
-
-  Future<bool> LoginRequest(String username,password)async
+  @override
+  Future LoginRequest(String username,password)async
   {
 
     if(success)
     {
       print('in');
-      return true;
+
+      Map <String,String> data={
+          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ"
+      };
+      return data;
     }
     else
     {

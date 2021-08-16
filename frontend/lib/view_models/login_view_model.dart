@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/injectors/login_service_injector.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginViewModel extends ChangeNotifier
 {
@@ -11,10 +12,13 @@ class LoginViewModel extends ChangeNotifier
         try
         {
           //todo need to recieve and save a jwt token with shared prefrences
-           bool isIn=await logIn.dependency.LoginRequest(username, pw);
-           if(isIn)
+           Map<String,String> isIn=await logIn.dependency.LoginRequest(username, pw);
+           if(isIn['token'].isNotEmpty)
            {
-               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => MainNavigator()),(Route<dynamic> route)  => false);
+             SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+             sharedPreferences.setString("token", isIn['token']);
+             print(isIn['token']);
+             Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => MainNavigator()),(Route<dynamic> route)  => false);
            }
            else
            {
@@ -25,7 +29,7 @@ class LoginViewModel extends ChangeNotifier
         catch(e)
         {
             //todo push error screen
-          print("an error occured");
+          print(e);
         }
     }
 
