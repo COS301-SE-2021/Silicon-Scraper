@@ -17,7 +17,7 @@ def create_app(test_config = None):
     except OSError:
         pass
 
-    from . import views
+    from api import views
     app.register_blueprint(views.bp)
 
     return app
