@@ -13,7 +13,7 @@ from api.nn_utilities.dataEncoding import encode_data
 
 cwd = os.path.dirname(__file__)
 
-#PATH_TO_PRICE_PRED_MODEL = 'trained_models/price_prediction.h5'
+PATH_TO_PRICE_PRED_MODEL = 'trained_models/price_prediction.h5'
 PATH_TO_AVAIL_PRED_MODEL = 'trained_models/avail_prediction.h5'
 PATH_TO_CPU_MODEL_DATA = os.path.join(cwd, "model_data/cpuModels.csv")
 PATH_TO_GPU_MODEL_DATA = os.path.join(cwd, "model_data/gpuModels.csv")
@@ -39,9 +39,9 @@ def prepare_params(params):
     with open(os.path.join(cwd,'nn_utilities/scalar_avail'), 'rb') as f:
         scaler_y_avail = pickle.load(f)
 
-    # with open(os.path.join(cwd,'nn_utilities/scalar_price'), 'rb') as f:
-    #     scalar_y_price = pickle.load(f)
-    # scalar_y_price.transform(data_price)
+    with open(os.path.join(cwd,'nn_utilities/scalar_price'), 'rb') as f:
+        scalar_y_price = pickle.load(f)
+    scalar_y_price.transform(data_price)
     return data_price, scaler_y_avail.transform(data_avail), scaler_y_avail, scalar_y_price
 
 
@@ -61,7 +61,7 @@ def price_and_availability():
     app.logger.info("Loading models ....")
     
     avail_model = keras.models.load_model(os.path.join(cwd, PATH_TO_AVAIL_PRED_MODEL))
-    #price_model = keras.models.load_model(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
+    price_model = keras.models.load_model(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
     app.logger.info("Models loaded ....")
     
     results = {'success': False}
@@ -86,11 +86,11 @@ def price_and_availability():
       
         input_data_price, input_data_avail, scaler_y_avail, scalar_y_price = prepare_params(params)
     
-        #price_preds = price_model(input_data_price) 
+        price_preds = price_model(input_data_price) 
         avail_preds = avail_model(input_data_avail) 
 
         results['predictions'] = {'price': 'price', 'availability': ''}
-        #results['predictions']['price'] = np.round(scalar_y_price.inverse_transform(price_preds)[0], 2).tolist()[0]
+        results['predictions']['price'] = np.round(scalar_y_price.inverse_transform(price_preds)[0], 2).tolist()[0]
         results['predictions']["availability"] = np.argmax(scaler_y_avail.inverse_transform(avail_preds)).tolist()
             
         results['success'] = True
