@@ -14,7 +14,7 @@ class ExploreViewModel {
     List<Product> products = [];
     List<Product> unprocessedProducts = [];
     return FutureBuilder(
-      future: explore.dependency.setItems(),
+      future: explore.dependency.setItems(productType),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
           return noConnection(context);
@@ -42,19 +42,23 @@ class ExploreViewModel {
             }
             return productHorizontalListView(context, products);
           } else {
-            if (productType.compareTo("cpu") == 0) {
-              return noProducts(context, "CPUs");
-            } else if (productType.compareTo("gpu") == 0) {
-              return noProducts(context, "GPUs");
-            } else {
-              return noProducts(context, "PRODUCTS");
-            }
+            return getNoProductErrorMessage(context, productType);
           }
         } else {
           return Center(child: CircularProgressIndicator());
         }
       },
     );
+  }
+
+  Center getNoProductErrorMessage(BuildContext context, String productType){
+    if (productType.compareTo("cpu") == 0) {
+      return noProducts(context, "CPUs");
+    } else if (productType.compareTo("gpu") == 0) {
+      return noProducts(context, "GPUs");
+    } else {
+      return noProducts(context, "PRODUCTS");
+    }
   }
 
   String getTitle(String productType){
