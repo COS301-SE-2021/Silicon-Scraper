@@ -35,14 +35,21 @@ def prepare_params(params):
     data_price = np.array(data_price)
     data_avail = np.array(data_avail)
 
-    scalar_y_price = None
     with open(os.path.join(cwd,'nn_utilities/scalar_avail'), 'rb') as f:
-        scaler_y_avail = pickle.load(f)
+        scalar_y_avail = pickle.load(f)
 
     with open(os.path.join(cwd,'nn_utilities/scalar_price'), 'rb') as f:
         scalar_y_price = pickle.load(f)
-    scalar_y_price.transform(data_price)
-    return data_price, scaler_y_avail.transform(data_avail), scaler_y_avail, scalar_y_price
+
+    with open(os.path.join(cwd,'nn_utilities/scalar_price_x'), 'rb') as f:
+        scalar_x_price = pickle.load(f)
+    with open(os.path.join(cwd,'nn_utilities/scalar_avail_x'), 'rb') as f:
+        scalar_x_avail = pickle.load(f)
+    
+    data_price = data_price.reshape(-1,1)
+    data_avail = data_avail.reshape(-1,1)
+    
+    return scalar_y_price.transform(data_price), scalar_y_avail.transform(data_avail), scalar_y_avail, scalar_y_price
 
 
 
@@ -85,7 +92,10 @@ def price_and_availability():
     if len(missing_params) == 0:
       
         input_data_price, input_data_avail, scaler_y_avail, scalar_y_price = prepare_params(params)
-    
+
+        input_data_price =  input_data_price.reshape(1,-1)
+        input_data_avail = input_data_avail.reshape(1, -1)
+
         price_preds = price_model(input_data_price) 
         avail_preds = avail_model(input_data_avail) 
 
