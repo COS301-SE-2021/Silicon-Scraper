@@ -3,7 +3,6 @@ import 'package:silicon_scraper/injectors/login_service_injector.dart';
 import 'package:silicon_scraper/views/login_view.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:silicon_scraper/views/sign_up_view.dart';
 
 class SignUpViewModel extends ChangeNotifier
 {
@@ -34,22 +33,11 @@ class SignUpViewModel extends ChangeNotifier
     }
   }
 
-  goToSignUp(context)
+  goToLogin(context)
   {
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => SignUpView()),(Route<dynamic> route)  => false);
-  }
-
-  forgotPassword(context,String email)
-  {
-    // todo push forgot pw screen
-  }
-
-  logout(context)async
-  {
-    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-    sharedPreferences.setBool("loggedIn",false);
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginView()),(Route<dynamic> route)  => false);
   }
+
 }
 
 class SignUpViewModelSingleton extends SignUpViewModel
