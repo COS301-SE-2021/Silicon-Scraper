@@ -53,15 +53,16 @@ parameters = [
 
 bp = Blueprint('predict', __name__, url_prefix='/predict')
 
-app = create_app()
+application = create_app()
+
 
 @bp.route('/price-and-availability', methods = ["GET"])
 def price_and_availability():
-    app.logger.info("Loading models ....")
+    application.logger.info("Loading models ....")
     print(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
     price_model = load_model(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
     avail_model = load_model(os.path.join(cwd, PATH_TO_AVAIL_PRED_MODEL))
-    app.logger.info("Models loaded ....")
+    application.logger.info("Models loaded ....")
     
     results = {'success': False}
 
@@ -105,4 +106,4 @@ def price_and_availability():
 if __name__ == '__main__':
 
     print("Starting web service...")
-    app.run(host = '0.0.0.0', debug=True,  port=int(os.environ.get('PORT', 5000)))
+    application.run(host = '0.0.0.0', debug=True,  port=int(os.environ.get('PORT', 5000)))
