@@ -13,7 +13,7 @@ class LoginViewModel extends ChangeNotifier
         try
         {
           //todo need to recieve and save a jwt token with shared prefrences
-           Map<String,String> isIn=await logIn.dependency.LoginRequest(username, pw);
+           Map<String,dynamic> isIn=await logIn.dependency.LoginRequest(username, pw);
            if(isIn['token'].isNotEmpty)
            {
              SharedPreferences sharedPreferences=await SharedPreferences.getInstance();

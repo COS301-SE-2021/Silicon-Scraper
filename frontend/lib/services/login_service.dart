@@ -5,10 +5,10 @@ import 'dart:convert';
 class LoginService
 {
 
-  Future LoginRequest(String username,password)async
+  Future LoginRequest(String username,String password)async
   {
 
-    var url = Uri.parse("https://api-silicon-scraper/users/login");
+    var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/users/login");
     Map <String,String> headers=
     {
       "Content-Type":"application/json; charset=utf-8",
@@ -20,12 +20,13 @@ class LoginService
       "password": password
     };
 
-    final response = await http.post(url,headers: headers,body: data);
+    var body=jsonEncode(data);
+    final response = await http.post(url,headers: headers,body: body);
     print(response.statusCode);
     if(response.statusCode==200)
     {
       var responseData=jsonDecode(response.body);
-
+      print(responseData);
         return responseData;
     }
     else if(response.statusCode==404||response.statusCode==500)

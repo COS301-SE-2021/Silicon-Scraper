@@ -36,7 +36,7 @@ void main() async{
   ExplorePageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
-  LoginInjector.configure(DependencyType.MOCK,success: true);
+  LoginInjector.configure(DependencyType.PROD,success: true);
 
   /// this sets the initial products for the watch list do not remove
   WatchListViewModelSingleton.getState().setInitialProducts();

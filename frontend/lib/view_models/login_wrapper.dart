@@ -7,7 +7,7 @@ class LoginWrapper extends StatelessWidget
 {
   Future<bool> checkLoginStatus() async{
     SharedPreferences sharedPreferences= await SharedPreferences.getInstance();
-    if(sharedPreferences.getBool("LoggedIn")==null||sharedPreferences.getBool("LoggedIn")==false)
+    if(sharedPreferences.get("loggedIn")==null||sharedPreferences.get("loggedIn")==false)
     {
       return false;
     }
@@ -32,8 +32,11 @@ class LoginWrapper extends StatelessWidget
         else if(snapshot.data!=null && snapshot.data==true){
           return MainNavigator();
         }
-        else{
+        else if(snapshot.data!=null && snapshot.data==false) {
           return LoginView();
+        }
+        else{
+          return Center(child: CircularProgressIndicator());
         }
       },
     );
