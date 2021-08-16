@@ -17,8 +17,7 @@ class ExplorePageService {
       var url = Uri.parse("http://10.0.2.2:3000/products/getProducts"); // todo products/?type=cpu
       Map <String,String> headers={
         "Content-Type":"application/json; charset=utf-8",
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwidXNlcm5hbWUiOiJMb3VpcyIsImhhc2giOiIkMmIkMTIkWm5IbHFhcEFWSnp2WjVlVzZ3QmN4dS44TTUuckVOb2RhSTBrV281ZjcxdWx2WDVQeGVHeUcifSwiaWF0IjoxNjI0MjY5OTM1LCJleHAiOjE2MjQzNTYzMzV9.zxMKowFfzwl3f9zCZSs9UKCu34Bg_4yOJqmaDt607dI',
-      };
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ'};
       final response = await http.get(url,headers: headers);
       //print(response.statusCode);
       var responseData = json.decode(response.body);
