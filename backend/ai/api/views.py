@@ -53,16 +53,15 @@ parameters = [
 
 bp = Blueprint('predict', __name__, url_prefix='/predict')
 
-application = create_app()
-
+app = create_app()
 
 @bp.route('/price-and-availability', methods = ["GET"])
 def price_and_availability():
-    application.logger.info("Loading models ....")
+    app.logger.info("Loading models ....")
     print(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
     price_model = load_model(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
     avail_model = load_model(os.path.join(cwd, PATH_TO_AVAIL_PRED_MODEL))
-    application.logger.info("Models loaded ....")
+    app.logger.info("Models loaded ....")
     
     results = {'success': False}
 
@@ -102,8 +101,3 @@ def price_and_availability():
             'message': f"missing parameter(s): '{' and '.join(missing_params)}'."
         }, 400
         
- 
-if __name__ == '__main__':
-
-    print("Starting web service...")
-    application.run(host = '0.0.0.0', debug=True,  port=int(os.environ.get('PORT', 5000)))
