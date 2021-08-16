@@ -21,7 +21,7 @@ class SignUpService
     var body=jsonEncode(data);
     final response = await http.post(url,headers: headers,body: body);
     print(response.statusCode);
-    if(response.statusCode==200)
+    if(response.statusCode==201)
     {
       var responseData=jsonDecode(response.body);
       print(responseData);

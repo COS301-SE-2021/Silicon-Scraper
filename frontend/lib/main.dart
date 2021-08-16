@@ -4,8 +4,6 @@ import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/injectors/explore_service_injector.dart';
 import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.dart';
-import 'package:silicon_scraper/views/login_view.dart';
-import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:silicon_scraper/theme/colors.dart';
 import 'injectors/dependency_types.dart';
 import 'injectors/login_service_injector.dart';
@@ -15,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:silicon_scraper/view_models/login_wrapper.dart';
+import 'injectors/sign_up_service_injector.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -37,6 +36,7 @@ void main() async{
   SearchSortFilterInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
   LoginInjector.configure(DependencyType.PROD,success: true);
+  SignUpInjector.configure(DependencyType.PROD,success: true);
 
   /// this sets the initial products for the watch list do not remove
   WatchListViewModelSingleton.getState().setInitialProducts();
