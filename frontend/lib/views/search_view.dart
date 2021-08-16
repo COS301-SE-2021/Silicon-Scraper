@@ -156,6 +156,10 @@ class ProductSearch extends SearchDelegate<String> {
                 this.products = snapshot.data;
                 this.originalProducts = snapshot.data;
               }
+
+              if (snapshot.data.isEmpty) {
+                return noProducts(context, "PRODUCTS");
+              }
               return buildResultSuccess(context);
             }
         }
