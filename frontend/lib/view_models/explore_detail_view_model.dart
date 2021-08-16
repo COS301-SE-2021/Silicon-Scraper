@@ -6,12 +6,10 @@ import 'package:silicon_scraper/services/getProducts.dart';
 class ExploreViewModel {
   ExplorePageInjector explore = ExplorePageInjector();
   List<Product> items = [];
-
   ExploreViewModel();
 
   FutureBuilder getExplorePageProducts(String productType, bool showAll) {
     List<Product> products = [];
-    List<Product> unprocessedProducts = [];
     return FutureBuilder(
       future: explore.dependency.setItems(productType),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
