@@ -33,7 +33,7 @@ class LoginService
         var responseData=jsonDecode(response.body);
         throw Exception("${responseData["message"]}");
     }
-    throw Exception('Unable to get products from the server');
+    throw Exception('Unable to log in');
   }
   
 }
