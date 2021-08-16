@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
+import 'package:silicon_scraper/view_models/login_wrapper.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -32,7 +32,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 void main() async{
-  WatchListInjector.configure(DependencyType.PROD);
+  WatchListInjector.configure(DependencyType.MOCK);
   ExplorePageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
@@ -169,7 +169,7 @@ class _MyAppState extends State<MyApp> {
               color: myLightBlue,
         )
       ),
-      home: /*MainNavigator()*/ LoginView(),
+      home: /*MainNavigator()*/ LoginWrapper(),
     );
   }
 }
