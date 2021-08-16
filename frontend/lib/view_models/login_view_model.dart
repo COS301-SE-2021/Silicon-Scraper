@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/injectors/login_service_injector.dart';
+import 'package:silicon_scraper/views/login_view.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,14 +18,13 @@ class LoginViewModel extends ChangeNotifier
            {
              SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
              sharedPreferences.setString("token", isIn['token']);
-             print(isIn['token']);
+             sharedPreferences.setBool("loggedIn",true);
              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => MainNavigator()),(Route<dynamic> route)  => false);
            }
            else
            {
                //todo push error screen or show incorrect pw
            }
-
         }
         catch(e)
         {
@@ -43,9 +43,11 @@ class LoginViewModel extends ChangeNotifier
         // todo push forgot pw screen
     }
 
-    logout()
+    logout(context)async
     {
-
+      SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+      sharedPreferences.setBool("loggedIn",false);
+      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginView()),(Route<dynamic> route)  => false);
     }
 }
 
