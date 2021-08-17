@@ -85,10 +85,10 @@ def price_and_availability():
 
         input_data_price =  input_data_price.reshape(1,-1)
         input_data_avail = input_data_avail.reshape(1, -1)
-
+        
         price_preds = price_model(input_data_price) 
         avail_preds = avail_model(input_data_avail) 
-
+        
         results['predictions'] = {'price': 'price', 'availability': ''}
         results['predictions']['price'] = np.round(scalar_y_price.inverse_transform(price_preds)[0], 2).tolist()[0]
         results['predictions']["availability"] = np.argmax(scaler_y_avail.inverse_transform(avail_preds)).tolist()
