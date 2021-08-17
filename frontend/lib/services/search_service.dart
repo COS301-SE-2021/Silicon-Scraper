@@ -8,7 +8,7 @@ class SearchService {
 
   Future searchRequest(String query) async {
     Uri uri = Uri.parse("https://api-silicon-scraper.herokuapp.com/products/search?key=" +
-        query);
+        query+"&userId=c8a93f30-fe1b-4cea-a7e2-49c37e908133");
     print(uri.toString());
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=utf-8",
