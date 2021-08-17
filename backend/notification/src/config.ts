@@ -10,6 +10,9 @@ import { deviceToken } from './entity/deviceToken';
 
 config({ path: resolve(__dirname, "../.env") })
 
+/**
+ * Creates connection to database for typeorm and loads environment variables
+ */
 export const connection = async () => {
     try {
         await createConnection({
