@@ -19,6 +19,9 @@
     "@types/axios": "^0.14.0",
     "@types/cron": "^1.7.3",
     "@types/jest": "^26.0.23",
+    "@types/newrelic": "^7.0.2",
+    "@types/node": "^15.12.4",
+    "@types/pg-promise": "^5.4.3",
     "@types/shelljs": "^0.8.9",
     "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.21.1",
@@ -26,13 +29,12 @@
     "cheerio": "^1.0.0-rc.9",
     "cron": "^1.8.2",
     "dotenv": "^10.0.0",
+    "newrelic": "^8.1.0",
     "pg-mem": "^1.9.9",
     "pg-promise": "^10.10.2",
     "shelljs": "^0.8.4",
     "source-map-loader": "^3.0.0",
-    "typescript": "^3.9.9",
-    "@types/node": "^15.12.4",
-    "@types/pg-promise": "^5.4.3"
+    "typescript": "^3.9.9"
   },
   "devDependencies": {
     "@types/node": "^15.12.4",
