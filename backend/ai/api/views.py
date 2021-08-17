@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import logging
 import json
 import pickle
 from tensorflow import keras
@@ -58,11 +57,9 @@ app = create_app()
 
 @bp.route('/price-and-availability', methods = ["GET"])
 def price_and_availability():
-    app.logger.info("Loading models ....")
     
     avail_model = keras.models.load_model(os.path.join(cwd, PATH_TO_AVAIL_PRED_MODEL))
     price_model = keras.models.load_model(os.path.join(cwd, PATH_TO_PRICE_PRED_MODEL))
-    app.logger.info("Models loaded ....")
     
     results = {'success': False}
 
