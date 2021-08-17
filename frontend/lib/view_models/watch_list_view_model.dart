@@ -56,7 +56,7 @@ class WatchListViewModel extends ChangeNotifier
         await watch.dependency.removeRequest(p);// check response
         items.removeWhere((t){ return t.id==p.id;});
         notifyListeners();
-//        return true;
+        return true;
       }
       catch(e)
       {
@@ -80,7 +80,7 @@ class WatchListViewModel extends ChangeNotifier
         await watch.dependency.addRequest(p);// check response
         items.add(p);
         notifyListeners();
-//        return true;
+        return true;
       }
       catch(e)
       {

@@ -1,5 +1,6 @@
 JSONData() {
-  return { "products": [
+  return
+    [
     {
       "id": "1",
       "type": "gpu",
@@ -91,6 +92,5 @@ JSONData() {
       "availability": "notspecified",
       "watch": false
     }
-  ]
-  };
+  ];
 }

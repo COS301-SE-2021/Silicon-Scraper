@@ -7,7 +7,7 @@ import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 @TestOn('vm')
 void main()
 {
-  /*WatchListInjector.configure(DependencyType.MOCK);
+  WatchListInjector.configure(DependencyType.MOCK);
   WatchListViewModel wlvm;
 
   group("watch list view model test when all services complete successfully", ()
@@ -22,9 +22,9 @@ void main()
         expect(()async{await wlvm.setInitialProducts();}, returnsNormally);
       });
 
-      test('test if setInitialProducts calls service', ()async{
+      test('test if setInitialProducts calls service should be 5 products', ()async{
         await wlvm.setInitialProducts();
-        expect(wlvm.items.length, 7);
+        expect(wlvm.items.length, 5);
       });
 
     group("test findProduct with data",(){
@@ -51,28 +51,28 @@ void main()
 
     });
 
-    group("test findProductStrict with data",(){
-      setUp(()async{
-        await wlvm.setInitialProducts();
-      });
-
-      test('findProduct at index 0 (lower limit) returns true', (){
-        expect(wlvm.findProductStrict(wlvm.items.first), true);
-      });
-
-      test('findProduct at index 6 (upper limit) returns true', (){
-        expect(wlvm.findProductStrict(wlvm.items.last), true);
-      });
-
-      test('findProduct at index 3 (middle) returns true', (){
-        expect(wlvm.findProductStrict(wlvm.items.elementAt(3)), true);
-      });
-
-      test('findProduct that is not the same object but with the same attributes returns false', (){
-        Product p=Product.fromJson(JSONData()[0]);
-        expect(wlvm.findProductStrict(p),true);
-      });
-    });
+//    group("test findProductStrict with data",(){
+//      setUp(()async{
+//        await wlvm.setInitialProducts();
+//      });
+//
+//      test('findProduct at index 0 (lower limit) returns true', (){
+//        expect(wlvm.findProductStrict(wlvm.items.first), true);
+//      });
+//
+//      test('findProduct at index 6 (upper limit) returns true', (){
+//        expect(wlvm.findProductStrict(wlvm.items.last), true);
+//      });
+//
+//      test('findProduct at index 3 (middle) returns true', (){
+//        expect(wlvm.findProductStrict(wlvm.items.elementAt(3)), true);
+//      });
+//
+//      test('findProduct that is not the same object but with the same attributes returns false', (){
+//        Product p=Product.fromJson(JSONData()[0]);
+//        expect(wlvm.findProductStrict(p),true);
+//      });
+//    });
 
     group('test removeProduct', (){
       test('when list is empty should throw exeption',()async{
@@ -95,12 +95,13 @@ void main()
           expect(await wlvm.removeProduct(wlvm.items.first), true);
         });
 
-        test('remove item of the same object items size should be 6', ()async{
+        test('remove item of the same object items size should be 4', ()async{
           await wlvm.removeProduct(wlvm.items.first);
-          expect(wlvm.items.length, 6);
+          expect(wlvm.items.length, 4);
         });
         //this test is invalid it may remove the item if all the properties are the same
-        *//*test('remove item of the same attributes should throw exception', ()async{
+
+        test('remove item of the same attributes should throw exception', ()async{
           Product p=Product.fromJson(JSONData()[0]);
 
           expect(()async=>
@@ -110,9 +111,9 @@ void main()
               throwsA(predicate((e) => e.message == "can't remove a product that is not in your watch list"))
           );
 
-        });*//*
+        });
 
-        test('remove item of the same attributes items size should be 7', ()async{
+        test('remove item of the same attributes items size should be 5', ()async{
           Product p=Product.fromJson(JSONData()[0]);
           try
           {
@@ -122,7 +123,7 @@ void main()
           {
 
           }
-          expect(wlvm.items.length, 7);
+          expect(wlvm.items.length, 5);
         });
 
       });
@@ -141,7 +142,7 @@ void main()
           );
         });
 
-        test('remove item of the same object items size should be 7', ()async{
+        test('remove item of the same object items size should be 5', ()async{
           try
           {
             await wlvm.removeProduct(wlvm.items.first);
@@ -150,10 +151,10 @@ void main()
           {
 
           }
-          expect(wlvm.items.length, 7);
+          expect(wlvm.items.length, 5);
         });
         //this test is invalid it may remove the item if all the properties are the same
-        *//*test('remove item of the same attributes should throw exception', ()async{
+        test('remove item of the same attributes should throw exception', ()async{
           Product p=Product.fromJson(JSONData()[0]);
 
           expect(()async=>
@@ -162,9 +163,9 @@ void main()
           },
               throwsA(predicate((e) => e.message == "can't remove a product that is not in your watch list"))
           );
-        });*//*
+        });
 
-        test('remove item of the same attributes items size should be 7', ()async{
+        test('remove item of the same attributes items size should be 5', ()async{
           Product p=Product.fromJson(JSONData()[0]);
           try
           {
@@ -174,7 +175,7 @@ void main()
           {
 
           }
-          expect(wlvm.items.length, 7);
+          expect(wlvm.items.length, 5);
         });
       });
     });
@@ -322,9 +323,9 @@ void main()
           expect(await wlvm.setInitialProducts(), true);
         });
 
-        test('if it adds initial products size should be 7', ()async{
+        test('if it adds initial products size should be 5', ()async{
           await wlvm.setInitialProducts();
-          expect(wlvm.items.length, 7);
+          expect(wlvm.items.length, 5);
         });
       });
       group("when service completes unsuccessfully",(){
@@ -368,5 +369,5 @@ void main()
           });
     });
 
-  });*/
+  });
 }
