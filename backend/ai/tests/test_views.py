@@ -12,7 +12,7 @@ def model_mock(data):
     pass
 
 def test_api_returns_error_on_incorrect_parameters(client):
-    res = client.get('/predict/price-and-availability', json={"brand": "MSI",
+    res = client.post('/predict/price-and-availability', json={"brand": "MSI",
     "model": "GEFORCE GTX 1080 TI GAMING X OC",
     "availability": "Out of Stock"})
 
@@ -22,7 +22,7 @@ def test_api_returns_error_on_incorrect_parameters(client):
     assert "missing" in data['message']
 
 def test_api_returns_error_on_missing_paramaters(client):
-    res = client.get('/predict/price-and-availability', json={"brand": "MSI",
+    res = client.post('/predict/price-and-availability', json={"brand": "MSI",
     "model": "GEFORCE GTX 1080 TI GAMING X OC",
     "availability": "Out of Stock",
     "da": "20180325112546",
