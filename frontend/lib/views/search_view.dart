@@ -578,6 +578,8 @@ class ProductSearch extends SearchDelegate<String> {
                                                           retailer1,
                                                           retailer2,
                                                           retailer3);
+                                                  this.filtered = Colors.deepOrangeAccent;
+                                                  this.filterText = "FILTERED";
                                                   Navigator.pop(context,
                                                       filteredProducts);
                                                 },
@@ -592,8 +594,6 @@ class ProductSearch extends SearchDelegate<String> {
                               (value) {
                                 _setState(() {
                                   this.products = value;
-                                  this.filtered = Colors.deepOrangeAccent;
-                                  this.filterText = "FILTERED";
                                 });
                               },
                             );
