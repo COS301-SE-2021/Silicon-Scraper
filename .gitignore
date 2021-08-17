@@ -39,6 +39,7 @@ coverage/
 
 #typescript
 backend/scraper/dist/
+
 # API related
 node_modules/
 

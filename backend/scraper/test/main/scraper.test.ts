@@ -1,16 +1,31 @@
-//import { mockAxios } from "../../__mocks__/axios";
 import * as scraper  from "../../src/main/scraper";
+import * as parser from "../../src/utilities/parser"
 import { urls } from "../../__mocks__/urlMock";
-import axios from "axios"
+// import axios from "axios"
 import { selectorsArray } from "../../src/utilities/selectors";
-const url = require("../../src/utilities/url")
 
 const eve = require("../../__mocks__/mockUrl")
-// Mock axios
-jest.mock("axios")
+
+jest.mock("axios", () => {
+    const eve = require("../../__mocks__/mockUrl")
+    let d: string = eve.getMockData()
+
+    const mockedResponse = {
+        data: d,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+    }
+
+    return Object.assign(jest.fn(), {
+        get: jest.fn().mockResolvedValue(mockedResponse)
+    })
+})
+
+import axios from "axios";
 
 let d: string = eve.getMockData()
-
 const mockAxios = axios as jest.Mocked<typeof axios>;
 
 const mockedResponse = {
@@ -23,39 +38,23 @@ const mockedResponse = {
 
 mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
 
-
-//const scrape = require('../../src/main/scraper');
-
-// jest.mock('../../src/utilities/selectors', () => ({
-//     getAvailabilitySelector: jest.fn().mockImplementation(() => {return 'availabilty_selector'}),
-//     getLinkSelector: jest.fn().mockImplementation(() => "link_selector"),
-//     getImageSelector: jest.fn().mockImplementation(() => {return "image_selector"}),
-//     getTableSelector: jest.fn().mockImplementation(() => {return "table_selector"}),
-//     getRowSelector: jest.fn().mockImplementation(() => {return "row_selector"}),
-//     getTitleSelector: jest.fn().mockImplementation(() => {return "title_selector"}),
-//     getPriceSelector: jest.fn().mockImplementation(() => "price_selection")
-// }
-// )) 
-
 describe("scraperTest()", () => {
     let title: string; 
     let parsedTitle: any;
-    let trimedPrice: number;
+    let trimedPrice: any;
 
     beforeEach(() => {
         jest.resetModules();
         jest.clearAllMocks();
-        title = "MSI GeForce RTX 3090 SUPRIM X 24GB GDDR6X"
-        parsedTitle = scraper.titleParser(title) ;
-        trimedPrice = scraper.trimPrice("from R 50000");
+        title = "MSI GeForce RTX 3090 SUPRIM X 24GB GDDR6X";
+        parsedTitle = parser.titleParser(title) ;
+        trimedPrice = parser.trimPrice("from R 50000");
       });
     
     afterAll(done => {
         done();
     })
     
-
-    const index = 0;
 
     test("Should not return empty string", () => {
         expect(parsedTitle).toEqual(expect.not.stringMatching(/^$/));
@@ -65,31 +64,31 @@ describe("scraperTest()", () => {
     test("Returns parsed title", () => {
         const expected = {
             'brand': 'MSI',
-            'model': 'GeForce RTX 3090 SUPRIM X 24GB'// GDDR6X'
+            'model': 'GeForce RTX 3090 SUPRIM X 24GB GDDR6X'
         }
         expect(parsedTitle).toEqual(expected);
     })
 
     test("Returns trimed price", () => {
         expect(trimedPrice).toEqual(50000)
-        expect(scraper.trimPrice("50000")).toEqual(undefined);
+        expect(parser.trimPrice("50000")).toEqual(undefined);
     })
 
     test("Should concatenate base url", () => {
         let urlOld = "../collections/gpus"
         const base = "https://baseUrl.com/"
         let expected = base+"collections/gpus"
-        const concat = scraper.concatUrl(urlOld, base);
+        const concat = parser.concatUrl(urlOld, base);
         expect(concat).toBe(expected);
 
         urlOld = "/p/collections"
         expected = base+urlOld
-        expect(scraper.concatUrl(urlOld, base)).toBe(expected)
+        expect(parser.concatUrl(urlOld, base)).toBe(expected)
     })
 
     test("Should produce concatenation error", () => { // this should fail
-        expect(scraper.concatUrl("", "")).toBe("");
-        expect(scraper.concatUrl(undefined, "baseurl")).toBe("https://www.evetech.co.za/")
+        expect(parser.concatUrl("", "")).toBe("");
+        expect(parser.concatUrl(undefined, "baseurl")).toBe("https://www.evetech.co.za/")
     })
     
     test('Should return array of products', async () =>{
@@ -109,11 +108,8 @@ describe("scraperTest()", () => {
         
         expect(product).toEqual(expect.arrayContaining([]))
         expect(product).not.toBeNull();
-        expect(product?.cpu).not.toBeNull();
-        expect(product?.gpu).not.toBeNull();
-       
-        // expect(selectorsArray[0].getTableSelector).toHaveBeenCalled();
-        
+        // expect(product?.cpu).not.toBeNull();
+        // expect(product?.gpu).not.toBeNull();
        
     })
 })
