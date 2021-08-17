@@ -36,6 +36,7 @@ class _ExploreState extends State<Explore> {
               login.logout(context);
             })
           ],
+          //toolbarHeight: 35,
         ),
         body: SingleChildScrollView(
             child: Column(

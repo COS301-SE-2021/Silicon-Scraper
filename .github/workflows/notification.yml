@@ -1,0 +1,22 @@
+name: Notifications
+
+on:
+  push:
+    branches: [master, develop, feature-notification]
+  pull_request: 
+    branches: [master, develop, feature-notification]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup and run notification tests
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - run: |
+        cd backend/notification
+        npm install
+        npm test

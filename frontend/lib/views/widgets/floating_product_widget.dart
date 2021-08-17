@@ -18,7 +18,6 @@ class FloatingProductWidget extends StatelessWidget {
         return Container(
             margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
             height: MediaQuery.of(context).size.height / 4 ,
-
             child: InkWell(
               onTap: ()
               {
@@ -33,12 +32,13 @@ class FloatingProductWidget extends StatelessWidget {
                         children: [
                           Container(
                             height:120,
-                            width: MediaQuery.of(context).size.width*0.85,
+                            width: MediaQuery.of(context).size.width*0.67,
                             child: Card(
                               elevation: 0,
                               color: Colors.white,
                               child: Container(
-                                padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.20, 0, 0, 0),
+                                //padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.20, 0, 0, 0),
+                                padding: EdgeInsets.only(left: 5),
                                 ///Brand + Model
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -131,7 +131,7 @@ class FloatingProductWidget extends StatelessWidget {
                   ),
                   ///image
                   Container(
-                    height: MediaQuery.of(context).size.height / 5,
+                    width: MediaQuery.of(context).size.width * 0.33,
                     child: Image.network('${state.item.image}',),
                   ),
 
