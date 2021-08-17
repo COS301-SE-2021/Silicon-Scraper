@@ -29,6 +29,7 @@ class PredictionViewModel extends ChangeNotifier
     try
     {
       _predict=await _predictor.dependency.predictionRequest(_item, _date);
+      print("it worked");
       if(_predict.price==_item.price)
         {
           _arrow=null;

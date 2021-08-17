@@ -116,9 +116,6 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                                   setState((){});
                                   await widget.state.predict.prediction(context);
                                 }
-
-
-
                           }
                           ,
                             child: Text('Predict the Future',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(

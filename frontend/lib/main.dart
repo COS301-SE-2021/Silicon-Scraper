@@ -34,7 +34,7 @@ void main() async{
   WatchListInjector.configure(DependencyType.PROD);
   ExplorePageInjector.configure(DependencyType.PROD);
   SearchSortFilterInjector.configure(DependencyType.PROD);
-  PredictionInjector.configure(DependencyType.MOCK,fail: false);
+  PredictionInjector.configure(DependencyType.PROD,fail: false);
   LoginInjector.configure(DependencyType.PROD,success: true);
   SignUpInjector.configure(DependencyType.PROD,success: true);
 
