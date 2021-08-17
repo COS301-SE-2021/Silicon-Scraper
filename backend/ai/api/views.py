@@ -46,7 +46,7 @@ def prepare_params(params):
 
 
 
-logging.basicConfig(filename=os.path.join(cwd,"api_logs/api.log"), level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
+#logging.basicConfig(filename=os.path.join(cwd,"api_logs/api.log"), level=logging.ERROR, format='{%(asctime)s}, {%(module)s}: %(message)s')
 
 parameters = [
     "brand", "model", "date", "type", "price", "availability"
