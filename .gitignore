@@ -8,6 +8,12 @@
 .buildlog/
 .history
 .svn/
+*.pytest_cache
+venv/
+*.egg-info
+*/__pycache__
+*/venv
+*/api_logs
 
 # IntelliJ related
 *.iml
