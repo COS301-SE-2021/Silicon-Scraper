@@ -10,7 +10,7 @@ void main()
   WatchListInjector.configure(DependencyType.MOCK);
   WatchListViewModel wlvm;
 
-  group("watch list view model test when all services complete successfully", ()
+  group("watch list view model test", ()
   {
     setUp(()
     {

@@ -113,11 +113,11 @@ void main() {
       });
       test("test applying availability 'in stock' filter (should be 3)", () {
         List<Product> res = search.applyFilters(list, true, false, false, false, min, max, false, false, false);
-        expect(res.length, 3);
+        expect(res.length, 2);
       });
       test("test applying availability 'out of stock' filter (should be 4)", () {
         List<Product> res = search.applyFilters(list, false, true, false, false, min, max, false, false, false);
-        expect(res.length, 4);
+        expect(res.length, 5);
       });
       test("test applying all availability filters (should be 7)", () {
         List<Product> res = search.applyFilters(list, true, true, false, false, min, max, false, false, false);
