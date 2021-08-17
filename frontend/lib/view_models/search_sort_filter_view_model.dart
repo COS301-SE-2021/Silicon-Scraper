@@ -3,13 +3,13 @@ import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.da
 import 'package:silicon_scraper/models/product_model.dart';
 
 class SearchViewModel {
-
   SearchSortFilterInjector search = SearchSortFilterInjector();
+
   SearchViewModel();
 
   // check if this is a mock service for getting results
   // cause mock results need to use an extra function to get search results
-  bool isMockSearchService(){
+  bool isMockSearchService() {
     return search.dependencyType == DependencyType.MOCK;
   }
 
@@ -24,7 +24,7 @@ class SearchViewModel {
     return products;
   }
 
-  Future<List<Product>> getProductList(query){
+  Future<List<Product>> getProductList(query) {
     return search.dependency.setProductList(query);
   }
 
@@ -61,6 +61,8 @@ class SearchViewModel {
       List<Product> products,
       bool inStock,
       bool outOfStock,
+      bool cpu,
+      bool gpu,
       double minPrice,
       double maxPrice,
       bool retailer1,
@@ -70,10 +72,20 @@ class SearchViewModel {
     /// retailer: 1 - evetech, 2 - dreamware, 3 - amptek
 
     List<Product> filteredProducts = [];
-    List<bool> filters = [inStock, outOfStock, retailer1, retailer2, retailer3];
+    List<bool> filters = [
+      inStock,
+      outOfStock,
+      cpu,
+      gpu,
+      retailer1,
+      retailer2,
+      retailer3
+    ];
     List<String> filterString = [
       "in stock",
       "out of stock",
+      "cpu",
+      "gpu",
       "evetech",
       "dreamware",
       "amptek"
@@ -88,24 +100,30 @@ class SearchViewModel {
     // check if its in the price range then add it to the filtered array
     bool add = true;
     for (int p = 0; p < products.length; p++) {
-      if (inStock || outOfStock || retailer1 || retailer2 || retailer3) {
+      if (inStock ||
+          outOfStock ||
+          cpu ||
+          gpu ||
+          retailer1 ||
+          retailer2 ||
+          retailer3) {
         add = false;
         for (int i = 0; i < filters.length; i++) {
           if (i < 2) {
             if (filters[i]) {
-              print(filters[i]);
               if (products
                       .elementAt(p)
                       .getAvailability()
                       .toLowerCase()
                       .compareTo(filterString[i]) ==
                   0) {
-                // print(products
-                //     .elementAt(p)
-                //     .getAvailability()); // returns a boolean i think?
                 add = true;
-              } else {
-                add = false;
+              }
+            }
+          } else if (i < 4) {
+            if (filters[i]) {
+              if (products.elementAt(p).type.toLowerCase().compareTo(filterString[i]) == 0) {
+                add = true;
               }
             }
           } else {
@@ -133,8 +151,6 @@ class SearchViewModel {
     return filteredProducts;
   }
 
-
-
   /// helper functions
   double priceMinMax(List<Product> products, int min0max1) {
     List<Product> tempProducts = products;
@@ -161,9 +177,9 @@ class SearchViewModel {
     return modelOrBrand.toLowerCase().contains(query.toLowerCase());
   }
 
-  // List<Product> getSortedFilteredProducts(List<Product> products) {
-  //   return products;
-  // }
+// List<Product> getSortedFilteredProducts(List<Product> products) {
+//   return products;
+// }
 }
 
 class SearchPageViewModelSingleton extends SearchViewModel {

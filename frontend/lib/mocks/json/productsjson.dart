@@ -88,7 +88,7 @@ JSONData(){
       "description": "/ 3584 Cuda Cores / Boost: **** MHz / Axial-tech Fan Design / All-Aluminum Shroud and Metal Backplate / Dual Ball Fan Bearings / Three Powerful Axial-tech Fans / 2.7-slot Design / 90YV0GC0-M0NA00 + FREE DELIVERY !\n",
       "url":"https://www.evetech.co.za/asus-tuf-rtx-3060-oc-12gb-gaming/best-deal/11364.aspx" ,
       "image": "https://www.evetech.co.za/repository/ProductImages/asus-geforce-rtx-3060-oc-tuf-12gb-gddr6-400px-v1.jpg",
-      "availability":"notspecified",
+      "availability":"in stock",
       "watch": false
     }
     ];

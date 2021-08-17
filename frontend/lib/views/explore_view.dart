@@ -24,6 +24,7 @@ class _ExploreState extends State<Explore> {
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
           ),
           centerTitle: true,
+          //toolbarHeight: 35,
         ),
         body: SingleChildScrollView(
             child: Column(

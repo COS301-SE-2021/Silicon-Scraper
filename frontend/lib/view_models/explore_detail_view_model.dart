@@ -4,85 +4,67 @@ import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 
 class ExploreViewModel {
-
   ExplorePageInjector explore = ExplorePageInjector();
-  List<Product> items=[];
-
+  List<Product> items = [];
   ExploreViewModel();
 
   FutureBuilder getExplorePageProducts(String productType, bool showAll) {
     List<Product> products = [];
-    List<Product> unprocessedProducts = [];
     return FutureBuilder(
-      future: explore.dependency.setItems(),
+      future: explore.dependency.setItems(productType),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
-          print("problem with connection");
-          return Center(child: CircularProgressIndicator());
+          return noConnection(context);
         } else if (snapshot.data != null) {
-          print("gets data");
-          unprocessedProducts = snapshot.data;
-          if (productType.compareTo("all") != 0) {
-            for (int i = 0; i < unprocessedProducts.length; i++) {
-              if (unprocessedProducts
-                      .elementAt(i)
-                      .type
-                      .toLowerCase()
-                      .compareTo(productType) ==
-                  0) {
-                products.add(unprocessedProducts.elementAt(i));
-              }
-            }
-          } else {
-            products = snapshot.data;
-          }
+          products = snapshot.data;
 
           // check if the product array is not empty (ie no products)
           if (products.isNotEmpty) {
-            if (showAll){
+            if (showAll) {
               return productListView(context, products);
             }
             return productHorizontalListView(context, products);
           } else {
-            if (productType.compareTo("cpu") == 0) {
-              return noProducts(context, "CPUs");
-            } else if (productType.compareTo("gpu") == 0) {
-              return noProducts(context, "GPUs");
-            } else {
-              return noProducts(context, "PRODUCTS");
-            }
+            return getNoProductErrorMessage(context, productType);
           }
         } else {
-          print("ERROR: not getting data");
           return Center(child: CircularProgressIndicator());
         }
       },
     );
   }
 
-  String getTitle(String productType){
-    String title = "Products";
-    if (productType.compareTo("cpu") == 0){
-      title = "CPUs";
+  Center getNoProductErrorMessage(BuildContext context, String productType) {
+    if (productType.compareTo("cpu") == 0) {
+      return noProducts(context, "CPUs");
+    } else if (productType.compareTo("gpu") == 0) {
+      return noProducts(context, "GPUs");
+    } else {
+      return noProducts(context, "PRODUCTS");
     }
-    else if (productType.compareTo("gpu") == 0){
+  }
+
+  String getTitle(String productType) {
+    String title = "Products";
+    if (productType.compareTo("cpu") == 0) {
+      title = "CPUs";
+    } else if (productType.compareTo("gpu") == 0) {
       title = "GPUs";
     }
     return title;
   }
 }
 
-class ExplorePageViewModelSingleton extends ExploreViewModel
-{
+class ExplorePageViewModelSingleton extends ExploreViewModel {
   static ExplorePageViewModelSingleton _instance;
-  ExplorePageViewModelSingleton._internal(){
+
+  ExplorePageViewModelSingleton._internal() {
 //
   }
-  static ExplorePageViewModelSingleton getState()
-  {
-    if(_instance==null)
-    {
-      _instance=ExplorePageViewModelSingleton._internal();
+
+  static ExplorePageViewModelSingleton getState() {
+    if (_instance == null) {
+      _instance = ExplorePageViewModelSingleton._internal();
     }
     return _instance;
   }

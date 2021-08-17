@@ -50,63 +50,63 @@ class Product
   {
     if(sAvailability==null)
       {
-        this.stockAvailability=availability.notSpecified;
+        this.stockAvailability=availability.outOfStock;
       }
     else if(sAvailability.toLowerCase().compareTo("in stock") ==0)
       {
-        this.stockAvailability=availability.available;
+        this.stockAvailability=availability.inStock;
       }
-    else if(sAvailability.toLowerCase().compareTo("limitedstock") ==0)
-      {
-        this.stockAvailability=availability.limitedStock;
-      }
+    // else if(sAvailability.toLowerCase().compareTo("limitedstock") ==0)
+    //   {
+    //     this.stockAvailability=availability.limitedStock;
+    //   }
     else if(sAvailability.toLowerCase().compareTo("out of stock") ==0)
     {
       this.stockAvailability=availability.outOfStock;
     }
-    else if(sAvailability.toLowerCase().compareTo("notspecified") ==0)
-    {
-      this.stockAvailability=availability.notSpecified;
-    }
+    // else if(sAvailability.toLowerCase().compareTo("notspecified") ==0)
+    // {
+    //   this.stockAvailability=availability.notSpecified;
+    // }
     else
     {
-      this.stockAvailability=availability.notSpecified;
+      this.stockAvailability=availability.outOfStock;
     }
   }
   //todo remove
   String getAvailability()
   {
 
-    if(this.stockAvailability==availability.available)
+    if(this.stockAvailability==availability.inStock)
       {
-        return "available";
+        return "in stock";
       }
-    else if(this.stockAvailability==availability.limitedStock)
-    {
-      return "limited stock";
-    }
+    // else if(this.stockAvailability==availability.limitedStock)
+    // {
+    //   return "limited stock";
+    // }
     else if(this.stockAvailability==availability.outOfStock)
     {
       return "out of stock";
     }
-    else if(this.stockAvailability==availability.notSpecified)
-    {
-      return "not specified";
-    }
-    return "not specified";
+    // else if(this.stockAvailability==availability.notSpecified)
+    // {
+    //   return "not specified";
+    // }
+    return "out of stock";
   }
   //todo remove
   Widget getAvailabilityText(double size,TextAlign align)
   {
-    if(this.stockAvailability==availability.available)
+    if(this.stockAvailability==availability.inStock)
     {
       return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.green),textAlign: align,);
     }
-    else if(this.stockAvailability==availability.notSpecified)
-    {
-      return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.grey),textAlign: align);
-    }
-    else if(this.stockAvailability==availability.outOfStock||this.stockAvailability==availability.limitedStock)
+    // else if(this.stockAvailability==availability.notSpecified)
+    // {
+    //   return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.grey),textAlign: align);
+    // }
+    else if(this.stockAvailability==availability.outOfStock /*||this.stockAvailability==availability.limitedStock*/)
     {
       return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.red),textAlign: align);
     }
@@ -117,8 +117,6 @@ class Product
 enum availability
 {
   //todo
-  available,
-  limitedStock,//remove
+  inStock,
   outOfStock,
-  notSpecified//remove
 }
