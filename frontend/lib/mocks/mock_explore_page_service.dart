@@ -9,17 +9,17 @@ class MockExplorePageService extends ExplorePageService {
   List<Product> items=[];
 
   MockExplorePageService() {
-    setItems();
+    //setItems();
   }
 
   @override
-  Future explorePageRequest() async {
+  Future explorePageRequest(String productType) async {
     return await getProducts();
   }
 
   @override
-  Future setItems()async {
-    items=await explorePageRequest();
+  Future setItems(String productType)async {
+    items=await explorePageRequest(productType);
     //print("setItems");
     return items;
   }

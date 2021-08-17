@@ -98,5 +98,24 @@ Center noProducts(BuildContext context, String productType){
   );
 }
 
+Center noConnection(BuildContext context){
+  return Center(
+    child: Padding(
+      padding: EdgeInsets.all(25),
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          style: TextStyle(
+            color: Colors.black12,
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+          ),
+          text: 'NO INTERNET \n CONNECTION',
+        ),
+      ),
+    ),
+  );
+}
+
 
 

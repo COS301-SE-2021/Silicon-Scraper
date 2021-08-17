@@ -64,7 +64,7 @@ class _ExploreDetailWidgetState extends State<ExploreDetailWidget> {
         ),
         //backgroundColor: Colors.white,
         body: Container(
-          child: explore.getExplorePageProducts("all", true)
+          child: explore.getExplorePageProducts(productType, true)
         ));
   }
 }
