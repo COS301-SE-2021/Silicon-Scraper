@@ -55,7 +55,7 @@ bp = Blueprint('predict', __name__, url_prefix='/predict')
 
 app = create_app()
 
-@bp.route('/price-and-availability', methods = ["GET"])
+@bp.route('/price-and-availability', methods = ["POST"])
 def price_and_availability():
     
     avail_model = keras.models.load_model(os.path.join(cwd, PATH_TO_AVAIL_PRED_MODEL))
