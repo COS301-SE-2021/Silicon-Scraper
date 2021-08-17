@@ -70,6 +70,9 @@ class ProductSearch extends SearchDelegate<String> {
   bool retailer2 = false;
   bool retailer3 = false;
 
+  Color filtered = Colors.black;
+  String filterText = "FILTER";
+
   @override
   ThemeData appBarTheme(BuildContext context) {
     assert(context != null);
@@ -346,8 +349,8 @@ class ProductSearch extends SearchDelegate<String> {
                       width: MediaQuery.of(context).size.width / 2 - 0.3,
                       child: TextButton(
                         child: Text(
-                          'FILTER',
-                          style: TextStyle(fontSize: 14.0, color: Colors.black),
+                          filterText,
+                          style: TextStyle(fontSize: 14.0, color: filtered),
                         ),
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -541,6 +544,8 @@ class ProductSearch extends SearchDelegate<String> {
                                                       color: Colors.grey),
                                                 ),
                                                 onPressed: () {
+                                                  //this.filtered = Colors.black;
+                                                  //this.filterText = "FILTER";
                                                   Navigator.pop(
                                                       context, this.products);
                                                 },
@@ -587,6 +592,8 @@ class ProductSearch extends SearchDelegate<String> {
                               (value) {
                                 _setState(() {
                                   this.products = value;
+                                  this.filtered = Colors.deepOrangeAccent;
+                                  this.filterText = "FILTERED";
                                 });
                               },
                             );
