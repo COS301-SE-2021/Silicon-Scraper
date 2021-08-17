@@ -86,19 +86,19 @@ jest.mock("../../src/main/scraper.ts")
 const mockScrape = scrape as jest.MockedFunction<typeof scrape>
 const mockScrapeSilon = scrapeSilon as jest.MockedFunction<typeof scrapeSilon>
 
-jest.mock("pg-promise")
+// jest.mock("pg-promise")
 
 describe("Database operations tests", () => {
     let products: any;
     let dbOps: any;
-    let pgp;
+   // let pgp;
     let db: any;
-    pgp = jest.fn((connection) => ({
-        none: jest.fn().mockResolvedValue(Promise.resolve()),
-        any: jest.fn().mockReturnValue((query: any) => Promise.resolve([]))
-    }))
+    // pgp = jest.fn((connection) => ({
+    //     none: jest.fn().mockResolvedValue(Promise.resolve()),
+    //     any: jest.fn().mockReturnValue((query: any) => Promise.resolve([]))
+    // }))
 
-    db = pgp("client_string");
+    db = {};
 
     beforeEach(() =>{
         jest.resetModules();
@@ -114,6 +114,10 @@ describe("Database operations tests", () => {
             gpu: gpus, 
             cpu: cpus
         })
+
+
+        db.none = jest.fn().mockResolvedValue(Promise.resolve()),
+         db.any = jest.fn().mockReturnValue((query: any) => Promise.resolve([]))
     
     })
 
