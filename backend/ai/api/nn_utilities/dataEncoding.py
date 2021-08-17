@@ -1,9 +1,19 @@
 import pandas as pd
 import os
+import datetime
 import sklearn.preprocessing as sp
-from api.nn_utilities.dataCleaning import split_date
 
 cwd = os.path.dirname(__file__)
+
+def split_date(date):
+    year = int(date.str[:4])
+    month = int(date.str[4:6])
+    day_month = int(date.str[6:8])   
+    week = datetime.date(year, month, day_month).isocalendar()[1]
+    day_week = datetime.date(year, month, day_month).isocalendar()[2]
+    day_year = day_week * week
+    quarter = math.ceil(float(month)/3)
+    return year, month, quarter, week, day_year, day_month, day_week
 
 def getModelData():
     gpuModels = pd.read_csv(os.path.join(cwd,"../model_data/gpuModels.csv"))

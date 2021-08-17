@@ -1,12 +1,10 @@
-import pandas as pd
 import os
 import numpy as np
 import logging
 import json
 import pickle
 from tensorflow import keras
-#from keras.models import load_model
-from pandas import json_normalize
+from pandas import json_normalize, read_csv
 from flask import jsonify, request, Blueprint
 from api import create_app
 from api.nn_utilities.dataEncoding import encode_data
@@ -26,7 +24,7 @@ def prepare_params(params):
     
     csv_path = PATH_TO_CPU_MODEL_DATA if data['type'].item() == 'cpu' else PATH_TO_GPU_MODEL_DATA
 
-    models = pd.read_csv(csv_path)
+    models = read_csv(csv_path)
 
     data['model'] = data['model'].str.upper()
 
