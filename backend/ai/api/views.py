@@ -38,11 +38,6 @@ def prepare_params(params):
 
     with open(os.path.join(cwd,'nn_utilities/scalar_price'), 'rb') as f:
         scalar_y_price = pickle.load(f)
-
-    with open(os.path.join(cwd,'nn_utilities/scalar_price_x'), 'rb') as f:
-        scalar_x_price = pickle.load(f)
-    with open(os.path.join(cwd,'nn_utilities/scalar_avail_x'), 'rb') as f:
-        scalar_x_avail = pickle.load(f)
     
     data_price = data_price.reshape(-1,1)
     data_avail = data_avail.reshape(-1,1)
