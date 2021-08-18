@@ -7,6 +7,8 @@ import { CPU } from '../src/entity/cpu';
 import typeorm from 'typeorm';
 import { deviceToken } from '../src/entity/deviceToken';
 
+jest.mock('firebase-admin');
+
 jest.mock('typeorm', () => {
     const actual = jest.requireActual('typeorm');
     return {
