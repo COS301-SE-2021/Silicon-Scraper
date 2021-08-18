@@ -118,7 +118,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                                 }
                           }
                           ,
-                            child: Text('Predict the Future',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
+                            child: Text('Predict',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                                   (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.pressed))
