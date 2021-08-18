@@ -172,4 +172,248 @@ Connection: close
 Content-Type: application/json
 ```
 
+### Fetch products
+Endpoint used to fetch gpus and cpus.
 
+#### Request
+Add an optional userId field i.e. userId=user_id to determine if the products are in the user's watchlist.
+
+```
+curl -i -H 'Accept: application/json' 'Authorization: Bearer thisisatoken' -X GET https://api-silicon-scraper/products?userId={user_id}
+```
+
+#### Response
+Example: GET https://api-silicon-scraper/products
+```
+HTTP/1.1 200
+Date: Thu, 24 Feb 2021 12:36:30 GMT
+Status: 200
+Connection: close
+Content-Type: application/json
+
+{
+	"products": [
+		{
+			"id": "d6442690-24a9-4969-a329-a8d37563cfe8",
+            "brand": "ASUS",
+            "model": "ROG Strix RTX 3090 OC 24GB White",
+            "image": "https://www.evetech.co.za/repository/components/asus-rog-strix-rtx-3090-oc-24gb-white-gaming-300px-v1_sml.jpg",
+            "price": 45999,
+            "availability": "Out of Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/asus-rog-strix-rtx-3090-oc-24gb-white-gaming/best-deal/11400.aspx",
+            "type": "gpu",
+            "description": ""
+		},
+		{
+            "id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "Intel",
+            "model": "Core i9-11900KF Gen Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": ""
+        }
+	]
+}
+```
+
+If the userId is specified:
+Example: GET https://api-silicon-scraper/products?userId={user_id}
+```
+HTTP/1.1 200
+Date: Thu, 24 Feb 2021 12:36:30 GMT
+Status: 200
+Connection: close
+Content-Type: application/json
+
+{
+	"products": [
+		{
+			"id": "d6442690-24a9-4969-a329-a8d37563cfe8",
+            "brand": "ASUS",
+            "model": "ROG Strix RTX 3090 OC 24GB White",
+            "image": "https://www.evetech.co.za/repository/components/asus-rog-strix-rtx-3090-oc-24gb-white-gaming-300px-v1_sml.jpg",
+            "price": 45999,
+            "availability": "Out of Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/asus-rog-strix-rtx-3090-oc-24gb-white-gaming/best-deal/11400.aspx",
+            "type": "gpu",
+            "description": "",
+			"watch": false
+		},
+		{
+			"id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "Intel",
+            "model": "Core i9-11900KF Gen Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": "",
+			"watch": false
+		}
+	]
+}
+```
+
+### Fetch product by id
+Endpoint used to retrieve a product with a matching id.
+
+#### Request
+Add an optional userId field i.e. userId=user_id to determine if the product is in the user's watchlist.
+```
+curl -i -H 'Accept: application/json' 'Authorization: Bearer thisisatoken' -X GET https://api-silicon-scraper/products/{product_id}?userId={user_id}
+```
+
+#### Response
+Example: GET https://api-silicon-scraper/products/7b05c566-be35-4829-9373-e36367e20937?userId={user_id}
+
+```
+HTTP/1.1 200
+Date: Thu, 24 Feb 2021 12:36:30 GMT
+Status: 200
+Connection: close
+Content-Type: application/json
+
+{
+	"products": [
+		{
+			"id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "Intel",
+            "model": "Core i9-11900KF Gen Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": ""
+		}
+	]
+}
+```
+
+If the userId is specified:
+Example: GET https://api-silicon-scraper/products/7b05c566-be35-4829-9373-e36367e20937?userId={user_id}
+```
+HTTP/1.1 200
+Date: Thu, 24 Feb 2021 12:36:30 GMT
+Status: 200
+Connection: close
+Content-Type: application/json
+
+{
+	"products": [
+		{
+			"id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "Intel",
+            "model": "Core i9-11900KF Gen Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": "",
+			"watch": false
+		}
+	]
+}
+```
+
+### Search for product
+Endpoint used to search for a gpu or cpu using a given key.
+
+#### Request
+Specify for the brand or model of cpu or gpu by adding the value to search for in the key field.
+Add an optional userId field i.e. userId=user_id to determine if the products are in the user's watchlist.
+
+```
+curl -i -H 'Accept: application/json' 'Authorization: Bearer thisisatoken' -X GET https://api-silicon-scraper/products/search?key={key}&userId={user_id}
+```
+
+#### Response
+Example: GET https://api-silicon-scraper/products/search?key=intel
+```
+HTTP/1.1 200
+Date: Thu, 24 Feb 2021 12:36:30 GMT
+Status: 200
+Connection: close
+Content-Type: application/json
+
+{
+	"products": [
+		{
+            "id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "Intel",
+            "model": "Core i9-11900KF Gen Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": ""
+		},
+		{
+            "id": "f5a8059f-25e1-4da5-abcc-726de609b012",
+            "brand": "Intel",
+            "model": "Core i9-9820X 4.1GHz Boost – 10 Core 20 Thread – LGA 2066 CPU",
+            "image": "https://amptek.co.za/wp-content/uploads/2020/09/Intel-Core-i9-9960X-BOX-1-1024x1024.jpg",
+            "price": 11699,
+            "availability": "Out of Stock",
+            "retailer": "Amptek",
+            "link": "https://amptek.co.za/product/intel-core-i9-9820x-x-series-16-5m-cache-up-to-4-20-ghz-lga2066/",
+            "type": "cpu",
+            "description": ""
+		}
+	]
+}
+```
+
+If the userId is specified:
+Example: GET https://api-silicon-scraper/products/search?key=intel&userId={user_id}
+```
+HTTP/1.1 200
+Date: Thu, 24 Feb 2021 12:36:30 GMT
+Status: 200
+Connection: close
+Content-Type: application/json
+
+{
+	"products": [
+		{
+            "id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "Intel",
+            "model": "Core i9-11900KF Gen Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": "",
+			"watch": false
+		},
+		{
+			"id": "f5a8059f-25e1-4da5-abcc-726de609b012",
+            "brand": "Intel",
+            "model": "Core i9-9820X 4.1GHz Boost – 10 Core 20 Thread – LGA 2066 CPU",
+            "image": "https://amptek.co.za/wp-content/uploads/2020/09/Intel-Core-i9-9960X-BOX-1-1024x1024.jpg",
+            "price": 11699,
+            "availability": "Out of Stock",
+            "retailer": "Amptek",
+            "link": "https://amptek.co.za/product/intel-core-i9-9820x-x-series-16-5m-cache-up-to-4-20-ghz-lga2066/",
+            "type": "cpu",
+            "description": "",
+			"watch": false
+		}
+	]
+}
+```
