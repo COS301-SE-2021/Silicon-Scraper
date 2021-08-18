@@ -10,7 +10,6 @@ class PredictionInjector
   static DependencyType _type;
   static bool _fail=false;
 
-
   static void configure(DependencyType depType,{bool fail=false})
   {
     _type=depType;

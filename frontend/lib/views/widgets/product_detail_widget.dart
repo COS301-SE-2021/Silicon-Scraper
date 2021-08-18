@@ -8,6 +8,7 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 
 class ProductDetailWidget extends StatefulWidget
@@ -23,6 +24,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
   _ProductDetailWidgetState(this.state);
   final ProductViewModel state;
   double buttonHeight= 200;
+  final DateFormat f=DateFormat("yyy-MM-dd");
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,19 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
         child: Stack(
           children: [
             ///image
+//            Container(
+//              decoration: BoxDecoration(
+//                gradient: LinearGradient(
+//                  colors: [
+//                    Colors.black,
+//                    Colors.blue
+//                  ],
+//                  begin: Alignment.topLeft,
+//                  end: Alignment.bottomRight,
+//                  stops: [0, 1],
+//                ),
+//              ),
+//            ),
             Container(
               alignment: Alignment.topCenter,
               height: MediaQuery.of(context).size.height/2,
@@ -89,18 +104,21 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                       padding: EdgeInsets.fromLTRB(20, 90, 20, 0),
                       child: Column(
                         children: [
-                          Text("${widget.state.item.description}"),
+//                          Text("${widget.state.item.description}"),
+                          bulletListWidget(widget.state.item.description),
                           ///date time picker
                           TextButton(onPressed: ()async
                           {
                               DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
-                              widget.state.predict.date=date;
-                              final DateFormat format=DateFormat('yyyMMddHHmmss');
-                              final String dates=format.format(date);
-                              print(dates);
+                              if(date!=null)
+                                {
+                                  widget.state.predict.date=date;
+                                  setState((){});
+                                  await widget.state.predict.prediction(context);
+                                }
                           }
                           ,
-                            child: Text('Predict the Future',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
+                            child: Text('Predict',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.resolveWith<Color>(
                                   (Set<MaterialState> states) {
                                 if (states.contains(MaterialState.pressed))
@@ -108,7 +126,50 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                                 return candy; // Use the component's default.
                               },
                             ),
-                          ),)
+                          ),),
+                    ChangeNotifierProvider.value(
+//                      create: (_)=> widget.state.predict,
+                      value:widget.state.predict ,
+                      child: Consumer<PredictionViewModel >(
+                          builder: (context,PredictionViewModel p,Widget child)
+                          {
+                            return Container(
+                              child: p.predict !=null ? Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("${f.format(p.date)}",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,))
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text('Prediction',style:TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.grey),)
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Container(
+                                        child: p.arrow,
+                                      ),
+                                      Container(
+                                        child: Text('R ${p.predict.price.toStringAsFixed(2)}',style:TextStyle(fontWeight: FontWeight.normal,fontSize: 17)),
+                                      ),
+                                      Container(
+                                        child: p.predict.availability?Text('Available',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.green)):Text('Out of Stock',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red)),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ) :
+                              Container(
+//                      child: CircularProgressIndicator(),
+                              ),
+                            );
+                          }
+                      ),
+                    ),
                         ],
                       )
                   ),
@@ -178,3 +239,90 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
 
 }
 
+Widget predictionWidget(PredictionViewModel p,BuildContext context)
+{
+  final DateFormat f=DateFormat("yyy-MM-dd");
+  return ChangeNotifierProvider<PredictionViewModel>(
+    create: (_)=> p,
+    child: Consumer<PredictionViewModel >(
+      builder: (context,p,Widget child)
+          {
+                return Container(
+                  child: p.predict !=null ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                             Text("${f.format(p.date)}",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,))
+                        ],
+                    ),
+                    Column(
+                      children: [
+                        Text('Prediction',style:TextStyle(fontSize: 17,fontWeight: FontWeight.bold,color: Colors.grey),)
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          child: p.arrow,
+                        ),
+                        Container(
+                          child: Text('R ${p.predict.price.toStringAsFixed(2)}',style:TextStyle(fontWeight: FontWeight.normal,fontSize: 17)),
+                        ),
+                        Container(
+                          child: p.predict.availability?Text('Available',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.green)):Text('Out of Stock',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red)),
+                        ),
+                      ],
+                      ),
+                  ],
+                  ) :
+                  Container(
+//                      child: CircularProgressIndicator(),
+                    ),
+            );
+          }
+    ),
+  );
+}
+
+Widget bulletListWidget(String l)
+{
+  List listItems=l.split('/');
+  listItems.removeAt(0);
+
+  return ListView.builder(
+    physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
+    shrinkWrap: true,
+      itemCount: listItems.length,
+    itemBuilder: (_,index){
+      return bulletListItem(listItems[index]);
+    },
+  );
+
+}
+
+Widget bulletListItem(String l)
+{
+  return Wrap(
+    crossAxisAlignment: WrapCrossAlignment.center,
+  children: [
+    MyBullet(),
+    Text(l,style: TextStyle(fontSize: 17),)
+  ],
+    );
+}
+
+class MyBullet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      height: 5.0,
+      width: 5.0,
+      decoration: new BoxDecoration(
+        color: Colors.black,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
+}

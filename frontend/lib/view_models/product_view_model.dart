@@ -15,7 +15,7 @@ class ProductViewModel extends ChangeNotifier
 
   ProductViewModel(this._item)
   {
-    predict=PredictionViewModel.initial(_item);
+    predict=PredictionViewModel(_item);
     if(_item.watching)
       {
         save=Icon(Icons.bookmark,color: theOrange,);

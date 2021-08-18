@@ -12,6 +12,15 @@ class Prediction
 
   factory Prediction.fromJson(Map<String,dynamic>json)
   {
-    return Prediction(json['predictions']['availability'], json['predictions']['availability']);
+    bool check;
+    if(json['predictions']['price']==0)
+      {
+        check=false;
+      }
+    else
+      {
+        check=true;
+      }
+    return Prediction(check, json['predictions']['price']);
   }
 }
