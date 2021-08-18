@@ -69,7 +69,7 @@ class SearchViewModel {
       bool retailer2,
       bool retailer3, bool retailer4) {
     /// get the original array of search results
-    /// retailer: 1 - evetech, 2 - dreamware, 3 - amptek, 4 - Silicon Web (our own website)
+    /// retailer: 1 - evetech, 2 - dreamware, 3 - amptek, 4 - Siliconweb (our own website)
 
     List<Product> filteredProducts = [];
     List<bool> filters = [
@@ -79,7 +79,7 @@ class SearchViewModel {
       gpu,
       retailer1,
       retailer2,
-      retailer3
+      retailer3, retailer4
     ];
     List<String> filterString = [
       "in stock",
@@ -89,6 +89,7 @@ class SearchViewModel {
       "evetech",
       "dreamware",
       "amptek"
+      "siliconweb"
     ];
 
     // for each product
@@ -106,7 +107,7 @@ class SearchViewModel {
           gpu ||
           retailer1 ||
           retailer2 ||
-          retailer3) {
+          retailer3 || retailer4) {
         add = false;
         for (int i = 0; i < filters.length; i++) {
           if (i < 2) {
