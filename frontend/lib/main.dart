@@ -11,7 +11,7 @@ import 'injectors/watch_list_service_injector.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  WatchListInjector.configure(DependencyType.MOCK);
+  WatchListInjector.configure(DependencyType.PROD);
   ExplorePageInjector.configure(DependencyType.PROD);
   SearchSortFilterInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
