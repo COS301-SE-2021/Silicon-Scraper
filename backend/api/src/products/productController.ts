@@ -96,7 +96,7 @@ const search = async (req: express.Request, res: express.Response) => {
         if(query.userId) {
             const data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description, watch from 
                 (select * from (select * from gpus union all select * from cpus) as tbl
-                where concat(lower(tbl.brand),lower(tbl.model)) like '%${query.key}%') as res left join 
+                where concat(lower(tbl.brand),' ',lower(tbl.model)) like '%${query.key}%') as res left join 
                 (select product_id as watch from (select * from watchlist_gpu union all select * from watchlist_cpu) as wl 
                 where wl.user_id = '${query.userId}') as wl2 on wl2.watch = res.id`);
             data.forEach((x) => {
@@ -110,7 +110,7 @@ const search = async (req: express.Request, res: express.Response) => {
         else {
             const data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description from 
             (select * from gpus union all select * from cpus) as tbl
-            where concat(lower(tbl.brand),lower(tbl.model)) like '%${query.key}%'`);
+            where concat(lower(tbl.brand),' ',lower(tbl.model)) like '%${query.key}%'`);
             response.products = data;
         }
     }
