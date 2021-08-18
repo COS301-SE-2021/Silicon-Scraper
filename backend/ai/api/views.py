@@ -2,6 +2,7 @@ import os
 import numpy as np
 import json
 import pickle
+import sklearn.preprocessing as sp
 from tensorflow import keras
 from pandas import json_normalize, read_csv
 from flask import jsonify, request, Blueprint
@@ -38,10 +39,13 @@ def prepare_params(params):
     with open(os.path.join(cwd,'nn_utilities/scalar_price'), 'rb') as f:
         scalar_y_price = pickle.load(f)
     
-    data_price = data_price.reshape(-1,1)
-    data_avail = data_avail.reshape(-1,1)
+    with open(os.path.join(cwd,'nn_utilities/scalar_price_x'), 'rb') as f:
+        scalar_x_price = pickle.load(f)
+
+    with open(os.path.join(cwd,'nn_utilities/scalar_avail_x'), 'rb') as f:
+        scalar_x_avail = pickle.load(f)
     
-    return scalar_y_price.transform(data_price), scalar_y_avail.transform(data_avail), scalar_y_avail, scalar_y_price
+    return scalar_x_price.transform(data_price), scalar_x_avail.transform(data_avail), scalar_y_avail, scalar_y_price
 
 
 
