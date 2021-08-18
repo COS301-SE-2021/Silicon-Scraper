@@ -69,6 +69,7 @@ class ProductSearch extends SearchDelegate<String> {
   bool retailer1 = false;
   bool retailer2 = false;
   bool retailer3 = false;
+  bool retailer4 = false;
 
   Color filtered = Colors.black;
   String filterText = "FILTER";
@@ -530,6 +531,15 @@ class ProductSearch extends SearchDelegate<String> {
                                                 });
                                               },
                                             ),
+                                            CheckboxListTile(
+                                              title: const Text('Silicon Web'),
+                                              value: this.retailer4,
+                                              onChanged: (bool value) {
+                                                filterState(() {
+                                                  this.retailer4 = value;
+                                                });
+                                              },
+                                            ),
                                           ]),
                                       Padding(
                                           padding: EdgeInsets.all(20),
@@ -577,7 +587,7 @@ class ProductSearch extends SearchDelegate<String> {
                                                           _priceRangeValues.end,
                                                           retailer1,
                                                           retailer2,
-                                                          retailer3);
+                                                          retailer3, retailer4);
                                                   this.filtered = Colors.deepOrangeAccent;
                                                   this.filterText = "FILTERED";
                                                   Navigator.pop(context,
