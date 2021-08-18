@@ -67,9 +67,9 @@ class SearchViewModel {
       double maxPrice,
       bool retailer1,
       bool retailer2,
-      bool retailer3) {
+      bool retailer3, bool retailer4) {
     /// get the original array of search results
-    /// retailer: 1 - evetech, 2 - dreamware, 3 - amptek
+    /// retailer: 1 - evetech, 2 - dreamware, 3 - amptek, 4 - Silicon Web (our own website)
 
     List<Product> filteredProducts = [];
     List<bool> filters = [
