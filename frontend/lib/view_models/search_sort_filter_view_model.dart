@@ -67,7 +67,8 @@ class SearchViewModel {
       double maxPrice,
       bool retailer1,
       bool retailer2,
-      bool retailer3, bool retailer4) {
+      bool retailer3,
+      bool retailer4) {
     /// get the original array of search results
     /// retailer: 1 - evetech, 2 - dreamware, 3 - amptek, 4 - Siliconweb (our own website)
 
@@ -79,7 +80,8 @@ class SearchViewModel {
       gpu,
       retailer1,
       retailer2,
-      retailer3, retailer4
+      retailer3,
+      retailer4
     ];
     List<String> filterString = [
       "in stock",
@@ -88,7 +90,7 @@ class SearchViewModel {
       "gpu",
       "evetech",
       "dreamware",
-      "amptek"
+      "amptek",
       "siliconweb"
     ];
 
@@ -107,7 +109,8 @@ class SearchViewModel {
           gpu ||
           retailer1 ||
           retailer2 ||
-          retailer3 || retailer4) {
+          retailer3 ||
+          retailer4) {
         add = false;
         for (int i = 0; i < filters.length; i++) {
           if (i < 2) {
@@ -123,7 +126,12 @@ class SearchViewModel {
             }
           } else if (i < 4) {
             if (filters[i]) {
-              if (products.elementAt(p).type.toLowerCase().compareTo(filterString[i]) == 0) {
+              if (products
+                      .elementAt(p)
+                      .type
+                      .toLowerCase()
+                      .compareTo(filterString[i]) ==
+                  0) {
                 add = true;
               }
             }
