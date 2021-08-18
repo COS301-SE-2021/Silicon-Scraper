@@ -9,7 +9,10 @@ in standard JSON. All requests must include a content-type of application/json a
 200: Success
 400: Bad Request
 500: Server error
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature-ai
 ```
 
 ### Example Error Message
