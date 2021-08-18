@@ -44,8 +44,13 @@ def prepare_params(params):
 
     with open(os.path.join(cwd,'nn_utilities/scalar_avail_x'), 'rb') as f:
         scalar_x_avail = pickle.load(f)
+
     
-    return scalar_x_price.transform(data_price), scalar_x_avail.transform(data_avail), scalar_y_avail, scalar_y_price
+    data_price_scale = scalar_x_price.transform(data_price)
+    data_avail = data_avail.reshape(-1,1)
+    data_avail_scale = scalar_y_avail.transform(data_avail)
+    
+    return data_price_scale, data_avail_scale, scalar_y_avail, scalar_y_price
 
 
 
