@@ -76,7 +76,7 @@ _Team Leader_\
 > Interests: painting, poems & anime.
 
 **Thato (Lesedi) Motoma**\
-<img src="https://media-exp1.licdn.com/dms/image/C4D03AQF5K6g5rPqE1A/profile-displayphoto-shrink_800_800/0/1622795047263?e=1628121600&v=beta&t=k6QHUpdZU20Sj0anYUiW8fRL3DgJdNcX85dNxOC30vw" width="250" height="250">
+<img src="https://media-exp1.licdn.com/dms/image/C4D03AQF5K6g5rPqE1A/profile-displayphoto-shrink_400_400/0/1622795047263?e=1634774400&v=beta&t=YmBXp9EDeEUM3cppm3xUu1wrUJRfvmhw-sDxyPX3jLw" width="250" height="250">
 - [LinkedIn](https://www.linkedin.com/in/thato-lesedi-motoma-69311b1b1/)
 - [Github](https://github.com/lesedimotoma)
 > I am an open minded and flexible final year Computer Science student. A Linux enthusiast at heart, I dive into the deep end when it comes to trying something new. I hope to one day play a hand in diversifying and growing the IT industry in South Africa. 
