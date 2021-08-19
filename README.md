@@ -36,9 +36,9 @@ add it to a watch list to be notified of any changes in price or availability et
 - [Coding Standards](https://drive.google.com/file/d/1Xz1MYEKZbJ4Opc4wdHBSLzlEFQ_hjpr6/view?usp=sharing)
 
 ## Demo 3
-- [Bug Busters Inc-Demo 3]()
+- [Bug Busters Inc-Demo 3](https://drive.google.com/file/d/11rwPWUYnnbY9xSi9Kb8-EAtpPCW4I8Ob/view?usp=sharing)
 - [SRS document](https://drive.google.com/file/d/1SF_Xc8MDOEMqmZOcDluKoy6w5dFyrFLS/view?usp=sharing)
-- [User manual](https://drive.google.com/file/d/19kM9zs_i-K42ISxDN-ZQtg89MC0fT3Wz/view?usp=sharing)
+- [User manual](https://drive.google.com/file/d/11rwPWUYnnbY9xSi9Kb8-EAtpPCW4I8Ob/view?usp=sharing)
 - [Coding Standards](https://drive.google.com/file/d/1ZG9F7WaoOJ9lPKeS6td8gKStyioGfnfl/view?usp=sharing)
 - [Technical Installation Manual](https://drive.google.com/file/d/1AEo0fnDLCiIu_o1pdQOQe4JUxy3_JP15/view?usp=sharing)
 
