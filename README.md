@@ -35,6 +35,13 @@ add it to a watch list to be notified of any changes in price or availability et
 - [User manual](https://drive.google.com/file/d/19kM9zs_i-K42ISxDN-ZQtg89MC0fT3Wz/view?usp=sharing)
 - [Coding Standards](https://drive.google.com/file/d/1Xz1MYEKZbJ4Opc4wdHBSLzlEFQ_hjpr6/view?usp=sharing)
 
+## Demo 3
+- [Bug Busters Inc-Demo 3]()
+- [SRS document](https://drive.google.com/file/d/1SF_Xc8MDOEMqmZOcDluKoy6w5dFyrFLS/view?usp=sharing)
+- [User manual](https://drive.google.com/file/d/19kM9zs_i-K42ISxDN-ZQtg89MC0fT3Wz/view?usp=sharing)
+- [Coding Standards](https://drive.google.com/file/d/1ZG9F7WaoOJ9lPKeS6td8gKStyioGfnfl/view?usp=sharing)
+- [Technical Installation Manual](https://drive.google.com/file/d/1AEo0fnDLCiIu_o1pdQOQe4JUxy3_JP15/view?usp=sharing)
+
 ## Project Management Tools
 - [Discord (Communication tools)](https://discord.gg/xpsn3YRn)
 - [Github Project Board](https://github.com/COS301-SE-2021/Silicon-Scraper/projects/1)
