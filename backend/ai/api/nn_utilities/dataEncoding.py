@@ -51,7 +51,7 @@ def getModelData():
 
 def getCode(data, code_pd, name):
     for dt in code_pd.itertuples():
-        if str(dt[1]) in data.str.upper().item():
+        if str(dt[1].upper()) in data.str.upper().item():
             return code_pd[code_pd[name] == str(dt[1])]
 
 #
@@ -63,7 +63,7 @@ def encode_data(brand, model, availability_, price, type_d, timestamp):
 
     d1 = getCode(model, models, "model").drop(columns=["model", "model_code"])
     d2 = getCode(brand, brands, "brand").drop(columns=["brand", "brand_code"])
-    d3 = type_.loc[type_["type"].isin( type_d)].drop(columns=["type", "type_code"])
+    d3 = type_.loc[type_["type"].str.upper().isin( type_d)].drop(columns=["type", "type_code"])
     d4 = availability.loc[availability["availability"].str.upper().isin(availability_.str.upper())].drop(columns=["availability", 'availability_code'])
     data_ = pd.DataFrame([{"price": price}])
 
