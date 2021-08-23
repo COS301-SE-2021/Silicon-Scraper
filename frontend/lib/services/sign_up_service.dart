@@ -32,7 +32,7 @@ class SignUpService
       var responseData=jsonDecode(response.body);
       throw Exception("${responseData["message"]}");
     }
-    throw Exception('Unable sign up');
+    throw Exception('Unable to sign up');
   }
 
 }
