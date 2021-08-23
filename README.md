@@ -6,9 +6,9 @@
 
 ## Project Description
 
-** Silicon Scraper is system that scrapes online retailers for specific information regarding GPUs and CPUs.
+Silicon Scraper is a system that scrapes online retailers for specific information regarding GPUs and CPUs.
 <br>The information is then made available to the user via a mobile app where the user can search for a product and <br>
-add it to a watch list to be notified of any changes in price or availability etc. One of the more notable features is the ability for the user to request a prediction of price and availability for a product **
+add it to a watch list to be notified of any changes in price or availability etc. One of the more notable features is the ability for the user to request a prediction of price and availability for a product.
 
 ## Code quality 
 <!--Still need to add/edit badges-->
@@ -21,6 +21,8 @@ add it to a watch list to be notified of any changes in price or availability et
 [![Coverage Status](https://coveralls.io/repos/github/COS301-SE-2021/Silicon-Scraper/badge.svg?branch=master&style=for-the-badge)](https://coveralls.io/github/COS301-SE-2021/Silicon-Scraper?branch=master)
 ## Contents 
 - [Demo 1](#demo-1)
+- [Demo 2](#demo-2)
+- [Demo 3](#demo-3)
 - [Project Management Tools](#project-management-tools)
 - [Team Members](#team-members)
 - [Branching Strategy](#branching-strategy)
