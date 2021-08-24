@@ -72,7 +72,13 @@ class _SignUpViewState extends State<SignUpView> {
                       onPressed: () async{
                         print(nameController.text);
                         print(passwordController.text);
-                        signUp.signUp(nameController.text,passwordController.text,context);
+                      showDialog(context: context, builder: (_)=> AlertDialog(
+                        title: Center(
+                          child:CircularProgressIndicator()
+                        ),
+                      ));
+                        await signUp.signUp(nameController.text,passwordController.text,context);
+                        Navigator.pop(context);
                       },
                     )),
                 Container(

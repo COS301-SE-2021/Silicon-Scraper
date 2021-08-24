@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:silicon_scraper/injectors/sign_up_service_injector.dart';
 import 'package:silicon_scraper/views/login_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
 
 class SignUpViewModel extends ChangeNotifier
 {
@@ -29,10 +28,34 @@ class SignUpViewModel extends ChangeNotifier
       }
     }
     catch(e)
-    {print(e);
+    {
+      print(e);
       return showDialog(context: context, builder: (_)=> AlertDialog(
           title: Text("${e.message}")),);
     }
+  }
+
+  signUpWait(String username,String pw,context)
+  {
+    return FutureBuilder(
+      future: signUp(username, pw, context),
+      builder: (BuildContext context,AsyncSnapshot snapshot){
+        print("==================================");
+        if(snapshot.connectionState==ConnectionState.none)
+        {
+          return Center(child: CircularProgressIndicator());
+        }
+        else if(snapshot.data!=null && snapshot.data==true){
+          return Center(child: CircularProgressIndicator());
+        }
+        else if(snapshot.data!=null && snapshot.data==false) {
+          return Center(child: CircularProgressIndicator());
+        }
+        else{
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   goToLogin(context)
