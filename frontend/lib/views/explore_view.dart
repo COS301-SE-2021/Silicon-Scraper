@@ -87,7 +87,7 @@ class _ExploreState extends State<Explore> {
 
               /// explore all products clickable picture
               Container(
-                  margin: EdgeInsets.all(20),
+                  margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
                   child: InkWell(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
@@ -104,7 +104,7 @@ class _ExploreState extends State<Explore> {
               Container(
                   width: MediaQuery.of(context).size.width,
                   //height: MediaQuery.of(context).size.height / 39,
-                  margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                  margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
