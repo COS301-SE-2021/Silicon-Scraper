@@ -29,7 +29,7 @@ class LoginViewModel extends ChangeNotifier
            }
            else
            {
-               //todo push error screen or show incorrect pw
+               throw Exception("Incorrect username or password");
            }
         }
         catch(e)
