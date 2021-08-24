@@ -16,8 +16,8 @@ class FloatingProductWidget extends StatelessWidget {
       builder: (BuildContext context,WatchListViewModel w, Widget child)
       {
         return Container(
-            margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
-            height: MediaQuery.of(context).size.height / 4 ,
+            margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+            height: MediaQuery.of(context).size.height / 4.8 ,
             child: InkWell(
               onTap: ()
               {
