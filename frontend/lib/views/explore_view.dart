@@ -19,24 +19,27 @@ class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Explore",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
-          ),
-          centerTitle: true,
-          actions: [
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(35.0),
+          child: AppBar(
+            title: Text(
+              "Explore",
+              style: TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+            ),
+            centerTitle: true,
+            actions: [
 //          ElevatedButton(onPressed: (){
 //            sharedPreferences.clear();
 ////            sharedPreferences.commit();
 //          }, child: Icon(Icons.logout,color: Colors.white,),style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(myBlue) ),)
-            IconButton(icon: Icon(Icons.logout,color: Colors.white,), onPressed: ()
-            {
-              login.logout(context);
-            })
-          ],
-          //toolbarHeight: 35,
+              IconButton(icon: Icon(Icons.logout,color: Colors.white,), onPressed: ()
+              {
+                login.logout(context);
+              })
+            ],
+            //toolbarHeight: 35,
+          ),
         ),
         body: SingleChildScrollView(
             child: Column(
