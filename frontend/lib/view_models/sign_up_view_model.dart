@@ -22,7 +22,7 @@ class SignUpViewModel extends ChangeNotifier
       {
         SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
         sharedPreferences.setString("token", isIn['token']);
-        sharedPreferences.setBool("loggedIn",true);
+//        sharedPreferences.setBool("loggedIn",true);
         sharedPreferences.setString("userId", isIn['user']['id']);
         print(isIn['user']['id']);
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginView()),(Route<dynamic> route)  => false);
