@@ -41,29 +41,6 @@ class SignUpViewModel extends ChangeNotifier
     }
   }
 
-  signUpWait(String username,String pw,context)
-  {
-    return FutureBuilder(
-      future: signUp(username, pw, context),
-      builder: (BuildContext context,AsyncSnapshot snapshot){
-        print("==================================");
-        if(snapshot.connectionState==ConnectionState.none)
-        {
-          return Center(child: CircularProgressIndicator());
-        }
-        else if(snapshot.data!=null && snapshot.data==true){
-          return Center(child: CircularProgressIndicator());
-        }
-        else if(snapshot.data!=null && snapshot.data==false) {
-          return Center(child: CircularProgressIndicator());
-        }
-        else{
-          return Center(child: CircularProgressIndicator());
-        }
-      },
-    );
-  }
-
   goToLogin(context)
   {
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginView()),(Route<dynamic> route)  => false);

@@ -79,13 +79,7 @@ class _LoginViewState extends State<LoginView> {
                         onPressed: () async{
                           print(nameController.text);
                           print(passwordController.text);
-                          showDialog(context: context, builder: (_)=> AlertDialog(
-                            title: Center(
-                                child:CircularProgressIndicator()
-                            ),
-                          ));
                           await login.login(nameController.text, passwordController.text, context);
-//                          Navigator.pop(context);
                         },
                       )),
                   Container(

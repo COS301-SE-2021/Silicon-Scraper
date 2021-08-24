@@ -13,6 +13,11 @@ class LoginViewModel extends ChangeNotifier
     {
         try
         {
+          showDialog(context: context, builder: (_)=> AlertDialog(
+            title: Center(
+                child:CircularProgressIndicator()
+            ),
+          ));
           //todo need to recieve and save a jwt token with shared prefrences
            Map<String,dynamic> isIn=await logIn.dependency.LoginRequest(username, pw);
            if(isIn['token'].isNotEmpty)
@@ -29,8 +34,10 @@ class LoginViewModel extends ChangeNotifier
         }
         catch(e)
         {
-            //todo push error screen
           print(e);
+          Navigator.pop(context); /// remove the loading dialog before error is shown
+          return showDialog(context: context, builder: (_)=> AlertDialog(
+              title: Text("${e.message}")),);
         }
     }
 
