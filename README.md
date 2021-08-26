@@ -6,9 +6,9 @@
 
 ## Project Description
 
-** Silicon Scraper is system that scrapes online retailers for specific information regarding GPUs and CPUs.
+Silicon Scraper is a system that scrapes online retailers for specific information regarding GPUs and CPUs.
 <br>The information is then made available to the user via a mobile app where the user can search for a product and <br>
-add it to a watch list to be notified of any changes in price or availability etc. One of the more notable features is the ability for the user to request a prediction of price and availability for a product **
+add it to a watch list to be notified of any changes in price or availability etc. One of the more notable features is the ability for the user to request a prediction of price and availability for a product.
 
 ## Code quality 
 <!--Still need to add/edit badges-->
@@ -21,6 +21,8 @@ add it to a watch list to be notified of any changes in price or availability et
 [![Coverage Status](https://coveralls.io/repos/github/COS301-SE-2021/Silicon-Scraper/badge.svg?branch=master&style=for-the-badge)](https://coveralls.io/github/COS301-SE-2021/Silicon-Scraper?branch=master)
 ## Contents 
 - [Demo 1](#demo-1)
+- [Demo 2](#demo-2)
+- [Demo 3](#demo-3)
 - [Project Management Tools](#project-management-tools)
 - [Team Members](#team-members)
 - [Branching Strategy](#branching-strategy)
@@ -38,14 +40,14 @@ add it to a watch list to be notified of any changes in price or availability et
 ## Demo 3
 - [Bug Busters Inc-Demo 3](https://drive.google.com/file/d/11rwPWUYnnbY9xSi9Kb8-EAtpPCW4I8Ob/view?usp=sharing)
 - [SRS document](https://drive.google.com/file/d/1SF_Xc8MDOEMqmZOcDluKoy6w5dFyrFLS/view?usp=sharing)
-- [User manual](https://drive.google.com/file/d/11rwPWUYnnbY9xSi9Kb8-EAtpPCW4I8Ob/view?usp=sharing)
+- [User manual](https://drive.google.com/file/d/1_vwPD7vNkZBH65O-BMugdlWukGvnmJs3/view?usp=sharing)
 - [Coding Standards](https://drive.google.com/file/d/1ZG9F7WaoOJ9lPKeS6td8gKStyioGfnfl/view?usp=sharing)
 - [Technical Installation Manual](https://drive.google.com/file/d/1AEo0fnDLCiIu_o1pdQOQe4JUxy3_JP15/view?usp=sharing)
 
 ## Project Management Tools
 - [Discord (Communication tools)](https://discord.gg/xpsn3YRn)
 - [Github Project Board](https://github.com/COS301-SE-2021/Silicon-Scraper/projects/1)
-
+- [Github Discussion Board](https://github.com/orgs/COS301-SE-2021/teams/bug-busters-inc)
 ## Team Members
 This is Bug Busters Inc. meet our team:
 
