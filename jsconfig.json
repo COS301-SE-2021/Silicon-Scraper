@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@utilities/*": ["backend/scraper/utilities/*"],
+      "@main/*": ["backend/scraper/main/*"]
+    }
+  },
+  "typeAcquisition": {
+    "include": ["jest"]
+  }
+}
