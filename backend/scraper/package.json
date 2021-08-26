@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "",
-    "test": "jest --runInBand --detectOpenHandles"
+    "start": "npm run build && node build/main/scraper_scheduler.js",
+    "test": "jest --runInBand --detectOpenHandles",
+    "build": "tsc -p tsconfig.json",
+    "start-dev": "cd src/main && ts-node scraper_scheduler.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,17 +17,24 @@
     "@babel/preset-env": "^7.14.5",
     "@babel/preset-typescript": "^7.14.5",
     "@types/axios": "^0.14.0",
+    "@types/cron": "^1.7.3",
     "@types/jest": "^26.0.23",
+    "@types/newrelic": "^7.0.2",
+    "@types/node": "^15.12.4",
+    "@types/pg-promise": "^5.4.3",
+    "@types/shelljs": "^0.8.9",
     "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.21.1",
     "babel-jest": "^27.0.2",
     "cheerio": "^1.0.0-rc.9",
     "cron": "^1.8.2",
     "dotenv": "^10.0.0",
+    "newrelic": "^8.1.0",
     "pg-mem": "^1.9.9",
     "pg-promise": "^10.10.2",
     "shelljs": "^0.8.4",
-    "source-map-loader": "^3.0.0"
+    "source-map-loader": "^3.0.0",
+    "typescript": "^3.9.9"
   },
   "devDependencies": {
     "@types/cron": "^1.7.3",

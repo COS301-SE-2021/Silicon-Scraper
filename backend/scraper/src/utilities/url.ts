@@ -1,3 +1,12 @@
+
+export const getSiliconWebUrl = () => {
+    return {
+        urls:["https://siliconweb.herokuapp.com/"],
+        "type":"gpu"
+    };
+
+}
+
 export const getEveTecUrl =  () => {
     return "https://www.evetech.co.za/";
 }

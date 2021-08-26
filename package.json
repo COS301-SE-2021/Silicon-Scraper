@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "start": "cd backend/scraper/src/main && npm start",
     "test": "jest"
   },
   "repository": {

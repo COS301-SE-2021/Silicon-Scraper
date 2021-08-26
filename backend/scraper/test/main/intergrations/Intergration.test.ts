@@ -1,6 +1,31 @@
 import {dataOps} from "../../../src/main/scraperDbOp";
+<<<<<<< HEAD
 import * as scraper from "../../../src/main/scraper"
 // Mock axios
+=======
+
+const eve = require("../../../__mocks__/mockUrl")
+import * as scraper from "../../../src/main/scraper"
+// Mock axios
+jest.mock("axios", () => {
+    const eve = require("../../../__mocks__/mockUrl")
+    let d: string = eve.getMockData()
+
+    const mockedResponse = {
+        data: d,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+    }
+
+    return Object.assign(jest.fn(), {
+        get: jest.fn().mockResolvedValue(mockedResponse)
+    })
+})
+
+import axios from "axios";
+>>>>>>> 881a2296672cfc037f18474389ef966df8995f4a
 
 jest.mock("axios", () => {
     const eve = require("../../../__mocks__/mockUrl")
@@ -32,7 +57,7 @@ import cheerio from 'cheerio'
 
 //mockAxios.get = jest.fn().mockResolvedValue(mockedResponse)
 
-let pgp = jest.fn(() => ({
+let pgp = jest.fn((connection) => ({
     none: jest.fn(() => Promise.resolve()) ,
     any: jest.fn(() => Promise.resolve([])),
     as: jest.fn(() => {
@@ -45,7 +70,7 @@ let pgp = jest.fn(() => ({
     })
 }))
 
-let db = pgp()
+let db = pgp("connection")
 
 describe("scraper database operations", () =>{
     let mockAxios:any = undefined

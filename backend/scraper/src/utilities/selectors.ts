@@ -67,6 +67,45 @@ class EvetechSelectors extends Selectors {
 
 }
 
+class SiliconwebSelectors extends Selectors {
+
+    constructor(ret:string) {
+        super(ret);
+    }
+
+
+    getTitleSelector = ((index: number) => {
+        const titles = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
+        return titles+pad(index)+"_lblName";
+    })
+
+    getLinkSelector = ((index: number) => {
+        const link = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
+        return link + pad(index) + "_HyperLink2"
+    })
+
+    getPriceSelector = () => {return ".price"}
+
+    getAvailabilitySelector = ((index: number) => {
+        const availability = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
+        return availability+pad(index)+"_lblStatus"
+    })
+
+    getImageSelector = ((index: number) => {
+        const imageUrl = "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products_ctl"
+        return imageUrl+pad(index)+"_img_pro";
+    })
+
+    getTableSelector = () => {return "#ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products"}
+
+    getRowSelector = () => {return "tbody tr"}
+
+    getBaseUrl() : string {
+        return "https://www.evetech.co.za/"
+    }
+
+}
+
 class AmpTekSelectors extends Selectors {
     constructor(ret:string) {
         super(ret);
@@ -148,4 +187,5 @@ class DreamwareSelectors extends Selectors {
 const evetechSelector: Selectors = new EvetechSelectors("Evetech")
 const amptekSelector: Selectors = new AmpTekSelectors("Amptek")
 const dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
-export const selectorsArray: Selectors[] = [evetechSelector, amptekSelector,dreamwareSelector ]
+const siliconwebSelector: Selectors = new SiliconwebSelectors("Siliconweb")
+export const selectorsArray: Selectors[] = [siliconwebSelector, evetechSelector, amptekSelector,dreamwareSelector ]

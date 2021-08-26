@@ -1,11 +1,16 @@
 import {Product} from "../utilities/productsModel";
 const env = require('../../config')
 //const scraper = require("./scraper.ts");
-import * as scraper from "../../src/main/scraper"
+import * as scraper from "../main/scraper"
 
-const pgp = require('pg-promise')({
-    /* initialization options */
-    capSQL: true // capitalize all generated SQL
+// const pgp = require('pg-promise')({
+//     /* initialization options */
+//     capSQL: true // capitalize all generated SQL
+// });
+
+import pgPromise from 'pg-promise';
+const pgp = pgPromise({
+    capSQL: true
 });
 
 let today = new Date()
@@ -19,8 +24,11 @@ const client = {
 }
 
 let db_ = pgp(client)
+//let db_:any = undefined
 
-export const dataOps = (db=db_) => {
+export const dataOps = (db:any =db_) => {
+
+
     const cs = new pgp.helpers.ColumnSet(['brand', 'model', 'price', 'retailer', 'image', 'link', 'availability', 'details', 'type', 'description'], {table: 'gpus'})
 
     const cs_ = new pgp.helpers.ColumnSet(['brand', 'model', 'price', 'retailer', 'image', 'link', 'availability', 'details', 'type', 'description'], {table: 'cpus'})
@@ -239,5 +247,5 @@ export const dataOps = (db=db_) => {
     }
 }
 
-dataOps()
-//console.log("Run scraper")
+//dataOps()
+console.log("Run scraper")

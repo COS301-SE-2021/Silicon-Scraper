@@ -6,8 +6,8 @@ const cheerio = require("cheerio");
 import axios from 'axios'
 
 
-let url = require("../utilities/url.ts");
-let selectors = require("../utilities/selectors.ts").selectorsArray;
+let url = require("../utilities/url");
+let selectors = require("../utilities/selectors").selectorsArray;
 let array1 : Product[] = [];
 let array2 : Product[] = [];
 let products = {
@@ -22,6 +22,7 @@ let today = new Date()
  * @type {string[]} specific url to scrape
  */
 let urls = [
+     url.getSiliconWebUrl(),
      url.getEveTecGpuUrl(),
      url.getEveTecCpuUrl(),
      url.getAmpTekGpuUrl(),
@@ -37,6 +38,7 @@ let jk = 0;
  * @returns {array} An array of products
  */
 export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
+
     const html = await axios.get(webToScrape);
     return getWebData(html.data, selector, baseUrl, type)
 }
@@ -133,6 +135,6 @@ export const scrape = async () => {
     return products;
 }
 
- // scrape().then(r => {console.log(r)})
+  //scrape().then(r => {console.log(r)})
 
 

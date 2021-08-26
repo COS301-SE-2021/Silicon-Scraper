@@ -1,12 +1,30 @@
 import * as scraper  from "../../src/main/scraper";
 import * as parser from "../../src/utilities/parser"
 import { urls } from "../../__mocks__/urlMock";
-import axios from "axios"
+// import axios from "axios"
 import { selectorsArray } from "../../src/utilities/selectors";
 
 const eve = require("../../__mocks__/mockUrl")
 
-jest.mock("axios")
+jest.mock("axios", () => {
+    const eve = require("../../__mocks__/mockUrl")
+    let d: string = eve.getMockData()
+
+    const mockedResponse = {
+        data: d,
+        status: 200,
+        statusText: "OK",
+        headers: {},
+        config: {},
+    }
+
+    return Object.assign(jest.fn(), {
+        get: jest.fn().mockResolvedValue(mockedResponse)
+    })
+})
+
+import axios from "axios";
+
 let d: string = eve.getMockData()
 const mockAxios = axios as jest.Mocked<typeof axios>;
 
@@ -23,12 +41,12 @@ mockAxios.get = jest.fn().mockResolvedValue(mockedResponse);
 describe("scraperTest()", () => {
     let title: string; 
     let parsedTitle: any;
-    let trimedPrice: number;
+    let trimedPrice: any;
 
     beforeEach(() => {
         jest.resetModules();
         jest.clearAllMocks();
-        title = "MSI GeForce RTX 3090 SUPRIM X 24GB GDDR6X"
+        title = "MSI GeForce RTX 3090 SUPRIM X 24GB GDDR6X";
         parsedTitle = parser.titleParser(title) ;
         trimedPrice = parser.trimPrice("from R 50000");
       });
