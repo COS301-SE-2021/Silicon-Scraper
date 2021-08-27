@@ -118,12 +118,14 @@ export const date = (d:string)=>{
     return d
 }
 
-export const manufacturerUrl = (brand: string, model: string) => {
+export const manufacturerUrl: any = (brand: string, model: string) => {
     if (brand == "Sapphire"){
         return sapphireUrl(model)
     } else if (model.includes("Radeon") || model.toUpperCase().includes("RYZEN")){
         return amdUrl(model)
-    }else return nvidiaUrl(model)
+
+    }else
+        return nvidiaUrl(model)
 }
 
 const sapphireUrl = (model: string) => {
@@ -155,7 +157,11 @@ const sapphireUrl = (model: string) => {
     }
 
     url = getSapphire().urls + modelSplit.join('-').toLowerCase()
-    return url
+
+    return {
+        url: url,
+        manufacturer: "sapphire"
+    }
 }
 
 
@@ -199,7 +205,11 @@ const amdUrl = (model: string) => {
     }
 
     url += modelSplit.join('-').toLowerCase()
-    return url
+
+    return {
+        url: url,
+        manufacturer:"amd"
+    }
 }
 
 
@@ -240,7 +250,11 @@ const nvidiaUrl = (model: string) => {
         }
     }
 
-    return url + modelSplit.join('-').toLowerCase()
+    return{
+        url: url + modelSplit.join('-').toLowerCase(),
+        manufacturer : "nvidia"
+
+    }
 }
 
 
@@ -260,6 +274,12 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("AMD Ryzen 3 PRO 5350GE")
+let title = titleParser("NVIDIA PNY Quadro P2000 5GB GDDR5 Workstation GPU")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))
+
+export const getDescriptions = (descriptions: string []) => {
+
+    return {}
+
+}
