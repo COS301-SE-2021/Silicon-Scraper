@@ -161,6 +161,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
 
 
+
     return getDescriptions(description)
 }
 
