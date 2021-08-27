@@ -207,14 +207,10 @@ export class amdSelector extends descriptionSelector{
 */
 export class nvidiaSelector extends descriptionSelector{
     getDescriptions(): string {
-        return " ";
+        return "tbody";
     }
 
 }
-
-
-
-
 
 
 const evetechSelector: Selectors = new EvetechSelectors("Evetech")
