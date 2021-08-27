@@ -40,7 +40,7 @@ let jk = 0;
 export const scrapeSilon = async (webToScrape: any, selector: Selectors, baseUrl: string, type:string) =>{
 
     const html = await axios.get(webToScrape);
-    return getWebData(html.data, selector, baseUrl, type)
+    return await getWebData(html.data, selector, baseUrl, type)
 }
 /**
  *
@@ -55,8 +55,8 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:
 
     //Number of pages = number of times a request is going to happen at a specific site
     $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
-        $(row).each((k: any, col: any) => {
-            addToProducts(b++, $, selector, baseUrl, type, col);
+        $(row).each(async (k: any, col: any) => {
+            await addToProducts(b++, $, selector, baseUrl, type, col);
         })
     })
 
@@ -70,21 +70,24 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:
  * @param $
  * @param selector
  */
-export const addToProducts = ( index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string , type:string,  data?: any) =>{
+export const addToProducts = async (index: number, $: (arg0: any) => any[], selector: Selectors, baseUrl: string, type: string, data?: any) => {
 
     let baseTitle: string = (selector.retailer == "Dreamware") ? $(data).find(selector.getTitleSelector(index)).attr('title') : $(data).find(selector.getTitleSelector(index)).text().trim()
     let title = titleParser(baseTitle)
     let price = trimPrice($(data).find(selector.getPriceSelector()).text().trim())
 
     //console.log(title)
-    if(price === undefined)
+    if (price === undefined)
         return
 
-    if ( title.model === "" || title.brand === ""){
-        return 
+    if (title.model === "" || title.brand === "") {
+        return
     }
 
-    let brand = title.brand; let model = title.model
+    let brand = title.brand;
+    let model = title.model
+    let des = await getDescription(brand, model)
+
 
     let productsArray = {
         image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src'), baseUrl),
@@ -99,37 +102,42 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
                 {
                     //change datetime when calling the cache data
 
-                    datetime:date( today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()),
+                    datetime: date(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()),
                     price: trimPrice($(data).find(selector.getPriceSelector()).text().trim()),
                     availability: availability($(data).find(selector.getAvailabilitySelector(index)).text().trim())
                 }
             ]
         },
-        type:type,
+        type: type,
 
 
         /*
             Pass in the title to the descriptions array and scrape the manufactures
         */
-        description: getDescription(brand, model)
+        description: des
     }
 
-    if(type === "gpu") {
+    if (type === "gpu") {
 
         products.gpu.push(<Product>productsArray)
-    }else if(type === "cpu"){
+    } else if (type === "cpu") {
 
         products.cpu.push(<Product>productsArray)
     }
 
 }
 
-export const getDescription = (brand: string, model: string) =>{
+export const getDescription = async (brand: string, model: string) =>{
 
     const url_man = manufacturerUrl(brand, model)
     const man = url_man.manufacture
     const url = url_man.url
-    const selector = manufacturesSelectorsArray
+    const keys = Object.keys(manufacturesSelectorsArray)
+    const index = keys.findIndex((key) => { return key === man}) //Finds matching selector index using the keys
+    const selector = Object.values(manufacturesSelectorsArray)[index]
+
+    const html = await axios.get(url);
+
 
 
 
