@@ -276,7 +276,7 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
     if(manufacture.includes("nvidia")){
         descriptions.forEach((item) => {
             let itemSplitArray = item.split("/")
-            let key = itemSplitArray[0]
+            let key:string = itemSplitArray[0]
 
             if(itemSplitArray.length === 2){
                 let tiValue = itemSplitArray[2]
@@ -285,15 +285,19 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
                 //possible solution to include the ti in the manufacture type
 
                 if(manufacture.includes("ti")){
-                    descriptionObj[key] = tiValue
+                    //descriptionObj[key] = tiValue
                 }else{
-                    descriptionObj[key] = tiValue
+                    //descriptionObj[key] = tiValue
                 }
-
             }
 
-
         })
+    }else if(manufacture.includes("amd")){
+
+    }else if(manufacture.includes("sapphire")){
+
+    }else if(manufacture.includes("intel")){
+
     }
 
     return {}
