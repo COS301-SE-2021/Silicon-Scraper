@@ -168,7 +168,7 @@ class DreamwareSelectors extends Selectors {
     }
 
     getTitleSelector(index?: number):any {
-        return ".product-box-name";
+        return ".product-image img";
     }
 
     getTableSelector = () => {// not a table - its a div - iterate through each child 
