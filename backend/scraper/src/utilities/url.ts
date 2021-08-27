@@ -76,7 +76,10 @@ Urls for the manufactures
  */
 export const getAmd = () => {
     return {
-        urls:["https://www.amd.com/en/products/graphics/", "https://www.amd.com/en/products/cpu/"]
+        urls:["https://www.amd.com/en/products/graphics/", 
+        "https://www.amd.com/en/products/cpu/", 
+        "https://www.amd.com/en/products/professional-graphics/",
+        "https://www.amd.com/en/products/apu/"]
     }
 }
 
@@ -91,5 +94,11 @@ export const getNvidia = () => {
 export const getSapphire = () => {
     return {
         urls: ["https://www.sapphiretech.com/en/consumer/"]
+    }
+}
+
+export const getIntel = () => {
+    return {
+        urls: []
     }
 }

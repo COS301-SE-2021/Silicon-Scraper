@@ -118,11 +118,10 @@ export const date = (d:string)=>{
     return d
 }
 
-export const manufacturerUrl = (brand: string, model: string) => {
+export const manufacturerUrl: any = (brand: string, model: string) => {
     if (brand == "Sapphire"){
         return sapphireUrl(model)
-
-    } else if (model.includes("Radeon") || model.includes("Ryzen")){
+    } else if (model.includes("Radeon") || model.toUpperCase().includes("RYZEN")){
         return amdUrl(model)
 
     }else
@@ -158,9 +157,10 @@ const sapphireUrl = (model: string) => {
     }
 
     url = getSapphire().urls + modelSplit.join('-').toLowerCase()
+
     return {
-        url:url,
-        manufacture:"sapphire"
+        url: url,
+        manufacturer: "sapphire"
     }
 }
 
@@ -172,6 +172,7 @@ const amdUrl = (model: string) => {
     let add = false
     let url = ""
 
+
     modelSplit.forEach((item, index) => {
         let extra = item.toUpperCase().includes("XT")
 
@@ -180,17 +181,22 @@ const amdUrl = (model: string) => {
         }
 
         if(cpu == true){
-            if( !isNaN(+(item.slice(0,-1))) && +(item.slice(0,-1)) != 0){
+            if( (!isNaN(+(item.slice(0,-1))) && +(item.slice(0,-1)) != 0) || item.toUpperCase().includes("WX") ){
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
             }
+            if(model.includes("PRO")){
+                url = getAmd().urls[3]
+            }else url = getAmd().urls[1]
             add = true
-            url = getAmd().urls[1]
+
         }else if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
-                url = getAmd().urls[0]
+                if(model.toUpperCase().includes("PRO")){
+                    url = getAmd().urls[2]
+                    add = false
+                }else url = getAmd().urls[0]
         }
 
-        
     })
     
     if(modelSplit[0] !== "AMD" && add) {
@@ -198,9 +204,10 @@ const amdUrl = (model: string) => {
     }
 
     url += modelSplit.join('-').toLowerCase()
+
     return {
-        url:url,
-        manufacture:"amd"
+        url: url,
+        manufacturer:"amd"
     }
 }
 
@@ -209,14 +216,18 @@ const nvidiaUrl = (model: string) => {
     let modelSplit = model.split(' ')
     let url = getNvidia().urls[0]
     let extra = ["TI", "SUPER"]
+    let workstation = ["QUADRO P", "QUADRO G", "NVIDIA T"]
     let addDouble = false
 
     if(model.includes("RTX 30")){
         url += "30-series/"
         addDouble = true
-    }else if(model.toUpperCase().includes("QUADRO")){
+    }else if(model.toUpperCase().includes("QUADRO RTX")){
         modelSplit = removeWord("QUADRO", modelSplit)
         url = getNvidia().urls[1] +  "quadro/"
+    }else if (workstation.some(x => model.toUpperCase().includes(x))){
+        url = getNvidia().urls[2]
+        return url
     }
 
     if(modelSplit[0].toUpperCase() == "GEFORCE"){
@@ -239,10 +250,15 @@ const nvidiaUrl = (model: string) => {
     }
 
     return{
-        url:url + modelSplit.join('-').toLowerCase(),
-        manufacture : "nvidia"
+        url: url + modelSplit.join('-').toLowerCase(),
+        manufacturer : "nvidia"
 
     }
+}
+
+
+const intelUrl = (word: string) => {
+
 }
 
 
@@ -301,4 +317,5 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
     }
 
     return {}
+
 }
