@@ -103,6 +103,11 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
             ]
         },
         type:type,
+
+
+        /*
+            Pass in the title to the descriptions array and scrape the manufactures
+        */
         description:""
     }
 
