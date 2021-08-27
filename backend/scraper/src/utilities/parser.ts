@@ -183,13 +183,15 @@ const amdUrl = (model: string) => {
         }else if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
                 url = getAmd().urls[0]
-                add = false
         }
   
     })
 
     
-    if(model.toUpperCase().includes("PRO")) url = getAmd().urls[2]
+    if(model.toUpperCase().includes("PRO")){
+        url = getAmd().urls[2]
+        add = false
+    } 
     
     if(modelSplit[0] !== "AMD" && add) {
         modelSplit.unshift("AMD")
@@ -252,6 +254,6 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("AMD Radeon Pro WX 9100, 16GB HBM2, Workstation Card")
+let title = titleParser("AMD RYZEN Threadripper PRO 3975WX Processor")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))
