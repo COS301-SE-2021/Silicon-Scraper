@@ -96,3 +96,9 @@ export const getSapphire = () => {
         urls: ["https://www.sapphiretech.com/en/consumer/"]
     }
 }
+
+export const getIntel = () => {
+    return {
+        urls: []
+    }
+}

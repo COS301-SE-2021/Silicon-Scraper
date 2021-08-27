@@ -244,6 +244,11 @@ const nvidiaUrl = (model: string) => {
 }
 
 
+const intelUrl = (word: string) => {
+    
+}
+
+
 const removeWord = (word: string, arr:string[]) => {
     arr.forEach((item, index) => {
         if(item.toUpperCase() == word ) {
