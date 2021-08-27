@@ -261,8 +261,14 @@ const removeWord = (word: string, arr:string[]) => {
 // console.log(title)
 // console.log(manufacturerUrl(title.brand, title.model))
 
-export const getDescriptions = (descriptions: string []) => {
+
+/*
+example description[
+
+]
+ */
+export const getDescriptions = (descriptions: string [], manufacture:string) => {
+
 
     return {}
-
 }
