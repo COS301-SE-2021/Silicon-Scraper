@@ -166,6 +166,7 @@ const amdUrl = (model: string) => {
     let add = false
     let url = ""
 
+
     modelSplit.forEach((item, index) => {
         let extra = item.toUpperCase().includes("XT")
 
@@ -182,10 +183,13 @@ const amdUrl = (model: string) => {
         }else if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
                 url = getAmd().urls[0]
+                add = false
         }
-
-        
+  
     })
+
+    
+    if(model.toUpperCase().includes("PRO")) url = getAmd().urls[2]
     
     if(modelSplit[0] !== "AMD" && add) {
         modelSplit.unshift("AMD")
@@ -200,14 +204,18 @@ const nvidiaUrl = (model: string) => {
     let modelSplit = model.split(' ')
     let url = getNvidia().urls[0]
     let extra = ["TI", "SUPER"]
+    let workstation = ["QUADRO P", "QUADRO G", "NVIDIA T"]
     let addDouble = false
 
     if(model.includes("RTX 30")){
         url += "30-series/"
         addDouble = true
-    }else if(model.toUpperCase().includes("QUADRO")){
+    }else if(model.toUpperCase().includes("QUADRO RTX")){
         modelSplit = removeWord("QUADRO", modelSplit)
         url = getNvidia().urls[1] +  "quadro/"
+    }else if (workstation.some(x => model.toUpperCase().includes(x))){
+        url = getNvidia().urls[2]
+        return url 
     }
 
     if(modelSplit[0].toUpperCase() == "GEFORCE"){
@@ -244,6 +252,6 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-// let title = titleParser("NVIDIA PNY Quadro P2000 5GB GDDR5 Workstation GPU")
-// console.log(title)
-// console.log(manufacturerUrl(title.brand, title.model))
+let title = titleParser("AMD Radeon Pro WX 9100, 16GB HBM2, Workstation Card")
+console.log(title)
+console.log(manufacturerUrl(title.brand, title.model))

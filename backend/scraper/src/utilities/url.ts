@@ -76,7 +76,9 @@ Urls for the manufactures
  */
 export const getAmd = () => {
     return {
-        urls:["https://www.amd.com/en/products/graphics/", "https://www.amd.com/en/products/cpu/"]
+        urls:["https://www.amd.com/en/products/graphics/", 
+        "https://www.amd.com/en/products/cpu/", 
+        "https://www.amd.com/en/products/professional-graphics/"]
     }
 }
 
