@@ -121,7 +121,7 @@ export const date = (d:string)=>{
 export const manufacturerUrl = (brand: string, model: string) => {
     if (brand == "Sapphire"){
         return sapphireUrl(model)
-    } else if (model.includes("Radeon") || model.includes("Ryzen")){
+    } else if (model.includes("Radeon") || model.toUpperCase().includes("RYZEN")){
         return amdUrl(model)
     }else return nvidiaUrl(model)
 }
@@ -175,23 +175,24 @@ const amdUrl = (model: string) => {
         }
 
         if(cpu == true){
-            if( !isNaN(+(item.slice(0,-1))) && +(item.slice(0,-1)) != 0){
+            if( (!isNaN(+(item.slice(0,-1))) && +(item.slice(0,-1)) != 0) || item.toUpperCase().includes("WX") ){
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
             }
+            if(model.includes("PRO")){
+                url = getAmd().urls[3]
+            }else url = getAmd().urls[1]
             add = true
-            url = getAmd().urls[1]
+            
         }else if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
-                url = getAmd().urls[0]
+                if(model.toUpperCase().includes("PRO")){
+                    url = getAmd().urls[2]
+                    add = false
+                }else url = getAmd().urls[0]
         }
   
     })
-
     
-    if(model.toUpperCase().includes("PRO")){
-        url = getAmd().urls[2]
-        add = false
-    } 
     
     if(modelSplit[0] !== "AMD" && add) {
         modelSplit.unshift("AMD")
@@ -254,6 +255,6 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("AMD RYZEN Threadripper PRO 3975WX Processor")
+let title = titleParser("AMD Ryzen 3 PRO 5350GE")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))
