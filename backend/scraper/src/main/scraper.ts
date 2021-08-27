@@ -1,6 +1,14 @@
 import {manufacturesSelectorsArray, Selectors} from "../utilities/selectors";
 import {Product} from "../utilities/productsModel";
-import {concatUrl, titleParser, availability, date, trimPrice, manufacturerUrl} from "../utilities/parser";
+import {
+    concatUrl,
+    titleParser,
+    availability,
+    date,
+    trimPrice,
+    manufacturerUrl,
+    getDescriptions
+} from "../utilities/parser";
 const cheerio = require("cheerio");
 //import cheerio from 'cheerio'
 import axios from 'axios'
@@ -129,7 +137,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 
 export const scrapeDescription = async (brand: string, model: string) =>{
 
-    let description = []
+    let description: string[] = []
     const url_man = manufacturerUrl(brand, model)
     const man = url_man.manufacture
     const url = url_man.url
@@ -153,7 +161,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
 
 
-    return ""
+    return getDescriptions(description)
 }
 
 
