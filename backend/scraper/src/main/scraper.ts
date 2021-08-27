@@ -129,7 +129,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 
 export const scrapeDescription = async (brand: string, model: string) =>{
 
-    let description = {}
+    let description = []
     const url_man = manufacturerUrl(brand, model)
     const man = url_man.manufacture
     const url = url_man.url
@@ -142,9 +142,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
     if(man != "amd"){
         $(selector.getDescriptions()).children().each((i: any, row: any) =>{
-            $(row).text().trim()
-
-
+            description.push($(row).text().trim()) //push into an array of descriptions with key values
         })
     }else{
 
