@@ -202,6 +202,15 @@ export class amdSelector extends descriptionSelector{
 
 }
 
+/*
+* Iterate through the table, use the td pairs to collect the label : item pair
+*/
+export class nvidiaSelector extends descriptionSelector{
+    getDescriptions(): string {
+        return " ";
+    }
+
+}
 
 
 
