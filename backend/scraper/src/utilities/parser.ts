@@ -269,6 +269,11 @@ example description[
  */
 export const getDescriptions = (descriptions: string [], manufacture:string) => {
 
+    if(manufacture.includes("nvidia")){
+        descriptions.forEach((item) => {
+            let itemSplitArray = item.split("/")
+        })
+    }
 
     return {}
 }
