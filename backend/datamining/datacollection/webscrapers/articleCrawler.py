@@ -10,10 +10,9 @@ import mechanicalsoup
 
 browser = mechanicalsoup.Browser()
 
-
 def gethtml(url):
     r = session.get(url)
-    r.html.render(sleep=1, scrolldown=5)
+    r.html.render(sleep=1, scrolldown=10)
     articles = r.html.find('article')
     return articles
 
@@ -21,11 +20,12 @@ def gethtml(url):
 def parseArticles(articles):
     for item in articles:
         newsitem = item.find('h3', first=True)
-        title = newsitem.text
-        link = newsitem.absolute_links
-        print(title, link)
+        if newsitem != None : 
+            title = newsitem.text
+            link = newsitem.absolute_links
+            print(title, link)
 
 
-url = "https://news.google.com/search?q=gpu%20prices&hl=en-ZA&gl=ZA&ceid=ZA%3Aen"
+url = "https://news.google.com/search?q=cpu%20prices&hl=en-ZA&gl=ZA&ceid=ZA%3Aen"
 articles = gethtml(url)
 parseArticles(articles)
