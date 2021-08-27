@@ -184,6 +184,20 @@ class DreamwareSelectors extends Selectors {
     }
 }
 
+
+/*
+* Selectors for the description
+* */
+export abstract class descriptionSelector {
+    abstract getDescriptions() : string
+}
+
+
+
+
+
+
+
 const evetechSelector: Selectors = new EvetechSelectors("Evetech")
 const amptekSelector: Selectors = new AmpTekSelectors("Amptek")
 const dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
