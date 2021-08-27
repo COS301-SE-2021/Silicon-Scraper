@@ -154,6 +154,9 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         })
     }else{
 
+        //Get the amd one
+
+
     }
 
 
