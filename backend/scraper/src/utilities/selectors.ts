@@ -212,6 +212,16 @@ export class nvidiaSelector extends descriptionSelector{
 
 }
 
+/*
+* Iterate through the unordered list, use the li.innerText to collect the label : item pair *rough
+*/
+export class sapphireSelector extends descriptionSelector{
+    getDescriptions(): string {
+        return "div.desc > ul";
+    }
+
+}
+
 
 const evetechSelector: Selectors = new EvetechSelectors("Evetech")
 const amptekSelector: Selectors = new AmpTekSelectors("Amptek")
