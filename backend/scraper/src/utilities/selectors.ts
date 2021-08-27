@@ -233,3 +233,4 @@ const siliconwebSelector: Selectors = new SiliconwebSelectors("Siliconweb")
 export const selectorsArray: Selectors[] = [siliconwebSelector, evetechSelector, amptekSelector,dreamwareSelector ]
 
 const amd: descriptionSelector = new amdSelector()
+const nvidia: descriptionSelector = new nvidiaSelector()
