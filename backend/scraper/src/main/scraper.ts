@@ -139,6 +139,8 @@ export const getDescription = async (brand: string, model: string) =>{
     const html = await axios.get(url);
     const $ = await cheerio.load(html);
 
+    $(selector.getDescriptions())
+
 
 
 
