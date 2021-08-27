@@ -81,7 +81,7 @@ export const titleParser = (title: string) =>{
     for (let i = 0; i < detailedTitle.length; i++) {
         if(detailedTitle[i].toUpperCase() === "AMD" && (cpus.some(x => detailedTitle[i+1].toUpperCase().includes(x)) || graphics.some(x => x === detailedTitle[i+1].toUpperCase())))
             brand += detailedTitle[i] + " "
-        else if(graphics.some(x => x === detailedTitle[i].toUpperCase()) || cpus.some(x => detailedTitle[i].toUpperCase().includes(x))){
+        else if(graphics.some(x => x === detailedTitle[i].toUpperCase()) || cpus.some(x => detailedTitle[i].toUpperCase().includes(x) && !detailedTitle[i+1].toUpperCase().includes("RADEON")) ){
             
             for (let k = i ; k< detailedTitle.length && !detailedTitle[k].includes("..."); k++){
                 if(temp.some(x => x === detailedTitle[k])){
@@ -158,8 +158,30 @@ const sapphireUrl = (model: string) => {
     return url
 }
 
-const amdUrl = (model: string) => {
 
+
+const amdUrl = (model: string) => {
+    let modelSplit = model.split(' ')
+    let add = false
+
+    modelSplit.forEach((item, index) => {
+        let extra = item.toUpperCase().includes("XT")
+
+        if(!isNaN(+item) && +item >5000){
+            add = true
+        }
+
+        if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
+            modelSplit.splice(index+1, modelSplit.length-(index+1))
+        }
+    })
+    
+    if(modelSplit[0] !== "AMD" && add) {
+        modelSplit.unshift("AMD")
+    }
+
+    let url = getAmd().urls + modelSplit.join('-').toLowerCase()
+    return url
 }
 
 const nvidiaUrl = (model: string) => {
@@ -177,6 +199,6 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("Sapphire Radeon NITRO+ RX 6700 XT 12GB GDDR6 PCIE 4.0 AMD Graphics Card")
+let title = titleParser("Gigabyte AMD Radeon Vega Frontier Edition Liquid-cooled 16GB HBM2 Graphics Card")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))
