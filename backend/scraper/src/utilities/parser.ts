@@ -264,4 +264,5 @@ const removeWord = (word: string, arr:string[]) => {
 export const getDescriptions = (descriptions: string []) => {
 
 
+
 }
