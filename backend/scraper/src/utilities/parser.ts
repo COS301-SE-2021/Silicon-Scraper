@@ -57,11 +57,27 @@ export const titleParser = (title: string) =>{
     let detailedTitle = title.replace(/,/g,"" ).split(' ')
     let model = ''
     let brand = '';
-    const graphics = ["GEFORCE", "RTX", "RX", "RADEON", "AMD", "GTX", "GT" ]
+    const graphics = ["GEFORCE", "RTX", "RX", "RADEON", "AMD", "GTX", "GT" , "NITRO+"]
     const cpus = ["RYZEN", "ATHLON", "PENTIUM", "CORE", "A12", "A10", "A8", "A6", "DUAL", "CELERON"]
     const temp = ["A12", "A10", "A8", "A6", "i9", "i5", "i3", "i7"]
+
     if(detailedTitle[0] == "RYZEN")
         brand = "AMD "
+
+    detailedTitle.forEach((item, index) => {
+        if(item.toUpperCase() === "SAPPHIRE") {
+            detailedTitle.splice(index, 1)
+            brand = "Sapphire "
+        }
+
+        if(item.toUpperCase().includes("NITRO")){
+            detailedTitle.splice(index, 1)
+            detailedTitle.unshift(item)
+            
+        }
+    })
+
+
     for (let i = 0; i < detailedTitle.length; i++) {
         if(detailedTitle[i].toUpperCase() === "AMD" && (cpus.some(x => detailedTitle[i+1].toUpperCase().includes(x)) || graphics.some(x => x === detailedTitle[i+1].toUpperCase())))
             brand += detailedTitle[i] + " "
@@ -81,6 +97,8 @@ export const titleParser = (title: string) =>{
 
     }
 
+    if(brand === "") brand = "Gigabyte "
+
     let detailedTitleObj = {
         'brand' : brand.slice(0,-1), //detailedTitle[0],
         'model' : model.substring(1)
@@ -99,3 +117,4 @@ export const availability = (availability:string) => {
 export const date = (d:string)=>{
     return d
 }
+
