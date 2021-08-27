@@ -161,6 +161,7 @@ const sapphireUrl = (model: string) => {
 
 
 const amdUrl = (model: string) => {
+    let cpu = model.toUpperCase().includes("RYZEN")
     let modelSplit = model.split(' ')
     let add = false
 
@@ -171,9 +172,16 @@ const amdUrl = (model: string) => {
             add = true
         }
 
-        if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
-            modelSplit.splice(index+1, modelSplit.length-(index+1))
+        if(cpu == true){
+            if( !isNaN(+(item.slice(0,-1))) && +(item.slice(0,-1)) != 0){
+                modelSplit.splice(index+1, modelSplit.length-(index+1))
+            }
+            add = true
+        }else if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
+                modelSplit.splice(index+1, modelSplit.length-(index+1))
         }
+
+        
     })
     
     if(modelSplit[0] !== "AMD" && add) {
@@ -184,9 +192,11 @@ const amdUrl = (model: string) => {
     return url
 }
 
-const nvidiaUrl = (model: string) => {
 
+const nvidiaUrl = (model: string) => {
+    let modelSplit = model.split(' ')
 }
+
 
 const removeWord = (word: string, arr:string[]) => {
     arr.forEach((item, index) => {
@@ -199,6 +209,6 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("Gigabyte AMD Radeon Vega Frontier Edition Liquid-cooled 16GB HBM2 Graphics Card")
+let title = titleParser("AMD Ryzen 9 5950X 3.4GHz up to 4.9GHz Boost 16C/32T AM4 Socket Desktop Processors")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))
