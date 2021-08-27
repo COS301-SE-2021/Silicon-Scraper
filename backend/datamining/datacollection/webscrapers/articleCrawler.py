@@ -10,22 +10,54 @@ import mechanicalsoup
 
 browser = mechanicalsoup.Browser()
 
-def gethtml(url):
-    r = session.get(url)
-    r.html.render(sleep=1, scrolldown=10)
-    articles = r.html.find('article')
-    return articles
+# implementation can not be tested fully/in a desirable manner
+# look for a better way to do this
 
 
-def parseArticles(articles):
-    for item in articles:
-        newsitem = item.find('h3', first=True)
-        if newsitem != None : 
-            title = newsitem.text
-            link = newsitem.absolute_links
-            print(title, link)
+"""
+ Generic object used to  assign dynamic properties
+"""
+
+class Article(object):
+    pass
+
+"""
+    Scraper used to retrieve articles regarding GPUs and CPUs
+
+    getHTML -> returns the html based on the input string url provided
+
+    save_articles -> returns an article array of titles and links to the articles based
+    on the response object data provided
+"""
+
+class ArticleCrawler:
+
+    def __init__(self, sleep = 1, scrolldown = 10, first = True):
+        self.sleep = sleep
+        self.scrolldown = scrolldown
+        self.first = first
+
+    def getHTML(self, url):
+        response = session.get(url)
+        response.html.render(sleep=self.sleep, scrolldown=self.scrolldown)
+        articles = response.html.find('article')
+        return articles
 
 
-url = "https://news.google.com/search?q=cpu%20prices&hl=en-ZA&gl=ZA&ceid=ZA%3Aen"
-articles = gethtml(url)
-parseArticles(articles)
+    def save_articles(self, articles):
+        parsed_articles = []
+        for article in articles:
+            item = Article()
+            news_item = article.find('h3', first=self.first)
+            if news_item != None:
+                item.title = news_item.text
+                item.link = news_item.absolute_links
+                parsed_articles.append(item)
+        return parsed_articles
+
+
+# url = "https://news.google.com/search?q=cpu%20prices&hl=en-ZA&gl=ZA&ceid=ZA%3Aen"
+# crawler = ArticleCrawler()
+# articles = crawler.getHTML(url)
+# saved_articles = crawler.save_articles(articles)
+# print(saved_articles[0].title, saved_articles[0].link)
