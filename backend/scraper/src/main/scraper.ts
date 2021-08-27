@@ -1,6 +1,6 @@
 import {Selectors} from "../utilities/selectors";
 import {Product} from "../utilities/productsModel";
-import {concatUrl, titleParser, availability, date, trimPrice} from "../utilities/parser";
+import {concatUrl, titleParser, availability, date, trimPrice, manufacturerUrl} from "../utilities/parser";
 const cheerio = require("cheerio");
 //import cheerio from 'cheerio'
 import axios from 'axios'
@@ -83,10 +83,13 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
     if ( title.model === "" || title.brand === ""){
         return 
     }
+
+    let brand = title.brand; let model = title.model
+
     let productsArray = {
         image: concatUrl($(data).find(selector.getImageSelector(index)).attr('src'), baseUrl),
-        brand: title.brand,
-        model: title.model,
+        brand: brand,
+        model: model,
         price: price,
         availability: availability($(data).find(selector.getAvailabilitySelector(index)).text().trim()),
         link: concatUrl($(data).find(selector.getLinkSelector(index)).attr('href'), baseUrl),
@@ -108,7 +111,7 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
         /*
             Pass in the title to the descriptions array and scrape the manufactures
         */
-        description:""
+        description: getDescription(brand, model)
     }
 
     if(type === "gpu") {
@@ -120,6 +123,18 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
     }
 
 }
+
+export const getDescription = (brand: string, model: string) =>{
+
+    const url_man = manufacturerUrl(brand, model)
+
+
+
+
+    return ""
+}
+
+
 
 /**
  * This function loops through the url array and calls the scrape function

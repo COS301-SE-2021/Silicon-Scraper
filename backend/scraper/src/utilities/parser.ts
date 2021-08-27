@@ -121,9 +121,12 @@ export const date = (d:string)=>{
 export const manufacturerUrl = (brand: string, model: string) => {
     if (brand == "Sapphire"){
         return sapphireUrl(model)
+
     } else if (model.includes("Radeon") || model.includes("Ryzen")){
         return amdUrl(model)
-    }else return nvidiaUrl(model)
+
+    }else
+        return nvidiaUrl(model)
 }
 
 const sapphireUrl = (model: string) => {
@@ -155,7 +158,10 @@ const sapphireUrl = (model: string) => {
     }
 
     url = getSapphire().urls + modelSplit.join('-').toLowerCase()
-    return url
+    return {
+        url:url,
+        manufacture:"sapphire"
+    }
 }
 
 
@@ -192,7 +198,10 @@ const amdUrl = (model: string) => {
     }
 
     url += modelSplit.join('-').toLowerCase()
-    return url
+    return {
+        url:url,
+        manufacture:"amd"
+    }
 }
 
 
@@ -229,7 +238,11 @@ const nvidiaUrl = (model: string) => {
         }
     }
 
-    return url + modelSplit.join('-').toLowerCase()
+    return{
+        url:url + modelSplit.join('-').toLowerCase(),
+        manufacture : "nvidia"
+
+    }
 }
 
 
