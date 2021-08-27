@@ -1,4 +1,4 @@
-
+import { getAmd, getSapphire, getNvidia } from "./url";
 
 var j = "/web/";
 let url = require("../utilities/url");
@@ -118,3 +118,65 @@ export const date = (d:string)=>{
     return d
 }
 
+export const manufacturerUrl = (brand: string, model: string) => {
+    if (brand == "Sapphire"){
+        return sapphireUrl(model)
+    } else if (model.includes("Radeon") || model.includes("Ryzen")){
+        return amdUrl(model)
+    }else return nvidiaUrl(model)
+}
+
+const sapphireUrl = (model: string) => {
+    model = model.replace(/\+/g, '')
+    let modelSplit = model.split(' ')
+    let change = false
+
+    modelSplit = removeWord("AMD", modelSplit)
+    modelSplit.forEach((item, index) => {
+        
+        if(!isNaN(+item) && +item < 6000){
+            change = true
+        }
+
+        if(item.includes("GB")){
+            modelSplit[index] = modelSplit[index].slice(0,-1)
+        } 
+        
+        if(item.includes('GDDR')){
+            if(change == true) {
+                modelSplit[index] = modelSplit[index].replace('DDR', '')
+            }
+            modelSplit.splice(index+1, modelSplit.length-(index+1))
+        }
+    })
+
+    if(change) {
+        modelSplit = removeWord("RADEON", modelSplit)
+    }
+
+    url = getSapphire().urls + modelSplit.join('-').toLowerCase()
+    return url
+}
+
+const amdUrl = (model: string) => {
+
+}
+
+const nvidiaUrl = (model: string) => {
+
+}
+
+const removeWord = (word: string, arr:string[]) => {
+    arr.forEach((item, index) => {
+        if(item.toUpperCase() == word ) {
+            arr.splice(index, 1)
+            return index
+        }
+    })
+
+    return arr
+}
+
+let title = titleParser("Sapphire Radeon NITRO+ RX 6700 XT 12GB GDDR6 PCIE 4.0 AMD Graphics Card")
+console.log(title)
+console.log(manufacturerUrl(title.brand, title.model))
