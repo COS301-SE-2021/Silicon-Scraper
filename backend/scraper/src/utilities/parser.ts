@@ -164,6 +164,7 @@ const amdUrl = (model: string) => {
     let cpu = model.toUpperCase().includes("RYZEN")
     let modelSplit = model.split(' ')
     let add = false
+    let url = ""
 
     modelSplit.forEach((item, index) => {
         let extra = item.toUpperCase().includes("XT")
@@ -177,8 +178,10 @@ const amdUrl = (model: string) => {
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
             }
             add = true
+            url = getAmd().urls[1]
         }else if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
+                url = getAmd().urls[0]
         }
 
         
@@ -188,13 +191,41 @@ const amdUrl = (model: string) => {
         modelSplit.unshift("AMD")
     }
 
-    let url = getAmd().urls + modelSplit.join('-').toLowerCase()
+    url += modelSplit.join('-').toLowerCase()
     return url
 }
 
 
 const nvidiaUrl = (model: string) => {
     let modelSplit = model.split(' ')
+    let url = getNvidia().urls[0]
+    let extra = ["TI", "SUPER"]
+    let addDouble = false
+    if(model.includes("RTX 30")){
+        url += "30-series/"
+        addDouble = true
+    }
+
+    if(modelSplit[0].toUpperCase() == "GEFORCE"){
+        modelSplit.shift()
+    }
+
+    modelSplit.forEach((item, index) => {
+        if( extra.some(x => item.toUpperCase().includes(x)) || (!isNaN(+item) && !extra.some(x => modelSplit[index+1].toUpperCase().includes(x))) ){
+            modelSplit.splice(index+1, modelSplit.length-(index+1))
+        }
+    })
+
+    if(addDouble == true && modelSplit.some(x => x != "3090")){
+        let pos = modelSplit.length-1
+        if(modelSplit[pos].toUpperCase() === "TI"){
+            modelSplit[pos] = modelSplit[pos-1]+modelSplit[pos]
+        }else{
+            modelSplit[pos] = modelSplit[pos] + "-" + modelSplit[pos]+"ti"
+        }
+    }
+
+    return url + modelSplit.join('-').toLowerCase()
 }
 
 
@@ -209,6 +240,6 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("AMD Ryzen 9 5950X 3.4GHz up to 4.9GHz Boost 16C/32T AM4 Socket Desktop Processors")
+let title = titleParser("MSI Geforce RTX 3070 Ti Gaming X Trio 8GB GDDR6X PCIE 4.0 Nvidia Graphics Card")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))
