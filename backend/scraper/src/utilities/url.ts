@@ -70,3 +70,24 @@ export const getDreamwareCpuUrl = () =>{
     }
 
 }
+
+/*
+Urls for the manufactures
+ */
+export const getAmd = () => {
+    return {
+        urls:["https://www.amd.com/en/products/graphics/"]
+    }
+}
+
+export const getNvidia = () => {
+    return {
+        urls: ["https://www.nvidia.com/en-us/geforce/graphics-cards/"]
+    }
+}
+
+export const getSapphire = () => {
+    return {
+        urls: ["https://www.sapphiretech.com/en/consumer/"]
+    }
+}
