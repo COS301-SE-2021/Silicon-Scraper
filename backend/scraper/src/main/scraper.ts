@@ -1,4 +1,4 @@
-import {Selectors} from "../utilities/selectors";
+import {manufacturesSelectorsArray, Selectors} from "../utilities/selectors";
 import {Product} from "../utilities/productsModel";
 import {concatUrl, titleParser, availability, date, trimPrice, manufacturerUrl} from "../utilities/parser";
 const cheerio = require("cheerio");
@@ -127,7 +127,9 @@ export const addToProducts = ( index: number, $: (arg0: any) => any[], selector:
 export const getDescription = (brand: string, model: string) =>{
 
     const url_man = manufacturerUrl(brand, model)
-
+    const man = url_man.manufacture
+    const url = url_man.url
+    const selector = manufacturesSelectorsArray
 
 
 
