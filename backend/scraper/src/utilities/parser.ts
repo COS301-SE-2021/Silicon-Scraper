@@ -57,7 +57,7 @@ export const titleParser = (title: string) =>{
     let detailedTitle = title.replace(/,/g,"" ).split(' ')
     let model = ''
     let brand = '';
-    const graphics = ["GEFORCE", "RTX", "RX", "RADEON", "AMD", "GTX", "GT" , "NITRO+"]
+    const graphics = ["GEFORCE", "QUADRO", "RTX", "RX", "RADEON", "AMD", "GTX", "GT" , "NITRO+"]
     const cpus = ["RYZEN", "ATHLON", "PENTIUM", "CORE", "A12", "A10", "A8", "A6", "DUAL", "CELERON"]
     const temp = ["A12", "A10", "A8", "A6", "i9", "i5", "i3", "i7"]
 
@@ -201,9 +201,13 @@ const nvidiaUrl = (model: string) => {
     let url = getNvidia().urls[0]
     let extra = ["TI", "SUPER"]
     let addDouble = false
+
     if(model.includes("RTX 30")){
         url += "30-series/"
         addDouble = true
+    }else if(model.toUpperCase().includes("QUADRO")){
+        modelSplit = removeWord("QUADRO", modelSplit)
+        url = getNvidia().urls[1] +  "quadro/"
     }
 
     if(modelSplit[0].toUpperCase() == "GEFORCE"){
@@ -240,6 +244,6 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("MSI Geforce RTX 3070 Ti Gaming X Trio 8GB GDDR6X PCIE 4.0 Nvidia Graphics Card")
+let title = titleParser("NVIDIA PNY Quadro P2000 5GB GDDR5 Workstation GPU")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))

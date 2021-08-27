@@ -82,7 +82,9 @@ export const getAmd = () => {
 
 export const getNvidia = () => {
     return {
-        urls: ["https://www.nvidia.com/en-us/geforce/graphics-cards/"]
+        urls: ["https://www.nvidia.com/en-us/geforce/graphics-cards/", 
+        "https://www.nvidia.com/en-us/design-visualization/",
+        "https://www.nvidia.com/en-us/design-visualization/desktop-graphics/"]
     }
 }
 
