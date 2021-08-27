@@ -260,3 +260,7 @@ const removeWord = (word: string, arr:string[]) => {
 // let title = titleParser("NVIDIA PNY Quadro P2000 5GB GDDR5 Workstation GPU")
 // console.log(title)
 // console.log(manufacturerUrl(title.brand, title.model))
+
+const getDescriptions = (descriptions: string []) => {
+
+}
