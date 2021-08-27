@@ -82,12 +82,12 @@ export const getAmd = () => {
 
 export const getNvidia = () => {
     return {
-        urls: [" "]
+        urls: ["https://www.nvidia.com/en-us/geforce/graphics-cards/"]
     }
 }
 
 export const getSapphire = () => {
     return {
-        urls: [" "]
+        urls: ["https://www.sapphiretech.com/en/consumer/"]
     }
 }
