@@ -135,6 +135,6 @@ export const scrape = async () => {
     return products;
 }
 
-scrapeSilon(url.getEveTecCpuUrl().urls[0], selectors[1], selectors[1].getBaseUrl(), "cpu" ).then(r => {console.log(r)})
+// scrapeSilon(url.getEveTecCpuUrl().urls[0], selectors[1], selectors[1].getBaseUrl(), "cpu" ).then(r => {console.log(r)})
 
 
