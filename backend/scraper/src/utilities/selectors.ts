@@ -187,9 +187,19 @@ class DreamwareSelectors extends Selectors {
 
 /*
 * Selectors for the description
-* */
+*/
 export abstract class descriptionSelector {
     abstract getDescriptions() : string
+}
+
+/*
+* Iterate through the child divs, and use the field_label->div and field_items->div to get label item pair
+*/
+export class amdSelector extends descriptionSelector{
+    getDescriptions(): string {
+        return "#product-specs > div > fieldset:nth-child(3) > div";
+    }
+
 }
 
 
