@@ -294,12 +294,13 @@ const removeWord = (word: string, arr:string[]) => {
 // console.log(title)
 // console.log(manufacturerUrl(title.brand, title.model))
 
-/*
-example description[
-
-]
+/**
+ * @param descriptions
+ * @param manufacturer
+ *
+ *
  */
-export const getDescriptions = (descriptions: string [], manufacture:string) => {
+export const getDescriptions = (descriptions: string [], manufacturer:string) => {
 
     let descriptionObj: {[k: string]: any} = { }
 
@@ -314,7 +315,7 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
 
                 // Differentiate between ti and ~ti
                 //possible solution to include the ti in the manufacture type
-                if(manufacture.includes("ti")){
+                if(manufacturer.includes("ti")){
                     descriptionObj[key] = tiValue
                 }else{
                     descriptionObj[key] = nonetiValue

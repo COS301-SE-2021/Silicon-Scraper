@@ -135,6 +135,14 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 
 }
 
+/**
+ * This is a Description scraper which collects product descriptions of the given product passed in via model and brand thus returning
+ * an object with all the desired descriptions
+ * @param brand
+ * @param model
+ * @return {description} type: {[key:string] : any}
+ */
+
 export const scrapeDescription = async (brand: string, model: string) =>{
 
     let description: string[] = []
