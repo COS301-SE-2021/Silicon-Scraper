@@ -157,7 +157,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         if(man != "amd") {
             description.push($(row).text())
         }else{
-            description.push($(row).children()[0].text() + " "+$(row).children()[0].text())
+            description.push($(row).children()[0].text() + "/"+$(row).children()[0].text())
         }
     })
 
