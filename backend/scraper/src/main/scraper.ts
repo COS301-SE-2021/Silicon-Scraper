@@ -139,7 +139,11 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
     let description: string[] = []
     const url_man = manufacturerUrl(brand, model)
-    const man = url_man.manufacturer
+    let man = url_man.manufacture
+    if(model.includes("ti")){
+        man = man+" "+"ti"
+    }
+
     const url = url_man.url
     const keys = Object.keys(manufacturesSelectorsArray)
     const index = keys.findIndex((key) => { return key === man}) //Finds matching selector index using the keys
@@ -165,7 +169,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
 
 
-    return getDescriptions(description)
+    return getDescriptions(description, man)
 }
 
 

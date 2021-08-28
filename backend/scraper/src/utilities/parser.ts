@@ -188,7 +188,7 @@ const amdUrl = (model: string) => {
                 url = getAmd().urls[3]
             }else url = getAmd().urls[1]
             add = true
-            
+
         }else if(extra == true || (!isNaN(+item) && modelSplit[index+1].toUpperCase().includes("XT") == false) ){
                 modelSplit.splice(index+1, modelSplit.length-(index+1))
                 if(model.toUpperCase().includes("PRO")){
@@ -196,9 +196,8 @@ const amdUrl = (model: string) => {
                     add = false
                 }else url = getAmd().urls[0]
         }
-  
+
     })
-    
     
     if(modelSplit[0] !== "AMD" && add) {
         modelSplit.unshift("AMD")
@@ -228,7 +227,7 @@ const nvidiaUrl = (model: string) => {
         url = getNvidia().urls[1] +  "quadro/"
     }else if (workstation.some(x => model.toUpperCase().includes(x))){
         url = getNvidia().urls[2]
-        return url 
+        return url
     }
 
     if(modelSplit[0].toUpperCase() == "GEFORCE"){
@@ -259,7 +258,7 @@ const nvidiaUrl = (model: string) => {
 
 
 const intelUrl = (word: string) => {
-    
+
 }
 
 
@@ -274,11 +273,48 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("NVIDIA PNY Quadro P2000 5GB GDDR5 Workstation GPU")
-console.log(title)
-console.log(manufacturerUrl(title.brand, title.model))
+// let title = titleParser("NVIDIA PNY Quadro P2000 5GB GDDR5 Workstation GPU")
+// console.log(title)
+// console.log(manufacturerUrl(title.brand, title.model))
 
-export const getDescriptions = (descriptions: string []) => {
+
+/*
+example description[
+
+]
+ */
+export const getDescriptions = (descriptions: string [], manufacture:string) => {
+
+    let descriptionObj: {} = {
+
+    }
+
+    if(manufacture.includes("nvidia")){
+        descriptions.forEach((item) => {
+            let itemSplitArray = item.split("/")
+            let key:string = itemSplitArray[0]
+
+            if(itemSplitArray.length === 2){
+                let tiValue = itemSplitArray[2]
+                let nonetiValue = itemSplitArray[1]
+                // Differentiate between ti and ~ti
+                //possible solution to include the ti in the manufacture type
+
+                if(manufacture.includes("ti")){
+                    //descriptionObj[key] = tiValue
+                }else{
+                    //descriptionObj[key] = tiValue
+                }
+            }
+
+        })
+    }else if(manufacture.includes("amd")){
+
+    }else if(manufacture.includes("sapphire")){
+
+    }else if(manufacture.includes("intel")){
+
+    }
 
     return {}
 
