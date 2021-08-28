@@ -154,9 +154,9 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
     $(selector.getDescriptions()).children().each((i: any, row: any) =>{
         //push into an array of descriptions with key values
-        if(man != "amd") {
+        if(man === "nvidia") {
             description.push($(row).text())
-        }else{
+        }else if(man === "amd"){
             description.push($(row).children()[0].text() + "/"+$(row).children()[0].text())
         }
     })
