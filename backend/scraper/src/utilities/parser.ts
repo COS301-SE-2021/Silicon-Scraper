@@ -325,7 +325,5 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
         }
     })
 
-
-    return {}
-
+    return descriptionObj
 }
