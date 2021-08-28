@@ -157,13 +157,11 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         if(man === "nvidia") {
             description.push($(row).text())
         }else if(man === "amd"){
-            description.push($(row).children()[0].text() + "/"+$(row).children()[0].text())
+            description.push($(row).text())
         }else if(man === "sapphire"){
-
-
-
+            description.push($(row).text())
         }else if (man === "intel"){
-
+            description.push($(row).text())
         }
     })
 
