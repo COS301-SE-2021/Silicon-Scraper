@@ -223,6 +223,13 @@ export class sapphireSelector extends descriptionSelector{
 }
 
 
+export class intelSelector extends descriptionSelector{
+    getDescriptions(): string {
+        return " ";
+    }
+}
+
+
 
 
 const evetechSelector: Selectors = new EvetechSelectors("Evetech")
