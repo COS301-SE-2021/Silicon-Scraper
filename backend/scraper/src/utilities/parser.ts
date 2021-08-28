@@ -290,9 +290,9 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("Intel i9-9900KF 3.6GHz 8 Core Coffee Lake Refresh LGA1151 Socket 14nm Unlocked Desktop Processorr")
-console.log(title)
-console.log(manufacturerUrl(title.brand, title.model))
+// let title = titleParser("Intel Core i9 10850K - 3.6GHz; Turbo 5.2GHz; 10C/20T LGA1200 Desktop Processor")
+// console.log(title)
+// console.log(manufacturerUrl(title.brand, title.model))
 
 
 /*
