@@ -303,33 +303,27 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
 
     let descriptionObj: {[k: string]: any} = { }
 
-    if(manufacture.includes("nvidia") || manufacture.includes("amd")){
-        descriptions.forEach((item) => {
-            let itemSplitArray = item.split("/")
-            let key:string = itemSplitArray[0]
+    descriptions.forEach((item) => {
+        let itemSplitArray = item.split("/")
+        let key:string = itemSplitArray[0]
 
-            if(itemSplitArray.length === 3){
-                let tiValue = itemSplitArray[2]
-                let nonetiValue = itemSplitArray[1]
+        if(itemSplitArray.length === 3){
+            let tiValue = itemSplitArray[2]
+            let nonetiValue = itemSplitArray[1]
 
-                // Differentiate between ti and ~ti
-                //possible solution to include the ti in the manufacture type
+            // Differentiate between ti and ~ti
+            //possible solution to include the ti in the manufacture type
 
-                if(manufacture.includes("ti")){
-                    descriptionObj[key] = tiValue
-                }else{
-                    descriptionObj[key] = nonetiValue
-                }
+            if(manufacture.includes("ti")){
+                descriptionObj[key] = tiValue
             }else{
-                descriptionObj[key] = itemSplitArray[1]
+                descriptionObj[key] = nonetiValue
             }
-        })
-    }
-    else if(manufacture.includes("sapphire")){
+        }else{
+            descriptionObj[key] = itemSplitArray[1]
+        }
+    })
 
-    }else if(manufacture.includes("intel")){
-
-    }
 
     return {}
 
