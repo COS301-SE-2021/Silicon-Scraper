@@ -320,11 +320,18 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
                 }else{
                     descriptionObj[key] = nonetiValue
                 }
+            }else{
+                descriptionObj[key] = itemSplitArray[1]
             }
+
 
         })
     }else if(manufacture.includes("amd")){
-
+        descriptions.forEach((item) => {
+            let itemSplitArray = item.split(" ")
+            let key:string = itemSplitArray[0]
+            descriptionObj[key] = itemSplitArray[1]
+        })
 
     }else if(manufacture.includes("sapphire")){
 
