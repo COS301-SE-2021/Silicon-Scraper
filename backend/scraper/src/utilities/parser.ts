@@ -294,7 +294,6 @@ const removeWord = (word: string, arr:string[]) => {
 // console.log(title)
 // console.log(manufacturerUrl(title.brand, title.model))
 
-
 /*
 example description[
 
@@ -302,9 +301,7 @@ example description[
  */
 export const getDescriptions = (descriptions: string [], manufacture:string) => {
 
-    let descriptionObj: {} = {
-
-    }
+    let descriptionObj: {[k: string]: any} = { }
 
     if(manufacture.includes("nvidia")){
         descriptions.forEach((item) => {
@@ -319,9 +316,9 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
                 //possible solution to include the ti in the manufacture type
 
                 if(manufacture.includes("ti")){
-                    //descriptionObj[key] = tiValue
+                    descriptionObj[key] = tiValue
                 }else{
-                    //descriptionObj[key] = nonetiValue
+                    descriptionObj[key] = nonetiValue
                 }
             }
 
