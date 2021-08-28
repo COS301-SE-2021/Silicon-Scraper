@@ -1,4 +1,4 @@
-import { getAmd, getSapphire, getNvidia } from "./url";
+import { getAmd, getSapphire, getNvidia, getIntel } from "./url";
 
 var j = "/web/";
 let url = require("../utilities/url");
@@ -124,7 +124,9 @@ export const manufacturerUrl: any = (brand: string, model: string) => {
     } else if (model.includes("Radeon") || model.toUpperCase().includes("RYZEN")){
         return amdUrl(model)
 
-    }else
+    }else if (brand === "Intel"){
+        return intelUrl(model)
+    }else 
         return nvidiaUrl(model)
 }
 
@@ -257,8 +259,23 @@ const nvidiaUrl = (model: string) => {
 }
 
 
-const intelUrl = (word: string) => {
+const intelUrl = (model: string) => {
+    let modelSplit = model.split(' ')//model.replace(/ /g, '%20')
+    let extra = ["Skylake", "Quad", "Gold"]
 
+    modelSplit.forEach((item, index) => {
+        if(extra.some(x => item.includes(x))){
+            modelSplit.splice(index+2, modelSplit.length-(index+2))
+        }else if(item.includes('-') && (!modelSplit[index+1].includes("Skylake") || !modelSplit[index+1].includes("QUad"))){
+            modelSplit.splice(index+1, modelSplit.length-(index+1))
+        }
+    })
+
+    let url = getIntel().urls + modelSplit.join('%20') + "&t=All"
+    return {
+        url: url,
+        manufacturer: "intel"
+    }
 }
 
 
@@ -273,9 +290,9 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-// let title = titleParser("NVIDIA PNY Quadro P2000 5GB GDDR5 Workstation GPU")
-// console.log(title)
-// console.log(manufacturerUrl(title.brand, title.model))
+let title = titleParser("Intel i9-9900KF 3.6GHz 8 Core Coffee Lake Refresh LGA1151 Socket 14nm Unlocked Desktop Processorr")
+console.log(title)
+console.log(manufacturerUrl(title.brand, title.model))
 
 
 /*
