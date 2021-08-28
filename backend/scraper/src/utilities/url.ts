@@ -99,6 +99,6 @@ export const getSapphire = () => {
 
 export const getIntel = () => {
     return {
-        urls: []
+        urls: ["https://www.intel.com/content/www/us/en/homepage.html"]
     }
 }
