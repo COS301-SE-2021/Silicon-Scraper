@@ -157,11 +157,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         description.push($(row).text().replace("\\n", "/").replace(":", "/"))
     })
 
-
-
-
-
-
     return getDescriptions(description, man)
 }
 

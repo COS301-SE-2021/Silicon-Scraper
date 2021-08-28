@@ -305,22 +305,23 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
 
     descriptions.forEach((item) => {
         let itemSplitArray = item.split("/")
-        let key:string = itemSplitArray[0]
+        if (itemSplitArray.length > 1) {
+            let key:string = itemSplitArray[0]
 
-        if(itemSplitArray.length === 3){
-            let tiValue = itemSplitArray[2]
-            let nonetiValue = itemSplitArray[1]
+            if(itemSplitArray.length > 2){
+                let tiValue = itemSplitArray[2]
+                let nonetiValue = itemSplitArray[1]
 
-            // Differentiate between ti and ~ti
-            //possible solution to include the ti in the manufacture type
-
-            if(manufacture.includes("ti")){
-                descriptionObj[key] = tiValue
+                // Differentiate between ti and ~ti
+                //possible solution to include the ti in the manufacture type
+                if(manufacture.includes("ti")){
+                    descriptionObj[key] = tiValue
+                }else{
+                    descriptionObj[key] = nonetiValue
+                }
             }else{
-                descriptionObj[key] = nonetiValue
+                descriptionObj[key] = itemSplitArray[1]
             }
-        }else{
-            descriptionObj[key] = itemSplitArray[1]
         }
     })
 
