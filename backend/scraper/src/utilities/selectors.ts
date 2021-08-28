@@ -248,5 +248,6 @@ const intel: descriptionSelector = new intelSelector()
 export const manufacturesSelectorsArray = {
     "amd":amd,
     "nvidia":nvidia,
-    "sapphire":sapphire
+    "sapphire":sapphire,
+    "intel":intel
 }
