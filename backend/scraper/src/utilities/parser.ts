@@ -314,18 +314,20 @@ export const getDescriptions = (descriptions: string [], manufacture:string) => 
             if(itemSplitArray.length === 2){
                 let tiValue = itemSplitArray[2]
                 let nonetiValue = itemSplitArray[1]
+
                 // Differentiate between ti and ~ti
                 //possible solution to include the ti in the manufacture type
 
                 if(manufacture.includes("ti")){
                     //descriptionObj[key] = tiValue
                 }else{
-                    //descriptionObj[key] = tiValue
+                    //descriptionObj[key] = nonetiValue
                 }
             }
 
         })
     }else if(manufacture.includes("amd")){
+
 
     }else if(manufacture.includes("sapphire")){
 

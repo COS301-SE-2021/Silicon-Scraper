@@ -152,17 +152,14 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     const html = await axios.get(url);
     const $ = await cheerio.load(html);
 
-    if(man != "amd"){
-        $(selector.getDescriptions()).children().each((i: any, row: any) =>{
-            description.push($(row).text().trim()) //push into an array of descriptions with key values
-        })
-    }else{
-
-        //Get the amd one
-
-
-    }
-
+    $(selector.getDescriptions()).children().each((i: any, row: any) =>{
+        //push into an array of descriptions with key values
+        if(man != "amd") {
+            description.push($(row).text())
+        }else{
+            description.push($(row).children()[0].text() + " "+$(row).children()[0].text())
+        }
+    })
 
 
 
