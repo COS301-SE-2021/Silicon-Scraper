@@ -242,6 +242,8 @@ export const selectorsArray: Selectors[] = [siliconwebSelector, evetechSelector,
 const amd: descriptionSelector = new amdSelector()
 const nvidia: descriptionSelector = new nvidiaSelector()
 const sapphire: descriptionSelector = new sapphireSelector()
+const intel: descriptionSelector = new intelSelector()
+
 
 export const manufacturesSelectorsArray = {
     "amd":amd,
