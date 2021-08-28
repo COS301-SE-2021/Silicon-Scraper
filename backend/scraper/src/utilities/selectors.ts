@@ -225,7 +225,7 @@ export class sapphireSelector extends descriptionSelector{
 
 export class intelSelector extends descriptionSelector{
     getDescriptions(): string {
-        return " ";
+        return "#specs-1-0-1";
     }
 }
 
