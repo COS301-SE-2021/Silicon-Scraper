@@ -295,10 +295,11 @@ const removeWord = (word: string, arr:string[]) => {
 // console.log(manufacturerUrl(title.brand, title.model))
 
 /**
+ * This function aids with filtering the description and drawing out the needed data, whilst adding consistency
+ * to the description object
+ *
  * @param descriptions
  * @param manufacturer
- *
- *
  */
 export const getDescriptions = (descriptions: string [], manufacturer:string) => {
 
