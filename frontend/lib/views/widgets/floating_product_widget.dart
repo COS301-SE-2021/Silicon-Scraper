@@ -16,7 +16,7 @@ class FloatingProductWidget extends StatelessWidget {
       builder: (BuildContext context,WatchListViewModel w, Widget child)
       {
         return Container(
-            margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+            margin: EdgeInsets.fromLTRB(5, 10, 0, 0),
             height: MediaQuery.of(context).size.height / 4 ,
             child: InkWell(
               onTap: ()
@@ -26,19 +26,19 @@ class FloatingProductWidget extends StatelessWidget {
               child: Stack(
                 children: [
                   Positioned(
-                    bottom: 30,
+                    bottom: 5,
                     right:5,
                     child: Stack(
                         children: [
                           Container(
                             height:120,
-                            width: MediaQuery.of(context).size.width*0.67,
+                            width: MediaQuery.of(context).size.width*0.85,
                             child: Card(
                               elevation: 0,
                               color: Colors.white,
                               child: Container(
-                                //padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.20, 0, 0, 0),
-                                padding: EdgeInsets.only(left: 5),
+                                padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.20, 0, 0, 0),
+//                                padding: EdgeInsets.only(left: 5),
                                 ///Brand + Model
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -104,6 +104,7 @@ class FloatingProductWidget extends StatelessWidget {
                             child: Container(
                               height: 40,
                               child: FloatingActionButton(
+                                heroTag: state.item.id,
                                 backgroundColor: Colors.white,
                                 child: state.save, onPressed: (){
                                 print('widget: ${state.item.id}');
@@ -121,7 +122,7 @@ class FloatingProductWidget extends StatelessWidget {
                               child: Divider(
                                 height:0,
                                 thickness: 1,
-                                color: Colors.grey,
+                                color: Colors.grey[600],
                               ),
                             ),
                           )
@@ -130,6 +131,7 @@ class FloatingProductWidget extends StatelessWidget {
                   ),
                   ///image
                   Container(
+                    height: MediaQuery.of(context).size.height/4,
                     width: MediaQuery.of(context).size.width * 0.33,
                     child: Image.network('${state.item.image}',),
                   ),

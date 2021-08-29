@@ -3,12 +3,18 @@ import Broadcast from '../broadcast/broadcast';
 import { CPU } from '../entity/cpu';
 import { GPU } from '../entity/gpu';
 
+/**
+ * Notification received by server from database including the updated or newly inserted product
+ */
 interface notification {
     processId: number;
     channel: string;
     payload?: string;
 }
 
+/**
+ * Class used to listen for notifications from the database
+ */
 export default class Listener {
     constructor() {
         const client = new pg.Client({

@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:silicon_scraper/view_models/explore_detail_view_model.dart';
+import 'package:silicon_scraper/view_models/login_view_model.dart';
 import 'package:silicon_scraper/views/widgets/explore_detail_widget.dart';
 
 class Explore extends StatefulWidget {
@@ -13,6 +14,7 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
   ExplorePageViewModelSingleton explore = ExplorePageViewModelSingleton.getState();
+  LoginViewModelSingleton login=LoginViewModelSingleton.getState();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,16 @@ class _ExploreState extends State<Explore> {
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
           ),
           centerTitle: true,
+          actions: [
+//          ElevatedButton(onPressed: (){
+//            sharedPreferences.clear();
+////            sharedPreferences.commit();
+//          }, child: Icon(Icons.logout,color: Colors.white,),style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(myBlue) ),)
+            IconButton(icon: Icon(Icons.logout,color: Colors.white,), onPressed: ()
+            {
+              login.logout(context);
+            })
+          ],
           //toolbarHeight: 35,
         ),
         body: SingleChildScrollView(

@@ -1,4 +1,4 @@
-import { BadRequest, Forbidden, NotFound, Unauthorized } from "http-errors";
+import { BadRequest, Conflict, Forbidden, NotFound, Unauthorized } from "http-errors";
 import { InvalidCredentials, RequestError, UsernameNotFound } from "../../src/types/CustomErrors";
 import { CreateUserRequest, LoginUserRequest, RemoveUserRequest } from "../../src/types/Requests";
 import { CreateUserResponse, LoginUserResponse } from "../../src/types/Responses";
@@ -89,7 +89,7 @@ describe('Create User unit tests>', () => {
             const response: CreateUserResponse = await userService.createUser(request);
         }
         catch (error) {
-            expect(error).toBeInstanceOf(Forbidden);
+            expect(error).toBeInstanceOf(Conflict);
         }
     });
 

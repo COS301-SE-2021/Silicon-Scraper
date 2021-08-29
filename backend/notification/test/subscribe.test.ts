@@ -8,6 +8,7 @@ import typeorm from 'typeorm';
 import { app } from '../src/app';
 
 // mock Listener class
+jest.mock('../src/firebase/firebase.initialise');
 jest.mock('pg');
 jest.mock('../src/listener/listener');
 jest.mock('typeorm', () => {

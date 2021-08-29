@@ -8,8 +8,9 @@ class PredictionService
 {
    Future predictionRequest(Product p,DateTime t)async
    {
+     print("here");
      //todo change endpoint
-     var url = Uri.parse("http://10.0.2.2:3000/watchlist");
+     var url = Uri.parse("https://silicon-scraper-ai-api.herokuapp.com/predict/price-and-availability");
      Map <String,String> headers=
      {
        "Content-Type":"application/json; charset=utf-8",
@@ -18,26 +19,39 @@ class PredictionService
 
      final DateFormat format=DateFormat('yyyMMddHHmmss');
      final String date=format.format(t);
+     String av;
+     if(p.stockAvailability==availability.outOfStock)
+       {
+         av="Out of Stock";
+       }
+     else
+     {
+       av="In Stock";
+     }
 
      Map <String,dynamic> body=
      {
        "brand":p.brand,
-       "model":p.model,
-       "availability":p.stockAvailability.toString(),
+       "model":p.model.toUpperCase(),
+       "availability":av,
        "date":date,
        "type":p.type,
        "price":p.price
      };
+     var data=jsonEncode(body);
+     print(data);
+     final response = await http.post(url,headers: headers,body: data);
 
-     final response = await http.post(url,headers: headers,body: body);
+     print("here now"+response.body+response.statusCode.toString());
      var responseData = json.decode(response.body);
 
-//        print(response.statusCode);
-//        print(responseData);
+        print(response.statusCode);
+        print(responseData);
 
      if(response.statusCode==200)
      {
        return Prediction.fromJson(responseData);
+//     return responseData;
      }
      else if(responseData.success==false)
        {
