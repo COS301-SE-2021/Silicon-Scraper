@@ -87,7 +87,8 @@ export const getNvidia = () => {
     return {
         urls: ["https://www.nvidia.com/en-us/geforce/graphics-cards/", 
         "https://www.nvidia.com/en-us/design-visualization/",
-        "https://www.nvidia.com/en-us/design-visualization/desktop-graphics/"]
+        "https://www.nvidia.com/en-us/design-visualization/desktop-graphics/",
+        "https://www.nvidia.com/en-us/geforce/10-series/"]
     }
 }
 

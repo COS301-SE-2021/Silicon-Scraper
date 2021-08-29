@@ -147,25 +147,29 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
     let description: string[] = []
     const url_man = manufacturerUrl(brand, model)
-    let man = url_man.manufacture
+    let man = url_man.manufacturer
     if(model.includes("ti")){
         man = man+" "+"ti"
     }
+    console.log(url_man.url, url_man.manufacturer, model)
 
     const url = url_man.url
     const keys = Object.keys(manufacturesSelectorsArray)
     const index = keys.findIndex((key) => { return key === man}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
 
-    const html = await axios.get(url);
-    const $ = await cheerio.load(html);
+    try {
+        const html = await axios.get(url);
+        const $ = await cheerio.load(html);
 
-    $(selector.getDescriptions()).children().each((i: any, row: any) =>{
-        //push into an array of descriptions with key values
-        description.push($(row).text().replace("\\n", "/").replace(":", "/"))
-    })
+        $(selector.getDescriptions()).children().each((i: any, row: any) =>{
+            //push into an array of descriptions with key values
+            description.push($(row).text().replace("\\n", "/").replace(":", "/"))
+        })
 
-    return getDescriptions(description, man)
+        return getDescriptions(description, man)
+    }catch(e){console.log(e)}
+    
 }
 
 
@@ -189,6 +193,6 @@ export const scrape = async () => {
     return products;
 }
 
-// scrape().then(r => {console.log(r)})
+scrape().then(r => {console.log(r)})
 
 
