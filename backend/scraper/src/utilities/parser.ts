@@ -303,7 +303,7 @@ const intelUrl = (model: string) => {
         }
     })
 
-    let url = getIntel().urls + modelSplit.join('%20') + "&t=All"
+    let url = getIntel().urls + modelSplit.join('%20') + "&t=Specifications"
     return {
         url: url,
         manufacturer: "intel"

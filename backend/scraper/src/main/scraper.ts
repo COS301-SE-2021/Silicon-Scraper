@@ -172,7 +172,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         
         $(selector.getDescriptions()).children().each((i: any, row: any) =>{
             //push into an array of descriptions with key values
-            console.log($(row).text())
             description.push($(row).text().replace("\\n", "/").replace(":", "/"))
         })
 

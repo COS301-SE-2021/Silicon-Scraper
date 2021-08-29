@@ -207,7 +207,7 @@ export class amdSelector extends descriptionSelector{
 */
 export class nvidiaSelector extends descriptionSelector{
     getDescriptions(): string {
-        return "#specChart > table > tbody";
+        return "table > tbody";
     }
 
 }
