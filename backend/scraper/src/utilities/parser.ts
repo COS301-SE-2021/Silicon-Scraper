@@ -75,6 +75,14 @@ export const titleParser = (title: string) =>{
             detailedTitle.unshift(item)
             
         }
+
+        if(item.includes("Intel")){
+            let pos = detailedTitle.indexOf("Core")
+            if(pos != -1 && pos > index+1){
+                detailedTitle.splice(pos, 1)
+                detailedTitle.splice(index+1, 0, "Core")
+            }
+        }
     })
 
 
@@ -290,9 +298,9 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-// let title = titleParser("Intel Core i9 10850K - 3.6GHz; Turbo 5.2GHz; 10C/20T LGA1200 Desktop Processor")
-// console.log(title)
-// console.log(manufacturerUrl(title.brand, title.model))
+let title = titleParser("Intel i9-9900 3.1GHz 8 Core Coffee Lake Refresh LGA1151 Socket 14nm Desktop Processor")
+console.log(title)
+console.log(manufacturerUrl(title.brand, title.model))
 
 /**
  * This function aids with filtering the description and drawing out the needed data, whilst adding consistency
