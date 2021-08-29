@@ -81,7 +81,7 @@ export const titleParser = (title: string) =>{
             if(pos != -1 && pos > index+1){
                 detailedTitle.splice(pos, 1)
                 detailedTitle.splice(index+1, 0, "Core")
-            }else if (pos == -1) detailedTitle.splice(index+1, 0, "Core")
+            }else if (pos == -1 && temp.some(x => model.includes(x))) detailedTitle.splice(index+1, 0, "Core")
         }
     })
 
@@ -94,7 +94,7 @@ export const titleParser = (title: string) =>{
             for (let k = i ; k< detailedTitle.length && !detailedTitle[k].includes("..."); k++){
                 if(temp.some(x => x === detailedTitle[k])){
                     model += " " + detailedTitle[k] + "-" + detailedTitle[k+1]
-                    k = k+2
+                    k = k+1
                 }else
                     model += " " + detailedTitle[k]
             }
@@ -298,7 +298,7 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("Intel i9-9900K Unlocked Processor (Coffee Lake Refresh)")
+let title = titleParser("Intel Pentium Gold G5420 Processor")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))
 
