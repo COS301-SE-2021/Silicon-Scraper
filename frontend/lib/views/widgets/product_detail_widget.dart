@@ -113,7 +113,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                               children: [
                                 Text("${widget.state.item.brand +" "+ widget.state.item.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(20, 0, 10, 0),
+                                  margin: EdgeInsets.fromLTRB(15, 0, 10, 0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
@@ -154,6 +154,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                           builder: (context,PredictionViewModel p,Widget child)
                           {
                             return Container(
+                              decoration: BoxDecoration(
+//                                borderRadius: BorderRadiusGeometry.only()
+                              ),
+//                              color: Colors.blueGrey,
                               child: p.predict !=null ? Column(
                                 children: [
                                   Row(
