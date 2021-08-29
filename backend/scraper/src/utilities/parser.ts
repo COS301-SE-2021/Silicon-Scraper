@@ -81,7 +81,7 @@ export const titleParser = (title: string) =>{
             if(pos != -1 && pos > index+1){
                 detailedTitle.splice(pos, 1)
                 detailedTitle.splice(index+1, 0, "Core")
-            }
+            }else if (pos == -1) detailedTitle.splice(index+1, 0, "Core")
         }
     })
 
@@ -298,7 +298,7 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("Intel i9-9900 3.1GHz 8 Core Coffee Lake Refresh LGA1151 Socket 14nm Desktop Processor")
+let title = titleParser("Intel i9-9900K Unlocked Processor (Coffee Lake Refresh)")
 console.log(title)
 console.log(manufacturerUrl(title.brand, title.model))
 
