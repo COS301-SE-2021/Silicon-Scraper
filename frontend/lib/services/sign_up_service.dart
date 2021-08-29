@@ -32,10 +32,18 @@ class SignUpService
       var responseData=jsonDecode(response.body);
       throw Exception("${responseData["message"]}");
     }
-    throw Exception('Unable sign up');
+    else if(response.statusCode==409)
+      {
+        throw Exception('This user name is already taken');
+      }
+    throw Exception('Unable to sign up');
   }
 
+
+
 }
+
+
 
 class SignUpSingleton extends SignUpService
 {

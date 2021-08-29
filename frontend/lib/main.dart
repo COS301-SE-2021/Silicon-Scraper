@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
+import 'package:silicon_scraper/view_models/notification_view_model.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/injectors/explore_service_injector.dart';
 import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.dart';
@@ -34,9 +35,10 @@ void main() async{
   WatchListInjector.configure(DependencyType.PROD);
   ExplorePageInjector.configure(DependencyType.PROD);
   SearchSortFilterInjector.configure(DependencyType.PROD);
-  PredictionInjector.configure(DependencyType.PROD,fail: false);
+  PredictionInjector.configure(DependencyType.MOCK,fail: false);
   LoginInjector.configure(DependencyType.PROD,success: true);
   SignUpInjector.configure(DependencyType.PROD,success: true);
+  NotificationViewModel notification=new NotificationViewModel();
 
   /// this sets the initial products for the watch list do not remove
   WatchListViewModelSingleton.getState().setInitialProducts();
@@ -45,9 +47,9 @@ void main() async{
   /// below this line is firebase implementations
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  String t=await FirebaseMessaging.instance.getToken();
-
-  print("your token is:"+t);
+//  String t=await FirebaseMessaging.instance.getToken();
+//  print("your token is:"+t);
+  notification.register();
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();

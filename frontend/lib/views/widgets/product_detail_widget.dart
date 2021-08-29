@@ -79,16 +79,16 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
                   ///header
-                  header:Container(
+                  /*header:Container(
                     height: (MediaQuery.of(context).size.height)*0.1,
                     width:MediaQuery.of(context).size.width-20 ,
-                    padding: EdgeInsets.only(top:10,/*left:50,*/right:50),
+                    padding: EdgeInsets.only(top:10,*//*left:50,*//*right:50),
                     child: Wrap(
                       alignment: WrapAlignment.center,
                       children: [
                         Text("${widget.state.item.brand +" "+ widget.state.item.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
                         Container(
-                          margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          margin: EdgeInsets.fromLTRB(20, 0, 10, 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -98,12 +98,32 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/
                   ///description panel
                   panel: Container(
-                      padding: EdgeInsets.fromLTRB(20, 90, 20, 0),
+                      padding: EdgeInsets.fromLTRB(20,0, 20, 0),
                       child: Column(
                         children: [
+                          Container(
+//                            height: (MediaQuery.of(context).size.height)*0.1,
+                            width:MediaQuery.of(context).size.width-20 ,
+                            padding: EdgeInsets.only(top:10,/*left:50,*/right:50),
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              children: [
+                                Text("${widget.state.item.brand +" "+ widget.state.item.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text("Retailer: ${widget.state.item.retailer}",style: TextStyle(fontSize: 20,color: Colors.grey),),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 //                          Text("${widget.state.item.description}"),
                           bulletListWidget(widget.state.item.description),
                           ///date time picker
@@ -134,6 +154,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                           builder: (context,PredictionViewModel p,Widget child)
                           {
                             return Container(
+                              decoration: BoxDecoration(
+//                                borderRadius: BorderRadiusGeometry.only()
+                              ),
+//                              color: Colors.blueGrey,
                               child: p.predict !=null ? Column(
                                 children: [
                                   Row(

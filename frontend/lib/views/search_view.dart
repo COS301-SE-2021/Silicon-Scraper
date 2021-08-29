@@ -9,22 +9,25 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Search",
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(35.0),
+        child: AppBar(
+          title: Text(
+            "Search",
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              color: Colors.black,
+              onPressed: () async {
+                showSearch(context: context, delegate: ProductSearch());
+              },
+            )
+          ],
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            color: Colors.black,
-            onPressed: () async {
-              showSearch(context: context, delegate: ProductSearch());
-            },
-          )
-        ],
       ),
       body: Container(
         color: Colors.white,
