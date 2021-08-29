@@ -129,7 +129,7 @@ export const date = (d:string)=>{
 export const manufacturerUrl: any = (brand: string, model: string) => {
     if (brand == "Sapphire"){
         return sapphireUrl(model)
-    } else if (model.toUpperCase().includes("RADEON") || model.toUpperCase().includes("RYZEN") || model.includes("AMD")){
+    } else if (model.toUpperCase().includes("RADEON") || model.toUpperCase().includes("RYZEN") || model.includes("RX")){
         return amdUrl(model)
 
     }else if (brand === "Intel"){
@@ -180,6 +180,7 @@ const amdUrl = (model: string) => {
     let cpu = model.toUpperCase().includes("RYZEN")
     let modelSplit = model.split(' ')
     let add = false
+    let rad = false
     let url = ""
 
 
@@ -206,10 +207,17 @@ const amdUrl = (model: string) => {
                     url = getAmd().urls[2]
                     add = false
                 }else url = getAmd().urls[0]
+
+                if(!model.includes("Radeon")){
+                    rad = true 
+                }
         }
 
     })
     
+    if(rad){
+        modelSplit.unshift("Radeon")
+    }
     if(modelSplit[0] !== "AMD" && add) {
         modelSplit.unshift("AMD")
     }
@@ -233,6 +241,11 @@ const nvidiaUrl = (model: string) => {
     if(model.includes("GTX 10")){
         return {
             url: getNvidia().urls[3],
+            manufacturer: "nvidia"
+        }
+    }else if(model.includes("GT 7")){
+        return {
+            url: "",
             manufacturer: "nvidia"
         }
     }
@@ -309,9 +322,9 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("NVIDIA Quadro P1000 4GB GDDR5 Workstation Graphics")
-console.log(title)
-console.log(manufacturerUrl(title.brand, title.model))
+// let title = titleParser("MSI RX 6900 XT 16GB Top Gaming")
+// console.log(title)
+// console.log(manufacturerUrl(title.brand, title.model))
 
 /**
  * This function aids with filtering the description and drawing out the needed data, whilst adding consistency

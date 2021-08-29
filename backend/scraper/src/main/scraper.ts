@@ -30,7 +30,6 @@ let today = new Date()
  * @type {string[]} specific url to scrape
  */
 let urls = [
-     url.getSiliconWebUrl(),
      url.getEveTecGpuUrl(),
      url.getEveTecCpuUrl(),
      url.getAmpTekGpuUrl(),
@@ -95,6 +94,8 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
     let brand = title.brand;
     let model = title.model
     let des = await scrapeDescription(brand, model)
+    console.log("model: ", model)
+    console.log("description: ", des)
 
 
     let productsArray = {
@@ -147,17 +148,18 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
     let description: string[] = []
     const url_man = manufacturerUrl(brand, model)
+    if(url_man.url === "") return ""
+
     let man = url_man.manufacturer
-    if(model.includes("ti")){
+    if(model.toUpperCase().includes("TI ")){
         man = man+" "+"ti"
     }
-    console.log(url_man.url, url_man.manufacturer, model)
 
     const url = url_man.url
     const keys = Object.keys(manufacturesSelectorsArray)
     const index = keys.findIndex((key) => { return key === man}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
-
+    
     try {
         const html = await axios.get(url);
         const $ = await cheerio.load(html);
@@ -168,7 +170,9 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         })
 
         return getDescriptions(description, man)
-    }catch(e){console.log(e)}
+    }catch(e){
+        console.warn(e)
+    }
     
 }
 
