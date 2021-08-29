@@ -298,9 +298,9 @@ const removeWord = (word: string, arr:string[]) => {
     return arr
 }
 
-let title = titleParser("Intel Pentium Gold G5420 Processor")
-console.log(title)
-console.log(manufacturerUrl(title.brand, title.model))
+// let title = titleParser("Intel Pentium Gold G5420 Processor")
+// console.log(title)
+// console.log(manufacturerUrl(title.brand, title.model))
 
 /**
  * This function aids with filtering the description and drawing out the needed data, whilst adding consistency
