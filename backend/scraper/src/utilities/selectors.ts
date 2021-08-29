@@ -197,7 +197,7 @@ export abstract class descriptionSelector {
 */
 export class amdSelector extends descriptionSelector{
     getDescriptions(): string {
-        return "#product-specs > div > fieldset:nth-child(3) > div";
+        return "#product-specs > div > fieldset > div";
     }
 
 }
@@ -207,7 +207,7 @@ export class amdSelector extends descriptionSelector{
 */
 export class nvidiaSelector extends descriptionSelector{
     getDescriptions(): string {
-        return "tbody";
+        return "#specChart > table > tbody";
     }
 
 }

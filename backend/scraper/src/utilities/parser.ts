@@ -334,7 +334,7 @@ const removeWord = (word: string, arr:string[]) => {
  * @param manufacturer
  */
 export const getDescriptions = (descriptions: string [], manufacturer:string) => {
-
+   // console.log(descriptions, manufacturer)
     let descriptionObj: {[k: string]: any} = { }
 
     descriptions.forEach((item) => {

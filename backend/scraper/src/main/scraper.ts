@@ -94,8 +94,8 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
     let brand = title.brand;
     let model = title.model
     let des = await scrapeDescription(brand, model)
-    console.log("model: ", model)
-    console.log("description: ", des)
+    // console.log("model: ", model)
+    // console.log("description: ", des)
 
 
     let productsArray = {
@@ -147,7 +147,11 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 export const scrapeDescription = async (brand: string, model: string) =>{
 
     let description: string[] = []
-    const url_man = manufacturerUrl(brand, model)
+    //const url_man = manufacturerUrl(brand, model)
+    const url_man = {
+        url: "https://www.amd.com/en/products/graphics/amd-radeon-rx-6800-xt",
+        manufacturer: "amd"
+    }
     if(url_man.url === "") return ""
 
     let man = url_man.manufacturer
@@ -157,21 +161,24 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
     const url = url_man.url
     const keys = Object.keys(manufacturesSelectorsArray)
-    const index = keys.findIndex((key) => { return key === man}) //Finds matching selector index using the keys
+    const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
     
     try {
         const html = await axios.get(url);
         const $ = await cheerio.load(html);
-
+        //console.log( $(selector.getDescriptions()) )
+        //console.log($(selector.getDescriptions()).children() )       
+        
         $(selector.getDescriptions()).children().each((i: any, row: any) =>{
             //push into an array of descriptions with key values
+            console.log($(row).text())
             description.push($(row).text().replace("\\n", "/").replace(":", "/"))
         })
 
         return getDescriptions(description, man)
     }catch(e){
-        console.warn(e)
+        //console.warn(e)
     }
     
 }
@@ -197,6 +204,6 @@ export const scrape = async () => {
     return products;
 }
 
-scrape().then(r => {console.log(r)})
-
+//scrape().then(r => {console.log(r)})
+scrapeDescription("MSI", "Radeon RX 6800 xt ").then(r=> console.log(r))
 
