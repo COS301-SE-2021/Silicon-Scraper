@@ -1,14 +1,13 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import urllib.parse
-
 from requests_html import HTMLSession
 
 session = HTMLSession()
 
-import mechanicalsoup
+from mechanicalsoup import Browser
 
-browser = mechanicalsoup.Browser()
+browser = Browser()
 
 # implementation can not be tested fully/in a desirable manner
 # look for a better way to do this
@@ -18,8 +17,10 @@ browser = mechanicalsoup.Browser()
  Generic object used to  assign dynamic properties
 """
 
+
 class Article(object):
     pass
+
 
 """
     Scraper used to retrieve articles regarding GPUs and CPUs
@@ -30,9 +31,10 @@ class Article(object):
     on the response object data provided
 """
 
+
 class ArticleCrawler:
 
-    def __init__(self, sleep = 1, scrolldown = 10, first = True):
+    def __init__(self, sleep=1, scrolldown=10, first=True):
         self.sleep = sleep
         self.scrolldown = scrolldown
         self.first = first
@@ -42,7 +44,6 @@ class ArticleCrawler:
         response.html.render(sleep=self.sleep, scrolldown=self.scrolldown)
         articles = response.html.find('article')
         return articles
-
 
     def save_articles(self, articles):
         parsed_articles = []
@@ -55,8 +56,18 @@ class ArticleCrawler:
                 parsed_articles.append(item)
         return parsed_articles
 
+    def scrape(self, url):
+        return self.save_articles(self.getHTML(url))
 
-# url = "https://news.google.com/search?q=cpu%20prices&hl=en-ZA&gl=ZA&ceid=ZA%3Aen"
+
+# Testing
+
+url = "https://news.google.com/search?q=cpu%20prices&hl=en-ZA&gl=ZA&ceid=ZA%3Aen"
+
+aCrawler = ArticleCrawler()
+articles = aCrawler.scrape(url)
+print(articles)
+
 # crawler = ArticleCrawler()
 # articles = crawler.getHTML(url)
 # saved_articles = crawler.save_articles(articles)
