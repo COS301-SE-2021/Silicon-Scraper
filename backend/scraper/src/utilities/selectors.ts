@@ -238,7 +238,7 @@ const amptekSelector: Selectors = new AmpTekSelectors("Amptek")
 const dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
 const siliconwebSelector: Selectors = new SiliconwebSelectors("Siliconweb")
 
-export const selectorsArray: Selectors[] = [siliconwebSelector, evetechSelector, amptekSelector,dreamwareSelector ]
+export const selectorsArray: Selectors[] = [evetechSelector, amptekSelector,dreamwareSelector ]
 
 const amd: descriptionSelector = new amdSelector()
 const nvidia: descriptionSelector = new nvidiaSelector()

@@ -7,7 +7,7 @@
     "start": "npm run build && node build/main/scraper_scheduler.js",
     "test": "jest --runInBand --detectOpenHandles",
     "build": "tsc -p tsconfig.json",
-    "start-dev": "cd src/main && ts-node scraper_scheduler.ts"
+    "start-dev": "cd src/main && ts-node scraper.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +22,7 @@
     "@types/newrelic": "^7.0.2",
     "@types/node": "^15.12.4",
     "@types/pg-promise": "^5.4.3",
+    "@types/puppeteer": "^5.4.4",
     "@types/shelljs": "^0.8.9",
     "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.21.1",
