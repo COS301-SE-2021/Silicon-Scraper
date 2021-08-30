@@ -166,14 +166,15 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     
     try {
         const html = await axios.get(url);
-        const $ = await cheerio.load(html);
-        //console.log( $(selector.getDescriptions()) )
+        const $ = await cheerio.load(html.data);
+
         //console.log($(selector.getDescriptions()).children() )       
         
         $(selector.getDescriptions()).children().each((i: any, row: any) =>{
             //push into an array of descriptions with key values
             description.push($(row).text().replace("\\n", "/").replace(":", "/"))
         })
+
 
         return getDescriptions(description, man)
     }catch(e){

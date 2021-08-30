@@ -197,9 +197,10 @@ export abstract class descriptionSelector {
 */
 export class amdSelector extends descriptionSelector{
     getDescriptions(): string {
-        return "#product-specs > div > fieldset > div";
+        return "#product-specs > div > fieldset:nth-child(2) > div";
     }
 
+    //fieldset > div
 }
 
 /*
