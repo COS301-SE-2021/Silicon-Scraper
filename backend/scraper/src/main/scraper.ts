@@ -10,8 +10,10 @@ import {
     getDescriptions
 } from "../utilities/parser";
 const cheerio = require("cheerio");
+const puppeteer = require('puppeteer');
 //import cheerio from 'cheerio'
 import axios from 'axios'
+import {Browser, Page} from "puppeteer";
 
 
 let url = require("../utilities/url");
@@ -60,6 +62,7 @@ const getWebData = async (html: any, selector: Selectors, baseUrl: string, type:
     const $ = await cheerio.load(html);
     let b = 0;
 
+
     //Number of pages = number of times a request is going to happen at a specific site
     $(selector.getTableSelector()).find(selector.getRowSelector()).children().each((i: any, row: any) => {
         $(row).each(async (k: any, col: any) => {
@@ -94,8 +97,6 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
     let brand = title.brand;
     let model = title.model
     let des = await scrapeDescription(brand, model)
-    // console.log("model: ", model)
-    // console.log("description: ", des)
 
 
     let productsArray = {
@@ -161,26 +162,67 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
     const url = url_man.url
     const keys = Object.keys(manufacturesSelectorsArray)
-    const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
+    const index = keys.findIndex((key) => { return key === man}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
-    
+
+
+
     try {
-        const html = await axios.get(url);
-        const $ = await cheerio.load(html);
-        //console.log( $(selector.getDescriptions()) )
-        //console.log($(selector.getDescriptions()).children() )       
-        
-        $(selector.getDescriptions()).children().each((i: any, row: any) =>{
-            //push into an array of descriptions with key values
-            console.log($(row).text())
-            description.push($(row).text().replace("\\n", "/").replace(":", "/"))
+         const html = await axios.get(url);
+
+
+//         const fs = require('fs')
+//
+// // Data which will write in a file.
+//         let data = html.data
+//
+// // Write data in 'Output.txt' .
+//         fs.writeFile('Output.txt', data, (err: any) => {
+//
+//             // In case of a error throw err.
+//             if (err) throw err;
+//         })
+
+
+        puppeteer.launch().then((browser: Browser ) => {
+            browser.newPage().then((page: Page) => {
+                return page.goto(url).then(() => {
+                    return page.content();
+                }).then(async (html:string) =>{
+                    const $ = await cheerio.load(html);
+                    console.log(selector.getDescriptions())
+                    console.log($(selector.getDescriptions()).length)
+
+                    $(selector.getDescriptions()).children().each((i: any, row: any) =>{
+                        //push into an array of descriptions with key values
+                        console.log("Hello")
+                        description.push($(row).text().replace("\\n", "/").replace(":", "/"))
+                    })
+
+                    return getDescriptions(description, man)
+
+                })
+            })
         })
 
-        return getDescriptions(description, man)
+
+         //const $ = await cheerio.load(html);
+        // console.log(selector.getDescriptions())
+        //
+        // console.log($(selector.getDescriptions()).length)
+        //
+        // $(selector.getDescriptions()).children().each((i: any, row: any) =>{
+        //     //push into an array of descriptions with key values
+        //     console.log("Hello")
+        //     description.push($(row).text().replace("\\n", "/").replace(":", "/"))
+        // })
+        //
+        // return getDescriptions(description, man)
     }catch(e){
-        //console.warn(e)
+        console.warn(e)
+        return {}
     }
-    
+
 }
 
 
@@ -196,6 +238,7 @@ export const scrape = async () => {
 
 
                 await scrapeSilon(url_, selector, selector.getBaseUrl(), url.type);
+
 
             }
         }
