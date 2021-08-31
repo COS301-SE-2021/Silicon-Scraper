@@ -7,6 +7,14 @@ class Twitter(object):
     pass
 
 
+"""
+    This is a web crawler initialized to scrape tweets.
+    using the scrapetwitter method one can insert the search
+    term and initial scrape date.
+
+"""
+
+
 class TwitterCrawler:
 
     def __init__(self, api_key, secret):
