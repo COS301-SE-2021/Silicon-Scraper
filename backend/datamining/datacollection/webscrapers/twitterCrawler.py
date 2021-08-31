@@ -1,6 +1,6 @@
 import tweepy as tweepy
-from decouple import config
 import pandas as pd
+from decouple import config
 
 
 class Twitter(object):
@@ -11,7 +11,6 @@ class Twitter(object):
     This is a web crawler initialized to scrape tweets.
     using the scrapetwitter method one can insert the search
     term and initial scrape date.
-
 """
 
 
@@ -32,3 +31,7 @@ class TwitterCrawler:
 
     def gettweets(self):
         return self.tweets
+
+
+def initializetwittercrawler():
+    return TwitterCrawler(config('api_key'), config('secret'))

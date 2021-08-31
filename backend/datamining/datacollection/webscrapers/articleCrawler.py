@@ -12,7 +12,6 @@ browser = Browser()
 # implementation can not be tested fully/in a desirable manner
 # look for a better way to do this
 
-
 """
  Generic object used to  assign dynamic properties
 """
