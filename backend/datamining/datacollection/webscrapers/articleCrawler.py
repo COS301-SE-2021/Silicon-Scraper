@@ -57,17 +57,3 @@ class ArticleCrawler:
 
     def scrape(self, url):
         return self.save_articles(self.getHTML(url))
-
-
-# Testing
-
-url = "https://news.google.com/search?q=cpu%20prices&hl=en-ZA&gl=ZA&ceid=ZA%3Aen"
-
-aCrawler = ArticleCrawler()
-articles = aCrawler.scrape(url)
-print(articles)
-
-# crawler = ArticleCrawler()
-# articles = crawler.getHTML(url)
-# saved_articles = crawler.save_articles(articles)
-# print(saved_articles[0].title, saved_articles[0].link)
