@@ -28,8 +28,3 @@ class ReviewCrawler:
         for i in range(len(reviews)):
             reviews[i] = self.clean(reviews[i])
         return reviews
-
-URL = "https://www.techpowerup.com/review/?category=Graphics+Cards&manufacturer=&pp=25&order=date"
-rCrawler = ReviewCrawler()
-reviews = rCrawler.scrape(URL)
-print(reviews)
