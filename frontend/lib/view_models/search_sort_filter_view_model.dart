@@ -57,108 +57,22 @@ class SearchViewModel {
     return sortedProducts;
   }
 
-  List<Product> applyFilters(
-      List<Product> products,
-      bool inStock,
-      bool outOfStock,
-      bool cpu,
-      bool gpu,
-      double minPrice,
-      double maxPrice,
-      bool retailer1,
-      bool retailer2,
-      bool retailer3,
-      bool retailer4) {
+  List<Product> applyFilters(List<Product> products, bool inStock, bool outOfStock, bool cpu, bool gpu, double minPrice, double maxPrice, bool retailer1, bool retailer2, bool retailer3, bool retailer4) {
     /// get the original array of search results
     /// retailer: 1 - evetech, 2 - dreamware, 3 - amptek, 4 - Siliconweb (our own website)
 
     List<Product> filteredProducts = [];
-    List<bool> filters = [
-      inStock,
-      outOfStock,
-      cpu,
-      gpu,
-      retailer1,
-      retailer2,
-      retailer3,
-      retailer4
-    ];
-    List<String> filterString = [
-      "in stock",
-      "out of stock",
-      "cpu",
-      "gpu",
-      "evetech",
-      "dreamware",
-      "amptek",
-      "siliconweb"
-    ];
 
-    // for each product
-    // check if any of the checkbox filters have been selected
-    // go through all the filters (nested for loop) and for the 'true' filters:
-    // check if the product matches
-    // if it does: add , if not add => false
-    // if the product matches all the 'true' filters ,
-    // check if its in the price range then add it to the filtered array
-    bool add = true;
+    //first filter by the price range
     for (int p = 0; p < products.length; p++) {
-      if (inStock ||
-          outOfStock ||
-          cpu ||
-          gpu ||
-          retailer1 ||
-          retailer2 ||
-          retailer3 ||
-          retailer4) {
-        add = false;
-        for (int i = 0; i < filters.length; i++) {
-          if (i < 2) {
-            if (filters[i]) {
-              if (products
-                      .elementAt(p)
-                      .getAvailability()
-                      .toLowerCase()
-                      .compareTo(filterString[i]) ==
-                  0) {
-                add = true;
-              }
-            }
-          } else if (i < 4) {
-            if (filters[i]) {
-              if (products
-                      .elementAt(p)
-                      .type
-                      .toLowerCase()
-                      .compareTo(filterString[i]) ==
-                  0) {
-                add = true;
-              }
-            }
-          } else {
-            if (filters[i]) {
-              if (products
-                      .elementAt(p)
-                      .retailer
-                      .toLowerCase()
-                      .compareTo(filterString[i]) ==
-                  0) {
-                add = true;
-              }
-            }
-          }
-        }
-      }
-      if (add) {
-        // lastly check the price range
-        if (products.elementAt(p).price >= minPrice &&
-            products.elementAt(p).price <= maxPrice) {
-          filteredProducts.add(products.elementAt(p));
-        }
+      if (products.elementAt(p).price >= minPrice && products.elementAt(p).price <= maxPrice) {
+        filteredProducts.add(products.elementAt(p));
       }
     }
+
     return filteredProducts;
   }
+
 
   /// helper functions
   double priceMinMax(List<Product> products, int min0max1) {
