@@ -63,18 +63,48 @@ class SearchViewModel {
 
     List<Product> filteredProducts = [];
 
-    //first filter by the price range
+    // 1. filter by the price range
+    // Go through all the products and only add the products of which the price is within the filter price range
     for (int p = 0; p < products.length; p++) {
       if (products.elementAt(p).price >= minPrice && products.elementAt(p).price <= maxPrice) {
         filteredProducts.add(products.elementAt(p));
       }
     }
 
+    // 2. Filter by availability
+    filteredProducts = applyAvailability(filteredProducts, inStock, outOfStock);
+
     return filteredProducts;
   }
 
+  List<Product> applyAvailability(List<Product> products, bool inStock, bool outOfStock){
+    List<Product> filteredByAvailability = [];
+    /// only filter if only 1 of them is true
+    /// ie if both are false or if both are true, return products
+    if ((!inStock && !outOfStock) || (inStock && outOfStock)){
+      return products;
+    } else {
+      /// now check which one is true and
+      /// add products that match the 'true one' to FilteredByAvailability from the given products
+      if (inStock) {
+        for (int p = 0; p < products.length; p++){
+          if(products.elementAt(p).getAvailability().toLowerCase().compareTo("in stock") == 0){
+            filteredByAvailability.add(products.elementAt(p));
+          }
+        }
+      } else {
+        for (int p = 0; p < products.length; p++){
+          if(products.elementAt(p).getAvailability().toLowerCase().compareTo("out of stock") == 0){
+            filteredByAvailability.add(products.elementAt(p));
+          }
+        }
+      }
+      return filteredByAvailability;
+    }
+  }
 
   /// helper functions
+
   double priceMinMax(List<Product> products, int min0max1) {
     List<Product> tempProducts = products;
     if (tempProducts != null) {
