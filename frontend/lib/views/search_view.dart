@@ -71,6 +71,7 @@ class ProductSearch extends SearchDelegate<String> {
   bool retailer2 = false;
   bool retailer3 = false;
   bool retailer4 = false;
+  bool priceChanged = false;
 
   Color filtered = Colors.black;
   String filterText = "FILTER";
@@ -402,7 +403,7 @@ class ProductSearch extends SearchDelegate<String> {
                                                       context, this.products);
                                                 },
                                                 icon:
-                                                    Icon(Icons.cancel_outlined),
+                                                    Icon(Icons.cancel_sharp),
                                                 color: Colors.grey,
                                               )
                                             ],
@@ -462,6 +463,7 @@ class ProductSearch extends SearchDelegate<String> {
                                               onChanged: (RangeValues values) {
                                                 filterState(() {
                                                   _priceRangeValues = values;
+                                                  this.priceChanged = true;
                                                 });
                                               },
                                             )
@@ -547,6 +549,7 @@ class ProductSearch extends SearchDelegate<String> {
                                                       Colors.deepOrangeAccent,
                                                 ),
                                                 onPressed: () {
+                                                  if (inStock || outOfStock || retailer1 || retailer2 || retailer3 || retailer4 || priceChanged) {
                                                   List<
                                                           Product>
                                                       filteredProducts =
@@ -564,7 +567,12 @@ class ProductSearch extends SearchDelegate<String> {
                                                   this.filterText = "FILTERED";
                                                   Navigator.pop(context,
                                                       filteredProducts);
-                                                },
+                                                }
+                                                  else {
+                                                    Navigator.pop(
+                                                        context, this.products);
+                                                  }
+    },
                                               ),
                                             ],
                                           )),
