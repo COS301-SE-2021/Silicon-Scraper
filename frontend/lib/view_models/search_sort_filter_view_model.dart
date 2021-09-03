@@ -63,6 +63,7 @@ class SearchViewModel {
     List<Product> filteredProducts = [];
 
     // 1. filter by the price range
+
     // Go through all the products and only add the products of which the price is within the filter price range
     for (int p = 0; p < products.length; p++) {
       if (products.elementAt(p).price >= minPrice && products.elementAt(p).price <= maxPrice) {
@@ -148,10 +149,7 @@ class SearchViewModel {
     }
   }
 
-
-
   /// helper functions
-
   double priceMinMax(List<Product> products, int min0max1) {
     List<Product> tempProducts = products;
     if (tempProducts != null) {
