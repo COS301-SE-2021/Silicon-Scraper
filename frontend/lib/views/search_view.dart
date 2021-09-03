@@ -319,7 +319,7 @@ class ProductSearch extends SearchDelegate<String> {
                         value: sortValue,
                         icon: const Icon(Icons.arrow_drop_down_sharp),
                         iconSize: 30,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                         ),
