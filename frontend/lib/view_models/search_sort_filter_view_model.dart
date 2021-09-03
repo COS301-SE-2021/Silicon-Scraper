@@ -57,7 +57,7 @@ class SearchViewModel {
     return sortedProducts;
   }
 
-  List<Product> applyFilters(List<Product> products, bool inStock, bool outOfStock, bool cpu, bool gpu, double minPrice, double maxPrice, bool retailer1, bool retailer2, bool retailer3, bool retailer4) {
+  List<Product> applyFilters(List<Product> products, bool inStock, bool outOfStock, double minPrice, double maxPrice, bool retailer1, bool retailer2, bool retailer3, bool retailer4) {
     // get the original array of search results
 
     List<Product> filteredProducts = [];

@@ -67,8 +67,6 @@ class ProductSearch extends SearchDelegate<String> {
   String sortValue = 'SORT';
   bool inStock = false;
   bool outOfStock = false;
-  bool cpuFilter = false;
-  bool gpuFilter = false;
   bool retailer1 = false;
   bool retailer2 = false;
   bool retailer3 = false;
@@ -439,35 +437,6 @@ class ProductSearch extends SearchDelegate<String> {
                                             ),
                                           ]),
 
-                                          /// product type checkboxes
-                                          ExpansionTile(
-                                              title: Text(
-                                                'Type',
-                                                style: TextStyle(fontSize: 18),
-                                              ),
-                                              childrenPadding:
-                                              EdgeInsets.fromLTRB(20, 0, 30, 0),
-                                              children: <Widget>[
-                                                CheckboxListTile(
-                                                  title: const Text('CPU'),
-                                                  value: this.cpuFilter,
-                                                  onChanged: (bool value) {
-                                                    filterState(() {
-                                                      this.cpuFilter = value;
-                                                    });
-                                                  },
-                                                ),
-                                                CheckboxListTile(
-                                                  title: const Text('GPU'),
-                                                  value: this.gpuFilter,
-                                                  onChanged: (bool value) {
-                                                    filterState(() {
-                                                      this.gpuFilter = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ]),
-
                                       /// price range slide
                                       ExpansionTile(
                                           title: Text(
@@ -584,7 +553,7 @@ class ProductSearch extends SearchDelegate<String> {
                                                       search.applyFilters(
                                                           this.originalProducts,
                                                           inStock,
-                                                          outOfStock, cpuFilter, gpuFilter,
+                                                          outOfStock,
                                                           _priceRangeValues
                                                               .start,
                                                           _priceRangeValues.end,
