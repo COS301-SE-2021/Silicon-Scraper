@@ -3,7 +3,6 @@ import {controllers} from './productController';
 
 const router = express.Router();
 
-// to be used for token verification for products
 // router.use((req, res, next) => {
 //     console.log('hello there');
 //     next();
@@ -12,5 +11,6 @@ const router = express.Router();
 router.get('/', controllers.getProducts);
 router.get('/search', controllers.search);
 router.get('/id/:id', controllers.getProductByID);
+router.get('/retailer', controllers.getRetailers);
 
 export default router;
