@@ -1,31 +1,15 @@
 import express from "express";
 import { getRepository } from "typeorm";
+import { CPU } from "../entity/cpu";
+import { GPU } from "../entity/gpu";
 import fetchData from "./repo";
 
 interface Response {
     products: any[]
 }
 
-function genSQLQuery(query: any) {
-    Object.keys(query).forEach((x) => {
-        console.log(`Key=${x}`);
-        switch(x) {
-            case 'key':
-                break;
-            case 'page':
-                break;
-            case 'limit':
-                break;
-            case 'retailer':
-                break;
-            case 'availability':
-                break;
-            case 'order':
-                break;
-            default:
-                break;
-        }
-    });
+interface RetailerResponse {
+    retailers: string[]
 }
 
 /**
@@ -69,25 +53,6 @@ const search = async (req: express.Request, res: express.Response) => {
         page: 1,
         limit: 20
     };
-    // Object.keys(query).forEach((x) => {
-    //     switch(x) {
-    //         case 'key':
-    //             queryObj.key = query.key.toLowerCase();
-    //             break;
-    //         case 'page':
-    //             let page = parseInt(query.page);
-    //             if(!isNaN(page))
-    //                 queryObj.page = (page > 0) ? page : 1;
-    //             break;
-    //         case 'limit':
-    //             let limit = parseInt(query.limit)
-    //             if(!isNaN(limit))    
-    //                 queryObj.limit = (limit > 0) ? limit : 20;
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // });
 
     const result: any[] = [];
     const response: Response = {products: []};
@@ -114,7 +79,6 @@ const search = async (req: express.Request, res: express.Response) => {
             response.products = data;
         }
     }
-    // const response: Response = {products: result.slice((queryObj.page-1)*queryObj.limit, (queryObj.page)*queryObj.limit)};
     res.status(200).json(response);
 }
 
@@ -128,29 +92,6 @@ const getProducts = async (req: express.Request, res: express.Response) => {
     const query = req.query;
     const values = ['gpus', 1, 20];
 
-    // Object.keys(query).forEach((x) => {
-    //     switch(x) {
-    //         case 'type':
-    //             if(query.type === 'cpu' || query.type === 'gpu') { 
-    //                 values[0] = query.type+'s'; 
-    //             }
-    //             break;
-    //         case 'page':
-    //             let page = parseInt(query.page);
-    //             if(!isNaN(page))
-    //                 values[1] = (page > 0) ? page : 1;
-    //             break;
-    //         case 'limit':
-    //             let limit = parseInt(query.limit);
-    //             if(!isNaN(limit))
-    //                 values[2] = (limit > 0) ? limit : 20; 
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // });
-    
-    // let offset = (values[1]-1)*values[2];
     let response: Response = {products: []};
     let table = '(select * from gpus union all select * from cpus)';
     if(query.type) {
@@ -185,8 +126,19 @@ const getProducts = async (req: express.Request, res: express.Response) => {
     res.status(200).json(response);
 }
 
+const getRetailers = async (req: express.Request, res: express.Response) => {
+    const response: RetailerResponse = { retailers: [] };
+    const gpus = getRepository(GPU);
+    let result = await gpus.createQueryBuilder('gpu').select('gpu.retailer').distinct(true).getRawMany();
+    for(let retailer of result) {
+        response.retailers.push(retailer.gpu_retailer);
+    }
+    res.status(200).json(response);
+}
+
 export const controllers = {
     getProducts,
     search,
-    getProductByID
+    getProductByID,
+    getRetailers
 }
