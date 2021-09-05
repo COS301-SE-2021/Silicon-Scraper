@@ -2,18 +2,23 @@ import 'dart:convert';
 import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchService {
   List<Product> items = [];
 
   Future searchRequest(String query) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString('token');
+    String userId = sharedPreferences.getString('userId');
+
     Uri uri = Uri.parse("https://api-silicon-scraper.herokuapp.com/products/search?key=" +
-        query+"&userId=c8a93f30-fe1b-4cea-a7e2-49c37e908133");
+        query+"&userId="+userId);
     print(uri.toString());
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=utf-8",
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ'};
+          'Bearer '+ token};
     final response = await http.get(uri, headers: headers);
     //print(response.statusCode);
 

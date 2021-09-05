@@ -84,47 +84,47 @@ void main() {
       double min = search.priceMinMax(list, 0);
       double max = search.priceMinMax(list, 1);
       test("test no filters applied expect 7", () {
-        List<Product> res = search.applyFilters(list, false, false, false, false, min, max, false, false, false, false);
+        List<Product> res = search.applyFilters(list, false, false, min, max, false, false, false, false);
         expect(res.length, 7);
       });
       test("test retailer filters 'evetech - retailer 1' applied expect 7", () {
-        List<Product> res = search.applyFilters(list, false, false, false, false, min, max, true, false, false , false);
+        List<Product> res = search.applyFilters(list, false, false, min, max, true, false, false , false);
         expect(res.length, 7);
       });
       test("test retailer filters 'other - retailer 2 & 3' applied expect 0", () {
-        List<Product> res = search.applyFilters(list, false, false, false, false, min, max, false, true, true, false);
+        List<Product> res = search.applyFilters(list, false, false, min, max, false, true, true, false);
         expect(res.length, 0);
       });
       test("test all retailer filters applied expect 7", () {
-        List<Product> res = search.applyFilters(list, false, false, false, false, min, max, true, true, true, false);
+        List<Product> res = search.applyFilters(list, false, false, min, max, true, true, true, false);
         expect(res.length, 7);
       });
       test("test applying price range filter lower bound", () {
-        List<Product> res = search.applyFilters(list, false, false, false, false, min + 1.0, max, false, false, false, false);
+        List<Product> res = search.applyFilters(list, false, false, min + 1.0, max, false, false, false, false);
         expect(res.length, 6);
       });
       test("test applying price range filter upper bound", () {
-        List<Product> res = search.applyFilters(list, false, false, false, false, min, max - 1.0, false, false, false, false);
+        List<Product> res = search.applyFilters(list, false, false, min, max - 1.0, false, false, false, false);
         expect(res.length, 5);
       });
       test("test applying price range filter in the range 0 - 10000 (should be 0)", () {
-        List<Product> res = search.applyFilters(list, false, false, false, false, 0, 10000, false, false, false, false);
+        List<Product> res = search.applyFilters(list, false, false, 0, 10000, false, false, false, false);
         expect(res.length, 0);
       });
       test("test applying availability 'in stock' filter (should be 2)", () {
-        List<Product> res = search.applyFilters(list, true, false, false, false, min, max, false, false, false, false);
+        List<Product> res = search.applyFilters(list, true, false, min, max, false, false, false, false);
         expect(res.length, 2);
       });
       test("test applying availability 'out of stock' filter (should be 5)", () {
-        List<Product> res = search.applyFilters(list, false, true, false, false, min, max, false, false, false, false);
+        List<Product> res = search.applyFilters(list, false, true, min, max, false, false, false, false);
         expect(res.length, 5);
       });
       test("test applying all availability filters (should be 7)", () {
-        List<Product> res = search.applyFilters(list, true, true, false, false, min, max, false, false, false, false);
+        List<Product> res = search.applyFilters(list, true, true, min, max, false, false, false, false);
         expect(res.length, 7);
       });
       test("test applying no availability filters (should be 7)", () {
-        List<Product> res = search.applyFilters(list, false, false, false, false, min, max, false, false, false, false);
+        List<Product> res = search.applyFilters(list, false, false, min, max, false, false, false, false);
         expect(res.length, 7);
       });
     });

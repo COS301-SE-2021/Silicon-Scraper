@@ -67,12 +67,11 @@ class ProductSearch extends SearchDelegate<String> {
   String sortValue = 'SORT';
   bool inStock = false;
   bool outOfStock = false;
-  bool cpuFilter = false;
-  bool gpuFilter = false;
   bool retailer1 = false;
   bool retailer2 = false;
   bool retailer3 = false;
   bool retailer4 = false;
+  bool priceChanged = false;
 
   Color filtered = Colors.black;
   String filterText = "FILTER";
@@ -320,7 +319,7 @@ class ProductSearch extends SearchDelegate<String> {
                         value: sortValue,
                         icon: const Icon(Icons.arrow_drop_down_sharp),
                         iconSize: 30,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           color: Colors.black,
                         ),
@@ -404,7 +403,7 @@ class ProductSearch extends SearchDelegate<String> {
                                                       context, this.products);
                                                 },
                                                 icon:
-                                                    Icon(Icons.cancel_outlined),
+                                                    Icon(Icons.cancel_sharp),
                                                 color: Colors.grey,
                                               )
                                             ],
@@ -439,35 +438,6 @@ class ProductSearch extends SearchDelegate<String> {
                                             ),
                                           ]),
 
-                                          /// product type checkboxes
-                                          ExpansionTile(
-                                              title: Text(
-                                                'Type',
-                                                style: TextStyle(fontSize: 18),
-                                              ),
-                                              childrenPadding:
-                                              EdgeInsets.fromLTRB(20, 0, 30, 0),
-                                              children: <Widget>[
-                                                CheckboxListTile(
-                                                  title: const Text('CPU'),
-                                                  value: this.cpuFilter,
-                                                  onChanged: (bool value) {
-                                                    filterState(() {
-                                                      this.cpuFilter = value;
-                                                    });
-                                                  },
-                                                ),
-                                                CheckboxListTile(
-                                                  title: const Text('GPU'),
-                                                  value: this.gpuFilter,
-                                                  onChanged: (bool value) {
-                                                    filterState(() {
-                                                      this.gpuFilter = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ]),
-
                                       /// price range slide
                                       ExpansionTile(
                                           title: Text(
@@ -493,6 +463,7 @@ class ProductSearch extends SearchDelegate<String> {
                                               onChanged: (RangeValues values) {
                                                 filterState(() {
                                                   _priceRangeValues = values;
+                                                  this.priceChanged = true;
                                                 });
                                               },
                                             )
@@ -578,13 +549,14 @@ class ProductSearch extends SearchDelegate<String> {
                                                       Colors.deepOrangeAccent,
                                                 ),
                                                 onPressed: () {
+                                                  if (inStock || outOfStock || retailer1 || retailer2 || retailer3 || retailer4 || priceChanged) {
                                                   List<
                                                           Product>
                                                       filteredProducts =
                                                       search.applyFilters(
                                                           this.originalProducts,
                                                           inStock,
-                                                          outOfStock, cpuFilter, gpuFilter,
+                                                          outOfStock,
                                                           _priceRangeValues
                                                               .start,
                                                           _priceRangeValues.end,
@@ -595,7 +567,12 @@ class ProductSearch extends SearchDelegate<String> {
                                                   this.filterText = "FILTERED";
                                                   Navigator.pop(context,
                                                       filteredProducts);
-                                                },
+                                                }
+                                                  else {
+                                                    Navigator.pop(
+                                                        context, this.products);
+                                                  }
+    },
                                               ),
                                             ],
                                           )),
