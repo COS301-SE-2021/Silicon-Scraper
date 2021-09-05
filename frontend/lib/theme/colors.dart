@@ -23,6 +23,13 @@ MaterialColor red = const MaterialColor(
 );
 //test swatch1
 
+MaterialColor white = const MaterialColor(
+  0xffFFFFFF,
+  const <int, Color>{
+    500: const Color(0xffFFFFFF),
+  },
+);
+
 Color crimson=Color(0xffB90E0A);
 Color rose=Color(0xffE3242B);
 Color candy=Color(0xffD21404);
