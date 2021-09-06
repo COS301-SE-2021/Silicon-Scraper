@@ -124,29 +124,39 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                               ],
                             ),
                           ),
+                              Row(
+                                children: [
+                                  TextButton(onPressed: ()async
+                                       {
+                                         DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
+                                         if(date!=null)
+                                         {
+                                         widget.state.predict.date=date;
+                                         setState((){});
+                                         await widget.state.predict.prediction(context);
+                                         }
+                                       }
+                                       ,
+                                       child: Text('Predict',style: TextStyle(fontSize: 18,color: Colors.black,fontWeight:FontWeight.w300),),style: ButtonStyle(
+                                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                             (Set<MaterialState> states) {
+                                           if (states.contains(MaterialState.pressed))
+                                             return white;
+                                           return white; // Use the component's default.
+                                         },
+                                       ),
+                                     ),),
+                                    TextButton(
+                                      child:Text("Analytics"),
+                                      onPressed:(){},
+
+                                  )
+                                ],
+                              ),
 //                          Text("${widget.state.item.description}"),
                           bulletListWidget(widget.state.item.description),
                           ///date time picker
-                          TextButton(onPressed: ()async
-                          {
-                              DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
-                              if(date!=null)
-                                {
-                                  widget.state.predict.date=date;
-                                  setState((){});
-                                  await widget.state.predict.prediction(context);
-                                }
-                          }
-                          ,
-                            child: Text('Predict',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.pressed))
-                                  return candy;
-                                return candy; // Use the component's default.
-                              },
-                            ),
-                          ),),
+
                     ChangeNotifierProvider.value(
 //                      create: (_)=> widget.state.predict,
                       value:widget.state.predict ,
