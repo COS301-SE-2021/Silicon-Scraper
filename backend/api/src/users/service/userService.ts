@@ -1,4 +1,4 @@
-import { Forbidden } from "http-errors";
+import { Conflict, Forbidden } from "http-errors";
 import { Repository } from "typeorm";
 import { User } from "../../entity/user";
 import { InvalidCredentials, RequestError, UsernameNotFound } from "../../types/CustomErrors";
@@ -22,7 +22,7 @@ export default class UserService {
             }
         });
         if (existingUser !== undefined)
-            throw new Forbidden('Username already in use');
+            throw new Conflict('Username already in use');
         const passwordHash = await this.passEnc.encode(request.password);
         const user: User = new User();
         user.username = request.username;

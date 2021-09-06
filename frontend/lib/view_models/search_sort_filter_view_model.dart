@@ -57,107 +57,96 @@ class SearchViewModel {
     return sortedProducts;
   }
 
-  List<Product> applyFilters(
-      List<Product> products,
-      bool inStock,
-      bool outOfStock,
-      bool cpu,
-      bool gpu,
-      double minPrice,
-      double maxPrice,
-      bool retailer1,
-      bool retailer2,
-      bool retailer3,
-      bool retailer4) {
-    /// get the original array of search results
-    /// retailer: 1 - evetech, 2 - dreamware, 3 - amptek, 4 - Siliconweb (our own website)
+  List<Product> applyFilters(List<Product> products, bool inStock, bool outOfStock, double minPrice, double maxPrice, bool retailer1, bool retailer2, bool retailer3, bool retailer4) {
+    // get the original array of search results
 
     List<Product> filteredProducts = [];
-    List<bool> filters = [
-      inStock,
-      outOfStock,
-      cpu,
-      gpu,
-      retailer1,
-      retailer2,
-      retailer3,
-      retailer4
-    ];
-    List<String> filterString = [
-      "in stock",
-      "out of stock",
-      "cpu",
-      "gpu",
-      "evetech",
-      "dreamware",
-      "amptek",
-      "siliconweb"
-    ];
 
-    // for each product
-    // check if any of the checkbox filters have been selected
-    // go through all the filters (nested for loop) and for the 'true' filters:
-    // check if the product matches
-    // if it does: add , if not add => false
-    // if the product matches all the 'true' filters ,
-    // check if its in the price range then add it to the filtered array
-    bool add = true;
+    // 1. filter by the price range
+
+    // Go through all the products and only add the products of which the price is within the filter price range
     for (int p = 0; p < products.length; p++) {
-      if (inStock ||
-          outOfStock ||
-          cpu ||
-          gpu ||
-          retailer1 ||
-          retailer2 ||
-          retailer3 ||
-          retailer4) {
-        add = false;
-        for (int i = 0; i < filters.length; i++) {
-          if (i < 2) {
-            if (filters[i]) {
-              if (products
-                      .elementAt(p)
-                      .getAvailability()
-                      .toLowerCase()
-                      .compareTo(filterString[i]) ==
-                  0) {
-                add = true;
-              }
-            }
-          } else if (i < 4) {
-            if (filters[i]) {
-              if (products
-                      .elementAt(p)
-                      .type
-                      .toLowerCase()
-                      .compareTo(filterString[i]) ==
-                  0) {
-                add = true;
-              }
-            }
-          } else {
-            if (filters[i]) {
-              if (products
-                      .elementAt(p)
-                      .retailer
-                      .toLowerCase()
-                      .compareTo(filterString[i]) ==
-                  0) {
-                add = true;
-              }
-            }
+      if (products.elementAt(p).price >= minPrice && products.elementAt(p).price <= maxPrice) {
+        filteredProducts.add(products.elementAt(p));
+      }
+    }
+
+    // 2. Filter by availability
+    filteredProducts = applyAvailability(filteredProducts, inStock, outOfStock);
+
+    // 3. Filter by retailer
+    filteredProducts = applyRetailer(filteredProducts, retailer1, retailer2, retailer3, retailer4);
+
+    return filteredProducts;
+  }
+
+  List<Product> applyAvailability(List<Product> products, bool inStock, bool outOfStock){
+    List<Product> filteredByAvailability = [];
+    // only filter if only 1 of them is true
+    // ie if both are false or if both are true, return products
+    if ((!inStock && !outOfStock) || (inStock && outOfStock)){
+      return products;
+    } else {
+      // now check which one is true and
+      // add products that match the 'true one' to FilteredByAvailability from the given products
+      if (inStock) {
+        for (int p = 0; p < products.length; p++){
+          if(products.elementAt(p).getAvailability().toLowerCase().compareTo("in stock") == 0){
+            filteredByAvailability.add(products.elementAt(p));
+          }
+        }
+      } else {
+        for (int p = 0; p < products.length; p++){
+          if(products.elementAt(p).getAvailability().toLowerCase().compareTo("out of stock") == 0){
+            filteredByAvailability.add(products.elementAt(p));
           }
         }
       }
-      if (add) {
-        // lastly check the price range
-        if (products.elementAt(p).price >= minPrice &&
-            products.elementAt(p).price <= maxPrice) {
-          filteredProducts.add(products.elementAt(p));
+      return filteredByAvailability;
+    }
+  }
+
+  List<Product> applyRetailer(List<Product> products, bool retailer1, bool retailer2, bool retailer3, bool retailer4){
+    // retailer: 1 - evetech, 2 - dreamware, 3 - amptek, 4 - siliconweb (our own website)
+
+    List<Product> FilteredByRetailer = [];
+    // only filter if at least one of them is true
+    // ie if both all are false or if all are true, return products
+    if ((retailer1 && retailer2 && retailer3 && retailer4) || (!retailer1 && !retailer2 && !retailer3 && !retailer4)){
+      return products;
+    }else{
+      // now check which one is true and
+      // add products that match the 'true one' to FilteredByRetailer from the given products
+      if(retailer1){
+        for (int p = 0; p < products.length; p++){
+          if(products.elementAt(p).retailer.toLowerCase().compareTo("evetech") == 0){
+            FilteredByRetailer.add(products.elementAt(p));
+          }
         }
       }
+      if (retailer2) {
+        for (int p = 0; p < products.length; p++){
+          if(products.elementAt(p).retailer.toLowerCase().compareTo("dreamware") == 0){
+            FilteredByRetailer.add(products.elementAt(p));
+          }
+        }
+      }
+      if (retailer3) {
+        for (int p = 0; p < products.length; p++){
+          if(products.elementAt(p).retailer.toLowerCase().compareTo("amptek") == 0){
+            FilteredByRetailer.add(products.elementAt(p));
+          }
+        }
+      }
+      if (retailer4) {
+        for (int p = 0; p < products.length; p++){
+          if(products.elementAt(p).retailer.toLowerCase().compareTo("siliconweb") == 0){
+            FilteredByRetailer.add(products.elementAt(p));
+          }
+        }
+      }
+      return FilteredByRetailer;
     }
-    return filteredProducts;
   }
 
   /// helper functions

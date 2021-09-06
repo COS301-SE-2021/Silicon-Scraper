@@ -72,7 +72,8 @@ class _SignUpViewState extends State<SignUpView> {
                       onPressed: () async{
                         print(nameController.text);
                         print(passwordController.text);
-                        signUp.signUp(nameController.text,passwordController.text,context);
+
+                        await signUp.signUp(nameController.text,passwordController.text,context);
                       },
                     )),
                 Container(

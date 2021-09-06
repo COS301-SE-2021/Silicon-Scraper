@@ -19,24 +19,27 @@ class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Explore",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
-          ),
-          centerTitle: true,
-          actions: [
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(35.0),
+          child: AppBar(
+            title: Text(
+              "Explore",
+              style: TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
+            ),
+            centerTitle: true,
+            actions: [
 //          ElevatedButton(onPressed: (){
 //            sharedPreferences.clear();
 ////            sharedPreferences.commit();
 //          }, child: Icon(Icons.logout,color: Colors.white,),style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(myBlue) ),)
-            IconButton(icon: Icon(Icons.logout,color: Colors.white,), onPressed: ()
-            {
-              login.logout(context);
-            })
-          ],
-          //toolbarHeight: 35,
+              IconButton(icon: Icon(Icons.logout,color: Colors.white,), onPressed: ()
+              {
+                login.logout(context);
+              })
+            ],
+            //toolbarHeight: 35,
+          ),
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -84,14 +87,14 @@ class _ExploreState extends State<Explore> {
 
               /// explore all products clickable picture
               Container(
-                  margin: EdgeInsets.all(20),
+                  margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
                   child: InkWell(
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(
                           builder: (context) => ExploreDetailWidget("all")));
                     },
                     child: Image.asset(
-                      'assets/images/explorePagePicture.jpg',
+                      'assets/images/explore_page_picture.jpg',
                       width: MediaQuery.of(context).size.width,
                       fit: BoxFit.cover,
                     ),
@@ -101,7 +104,7 @@ class _ExploreState extends State<Explore> {
               Container(
                   width: MediaQuery.of(context).size.width,
                   //height: MediaQuery.of(context).size.height / 39,
-                  margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                  margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

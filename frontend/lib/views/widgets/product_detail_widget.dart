@@ -79,16 +79,16 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
                   ///header
-                  header:Container(
+                  /*header:Container(
                     height: (MediaQuery.of(context).size.height)*0.1,
                     width:MediaQuery.of(context).size.width-20 ,
-                    padding: EdgeInsets.only(top:10,/*left:50,*/right:50),
+                    padding: EdgeInsets.only(top:10,*//*left:50,*//*right:50),
                     child: Wrap(
                       alignment: WrapAlignment.center,
                       children: [
                         Text("${widget.state.item.brand +" "+ widget.state.item.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
                         Container(
-                          margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                          margin: EdgeInsets.fromLTRB(20, 0, 10, 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -98,35 +98,65 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/
                   ///description panel
                   panel: Container(
-                      padding: EdgeInsets.fromLTRB(20, 90, 20, 0),
+                      padding: EdgeInsets.fromLTRB(20,0, 20, 0),
                       child: Column(
                         children: [
+                          Container(
+//                            height: (MediaQuery.of(context).size.height)*0.1,
+                            width:MediaQuery.of(context).size.width-20 ,
+                            padding: EdgeInsets.only(top:10,/*left:50,*/right:50),
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              children: [
+                                Text("${widget.state.item.brand +" "+ widget.state.item.model}",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(15, 0, 10, 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text("Retailer: ${widget.state.item.retailer}",style: TextStyle(fontSize: 20,color: Colors.grey),),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                              Row(
+                                children: [
+                                  TextButton(onPressed: ()async
+                                       {
+                                         DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
+                                         if(date!=null)
+                                         {
+                                         widget.state.predict.date=date;
+                                         setState((){});
+                                         await widget.state.predict.prediction(context);
+                                         }
+                                       }
+                                       ,
+                                       child: Text('Predict',style: TextStyle(fontSize: 18,color: Colors.black,fontWeight:FontWeight.w300),),style: ButtonStyle(
+                                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                             (Set<MaterialState> states) {
+                                           if (states.contains(MaterialState.pressed))
+                                             return white;
+                                           return white; // Use the component's default.
+                                         },
+                                       ),
+                                     ),),
+                                    TextButton(
+                                      child:Text("Analytics"),
+                                      onPressed:(){},
+
+                                  )
+                                ],
+                              ),
 //                          Text("${widget.state.item.description}"),
                           bulletListWidget(widget.state.item.description),
                           ///date time picker
-                          TextButton(onPressed: ()async
-                          {
-                              DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
-                              if(date!=null)
-                                {
-                                  widget.state.predict.date=date;
-                                  setState((){});
-                                  await widget.state.predict.prediction(context);
-                                }
-                          }
-                          ,
-                            child: Text('Predict',style: TextStyle(fontSize: 20,color: Colors.white),),style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                  (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.pressed))
-                                  return candy;
-                                return candy; // Use the component's default.
-                              },
-                            ),
-                          ),),
+
                     ChangeNotifierProvider.value(
 //                      create: (_)=> widget.state.predict,
                       value:widget.state.predict ,
@@ -134,6 +164,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                           builder: (context,PredictionViewModel p,Widget child)
                           {
                             return Container(
+                              decoration: BoxDecoration(
+//                                borderRadius: BorderRadiusGeometry.only()
+                              ),
+//                              color: Colors.blueGrey,
                               child: p.predict !=null ? Column(
                                 children: [
                                   Row(
