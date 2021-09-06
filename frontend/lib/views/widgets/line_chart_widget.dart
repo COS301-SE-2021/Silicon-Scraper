@@ -14,15 +14,18 @@ class LineChart extends StatelessWidget {
     return
       Container(
         height:MediaQuery.of(context).size.height/2.5 ,
-        margin:EdgeInsets.only(left:20,right:20),
           child: SfCartesianChart(
+              tooltipBehavior:TooltipBehavior(enable: true),
+            title: ChartTitle(text: "Price Trend"),
+              margin:EdgeInsets.only(left:20,right:20,top:20),
               primaryXAxis: DateTimeAxis(),
               series: <ChartSeries>[
                 // Renders line chart
                 LineSeries<SalesData, DateTime>(
                     dataSource: chartData,
                     xValueMapper: (SalesData sales, _) => sales.year,
-                    yValueMapper: (SalesData sales, _) => sales.sales
+                    yValueMapper: (SalesData sales, _) => sales.sales,
+                  enableTooltip: true,
                 )
               ]
           )
