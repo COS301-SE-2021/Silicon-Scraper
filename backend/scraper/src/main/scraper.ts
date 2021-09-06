@@ -186,36 +186,52 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         //     args: ["--no-sandbox" , "--disabled-setupid-sandbox"]
         // });
 
-        return puppeteer.launch({headless: true}).then(async (browser: Browser ) => {
+        return puppeteer.launch({headless: false}).then(async (browser: Browser ) => {
             
-            return browser.newPage().then( async (page: Page) => {
-                await page.setDefaultNavigationTimeout(0);
-                return page.goto(url, {waitUntil: 'domcontentloaded'}).then(async () => {
+            let page = await browser.newPage()
+            await page.setDefaultNavigationTimeout(0);
+            return page.goto(url, {waitUntil: 'domcontentloaded'}).then(async () => {
+                //await page.screenshot({path: 'image.png'})
+                const content = await page.evaluate(async () => {
+                    return {
+                        html: document.documentElement.innerHTML
+                    }
+                })
 
-                    let results = await page.evaluate(async () => {
-                        const $ = await cheerio.load(document);
-                        console.log(selector.getDescriptions())
-                        console.log($(selector.getDescriptions()).length)
+                //let results = await content.then(async (html) => {
+                    
+                    const $ = await cheerio.load(content.html);
+                    console.log(selector.getDescriptions())
+                    console.log($(selector.getDescriptions()).length)
 
-                        $(selector.getDescriptions()).children().each((i: any, row: any) =>{
+                    const children = $(selector.getDescriptions()).children()
+                    if(children !== undefined){
+                        console.log('getchildren')
+                        children.each((i: any, row: any) =>{
                             //push into an array of descriptions with key values
                             console.log("Hello")
                             description.push($(row).text().replace("\\n", "/").replace(":", "/"))
                         })
+                    }else{
+                        console.log('Unable to fetch results')
+                    }
+                    
+                    console.log('description', description)
+                    let des = getDescriptions(description, man)
 
-                        let des = getDescriptions(description, man)
-                        
-                        console.log('getDes')
-                        return des
-                    });
-                    browser.close()
-                    return results
+                    await browser.close()
+                    console.log('getDes', des)
+                    return des
+                //});
 
-                })//.then(async (html:string) =>{
+                
+                //return results
+
+            })//.then(async (html:string) =>{
 
                     
                 //})
-            })
+            
         }).catch((err: any) => {
             console.warn(err)
         })
@@ -263,5 +279,5 @@ export const scrape = async () => {
 }
 
 //scrape().then(r => {console.log(r)})
-scrapeDescription("MSI", "Radeon RX 6800 xt ").then(async r=> await console.log('return'))
+scrapeDescription("MSI", "Radeon RX 6800 xt ").then( r=> {console.log('results', r)})
 
