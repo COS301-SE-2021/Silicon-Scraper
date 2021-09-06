@@ -10,6 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../analytics_view.dart';
+
 
 class ProductDetailWidget extends StatefulWidget
 {
@@ -148,7 +150,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                                      ),),
                                     TextButton(
                                       child:Text("Analytics"),
-                                      onPressed:(){},
+                                      onPressed:()
+                                      {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsView()));
+                                      },
 
                                   )
                                 ],
