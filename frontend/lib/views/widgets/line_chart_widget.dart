@@ -11,23 +11,22 @@ class LineChart extends StatelessWidget {
       SalesData(DateTime(2014), 40)
     ];
 
-    return Scaffold(
-        body: Center(
-            child: Container(
-                child: SfCartesianChart(
-                    primaryXAxis: DateTimeAxis(),
-                    series: <ChartSeries>[
-                      // Renders line chart
-                      LineSeries<SalesData, DateTime>(
-                          dataSource: chartData,
-                          xValueMapper: (SalesData sales, _) => sales.year,
-                          yValueMapper: (SalesData sales, _) => sales.sales
-                      )
-                    ]
+    return
+      Container(
+        height:MediaQuery.of(context).size.height/2.5 ,
+        margin:EdgeInsets.only(left:20,right:20),
+          child: SfCartesianChart(
+              primaryXAxis: DateTimeAxis(),
+              series: <ChartSeries>[
+                // Renders line chart
+                LineSeries<SalesData, DateTime>(
+                    dataSource: chartData,
+                    xValueMapper: (SalesData sales, _) => sales.year,
+                    yValueMapper: (SalesData sales, _) => sales.sales
                 )
-            )
-        )
-    );
+              ]
+          )
+      );
   }
 }
 
