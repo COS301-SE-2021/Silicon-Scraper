@@ -148,11 +148,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 export const scrapeDescription = async (brand: string, model: string) =>{
 
     let descriptions: string[] = []
-    //const url_man = manufacturerUrl(brand, model)
-    const url_man = {
-        url: "https://www.sapphiretech.com/en/consumer/nitro-radeon-rx-6700-xt-12g-gddr6",
-        manufacturer: "sapphire"
-    }
+    const url_man = manufacturerUrl(brand, model)
     if(url_man.url === "") return ""
 
     let man = url_man.manufacturer
@@ -166,24 +162,20 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     const selector = Object.values(manufacturesSelectorsArray)[index]
 
     try {
-        // const browser = await puppeteer.launch({
-        //     headless:false,
-        //     args: ["--no-sandbox" , "--disabled-setupid-sandbox"]
-        // });
 
         return puppeteer.launch({headless: false}).then(async (browser: Browser ) => {
             
             let page = await browser.newPage()
             await page.setDefaultNavigationTimeout(0);
-            return page.goto(url, {waitUntil: 'domcontentloaded'}).then(async () => {
-                //await page.screenshot({path: 'image.png'}) 
+            const page_result = await page.goto(url, {waitUntil: 'domcontentloaded'}).then(async () => {
+                
                 const selectordes = selector.getDescriptions()
                 const content = await page.evaluate(async (selectordes: string) => {
-                    //let html = document.documentElement.innerHTML
+                    
                     let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
                     children.forEach((element) => {
-                        const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')//replace(/\s{2,}/g, '')
+                        const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
                         descript.push(text !== undefined? text: '')
 
                     })
@@ -191,54 +183,21 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                         description: descript
                     }
                 }, selectordes)
+                
+                let des = getDescriptions(content.description, man)
 
-                //let results = await content.then(async (html) => {
-                    console.log(content.description)
-                    //const $ = await cheerio.load(content.description);
+                await browser.close()
+                return des
 
-                    // const children = $('div.fieldset-wrapper')[0].children()
-                    // if(children !== undefined){
-                    //     console.log('getchildren')
-                    //     children.each((i: any, row: any) =>{
-                    //         //push into an array of descriptions with key values
-                    //         console.log("Hello")
-                    //         description.push($(row).text().replace("\\n", "/").replace(":", "/"))
-                    //     })
-                    // }else{
-                    //     console.log('Unable to fetch results')
-                    // }
-                    
-                    // console.log('description', description)
-                    let des = getDescriptions(content.description, man)
+            })
 
-                    await browser.close()
-                    // console.log('getDes', des)
-                    return des
-                //});
-
-
-            })//.then(async (html:string) =>{
-
-                    
-                //})
+            await browser.close()
+            return page_result
             
         }).catch((err: any) => {
             console.warn(err)
         })
 
-
-         //const $ = await cheerio.load(html);
-        // console.log(selector.getDescriptions())
-        //
-        // console.log($(selector.getDescriptions()).length)
-        //
-        // $(selector.getDescriptions()).children().each((i: any, row: any) =>{
-        //     //push into an array of descriptions with key values
-        //     console.log("Hello")
-        //     description.push($(row).text().replace("\\n", "/").replace(":", "/"))
-        // })
-        //
-        // return getDescriptions(description, man)
     }catch(e){
         console.warn(e)
         return {status: 'fail'}
@@ -269,5 +228,5 @@ export const scrape = async () => {
 }
 
 //scrape().then(r => {console.log(r)})
-scrapeDescription("Sapphire ", "Radeon NITRO+ RX 6700 XT 12GB GDDR6 PCIE 4.0 AMD Graphics Card ").then( r=> {console.log('results', r)})
+//scrapeDescription("Sapphire ", "Radeon NITRO+ RX 6700 XT 12GB GDDR6 PCIE 4.0 AMD Graphics Card ").then( r=> {console.log('results', r)})
 
