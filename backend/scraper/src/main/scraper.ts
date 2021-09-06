@@ -1,4 +1,4 @@
-import {manufacturesSelectorsArray, Selectors} from "../utilities/selectors";
+import {descriptionSelector, manufacturesSelectorsArray, Selectors} from "../utilities/selectors";
 import {Product} from "../utilities/productsModel";
 import {
     concatUrl,
@@ -168,20 +168,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
 
     try {
-         //const html = await axios.get(url);
-
-
-//         const fs = require('fs')
-//
-// // Data which will write in a file.
-//         let data = html.data
-//
-// // Write data in 'Output.txt' .
-//         fs.writeFile('Output.txt', data, (err: any) => {
-//
-//             // In case of a error throw err.
-//             if (err) throw err;
-//         })
         // const browser = await puppeteer.launch({
         //     headless:false,
         //     args: ["--no-sandbox" , "--disabled-setupid-sandbox"]
@@ -192,21 +178,22 @@ export const scrapeDescription = async (brand: string, model: string) =>{
             let page = await browser.newPage()
             await page.setDefaultNavigationTimeout(0);
             return page.goto(url, {waitUntil: 'domcontentloaded'}).then(async () => {
-                //await page.screenshot({path: 'image.png'})
-                const content = await page.evaluate(async () => {
+                //await page.screenshot({path: 'image.png'}) 
+                const selectordes = selector.getDescriptions()
+                const content = await page.evaluate(async (selectordes: string) => {
                     //let html = document.documentElement.innerHTML
-                    let children = Array.from(document.documentElement.querySelectorAll(selector.getDescriptions())[0].children)
+                    let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
                     children.forEach((element) => {
 
-                        const text = element.textContent?.replace(/\n/g, '/') !== undefined? element.textContent?.trim().replace(/\n/g, '/').replace(/\s{2,}/g, ''): ''
+                        const text = element.textContent?.replace(/\n/g, '/') !== undefined? element.textContent?.trim().replace(/\s{2,}/g, '//').replace(/\s{2,}/g, ''): ''
                         descript.push(text)
-                        
+
                     })
                     return {
                         description: descript
                     }
-                })
+                }, selectordes)
 
                 //let results = await content.then(async (html) => {
                     console.log(content.description)

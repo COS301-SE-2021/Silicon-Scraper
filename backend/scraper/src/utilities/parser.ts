@@ -342,7 +342,7 @@ export const getDescriptions = (descriptions: string [], manufacturer:string) =>
     let descriptionObj: {[k: string]: any} = { }
 
     descriptions.forEach((item) => {
-        let itemSplitArray = item.split("/")
+        let itemSplitArray = item.split("//")
         if (itemSplitArray.length > 1) {
             let key:string = itemSplitArray[0]
 
