@@ -126,7 +126,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
         */
         description: des
     }
-
+    
     if (type === "gpu") {
 
         products.gpu.push(<Product>productsArray)
@@ -134,7 +134,6 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 
         products.cpu.push(<Product>productsArray)
     }
-
 }
 
 /**
@@ -168,7 +167,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
 
     try {
-         const html = await axios.get(url);
+         //const html = await axios.get(url);
 
 
 //         const fs = require('fs')
@@ -182,28 +181,42 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 //             // In case of a error throw err.
 //             if (err) throw err;
 //         })
+        const browser = await puppeteer.launch({
+            headless:false,
+            args: ["--no-sandbox" , "--disabled-setupid-sandbox"]
+        });
 
+        //puppeteer.launch().then((browser: Browser ) => {
+            
+        return browser.newPage().then( async (page: Page) => {
+                await page.setDefaultNavigationTimeout(0);
+                return page.goto(url).then(async () => {
 
-        puppeteer.launch().then((browser: Browser ) => {
-            browser.newPage().then((page: Page) => {
-                return page.goto(url).then(() => {
-                    return page.content();
-                }).then(async (html:string) =>{
-                    const $ = await cheerio.load(html);
-                    console.log(selector.getDescriptions())
-                    console.log($(selector.getDescriptions()).length)
+                    let results = await page.evaluate(async () => {
+                        const $ = await cheerio.load(document);
+                        console.log(selector.getDescriptions())
+                        console.log($(selector.getDescriptions()).length)
 
-                    $(selector.getDescriptions()).children().each((i: any, row: any) =>{
-                        //push into an array of descriptions with key values
-                        console.log("Hello")
-                        description.push($(row).text().replace("\\n", "/").replace(":", "/"))
-                    })
+                        $(selector.getDescriptions()).children().each((i: any, row: any) =>{
+                            //push into an array of descriptions with key values
+                            console.log("Hello")
+                            description.push($(row).text().replace("\\n", "/").replace(":", "/"))
+                        })
 
-                    return getDescriptions(description, man)
+                        let des = getDescriptions(description, man)
+                        browser.close()
+                        console.log('getDes')
+                        return des
+                    });
 
-                })
+                    return results
+
+                })//.then(async (html:string) =>{
+
+                    
+                //})
             })
-        })
+       // })
 
 
          //const $ = await cheerio.load(html);
@@ -220,7 +233,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         // return getDescriptions(description, man)
     }catch(e){
         console.warn(e)
-        return {}
+        return {status: 'fail'}
     }
 
 }
@@ -248,5 +261,5 @@ export const scrape = async () => {
 }
 
 //scrape().then(r => {console.log(r)})
-scrapeDescription("MSI", "Radeon RX 6800 xt ").then(r=> console.log(r))
+scrapeDescription("MSI", "Radeon RX 6800 xt ").then(async r=> await console.log('return'))
 
