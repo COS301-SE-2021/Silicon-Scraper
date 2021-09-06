@@ -347,8 +347,8 @@ export const getDescriptions = (descriptions: string [], manufacturer:string) =>
             let key:string = itemSplitArray[0]
 
             if(itemSplitArray.length > 2){
-                let tiValue = itemSplitArray[2]
-                let nonetiValue = itemSplitArray[1]
+                let tiValue = itemSplitArray[1]
+                let nonetiValue = itemSplitArray[2]
 
                 // Differentiate between ti and ~ti
                 //possible solution to include the ti in the manufacture type

@@ -150,8 +150,8 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     let descriptions: string[] = []
     //const url_man = manufacturerUrl(brand, model)
     const url_man = {
-        url: "https://www.amd.com/en/products/graphics/amd-radeon-rx-6800-xt",
-        manufacturer: "amd"
+        url: "https://www.sapphiretech.com/en/consumer/nitro-radeon-rx-6700-xt-12g-gddr6",
+        manufacturer: "sapphire"
     }
     if(url_man.url === "") return ""
 
@@ -162,10 +162,8 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
     const url = url_man.url
     const keys = Object.keys(manufacturesSelectorsArray)
-    const index = keys.findIndex((key) => { return key === man}) //Finds matching selector index using the keys
+    const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
-
-
 
     try {
         // const browser = await puppeteer.launch({
@@ -185,9 +183,8 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                     let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
                     children.forEach((element) => {
-
-                        const text = element.textContent?.replace(/\n/g, '/') !== undefined? element.textContent?.trim().replace(/\s{2,}/g, '//').replace(/\s{2,}/g, ''): ''
-                        descript.push(text)
+                        const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')//replace(/\s{2,}/g, '')
+                        descript.push(text !== undefined? text: '')
 
                     })
                     return {
@@ -272,5 +269,5 @@ export const scrape = async () => {
 }
 
 //scrape().then(r => {console.log(r)})
-scrapeDescription("MSI", "Radeon RX 6800 xt ").then( r=> {console.log('results', r)})
+scrapeDescription("Sapphire ", "Radeon NITRO+ RX 6700 XT 12GB GDDR6 PCIE 4.0 AMD Graphics Card ").then( r=> {console.log('results', r)})
 
