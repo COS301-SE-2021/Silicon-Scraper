@@ -14,6 +14,7 @@ const puppeteer = require('puppeteer');
 //import cheerio from 'cheerio'
 import axios from 'axios'
 import {Browser, Page} from "puppeteer";
+import { getJSDocImplementsTags } from "typescript";
 
 
 let url = require("../utilities/url");
@@ -146,7 +147,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 
 export const scrapeDescription = async (brand: string, model: string) =>{
 
-    let description: string[] = []
+    let descriptions: string[] = []
     //const url_man = manufacturerUrl(brand, model)
     const url_man = {
         url: "https://www.amd.com/en/products/graphics/amd-radeon-rx-6800-xt",
@@ -194,7 +195,13 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 //await page.screenshot({path: 'image.png'})
                 const content = await page.evaluate(async () => {
                     //let html = document.documentElement.innerHTML
-                    let descript = document.documentElement.querySelectorAll('#product-specs > div > fieldset:nth-child(3) > div')[0].innerHTML
+                    let children = Array.from(document.documentElement.querySelectorAll(selector.getDescriptions())[0].children)
+                    let descript :string[] = [];
+                    children.forEach((element) => {
+
+                        const text = element.textContent?.replace(/\n/g, '/') !== undefined? element.textContent?.trim().replace(/\n/g, '/').replace(/\s{2,}/g, ''): ''
+                        descript.push(text)
+                    })
                     return {
                         description: descript
                     }
@@ -202,11 +209,9 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
                 //let results = await content.then(async (html) => {
                     console.log(content.description)
-                    // const $ = await cheerio.load(content.html);
-                    // console.log(selector.getDescriptions())
-                    // console.log($(selector.getDescriptions()).length)
+                    //const $ = await cheerio.load(content.description);
 
-                    // const children = $(selector.getDescriptions()).children()
+                    // const children = $('div.fieldset-wrapper')[0].children()
                     // if(children !== undefined){
                     //     console.log('getchildren')
                     //     children.each((i: any, row: any) =>{
@@ -219,15 +224,13 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                     // }
                     
                     // console.log('description', description)
-                    // let des = getDescriptions(description, man)
+                    let des = getDescriptions(content.description, man)
 
-                     await browser.close()
+                    await browser.close()
                     // console.log('getDes', des)
-                    // return des
+                    return des
                 //});
 
-                
-                return 
 
             })//.then(async (html:string) =>{
 
