@@ -193,39 +193,41 @@ export const scrapeDescription = async (brand: string, model: string) =>{
             return page.goto(url, {waitUntil: 'domcontentloaded'}).then(async () => {
                 //await page.screenshot({path: 'image.png'})
                 const content = await page.evaluate(async () => {
+                    //let html = document.documentElement.innerHTML
+                    let descript = document.documentElement.querySelectorAll('#product-specs > div > fieldset:nth-child(3) > div')[0].innerHTML
                     return {
-                        html: document.documentElement.innerHTML
+                        description: descript
                     }
                 })
 
                 //let results = await content.then(async (html) => {
-                    
-                    const $ = await cheerio.load(content.html);
-                    console.log(selector.getDescriptions())
-                    console.log($(selector.getDescriptions()).length)
+                    console.log(content.description)
+                    // const $ = await cheerio.load(content.html);
+                    // console.log(selector.getDescriptions())
+                    // console.log($(selector.getDescriptions()).length)
 
-                    const children = $(selector.getDescriptions()).children()
-                    if(children !== undefined){
-                        console.log('getchildren')
-                        children.each((i: any, row: any) =>{
-                            //push into an array of descriptions with key values
-                            console.log("Hello")
-                            description.push($(row).text().replace("\\n", "/").replace(":", "/"))
-                        })
-                    }else{
-                        console.log('Unable to fetch results')
-                    }
+                    // const children = $(selector.getDescriptions()).children()
+                    // if(children !== undefined){
+                    //     console.log('getchildren')
+                    //     children.each((i: any, row: any) =>{
+                    //         //push into an array of descriptions with key values
+                    //         console.log("Hello")
+                    //         description.push($(row).text().replace("\\n", "/").replace(":", "/"))
+                    //     })
+                    // }else{
+                    //     console.log('Unable to fetch results')
+                    // }
                     
-                    console.log('description', description)
-                    let des = getDescriptions(description, man)
+                    // console.log('description', description)
+                    // let des = getDescriptions(description, man)
 
-                    await browser.close()
-                    console.log('getDes', des)
-                    return des
+                     await browser.close()
+                    // console.log('getDes', des)
+                    // return des
                 //});
 
                 
-                //return results
+                return 
 
             })//.then(async (html:string) =>{
 
