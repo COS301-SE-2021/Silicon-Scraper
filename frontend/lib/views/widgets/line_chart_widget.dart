@@ -27,6 +27,14 @@ class LineChart extends StatelessWidget {
                     xValueMapper: (SalesData sales, _) => sales.year,
                     yValueMapper: (SalesData sales, _) => sales.sales,
                   enableTooltip: true,
+                    markerSettings: MarkerSettings(
+                        height:20,
+                        width:20,
+                        isVisible: true,
+                        shape: DataMarkerType.image,
+                        // Renders the image as marker
+                        image: AssetImage("assets/images/gpu_icon.png"),
+                    )
                 )
               ]
           )
