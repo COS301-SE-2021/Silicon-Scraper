@@ -4,10 +4,10 @@ class LineChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<SalesData> chartData = [
-      SalesData(DateTime(2010), 35),
-      SalesData(DateTime(2011), 28),
+      SalesData(DateTime(2010), 10),
+      SalesData(DateTime(2011), 50),
       SalesData(DateTime(2012), 34),
-      SalesData(DateTime(2013), 32),
+      SalesData(DateTime(2013), 70),
       SalesData(DateTime(2014), 40)
     ];
 
@@ -22,6 +22,7 @@ class LineChart extends StatelessWidget {
               series: <ChartSeries>[
                 // Renders line chart
                 LineSeries<SalesData, DateTime>(
+                  animationDuration: 8000,
                     dataSource: chartData,
                     xValueMapper: (SalesData sales, _) => sales.year,
                     yValueMapper: (SalesData sales, _) => sales.sales,
