@@ -201,6 +201,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
                         const text = element.textContent?.replace(/\n/g, '/') !== undefined? element.textContent?.trim().replace(/\n/g, '/').replace(/\s{2,}/g, ''): ''
                         descript.push(text)
+                        
                     })
                     return {
                         description: descript
