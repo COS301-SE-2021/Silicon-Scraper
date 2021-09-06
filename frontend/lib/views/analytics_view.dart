@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/views/widgets/line_chart_widget.dart';
 
 class AnalyticsView extends StatelessWidget
 {
@@ -10,7 +11,7 @@ class AnalyticsView extends StatelessWidget
           title: Text("Analytics"),
           centerTitle: true,
         ),
-      body:
+      body: LineChart(),
     );
   }
 }
