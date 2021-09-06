@@ -181,16 +181,16 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 //             // In case of a error throw err.
 //             if (err) throw err;
 //         })
-        const browser = await puppeteer.launch({
-            headless:false,
-            args: ["--no-sandbox" , "--disabled-setupid-sandbox"]
-        });
+        // const browser = await puppeteer.launch({
+        //     headless:false,
+        //     args: ["--no-sandbox" , "--disabled-setupid-sandbox"]
+        // });
 
-        //puppeteer.launch().then((browser: Browser ) => {
+        return puppeteer.launch({headless: true}).then(async (browser: Browser ) => {
             
-        return browser.newPage().then( async (page: Page) => {
+            return browser.newPage().then( async (page: Page) => {
                 await page.setDefaultNavigationTimeout(0);
-                return page.goto(url).then(async () => {
+                return page.goto(url, {waitUntil: 'domcontentloaded'}).then(async () => {
 
                     let results = await page.evaluate(async () => {
                         const $ = await cheerio.load(document);
@@ -204,11 +204,11 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                         })
 
                         let des = getDescriptions(description, man)
-                        browser.close()
+                        
                         console.log('getDes')
                         return des
                     });
-
+                    browser.close()
                     return results
 
                 })//.then(async (html:string) =>{
@@ -216,7 +216,9 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                     
                 //})
             })
-       // })
+        }).catch((err: any) => {
+            console.warn(err)
+        })
 
 
          //const $ = await cheerio.load(html);
