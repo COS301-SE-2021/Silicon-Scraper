@@ -27,13 +27,19 @@ class LineChart extends StatelessWidget {
                     xValueMapper: (SalesData sales, _) => sales.year,
                     yValueMapper: (SalesData sales, _) => sales.sales,
                   enableTooltip: true,
+            trendlines:<Trendline>[
+              Trendline(
+                  type: TrendlineType.linear,
+                  color: Colors.green)
+            ],
                     markerSettings: MarkerSettings(
-                        height:20,
-                        width:20,
+                        height:3,
+                        width:3,
                         isVisible: true,
-                        shape: DataMarkerType.image,
+
+                        /*shape: DataMarkerType.image,
                         // Renders the image as marker
-                        image: AssetImage("assets/images/gpu_icon.png"),
+                        image: AssetImage("assets/images/gpu_icon.png"),*/
                     )
                 )
               ]
