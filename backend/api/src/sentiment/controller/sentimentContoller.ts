@@ -8,7 +8,7 @@ import SentimentService from "../service/sentimentService";
 
 export default class sentimentContoller{
 
-    private router: Router;
+    private readonly router: Router;
 
     constructor(private readonly sentimentService: SentimentService){
         this.router = Router;
