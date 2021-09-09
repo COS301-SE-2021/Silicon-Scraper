@@ -8,6 +8,12 @@ export class ReviewSentiment{
     @Column()
     model!: string;
 
-
+    @Column({
+        name: 'characteristics',
+        type: 'jsonb',
+        default: () => "'{}'",
+        nullable: false,
+    })
+    characteristics!: any;
 
 }
