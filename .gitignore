@@ -37,6 +37,9 @@ coverage/
 #database
 .env
 
+#python
+venv/
+
 #typescript
 backend/scraper/dist/
 # API related
