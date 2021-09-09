@@ -1,3 +1,4 @@
+import { Url } from "url";
 import { getAmd, getSapphire, getNvidia, getIntel } from "./url";
 
 var j = "/web/";
@@ -36,7 +37,11 @@ export const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
 }
 
 
-
+/**
+ * This function changes a given price to the desired format 
+ * @param price 
+ * @returns 
+ */
 export const trimPrice = (price: string) =>{
 
     let price_ = price.split('\n')[0].split('R')[1];
@@ -54,7 +59,7 @@ export const trimPrice = (price: string) =>{
  *
  *
  *
- * @return {object}
+ * @return {object} type: {brand: string, model: string} : Object
  */
 
 export const titleParser = (title: string) =>{
@@ -118,6 +123,11 @@ export const titleParser = (title: string) =>{
     return detailedTitleObj
 }
 
+/**
+ * This function classifies a given string into 'In stock' or 'Out of Stock'
+ * @param availability 
+ * @returns type: string
+ */
 export const availability = (availability:string) => {
     if(availability.includes("In Stock") || availability.includes("add")){
         return "In Stock"
@@ -130,19 +140,52 @@ export const date = (d:string)=>{
     return d
 }
 
+/** 
+* This function creates a url to a specific products page on its manufacturers website given its brand name and model name 
+* @param brand
+* @param model
+* @return type: {url: string, manufacturer: string}
+*/
+
 export const manufacturerUrl: any = (brand: string, model: string) => {
+    let urlObject  = {
+        url: '',
+        manufacturer: ''
+    }
+
     if (brand == "Sapphire"){
-        return sapphireUrl(model)
+       
+        urlObject.url = sapphireUrl(model)
+        urlObject.manufacturer = 'sapphire'
+        return urlObject
+
     } else if (model.toUpperCase().includes("RADEON") || model.toUpperCase().includes("RYZEN") || model.includes("RX")){
-        return amdUrl(model)
+        
+        urlObject.url = amdUrl(model)
+        urlObject.manufacturer = 'amd' 
+        return urlObject
 
     }else if (brand === "Intel"){
-        return intelUrl(model)
-    }else if(model.includes("RTX") || model.includes("GTX") || model.includes("GT") || model.toLocaleLowerCase().includes("quadro") || brand.toLocaleLowerCase() === "nvidia")
-        return nvidiaUrl(model)
-    else return ""
+
+        urlObject.url = intelUrl(model)
+        urlObject.manufacturer = 'intel'
+        return urlObject
+
+    }else if(model.includes("RTX") || model.includes("GTX") || model.includes("GT") || model.toLocaleLowerCase().includes("quadro") || brand.toLocaleLowerCase() === "nvidia"){
+        
+        urlObject.url = nvidiaUrl(model)
+        urlObject.manufacturer = 'nvidia'
+        return urlObject
+    }
+    else return urlObject
 }
 
+
+/**
+ * This function creates urls for products manufacturered by Sapphire using the products model name
+ * @param model 
+ * @returns {url} type: string
+ */
 const sapphireUrl = (model: string) => {
     model = model.replace(/\+/g, '')
     let modelSplit = model.split(' ')
@@ -173,14 +216,15 @@ const sapphireUrl = (model: string) => {
 
     url = getSapphire().urls + modelSplit.join('-').toLowerCase()
 
-    return {
-        url: url,
-        manufacturer: "sapphire"
-    }
+    return url
 }
 
 
-
+/**
+ * This function creates urls for products manufacturered by Amd using the products model name
+ * @param model 
+ * @returns {url} type: string
+ */
 const amdUrl = (model: string) => {
     let cpu = model.toUpperCase().includes("RYZEN")
     let modelSplit = model.split(' ')
@@ -229,13 +273,14 @@ const amdUrl = (model: string) => {
 
     url += modelSplit.join('-').toLowerCase()
 
-    return {
-        url: url,
-        manufacturer:"amd"
-    }
+    return url
 }
 
-
+/**
+ * This function creates urls for products manufacturered by Nvidia using the products model name
+ * @param model 
+ * @returns {url} type: string
+ */
 const nvidiaUrl = (model: string) => {
     let modelSplit = model.split(' ')
     let url = getNvidia().urls[0]
@@ -244,15 +289,9 @@ const nvidiaUrl = (model: string) => {
     let addDouble = false
 
     if(model.includes("GTX 10")){
-        return {
-            url: getNvidia().urls[3],
-            manufacturer: "nvidia"
-        }
+        return getNvidia().urls[3]
     }else if(model.includes("GT 7")){
-        return {
-            url: "",
-            manufacturer: "nvidia"
-        }
+        return ""
     }
     if(model.includes("RTX 30")){
         url += "30-series/"
@@ -263,10 +302,7 @@ const nvidiaUrl = (model: string) => {
         url = !model.includes("RTX A")? url+  "quadro/": url 
     }else if (workstation.some(x => model.toUpperCase().includes(x))){
         url = getNvidia().urls[2]
-        return {
-            url: url,
-            manufacturer: "nvidia"
-        }
+        return url
     }
 
     if(modelSplit[0].toUpperCase() == "GEFORCE"){
@@ -288,14 +324,15 @@ const nvidiaUrl = (model: string) => {
         }
     }
 
-    return{
-        url: url + modelSplit.join('-').toLowerCase(),
-        manufacturer : "nvidia"
-
-    }
+    return (url + modelSplit.join('-').toLowerCase())
+  
 }
 
-
+/**
+ * This function creates urls for products manufacturered by Intel using the products model name
+ * @param model 
+ * @returns {url} type: string
+ */
 const intelUrl = (model: string) => {
     let modelSplit = model.split(' ')//model.replace(/ /g, '%20')
     let extra = ["Skylake", "Quad", "Gold"]
@@ -309,13 +346,15 @@ const intelUrl = (model: string) => {
     })
 
     let url = getIntel().urls + modelSplit.join('%20') + "&t=Specifications"
-    return {
-        url: url,
-        manufacturer: "intel"
-    }
+    return url
 }
 
-
+/**
+ * This is a helper function that removes a specified word from an array then shifts the remaining elements to cover up the gap
+ * @param word 
+ * @param arr 
+ * @returns {Array} type: string[]
+ */
 const removeWord = (word: string, arr:string[]) => {
     arr.forEach((item, index) => {
         if(item.toUpperCase() == word ) {
@@ -337,6 +376,7 @@ const removeWord = (word: string, arr:string[]) => {
  *
  * @param descriptions
  * @param manufacturer
+ * @returns {description} type: {[k: string]: any}
  */
 export const getDescriptions = (descriptions: string [], manufacturer:string) => {
    // console.log(descriptions, manufacturer)
