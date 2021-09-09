@@ -184,7 +184,8 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 }, selectordes)
                 
                 let des = getDescriptions(content.description, man)
-
+                if(des === {}) throw "Description Error: Unable to get descriptions"
+                
                 return des
 
             })
