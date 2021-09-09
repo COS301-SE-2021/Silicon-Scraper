@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, Column} from "typeorm";
 
 @Entity({name: 'review_sentiment', synchronize: false})
 export class ReviewSentiment{
