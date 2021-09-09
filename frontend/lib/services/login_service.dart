@@ -27,11 +27,13 @@ class LoginService
       print(responseData);
         return responseData;
     }
-    else if(response.statusCode==404||response.statusCode==500)
+    else if(response.statusCode==404||response.statusCode==500||response.statusCode==401)
     {
         var responseData=jsonDecode(response.body);
-        throw Exception("${responseData["message"]}");
+        throw Exception("${responseData["error"]}");
     }
+    var responseData=jsonDecode(response.body);
+    print(responseData);
     throw Exception('Unable to log in');
   }
   
