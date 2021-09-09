@@ -21,6 +21,7 @@ export default class sentimentContoller{
     routes(): Router{
         this.router.use(jwtUtil.verifyToken);
         this.router.get('/', async (req, res, next) => res.status(200).json(await this.retrieveSentiments(<RetrieveSentimentRequest>req.body).catch(err => next(err))))
+        return this.router;
     }
 
 
