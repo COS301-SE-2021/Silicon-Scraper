@@ -147,7 +147,6 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 
 export const scrapeDescription = async (brand: string, model: string) =>{
 
-    let descriptions: string[] = []
     const url_man = manufacturerUrl(brand, model)
     if(url_man.url === "") return ""
 
@@ -186,7 +185,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 
                 let des = getDescriptions(content.description, man)
 
-                await browser.close()
                 return des
 
             })
@@ -195,12 +193,12 @@ export const scrapeDescription = async (brand: string, model: string) =>{
             return page_result
             
         }).catch((err: any) => {
-            console.warn(err)
+            throw "Scraping Error: " + err
         })
 
     }catch(e){
         console.warn(e)
-        return {status: 'fail'}
+        return {}
     }
 
 }

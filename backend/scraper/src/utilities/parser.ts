@@ -138,8 +138,9 @@ export const manufacturerUrl: any = (brand: string, model: string) => {
 
     }else if (brand === "Intel"){
         return intelUrl(model)
-    }else 
+    }else if(model.includes("RTX") || model.includes("GTX") || model.includes("GT") || model.toLocaleLowerCase().includes("quadro") || brand.toLocaleLowerCase() === "nvidia")
         return nvidiaUrl(model)
+    else return ""
 }
 
 const sapphireUrl = (model: string) => {
