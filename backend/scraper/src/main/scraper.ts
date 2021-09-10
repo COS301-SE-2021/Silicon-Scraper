@@ -148,6 +148,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 export const scrapeDescription = async (brand: string, model: string) =>{
 
     const url_man = manufacturerUrl(brand, model)
+    console.log(url_man.url)
     if(url_man.url === "") return ""
 
     let man = url_man.manufacturer
@@ -227,5 +228,5 @@ export const scrape = async () => {
 }
 
 //scrape().then(r => {console.log(r)})
-//scrapeDescription("Sapphire ", "Radeon NITRO+ RX 6700 XT 12GB GDDR6 PCIE 4.0 AMD Graphics Card ").then( r=> {console.log('results', r)})
+scrapeDescription("Amd", "Ryzen 9 5950X Processor").then( r=> {console.log('results', r)})
 

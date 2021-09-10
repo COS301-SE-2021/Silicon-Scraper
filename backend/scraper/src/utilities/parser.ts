@@ -148,36 +148,29 @@ export const date = (d:string)=>{
 */
 
 export const manufacturerUrl: any = (brand: string, model: string) => {
-    let urlObject  = {
-        url: '',
-        manufacturer: ''
-    }
-
     if (brand == "Sapphire"){
-       
-        urlObject.url = sapphireUrl(model)
-        urlObject.manufacturer = 'sapphire'
-        return urlObject
+        return getUrlObject(sapphireUrl(model), 'sapphire')
 
     } else if (model.toUpperCase().includes("RADEON") || model.toUpperCase().includes("RYZEN") || model.includes("RX")){
         
-        urlObject.url = amdUrl(model)
-        urlObject.manufacturer = 'amd' 
-        return urlObject
+        return getUrlObject(amdUrl(model), 'amd')
 
     }else if (brand === "Intel"){
 
-        urlObject.url = intelUrl(model)
-        urlObject.manufacturer = 'intel'
-        return urlObject
+        return getUrlObject(intelUrl(model), 'intel')
 
     }else if(model.includes("RTX") || model.includes("GTX") || model.includes("GT") || model.toLocaleLowerCase().includes("quadro") || brand.toLocaleLowerCase() === "nvidia"){
-        
-        urlObject.url = nvidiaUrl(model)
-        urlObject.manufacturer = 'nvidia'
-        return urlObject
+
+        return getUrlObject( nvidiaUrl(model), 'nvidia')
     }
-    else return urlObject
+    else return getUrlObject()
+}
+
+const getUrlObject = (url = '', manufacturer = '') => {
+    return {
+        url: url,
+        manufacturer: manufacturer
+    }
 }
 
 
