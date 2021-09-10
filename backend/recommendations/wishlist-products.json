@@ -1,0 +1,16 @@
+{
+	"products": [
+		{
+			"id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "Intel",
+            "model": "Core i9-11900KF Gen Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": ""
+		}
+	]
+}

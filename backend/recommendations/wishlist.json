@@ -1,0 +1,28 @@
+{
+	"products": [ 
+		{
+			"id": "hifuvovuosaci",
+			"type": "CPU",
+			"brand": "AMD",
+			"model": "Ryzen 5"
+		},
+		{
+			"id": "hifuvovuosaci",
+			"type": "CPU",
+			"brand": "AMD",
+			"model": " Ryzen 9 5950X Processor"
+		},
+		{
+			"id": "hifuvovuosaci",
+			"type": "CPU",
+			"brand": "Intel",
+			"model": "Core i9-11900KF Gen Processor"
+		},
+		{
+			"id": "hifuvovuosaci",
+			"type": "CPU",
+			"brand": "AMD",
+			"model": "Ryzen 7 5800X Processor"
+		}
+	]
+}
