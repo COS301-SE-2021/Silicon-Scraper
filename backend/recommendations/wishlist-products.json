@@ -2,15 +2,79 @@
 	"products": [
 		{
 			"id": "7b05c566-be35-4829-9373-e36367e20937",
-            "brand": "Intel",
-            "model": "Core i9-11900KF Gen Processor",
+            "brand": "AMD",
+            "model": "Ryzen 9 5950X Processor",
             "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
             "price": 11299,
             "availability": "In Stock",
             "retailer": "Evetech",
             "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
             "type": "cpu",
-            "description": ""
+            "description": {
+                "# of CPU Cores": "16",
+                "# of Threads":"32",
+                "Base Clock": "3.4GHz",
+                "Max Boost Clock": "Up to 4.9GHz",
+                "Total L2 Cache":"8MB",
+                "Total L3 Cache":"64MB",
+                "Unlocked":"Yes",
+                "CMOS":"TSMC 7nm FinFET",
+                "Package":"AM4",
+                "PCI Express® Version":"PCIe 4.0",
+                "Thermal Solution (PIB)": "Not included",
+                "Default TDP / TDP":"105W"
+            }
+		},
+        {
+			"id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "AMD",
+            "model": "Ryzen 5 5600X Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": {
+                "# of CPU Cores": "6",
+                "# of Threads":"12",
+                "Base Clock": "3.7GHz",
+                "Max Boost Clock": "Up to 4.6GHz",
+                "Total L2 Cache":"3MB",
+                "Total L3 Cache":"32MB",
+                "Unlocked":"Yes",
+                "CMOS":"TSMC 7nm FinFET",
+                "Package":"AM4",
+                "PCI Express® Version":"PCIe 4.0",
+                "Thermal Solution (PIB)": "Wraith Stealth",
+                "Default TDP / TDP":"65W"
+            }
+		},
+        {
+			"id": "7b05c566-be35-4829-9373-e36367e20937",
+            "brand": "AMD",
+            "model": "Ryzen 7 5800X Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": {
+                "# of CPU Cores": "8",
+                "# of Threads":"16",
+                "Base Clock": "3.8GHz",
+                "Max Boost Clock": "Up to 4.7GHz",
+                "Total L2 Cache":"4MB",
+                "Total L3 Cache":"32MB",
+                "Unlocked":"Yes",
+                "CMOS":"TSMC 7nm FinFET",
+                "Package":"AM4",
+                "PCI Express® Version":"PCIe 4.0",
+                "Thermal Solution (PIB)": "Not included",
+                "Default TDP / TDP":"105W"
+            }
 		}
+
 	]
 }
