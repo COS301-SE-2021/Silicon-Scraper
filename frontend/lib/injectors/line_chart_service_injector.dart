@@ -1,7 +1,5 @@
 import 'package:silicon_scraper/mocks/json/mock_line_chart_service.dart';
-import 'package:silicon_scraper/mocks/mock_watch_list_service.dart';
 import 'package:silicon_scraper/services/line_chart_service.dart';
-import 'package:silicon_scraper/services/watch_list_service.dart';
 import 'dependency_types.dart';
 
 class LineChartInjector
@@ -9,13 +7,12 @@ class LineChartInjector
   static final LineChartInjector _singleton = LineChartInjector._internal();
 
   static DependencyType _type;
-  static bool _initialReq=true;
+  static bool _success=true;
 
-  static void configure(DependencyType depType,{bool initialReq=true,bool removeReq=true,bool addReq=true})
+  static void configure(DependencyType depType,{bool success=true})
   {
     _type=depType;
-    _initialReq=initialReq;
-
+    _success=success;
   }
 
   factory LineChartInjector(){
@@ -26,11 +23,11 @@ class LineChartInjector
     switch(_type)
     {
       case DependencyType.PROD:
-        return WatchListSingleton.getState();
+        return LineChartSingleton.getState();
       case DependencyType.MOCK:
-        return MockLineChartService(_initialReq);
+        return MockLineChartService(_success);
       default:
-        return MockLineChartService(_initialReq,);
+        return MockLineChartService(_success,);
     }
   }
 
