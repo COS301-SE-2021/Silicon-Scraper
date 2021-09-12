@@ -1,7 +1,6 @@
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 class LineChart extends StatefulWidget {
-
   @override
   _LineChartState createState() => _LineChartState();
 }
