@@ -1,15 +1,15 @@
+import 'package:silicon_scraper/mocks/json/mock_line_chart_service.dart';
 import 'package:silicon_scraper/mocks/mock_watch_list_service.dart';
+import 'package:silicon_scraper/services/line_chart_service.dart';
 import 'package:silicon_scraper/services/watch_list_service.dart';
 import 'dependency_types.dart';
 
-class WatchListInjector
+class LineChartInjector
 {
-  static final WatchListInjector _singleton = WatchListInjector._internal();
+  static final LineChartInjector _singleton = LineChartInjector._internal();
 
   static DependencyType _type;
   static bool _initialReq=true;
-
-
 
   static void configure(DependencyType depType,{bool initialReq=true,bool removeReq=true,bool addReq=true})
   {
@@ -18,21 +18,21 @@ class WatchListInjector
 
   }
 
-  factory WatchListInjector(){
+  factory LineChartInjector(){
     return _singleton;
   }
 
-  WatchListService get dependency{
+  LineChartService get dependency{
     switch(_type)
     {
       case DependencyType.PROD:
         return WatchListSingleton.getState();
       case DependencyType.MOCK:
-        return MockWatchListService(_initialReq,_removeReq,_addReq);
+        return MockLineChartService(_initialReq);
       default:
-        return MockWatchListService(_initialReq,_removeReq,_addReq);
+        return MockLineChartService(_initialReq,);
     }
   }
 
-  WatchListInjector._internal();
+  LineChartInjector._internal();
 }
