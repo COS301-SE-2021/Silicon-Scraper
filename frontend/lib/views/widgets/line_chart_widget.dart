@@ -1,11 +1,14 @@
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 class LineChart extends StatefulWidget {
+
   @override
   _LineChartState createState() => _LineChartState();
 }
 
 class _LineChartState extends State<LineChart> {
+  bool visible=false;
+  double animateChart=16000;
   @override
   Widget build(BuildContext context) {
     final List<SalesData> chartData = [
@@ -30,7 +33,7 @@ class _LineChartState extends State<LineChart> {
       SalesData(DateTime(2028), 70),
       SalesData(DateTime(2029), 40)
     ];
-
+    delayTrendline();
     return
       Container(
         key: UniqueKey(),
@@ -46,13 +49,14 @@ class _LineChartState extends State<LineChart> {
                 // Renders line chart
                 LineSeries<SalesData, DateTime>(
                   key: ValueKey("Key"),
-                  animationDuration: 16000,
+                  animationDuration: animateChart,
                     dataSource: chartData,
                     xValueMapper: (SalesData sales, _) => sales.year,
                     yValueMapper: (SalesData sales, _) => sales.sales,
                   enableTooltip: true,
             trendlines:<Trendline>[
               Trendline(
+                isVisible:visible,
                 forwardForecast:3,
                   animationDuration: 8000,
                   type: TrendlineType.movingAverage,
@@ -84,6 +88,14 @@ class _LineChartState extends State<LineChart> {
               ]
           )
       );
+  }
+  Future delayTrendline()async
+  {
+    await Future.delayed(Duration(seconds:14));
+    setState(() {
+      visible=true;
+      animateChart=0.0;
+    });
   }
 }
 
