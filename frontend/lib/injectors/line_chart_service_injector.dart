@@ -1,4 +1,4 @@
-import 'package:silicon_scraper/mocks/json/mock_line_chart_service.dart';
+import 'package:silicon_scraper/mocks/mock_line_chart_service.dart';
 import 'package:silicon_scraper/services/line_chart_service.dart';
 import 'dependency_types.dart';
 
