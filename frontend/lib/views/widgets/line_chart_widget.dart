@@ -53,7 +53,7 @@ class _LineChartState extends State<LineChart> {
                   enableTooltip: true,
             trendlines:<Trendline>[
               Trendline(
-//                forwardForecast:1,
+                forwardForecast:3,
                   animationDuration: 8000,
                   type: TrendlineType.movingAverage,
                   color: Colors.red,
