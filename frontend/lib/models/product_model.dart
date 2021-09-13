@@ -112,6 +112,20 @@ class Product
     }
     return Text(this.getAvailability(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,),textAlign: align);
   }
+
+  Widget getAvailabilityTextFormat(){
+
+    if (this.stockAvailability == availability.inStock) {
+      return Text('In stock', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.bold,
+          color: Color.fromARGB(1, 50, 250, 50)));
+    }
+    return Text('Out of stock', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
+        fontSize: 13,
+        fontWeight: FontWeight.bold,
+        color: Color.fromARGB(1, 255, 0, 0)));
+    }
 }
 
 enum availability
