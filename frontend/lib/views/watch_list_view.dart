@@ -39,7 +39,7 @@ class _WatchListState extends State<WatchList>
 //        {
 //          return w.floatingProductListView(context, w.items);
 //        },
-    body: watch.floatingProductListView(context, watch.items),
+    body: watch.horizontalProductListView(context, watch.items),
 //        child: Container(
 //        child: FutureBuilder(
 //        future: watch.setInitialProducts(),
