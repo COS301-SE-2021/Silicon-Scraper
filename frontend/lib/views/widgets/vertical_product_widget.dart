@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/product_detail_widget.dart';
 import 'package:provider/provider.dart';
@@ -14,15 +15,15 @@ class VerticalProductWidget extends StatefulWidget {
 }
 
 class _VerticalProductWidgetState extends State<VerticalProductWidget> {
+
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return ChangeNotifierProvider<ProductViewModel>(
       create: (_) => widget.state,
       child: Consumer<ProductViewModel>(
         builder:(context,ProductViewModel w,_) =>  Container(
           width: MediaQuery.of(context).size.width / 2.75,
-          height: MediaQuery.of(context).size.height/ 4,
+          height: MediaQuery.of(context).size.height/ 3,
           child: Card(
             //elevation: 1.0,
             shape: RoundedRectangleBorder(
@@ -52,7 +53,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                     child: Text("${widget.state.item.brand+" "+widget.state.item.model}", maxLines: 2, overflow: TextOverflow.ellipsis,textAlign: TextAlign.left,style: TextStyle(
                         fontSize: 14, color: Colors.black54, fontWeight: FontWeight.bold),),
                   ),
-                  /// price and bookmark button
+                  /// availability, price and bookmark button
                   Container(
                     width: MediaQuery.of(context).size.width /3,
                     //height: MediaQuery.of(context).size.height / 29.24,
@@ -61,14 +62,27 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// price
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child:
-                          Text('R ${widget.state.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black)),
+                        /// availability and price
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ///availability
+                            Container(
+                              margin: EdgeInsets.only(top: 5),
+                              child:
+                                widget.state.item.getAvailabilityTextFormat(),
+                            ),
+                            ///price
+                            Container(
+                              margin: EdgeInsets.only(top: 5),
+                              child:
+                              Text('R ${widget.state.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                            ),
+                          ],
                         ),
                         /// bookmark button
                         Container(
