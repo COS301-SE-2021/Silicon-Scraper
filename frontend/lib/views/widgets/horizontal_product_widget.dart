@@ -77,19 +77,41 @@ class HorizontalProductWidget extends StatelessWidget {
 
                       /// bookmark button, availability and price
                       Container(
-                        width: MediaQuery.of(context).size.width/ 1.7,
-                        // margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                        margin: EdgeInsets.only(top: 10),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            /// availability and price
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ///availability
+                                Container(
+                                  child: state.item.getAvailabilityTextFormat(),
+                                ),
+                                ///price
+                                Container(
+                                  margin: EdgeInsets.only(top: 3),
+                                  child: Text(
+                                      'R ${state.item.price.toStringAsFixed(2)}',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            ),
+
                             /// bookmark button
                             Container(
-                              margin: EdgeInsets.only(left: 15, top: 5),
-                              //alignment: Alignment.centerRight,
+                              margin: EdgeInsets.only(left: 0, bottom: 5),
                               height: MediaQuery.of(context).size.height / 20,
                               width: MediaQuery.of(context).size.width / 12.7,
                               child: FloatingActionButton(
+                                elevation: 0,
                                 heroTag: state.item.id,
                                 backgroundColor: Colors.white,
                                 child: state.save,
@@ -100,30 +122,7 @@ class HorizontalProductWidget extends StatelessWidget {
                               ),
                             ),
 
-                            /// availability and price
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ///availability
-                                Container(
-                                  child: state.item.getAvailabilityTextFormat(),
-                                ),
 
-                                ///price
-                                Container(
-                                  //margin: EdgeInsets.only(top: 5),
-                                  child: Text(
-                                      'R ${state.item.price.toStringAsFixed(2)}',
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black)),
-                                ),
-                              ],
-                            )
                           ],
                         ),
                       ),
