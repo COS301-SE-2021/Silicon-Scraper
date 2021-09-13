@@ -1,11 +1,21 @@
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/models/prediction_graph_data_model.dart';
+
 class LineChart extends StatefulWidget {
+  List<PredictionData> data;
+
+  LineChart(this.data);
+
   @override
-  _LineChartState createState() => _LineChartState();
+  _LineChartState createState() => _LineChartState(data);
 }
 
 class _LineChartState extends State<LineChart> {
+  List<PredictionData> data;
+
+  _LineChartState(this.data);
+
   bool visible=false;
   double animateChart=16000;
   @override
@@ -46,19 +56,20 @@ class _LineChartState extends State<LineChart> {
               primaryXAxis: DateTimeAxis(),
               series: <ChartSeries>[
                 // Renders line chart
-                LineSeries<SalesData, DateTime>(
+                LineSeries<PredictionData, DateTime>(
                   key: ValueKey("Key"),
                   animationDuration: animateChart,
-                    dataSource: chartData,
-                    xValueMapper: (SalesData sales, _) => sales.year,
-                    yValueMapper: (SalesData sales, _) => sales.sales,
+                    dataSource: data,
+                    xValueMapper: (PredictionData data, _) => data.time,
+                    yValueMapper: (PredictionData data, _) => data.price,
                   enableTooltip: true,
             trendlines:<Trendline>[
               Trendline(
                 isVisible:visible,
                 forwardForecast:3,
                   animationDuration: 8000,
-                  type: TrendlineType.movingAverage,
+                  type: TrendlineType.polynomial,
+                  polynomialOrder: 3,
                   color: Colors.red,
                   name:'trendline',
 //                  enableTooltip: true,

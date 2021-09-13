@@ -4,7 +4,7 @@ import 'package:silicon_scraper/services/line_chart_service.dart';
 
 class MockLineChartService extends LineChartService
 {
-  bool success=false;
+  bool success=true;
 
   MockLineChartService(this.success);
 

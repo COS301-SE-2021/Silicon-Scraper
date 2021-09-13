@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/views/widgets/line_chart_widget.dart';
+import 'package:silicon_scraper/view_models/line_chart_view_model.dart';
 
 class AnalyticsView extends StatelessWidget
 {
+  LineChartViewModel chartData=new LineChartViewModel();
   @override
   Widget build(BuildContext context)
   {
@@ -19,7 +21,47 @@ class AnalyticsView extends StatelessWidget
             centerTitle: true,
           ),
         ),
-      body: LineChart(),
+      body: Container
+      (
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(
+              child: Container(
+                child: FutureBuilder
+                (
+                  future: chartData.setData(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting)
+                    {
+                       return Container(
+                           margin: EdgeInsets.only(top:50),
+                           child: CircularProgressIndicator()
+                       );
+                    }
+                    else if (snapshot.data != null)
+                    {
+                      return LineChart(chartData.data);
+                    }
+                    else
+                    {
+                      return Container(
+                          margin: EdgeInsets.only(top:50),
+                          child: CircularProgressIndicator()
+                      );
+                    }
+                  }
+
+
+
+                    // check if the product array is not empty (ie no products)
+
+                ),
+              ),
+            ),
+          ],
+        )
+      ),
     );
   }
 }
