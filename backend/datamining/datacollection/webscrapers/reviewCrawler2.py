@@ -44,5 +44,8 @@ class ReviewCrawler:
 
         return review
 
+    def getproduct(self, url):
+        temp = url.split("/")
+        return temp[len(temp) - 1]
 
 
