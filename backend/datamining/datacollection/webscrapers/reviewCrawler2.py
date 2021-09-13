@@ -22,4 +22,6 @@ class ReviewCrawler:
 
         results = results.find_all("li")
 
+        title = {"title": tit.text.strip() for tit in title}
+
 
