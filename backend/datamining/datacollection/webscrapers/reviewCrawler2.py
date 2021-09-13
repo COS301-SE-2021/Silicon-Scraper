@@ -48,4 +48,14 @@ class ReviewCrawler:
         temp = url.split("/")
         return temp[len(temp) - 1]
 
+    def title(self):
+        res = []
+        for i in range(9):
+            page = i + 1
+            URL = config["BASEURL_3"] + str(page)
+            page = requests.get(URL)
+            soup = BeautifulSoup(page.content, "html.parser")
 
+
+
+        return res
