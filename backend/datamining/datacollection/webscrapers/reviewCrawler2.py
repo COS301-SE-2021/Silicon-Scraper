@@ -56,6 +56,9 @@ class ReviewCrawler:
             page = requests.get(URL)
             soup = BeautifulSoup(page.content, "html.parser")
 
-
+            results = soup.find(class_="listing-items")
+            results = results.find_all(class_="entry")
+            results = [self.getproduct(result['href'].strip()) for result in results if result.text.strip() != '']
+            res = np.append(res, results).tolist()
 
         return res
