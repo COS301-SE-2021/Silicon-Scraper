@@ -49,7 +49,6 @@ class _ExploreState extends State<Explore> {
               /// CPUs
               Container(
                   width: MediaQuery.of(context).size.width,
-                  //height: MediaQuery.of(context).size.height / 39,
                   margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,7 +80,7 @@ class _ExploreState extends State<Explore> {
               Container(
                 margin: EdgeInsets.only(left: 20, top: 10),
                 decoration: BoxDecoration(color: Colors.white),
-                height: MediaQuery.of(context).size.height / 4,
+                height: MediaQuery.of(context).size.height / 3.5,
                 child: explore.getExplorePageProducts("cpu", false),
               ),
 

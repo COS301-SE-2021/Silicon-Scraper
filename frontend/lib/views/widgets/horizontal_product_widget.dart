@@ -64,15 +64,13 @@ class HorizontalProductWidget extends StatelessWidget {
 
                       ///retailer
                       Container(
-                        // width: MediaQuery.of(context).size.width * 0.66,
-                        // margin: EdgeInsets.only(top: 5),
+                        margin: EdgeInsets.only(top: 5),
                         child: Text(
                           "${state.item.retailer[0].toUpperCase()}${state.item.retailer.substring(1)}",
                           textAlign: TextAlign.left,
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 15,
                             color: Color.fromARGB(128, 0, 0, 0),
-                            //fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
