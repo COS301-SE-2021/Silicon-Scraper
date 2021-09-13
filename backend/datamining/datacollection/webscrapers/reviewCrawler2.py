@@ -32,3 +32,12 @@ class ReviewCrawler:
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, "html.parser")
 
+        results = soup.find("article")
+
+        results = results.find(class_="pros-cons-block")
+
+        results = results.find_all("li")
+
+        results = [result.text.strip() for result in results if result.text.strip() != '']
+
+
