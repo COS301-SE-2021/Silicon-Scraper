@@ -15,3 +15,7 @@ class ReviewCrawler:
         soup = BeautifulSoup(page.content, "html.parser")
 
         results = soup.find("article")
+
+        title = results.find_all(class_="review-title-medium")
+
+
