@@ -26,4 +26,6 @@ class ReviewCrawler:
 
         reviews = {"reviews": [result.text.strip() for result in results if result.text.strip() != '']}
 
+        review = dict(title, **reviews)
+
 
