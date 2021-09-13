@@ -6,8 +6,8 @@ class PredictionData
 
   PredictionData(this.price, this.time);
 
-  factory PredictionData.fromJSON(Map<double,dynamic>json)
+  factory PredictionData.fromJSON(Map<String,dynamic>json)
   {
-    return PredictionData(json['predictions']['price'],json['predictions']['time']);
+    return PredictionData(json['price'].toDouble(),DateTime.parse(json['date']));
   }
 }
