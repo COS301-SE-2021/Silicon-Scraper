@@ -68,11 +68,11 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                           children: [
                             ///availability
                             Container(
-                              child: widget.state.item.getAvailabilityTextFormat(),
+                              child: widget.state.item.getAvailabilityTextFormat("vertical"),
                             ),
                             ///price
                             Container(
-                              margin: EdgeInsets.only(top: 5),
+                              margin: EdgeInsets.only(top: 3),
                               child:
                               Text('R ${widget.state.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
                                   fontSize: 16,

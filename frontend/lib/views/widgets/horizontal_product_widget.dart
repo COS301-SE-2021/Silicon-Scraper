@@ -67,7 +67,7 @@ class HorizontalProductWidget extends StatelessWidget {
                         margin: EdgeInsets.only(top: 5),
                         child: Text(
                           "${state.item.retailer[0].toUpperCase()}${state.item.retailer.substring(1)}",
-                          textAlign: TextAlign.left,
+                          textAlign: TextAlign.right,
                           style: TextStyle(
                             fontSize: 15,
                             color: Color.fromARGB(128, 0, 0, 0),
@@ -82,28 +82,6 @@ class HorizontalProductWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            /// availability and price
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ///availability
-                                Container(
-                                  child: state.item.getAvailabilityTextFormat(),
-                                ),
-                                ///price
-                                Container(
-                                  margin: EdgeInsets.only(top: 3),
-                                  child: Text(
-                                      'R ${state.item.price.toStringAsFixed(2)}',
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.black)),
-                                ),
-                              ],
-                            ),
 
                             /// bookmark button
                             Container(
@@ -122,7 +100,28 @@ class HorizontalProductWidget extends StatelessWidget {
                               ),
                             ),
 
-
+                            /// availability and price
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ///availability
+                                Container(
+                                  child: state.item.getAvailabilityTextFormat("horizontal"),
+                                ),
+                                ///price
+                                Container(
+                                  margin: EdgeInsets.only(top: 3),
+                                  child: Text(
+                                      'R ${state.item.price.toStringAsFixed(2)}',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
