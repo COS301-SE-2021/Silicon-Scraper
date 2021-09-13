@@ -18,4 +18,6 @@ class ReviewCrawler:
 
         title = results.find_all(class_="review-title-medium")
 
+        results = results.find(class_="pro-con")
+
 
