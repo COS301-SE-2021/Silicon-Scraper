@@ -33,11 +33,11 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 
 void main() async{
   WatchListInjector.configure(DependencyType.MOCK);
-  ExplorePageInjector.configure(DependencyType.PROD);
-  SearchSortFilterInjector.configure(DependencyType.PROD);
+  ExplorePageInjector.configure(DependencyType.MOCK);
+  SearchSortFilterInjector.configure(DependencyType.MOCK);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
-  LoginInjector.configure(DependencyType.PROD,success: true);
-  SignUpInjector.configure(DependencyType.PROD,success: true);
+  LoginInjector.configure(DependencyType.MOCK,success: true);
+  SignUpInjector.configure(DependencyType.MOCK,success: true);
   NotificationViewModel notification=new NotificationViewModel();
 
   /// this sets the initial products for the watch list do not remove
