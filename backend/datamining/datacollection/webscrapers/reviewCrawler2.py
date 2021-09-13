@@ -28,4 +28,7 @@ class ReviewCrawler:
 
         review = dict(title, **reviews)
 
+        URL = config["BASEURL_1"] + product
+        page = requests.get(URL)
+        soup = BeautifulSoup(page.content, "html.parser")
 
