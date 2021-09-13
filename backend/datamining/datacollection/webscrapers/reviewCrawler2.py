@@ -14,4 +14,4 @@ class ReviewCrawler:
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, "html.parser")
 
-
+        results = soup.find("article")
