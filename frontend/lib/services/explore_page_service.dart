@@ -23,12 +23,13 @@ class ExplorePageService {
 
     var url = Uri.parse(
         "https://api-silicon-scraper.herokuapp.com/products/?type=" +
-            productType +
+            productType+
             "&userId="+userId);
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=utf-8",
       'Authorization': 'Bearer ' + token
     };
+
     final response = await http.get(url, headers: headers);
     var responseData = json.decode(response.body);
     if (response.statusCode == 200) {

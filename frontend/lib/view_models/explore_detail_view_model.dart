@@ -17,7 +17,6 @@ class ExploreViewModel {
           return noConnection(context);
         } else if (snapshot.data != null) {
           products = snapshot.data;
-
           // check if the product array is not empty (ie no products)
           if (products.isNotEmpty) {
             if (showAll) {
@@ -27,7 +26,12 @@ class ExploreViewModel {
           } else {
             return getNoProductErrorMessage(context, productType);
           }
-        } else {
+        } else if (snapshot.hasError){
+          print("Snapshot error:");
+          print(snapshot.error);
+          return noProducts(context, "PRODUCTS");
+        }
+        else {
           return Center(child: CircularProgressIndicator());
         }
       },
