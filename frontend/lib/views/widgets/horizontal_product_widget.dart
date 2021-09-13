@@ -77,7 +77,7 @@ class HorizontalProductWidget extends StatelessWidget {
 
                       /// bookmark button, availability and price
                       Container(
-                        margin: EdgeInsets.only(top: 10),
+                        margin: EdgeInsets.only(right: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,11 +85,11 @@ class HorizontalProductWidget extends StatelessWidget {
 
                             /// bookmark button
                             Container(
-                              margin: EdgeInsets.only(left: 0, bottom: 5),
+                              margin: EdgeInsets.only(left: 0, top: 10),
                               height: MediaQuery.of(context).size.height / 20,
                               width: MediaQuery.of(context).size.width / 12.7,
                               child: FloatingActionButton(
-                                elevation: 0,
+                               // elevation: 0,
                                 heroTag: state.item.id,
                                 backgroundColor: Colors.white,
                                 child: state.save,
@@ -102,20 +102,21 @@ class HorizontalProductWidget extends StatelessWidget {
 
                             /// availability and price
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 ///availability
                                 Container(
+                                  margin: EdgeInsets.only(top: 5),
                                   child: state.item.getAvailabilityTextFormat("horizontal"),
                                 ),
                                 ///price
                                 Container(
-                                  margin: EdgeInsets.only(top: 3),
+                                  margin: EdgeInsets.only(top: 5),
                                   child: Text(
                                       'R ${state.item.price.toStringAsFixed(2)}',
                                       overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
+                                      textAlign: TextAlign.right,
                                       style: TextStyle(
                                           fontSize: 18,
                                           color: Colors.black)),
