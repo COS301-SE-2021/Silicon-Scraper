@@ -13,12 +13,12 @@ class HorizontalProductWidget extends StatelessWidget {
     return Consumer<WatchListViewModel>(
         builder: (BuildContext context, WatchListViewModel w, Widget child) {
       return Container(
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(color: Colors.black12, width: 1),
-          ),
-          //margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: InkWell(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(width: 1.0, color: Color.fromARGB(30, 0, 0, 0)),
+          )),
+        child: InkWell(
             onTap: () {
               Navigator.push(
                   context,
@@ -31,8 +31,9 @@ class HorizontalProductWidget extends StatelessWidget {
               children: [
                 /// image
                 Container(
-                  height: MediaQuery.of(context).size.height / 5,
-                  width: MediaQuery.of(context).size.width * 0.33,
+                  margin: EdgeInsets.only(top: 5),
+                  height: MediaQuery.of(context).size.height / 6,
+                  width: MediaQuery.of(context).size.width /2.2,
                   child: Image.network(
                     '${state.item.image}',
                   ),
@@ -40,9 +41,9 @@ class HorizontalProductWidget extends StatelessWidget {
 
                 /// rest of the product information
                 Container(
-                  height: MediaQuery.of(context).size.height / 5,
-                  width: MediaQuery.of(context).size.width/ 1.7,
-                  margin: EdgeInsets.fromLTRB(10, 15, 10, 5),
+                  height: MediaQuery.of(context).size.height / 6,
+                  width: MediaQuery.of(context).size.width/ 2,
+                  margin: EdgeInsets.fromLTRB(0, 15, 10, 5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,7 +120,9 @@ class HorizontalProductWidget extends StatelessWidget {
                                       textAlign: TextAlign.right,
                                       style: TextStyle(
                                           fontSize: 18,
-                                          color: Colors.black)),
+                                          color: Colors.black,
+                                        fontWeight: FontWeight.w500
+                                      )),
                                 ),
                               ],
                             ),
@@ -132,7 +135,6 @@ class HorizontalProductWidget extends StatelessWidget {
               ],
             ),
           ),
-        ),
       );
     });
   }
