@@ -40,4 +40,6 @@ class ReviewCrawler:
 
         results = [result.text.strip() for result in results if result.text.strip() != '']
 
+        review['reviews'] = np.append(review['reviews'], results).tolist()
 
+        return review
