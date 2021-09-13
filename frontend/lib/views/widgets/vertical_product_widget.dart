@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/product_detail_widget.dart';
 import 'package:provider/provider.dart';
@@ -64,24 +63,23 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                       children: [
                         /// availability and price
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ///availability
                             Container(
                               margin: EdgeInsets.only(top: 5),
-                              child:
-                                widget.state.item.getAvailabilityTextFormat(),
+                              child: widget.state.item.getAvailabilityTextFormat(),
                             ),
                             ///price
-                            Container(
-                              margin: EdgeInsets.only(top: 5),
-                              child:
-                              Text('R ${widget.state.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                            ),
+                            // Container(
+                            //   margin: EdgeInsets.only(top: 5),
+                            //   child:
+                            //   Text('R ${widget.state.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
+                            //       fontSize: 16,
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Colors.black)),
+                            // ),
                           ],
                         ),
                         /// bookmark button
