@@ -24,4 +24,6 @@ class ReviewCrawler:
 
         title = {"title": tit.text.strip() for tit in title}
 
+        reviews = {"reviews": [result.text.strip() for result in results if result.text.strip() != '']}
+
 
