@@ -43,3 +43,6 @@ class ReviewCrawler:
         review['reviews'] = np.append(review['reviews'], results).tolist()
 
         return review
+
+
+
