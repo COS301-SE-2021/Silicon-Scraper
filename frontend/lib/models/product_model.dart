@@ -116,12 +116,12 @@ class Product
   Text getAvailabilityTextFormat(){
     if (this.stockAvailability == availability.inStock) {
       return Text('In stock', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
-          fontSize: 13,
+          fontSize: 14,
           fontWeight: FontWeight.bold,
           color: Color.fromARGB(255, 41, 196, 41)));
     }
     return Text('Out of stock', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
-        fontSize: 13,
+        fontSize: 14,
         fontWeight: FontWeight.bold,
         color: Color.fromARGB(255, 255, 0, 0)));
     }
