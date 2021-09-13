@@ -40,17 +40,15 @@ class HorizontalProductWidget extends StatelessWidget {
 
                 /// rest of the product information
                 Container(
-                  width: MediaQuery.of(context).size.width/ 1.7,
                   height: MediaQuery.of(context).size.height / 5,
-                  margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  width: MediaQuery.of(context).size.width/ 1.7,
+                  margin: EdgeInsets.fromLTRB(10, 15, 10, 5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       /// product name (brand + model)
                       Container(
-                        // width: MediaQuery.of(context).size.width * 0.66,
-                        // margin: EdgeInsets.only(top: 5),
                         child: Text(
                           "${state.item.brand + " " + state.item.model}",
                           maxLines: 2,
@@ -58,8 +56,8 @@ class HorizontalProductWidget extends StatelessWidget {
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(220, 0, 0, 0),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
