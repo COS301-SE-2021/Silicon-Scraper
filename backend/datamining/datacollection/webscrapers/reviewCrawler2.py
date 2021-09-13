@@ -20,4 +20,6 @@ class ReviewCrawler:
 
         results = results.find(class_="pro-con")
 
+        results = results.find_all("li")
+
 
