@@ -40,7 +40,7 @@ class HorizontalProductWidget extends StatelessWidget {
 
                 /// rest of the product information
                 Container(
-                  width: MediaQuery.of(context).size.width * 0.66,
+                  width: MediaQuery.of(context).size.width/ 1.7,
                   height: MediaQuery.of(context).size.height / 5,
                   margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
                   child: Column(
@@ -81,7 +81,7 @@ class HorizontalProductWidget extends StatelessWidget {
 
                       /// bookmark button, availability and price
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.66,
+                        width: MediaQuery.of(context).size.width/ 1.7,
                         // margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
