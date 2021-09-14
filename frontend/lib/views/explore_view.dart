@@ -27,7 +27,7 @@ class _ExploreState extends State<Explore> {
               /// CPUs
               Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                  margin: EdgeInsets.fromLTRB(10, 5, 20, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -35,7 +35,7 @@ class _ExploreState extends State<Explore> {
                         "CPUs",
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                            fontSize: 26,
+                            fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
                       ),
@@ -56,7 +56,7 @@ class _ExploreState extends State<Explore> {
                     ],
                   )),
               Container(
-                margin: EdgeInsets.only(left: 20, top: 10),
+                margin: EdgeInsets.only(left: 10, top: 10, right: 10),
                 decoration: BoxDecoration(color: Colors.white),
                 height: MediaQuery.of(context).size.height / 3.5,
                 child: explore.getExplorePageProducts("cpu", false),
@@ -66,7 +66,7 @@ class _ExploreState extends State<Explore> {
               Container(
                   width: MediaQuery.of(context).size.width,
                   //height: MediaQuery.of(context).size.height / 39,
-                  margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                  margin: EdgeInsets.fromLTRB(10, 20, 20, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -74,7 +74,7 @@ class _ExploreState extends State<Explore> {
                         "GPUs",
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                            fontSize: 26,
+                            fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.bold),
                       ),
@@ -95,9 +95,9 @@ class _ExploreState extends State<Explore> {
                     ],
                   )),
               Container(
-                margin: EdgeInsets.only(left: 20, top: 10),
+                margin: EdgeInsets.only(left: 10, top: 10, right: 10),
                 decoration: BoxDecoration(color: Colors.white),
-                height: MediaQuery.of(context).size.height / 4,
+                height: MediaQuery.of(context).size.height / 3.5,
                 child: explore.getExplorePageProducts("gpu", false),
               ),
             ])
