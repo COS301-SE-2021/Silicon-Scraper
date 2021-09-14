@@ -189,7 +189,7 @@ class DreamwareSelectors extends Selectors {
 * Selectors for the description
 */
 export abstract class descriptionSelector {
-    abstract getDescriptions() : string
+    abstract getDescriptions(type?: string) : string
 }
 
 /*
@@ -225,8 +225,23 @@ export class sapphireSelector extends descriptionSelector{
 
 
 export class intelSelector extends descriptionSelector{
-    getDescriptions(): string {
-        return "#specs-1-0-1";
+    getDescriptions(type: string): string {
+        let selector: string = ''
+        switch(type){
+            case 'search': { 
+                selector = "#coveo-result-list2 > div"
+                break;
+            }
+            case 'url': {//[0].innerText()- to check if its correct node; [0].href - to get the url
+                selector = 'div:nth-child(5) > div > div > div > div:nth-child(2) > div > h3 > a '
+                break;
+            }
+            case 'specs': {
+                selector = '#bladeInside > ul'
+                break;
+            }
+        }
+        return selector ;
     }
 }
 

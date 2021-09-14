@@ -171,7 +171,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 
                 const selectordes = selector.getDescriptions()
                 const content = await page.evaluate(async (selectordes: string) => {
-                    
+                    // add intel scraping
                     let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
                     children.forEach((element) => {
