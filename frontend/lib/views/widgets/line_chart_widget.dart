@@ -1,6 +1,7 @@
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/models/prediction_graph_data_model.dart';
+import 'package:intl/intl.dart';
 
 class LineChart extends StatefulWidget {
   List<PredictionData> data;
@@ -38,14 +39,17 @@ class _LineChartState extends State<LineChart> {
               key: UniqueKey(),
               enableAxisAnimation: true,
               tooltipBehavior:TooltipBehavior(
-                  enable: true,
-                  activationMode:ActivationMode.singleTap,
+                enable: true,
+                activationMode:ActivationMode.singleTap,
                 header:"Prediction",
+//                format:
 
               ),
             title: ChartTitle(text: "Price Trend"),
-              margin:EdgeInsets.only(left:20,right:20,top:20),
-              primaryXAxis: DateTimeAxis(),
+              margin:EdgeInsets.only(left:5,right:5,top:20),
+              primaryXAxis: DateTimeAxis(
+                dateFormat: DateFormat('yyyy-MM-dd')
+              ),
               series: <ChartSeries>[
                 // Renders line chart
                 LineSeries<PredictionData, DateTime>(
