@@ -42,7 +42,7 @@ class _LineChartState extends State<LineChart> {
                 enable: true,
                 activationMode:ActivationMode.singleTap,
                 header:"Prediction",
-//                format:
+                format: "point.x: R point.y"
 
               ),
             title: ChartTitle(text: "Price Trend"),
