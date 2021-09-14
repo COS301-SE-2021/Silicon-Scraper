@@ -11,13 +11,23 @@ class _SentimentWidgetState extends State<SentimentWidget> {
   Widget build(BuildContext context)
   {
     return Container(
-      margin: EdgeInsets.only(top:20,),
-      child: LinearPercentIndicator(
-        width: 100.0,
-        lineHeight: 8.0,
-        percent: 0.9,
-        progressColor: Colors.blue,
+      margin: EdgeInsets.only(top:20,right:25),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        Text("Price: ",style:TextStyle(fontWeight: FontWeight.bold))  ,
+        LinearPercentIndicator(
+            width: 200,
+            lineHeight: 15.0,
+            percent: 0.3,
+            animation:true,animationDuration:2000,
+            progressColor: Colors.green,
+            center: Text("+30%") ,
+          ),
+
+      ],
       ),
     );
+
   }
 }
