@@ -11,7 +11,15 @@ Widget appbar(BuildContext context, String title) {
         height: MediaQuery.of(context).size.height / 5,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          color: Colors.white,
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment(0.0, 1.0),
+            // 10% of the width, so there are ten blinds.
+            colors: <Color>[ Color(0xffffb359),
+              Color(0xffffffff)],
+            tileMode: TileMode.clamp,
+            // repeats the gradient over the canvas
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
