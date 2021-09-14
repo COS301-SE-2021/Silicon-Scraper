@@ -70,7 +70,7 @@ ListView productListView(BuildContext context,List<Product> items)
 ListView productHorizontalListView(BuildContext context,List<Product> items)
 {
   return ListView.builder(
-      itemCount:items.length ,
+      itemCount:10 ,
       scrollDirection: Axis.horizontal,
       itemBuilder: (_,index){
         return
