@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../search_view.dart';
 
 Widget appbar(BuildContext context, String page) {
@@ -15,13 +14,14 @@ Widget appbar(BuildContext context, String page) {
     subtitle = "";
   }
   else if(page.compareTo("discover") == 0){
-    title = "RECOMMENDATIONS";
-    subtitle = "";
+    title = "DISCOVER";
+    subtitle = "RECOMMENDED PRODUCTS";
   }
 
   return PreferredSize(
       preferredSize: Size.fromHeight(MediaQuery.of(context).size.height / 5),
       child: AppBar(
+        elevation: 0,
           flexibleSpace: Container(
         margin: EdgeInsets.only(top: 20),
         height: MediaQuery.of(context).size.height / 5,
@@ -47,25 +47,27 @@ Widget appbar(BuildContext context, String page) {
                 ///title
                 Container(
                   margin: EdgeInsets.only(left: 10, top: 20),
-                  width: MediaQuery.of(context).size.width / 2.2,
+                  width: MediaQuery.of(context).size.width / 1.6,
                   child: Text(
                     title,
                     textAlign: TextAlign.left,
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
                     style: TextStyle(
                         fontSize: 30,
                         color: Colors.black,
-                        fontWeight: FontWeight.bold, letterSpacing: 3),
+                        fontWeight: FontWeight.bold, letterSpacing: 2),
                   ),
                 ),
 
                 ///subtitle
                 Container(
                   margin: EdgeInsets.only(left: 10),
-                  width: MediaQuery.of(context).size.width / 2.2,
+                  width: MediaQuery.of(context).size.width / 1.6,
                   child: Text(
                     subtitle,
                     textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
                 ),
 
@@ -110,7 +112,7 @@ Widget appbar(BuildContext context, String page) {
             Container(
               child: Image.asset(
                 'assets/images/transparent_logo.png',
-                width: MediaQuery.of(context).size.width / 2.5,
+                width: MediaQuery.of(context).size.width / 3,
                 fit: BoxFit.cover,
               ),
             )

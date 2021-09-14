@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/theme/colors.dart';
+import 'package:silicon_scraper/views/widgets/app_bar_widget.dart';
 import 'package:silicon_scraper/view_models/login_view_model.dart';
 import 'package:silicon_scraper/views/recommendation_view.dart';
 import 'package:silicon_scraper/views/watch_list_view.dart';
@@ -26,12 +27,15 @@ class MainNavigator extends StatefulWidget {
 
 class _MainNavigatorState extends State<MainNavigator> {
   int pageIndex = 0;
+
+  List<String> pageListString = ["explore", "watchlist", "discover"];
   List<Widget> pageList = <Widget>[Explore(), WatchList(), Recommendation()];
 
   @override
   Widget build(BuildContext context) {
     LoginViewModelSingleton login = LoginViewModelSingleton.getState();
     return Scaffold(
+      appBar: appbar(context, pageListString[pageIndex]),
       body: pageList[pageIndex],
       bottomNavigationBar: BottomNavigationBar(
         /// when selected
