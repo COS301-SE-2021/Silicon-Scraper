@@ -38,6 +38,14 @@ class _LineChartState extends State<LineChart> {
           child: SfCartesianChart(
               key: UniqueKey(),
               enableAxisAnimation: true,
+              legend: Legend(
+                  isVisible: true,
+//                  name:legend,
+                  // Border color and border width of legend
+                  borderColor: Colors.black,
+                  borderWidth: 2,
+                position:LegendPosition.bottom
+              ),
               tooltipBehavior:TooltipBehavior(
                 enable: true,
                 activationMode:ActivationMode.singleTap,
@@ -54,6 +62,7 @@ class _LineChartState extends State<LineChart> {
                 // Renders line chart
                 LineSeries<PredictionData, DateTime>(
                   key: ValueKey("Key"),
+                  name: "Prediction",
                   animationDuration: animateChart,
                     dataSource: data,
                     xValueMapper: (PredictionData data, _) => data.time,
