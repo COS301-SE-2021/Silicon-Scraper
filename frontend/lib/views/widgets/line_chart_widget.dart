@@ -17,31 +17,19 @@ class _LineChartState extends State<LineChart> {
   _LineChartState(this.data);
 
   bool visible=false;
-  double animateChart=16000;
+  double animateChart;
+
+  @override
+  void initState()
+  {
+    // TODO: implement initState
+    animateChart=((data.length/2)*1000);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<SalesData> chartData = [
-      SalesData(DateTime(2010), 10),
-      SalesData(DateTime(2011), 50),
-      SalesData(DateTime(2012), 34),
-      SalesData(DateTime(2013), 70),
-      SalesData(DateTime(2014), 40),
-      SalesData(DateTime(2015), 10),
-      SalesData(DateTime(2016), 50),
-      SalesData(DateTime(2017), 34),
-      SalesData(DateTime(2018), 70),
-      SalesData(DateTime(2019), 40),
-      SalesData(DateTime(2020), 10),
-      SalesData(DateTime(2021), 50),
-      SalesData(DateTime(2022), 34),
-      SalesData(DateTime(2023), 70),
-      SalesData(DateTime(2024), 40),
-      SalesData(DateTime(2025), 10),
-      SalesData(DateTime(2026), 50),
-      SalesData(DateTime(2027), 34),
-      SalesData(DateTime(2028), 70),
-      SalesData(DateTime(2029), 40)
-    ];
+
     delayTrendline();
     return
       Container(
@@ -101,7 +89,7 @@ class _LineChartState extends State<LineChart> {
   }
   Future delayTrendline()async
   {
-    await Future.delayed(Duration(seconds:14));
+    await Future.delayed(Duration(seconds:(animateChart/1000).toInt()));
     setState(() {
       visible=true;
       animateChart=0.0;
