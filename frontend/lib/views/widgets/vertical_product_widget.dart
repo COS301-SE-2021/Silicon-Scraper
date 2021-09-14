@@ -35,7 +35,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                     builder: (context) => ProductDetailWidget(widget.state)));
               },
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   /// image
@@ -72,7 +72,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                             ),
                             ///price
                             Container(
-                              margin: EdgeInsets.only(top: 3),
+                              margin: EdgeInsets.only(top: 3, bottom: 3),
                               child:
                               Text('R ${widget.state.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
                                   fontSize: 16,
@@ -83,7 +83,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                         ),
                         /// bookmark button
                         Container(
-                            margin: EdgeInsets.only(left: 15, top: 5),
+                            margin: EdgeInsets.only(left: 15, bottom: 5),
                             //alignment: Alignment.centerRight,
                             height: MediaQuery.of(context).size.height / 20,
                             width: MediaQuery.of(context).size.width / 12.7,
