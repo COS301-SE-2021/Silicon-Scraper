@@ -4,31 +4,13 @@ import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:silicon_scraper/view_models/search_sort_filter_view_model.dart';
 import 'package:silicon_scraper/views/watch_list_view.dart';
+import 'package:silicon_scraper/views/widgets/app_bar_widget.dart';
 
 class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(35.0),
-        child: AppBar(
-          title: Text(
-            "Search",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
-          ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              color: Colors.black,
-              onPressed: () async {
-                showSearch(context: context, delegate: ProductSearch());
-              },
-            )
-          ],
-        ),
-      ),
+      appBar: appbar(context, "search"),
       body: Container(
         color: Colors.white,
         margin: const EdgeInsets.all(15.0),

@@ -168,7 +168,7 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.grey[600],
         appBarTheme: AppBarTheme(
           brightness: Brightness.dark,
-              color: myLightBlue,
+              color: Colors.white,
         )
       ),
       home: /*MainNavigator()*/ LoginWrapper(),
