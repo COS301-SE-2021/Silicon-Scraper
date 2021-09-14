@@ -233,7 +233,7 @@ export class intelSelector extends descriptionSelector{
                 break;
             }
             case 'url': {//[0].innerText()- to check if its correct node; [0].href - to get the url
-                selector = 'div:nth-child(5) > div > div > div > div:nth-child(2) > div > h3 > a '
+                selector = 'div > div > div > div:nth-child(2) > div > h3 > a '
                 break;
             }
             case 'specs': {
