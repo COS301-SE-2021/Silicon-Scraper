@@ -19,28 +19,6 @@ class _ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(35.0),
-          child: AppBar(
-            title: Text(
-              "Explore",
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25),
-            ),
-            centerTitle: true,
-            actions: [
-//          ElevatedButton(onPressed: (){
-//            sharedPreferences.clear();
-////            sharedPreferences.commit();
-//          }, child: Icon(Icons.logout,color: Colors.white,),style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(myBlue) ),)
-              IconButton(icon: Icon(Icons.logout,color: Colors.white,), onPressed: ()
-              {
-                login.logout(context);
-              })
-            ],
-            //toolbarHeight: 35,
-          ),
-        ),
         body: SingleChildScrollView(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -83,21 +61,6 @@ class _ExploreState extends State<Explore> {
                 height: MediaQuery.of(context).size.height / 3.5,
                 child: explore.getExplorePageProducts("cpu", false),
               ),
-
-              /// explore all products clickable picture
-              Container(
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => ExploreDetailWidget("all")));
-                    },
-                    child: Image.asset(
-                      'assets/images/explore_page_picture.jpg',
-                      width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
 
               /// GPUs
               Container(
