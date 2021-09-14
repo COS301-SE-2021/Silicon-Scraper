@@ -16,7 +16,7 @@ class _LineChartState extends State<LineChart> {
 
   _LineChartState(this.data);
 
-  bool visible=false;
+  bool visible=true;
   double animateChart;
 
   @override
@@ -30,7 +30,6 @@ class _LineChartState extends State<LineChart> {
   @override
   Widget build(BuildContext context) {
 
-    delayTrendline();
     return
       Container(
         key: UniqueKey(),
@@ -38,7 +37,12 @@ class _LineChartState extends State<LineChart> {
           child: SfCartesianChart(
               key: UniqueKey(),
               enableAxisAnimation: true,
-              tooltipBehavior:TooltipBehavior(enable: true),
+              tooltipBehavior:TooltipBehavior(
+                  enable: true,
+                  activationMode:ActivationMode.singleTap,
+                header:"Prediction",
+
+              ),
             title: ChartTitle(text: "Price Trend"),
               margin:EdgeInsets.only(left:20,right:20,top:20),
               primaryXAxis: DateTimeAxis(),
@@ -51,7 +55,11 @@ class _LineChartState extends State<LineChart> {
                     xValueMapper: (PredictionData data, _) => data.time,
                     yValueMapper: (PredictionData data, _) => data.price,
                   enableTooltip: true,
-            trendlines:<Trendline>[
+//                  dataLabelSettings: DataLabelSettings
+//                  (
+//                    isVisible:true,
+//                  ),
+              trendlines:<Trendline>[
               Trendline(
                 isVisible:visible,
                 forwardForecast:3,
@@ -87,7 +95,7 @@ class _LineChartState extends State<LineChart> {
           )
       );
   }
-  Future delayTrendline()async
+   void delayTrendline()async
   {
     await Future.delayed(Duration(seconds:(animateChart/1000).toInt()));
     setState(() {
@@ -95,11 +103,4 @@ class _LineChartState extends State<LineChart> {
       animateChart=0.0;
     });
   }
-}
-
-
-class SalesData {
-  SalesData(this.year, this.sales);
-  final DateTime year;
-  final double sales;
 }
