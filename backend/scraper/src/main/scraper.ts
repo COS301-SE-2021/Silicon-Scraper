@@ -161,20 +161,25 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
 
+    let browser: Browser;
     try {
 
-        return puppeteer.launch({headless: false}).then(async (browser: Browser ) => {
+        browser = await puppeteer.launch({headless: false})
             
             let page = await browser.newPage()
             await page.setDefaultNavigationTimeout(0);
             const page_result = await page.goto(url, {waitUntil: 'domcontentloaded'}).then(async () => {
                 
-                const selectordes = selector.getDescriptions()
+                const selectordes = selector.getDescriptions('search')
                 const content = await page.evaluate(async (selectordes: string) => {
                     // add intel scraping
                     let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
-                    children.forEach((element) => {
+                    children.forEach(async (element, idx) => {
+                        if(element.textContent?.includes(model.replace('-', ''))){
+                            element.querySelectorAll(selector.getDescriptions('url'))[0].getAttribute('href')
+                            //await page.click()
+                        }
                         const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
                         descript.push(text !== undefined? text: '')
 
@@ -189,15 +194,13 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 
                 return des
 
+            }).catch((err: any) => {
+                throw "Scraping Error: " + err
             })
 
             await browser.close()
             return page_result
             
-        }).catch((err: any) => {
-            throw "Scraping Error: " + err
-        })
-
     }catch(e){
         console.warn(e)
         return {}
