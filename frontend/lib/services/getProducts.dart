@@ -62,7 +62,7 @@ ListView productListView(BuildContext context,List<Product> items)
     itemCount:items.length ,
       itemBuilder: (_,index){
         return
-            FloatingProductWidget( state: ProductViewModel(items[index]));
+            HorizontalProductWidget( state: ProductViewModel(items[index]));
       },
   );
 }
