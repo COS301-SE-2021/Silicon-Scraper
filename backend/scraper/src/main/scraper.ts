@@ -15,7 +15,7 @@ const puppeteer = require('puppeteer');
 import axios from 'axios'
 import {Browser, JSHandle, JSONObject, Page} from "puppeteer";
 import { getJSDocImplementsTags } from "typescript";
-
+declare const window: any
 
 let url = require("../utilities/url");
 let selectors = require("../utilities/selectors").selectorsArray;
@@ -161,48 +161,87 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
 
+    
     let browser: Browser;
     try {
 
-        browser = await puppeteer.launch({headless: false, dumpio: true})
+        browser = await puppeteer.launch({headless: false})
             
             let page = await browser.newPage()
             await page.setDefaultNavigationTimeout(0);
             
-            const page_result = await page.goto(url, {waitUntil: "networkidle0"}).then(async () => {
               
+            const page_result = await page.goto(url, {waitUntil: 'networkidle0'}).then(async () => {
+                 
                 page.on('console', msg => {
                     console.log("PAGE LOG:", msg.text())
                 })
 
-                const selectordes = (par?: string) => {
+                // await page.evaluateOnNewDocument(() => {
+                //     window.selectordes = (par: string) => selector.getDescriptions(par)
+                // })
+                await page.exposeFunction('selectordes', (par: string) => {
+                    //console.log(selector.getDescriptions(par))
                     return selector.getDescriptions(par)
-                }
-                page.exposeFunction('selectordes', selectordes)
-
+                })
+                await page.exposeFunction('selector.getDescriptions', selector.getDescriptions)
+                
                 const content = await page.evaluate(async ( model) => {
                     // add intel scraping
-                    console.log(selectordes('search'), document.documentElement.querySelectorAll(selectordes('search'))[0])
-                    let children = Array.from(document.documentElement.querySelectorAll(selectordes('search'))[0].children)
+                    let selector: string = await window.selectordes('search')
+                    //console.log(document.documentElement.querySelectorAll("#coveo-result-list2 > div").length)
+                    let children = Array.from(document.documentElement.querySelectorAll(selector)[0].children)
                     let descript :string[] = [];
                     
                     children.forEach(async (element, idx) => {
-                        console.log(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim()))
+                       
                         if(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim()) === true){
-                            console.log('heyyyyyyyy')
-                            //const href = element.querySelectorAll(selector.getDescriptions('url'))[0].getAttribute('href')
-                            console.log(selectordes('url'))
-                            await browser.close()
-                            return
-                            //await page.click()
+                            
+                            selector = await window.selectordes('url')
+                            let href = element.querySelectorAll(selector)[0].getAttribute('href')
+                            href = href != null? href: ''
+                            return await page.goto(href, {waitUntil: 'networkidle0'}).then(async () => {
+                                console.log('heyyyyyyyyyy')
+                                page.on('console', msg => {
+                                    console.log("PAGE LOG:", msg.text())
+                                })
+                                await page.screenshot({path: 'screenshot.png'})
+                                return
+                            })
+                            
+                            const context = await page.evaluate(async (descript) => {
+                                console.log('hehyyyy')
+                                selector = await window.selectordes('specs')
+                                let child = Array.from(document.documentElement.querySelectorAll(selector)[0].children)
+
+                                descript = child.map(element => {
+                                    
+                                    const text = element.textContent?.trim().replace(/\n{2}/, '//')
+                                    console.log(text)
+                                    return text
+                                })
+
+                                return {
+                                    des: descript
+                                }
+
+                            }, descript)
+
+                            
+                            descript = (await context).des
+                            console.log(descript)
+                        }else{
+                            const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
+                            descript.push(text !== undefined? text: '')
                         }
-                        const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
-                        descript.push(text !== undefined? text: '')
+                        
 
                     })
+
                     return {
                         description: descript
                     }
+
                 }, model)
                 
                 let des = getDescriptions(content.description, man)
