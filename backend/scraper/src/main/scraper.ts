@@ -13,7 +13,7 @@ const cheerio = require("cheerio");
 const puppeteer = require('puppeteer');
 //import cheerio from 'cheerio'
 import axios from 'axios'
-import {Browser, JSHandle, Page} from "puppeteer";
+import {Browser, JSHandle, JSONObject, Page} from "puppeteer";
 import { getJSDocImplementsTags } from "typescript";
 
 
@@ -174,18 +174,24 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 page.on('console', msg => {
                     console.log("PAGE LOG:", msg.text())
                 })
-                const selectordes = selector.getDescriptions('search')
-                const content = await page.evaluate(async (selectordes: string, model) => {
+
+                const selectordes = (par?: string) => {
+                    return selector.getDescriptions(par)
+                }
+                page.exposeFunction('selectordes', selectordes)
+
+                const content = await page.evaluate(async ( model) => {
                     // add intel scraping
-                    console.log(selectordes, document.documentElement.querySelectorAll(selectordes)[0])
-                    let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
+                    console.log(selectordes('search'), document.documentElement.querySelectorAll(selectordes('search'))[0])
+                    let children = Array.from(document.documentElement.querySelectorAll(selectordes('search'))[0].children)
                     let descript :string[] = [];
                     
                     children.forEach(async (element, idx) => {
                         console.log(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim()))
-                        if(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim())){
-                            const href = element.querySelectorAll(selector.getDescriptions('url'))[0].getAttribute('href')
-                            console.log('href:', href)
+                        if(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim()) === true){
+                            console.log('heyyyyyyyy')
+                            //const href = element.querySelectorAll(selector.getDescriptions('url'))[0].getAttribute('href')
+                            console.log(selectordes('url'))
                             await browser.close()
                             return
                             //await page.click()
@@ -197,7 +203,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                     return {
                         description: descript
                     }
-                }, selectordes, model)
+                }, model)
                 
                 let des = getDescriptions(content.description, man)
                 if(des === {}) throw "Description Error: Unable to get descriptions"
