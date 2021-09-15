@@ -9,3 +9,5 @@ class RecommendationGPU {
     @OneToMany(type => GPU, gpu => gpu.id)
     products!: GPU[] ;
 }
+
+export default RecommendationGPU;

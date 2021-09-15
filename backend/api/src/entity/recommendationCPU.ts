@@ -9,3 +9,5 @@ class RecommendationCPU {
     @OneToMany(type => CPU, cpu => cpu.id)
     products!: CPU[] ;
 }
+
+export default RecommendationCPU;
