@@ -40,8 +40,6 @@ const connect = async () => {
     const sentimentController: SentimentContoller = new SentimentContoller(sentimentService);
 
 
-
-
     app.use(express.json({limit: '2kb'}));
     app.use(helmet());
     app.use('/products', productRoutes);
