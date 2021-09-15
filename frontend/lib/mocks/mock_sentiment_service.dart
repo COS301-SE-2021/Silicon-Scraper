@@ -12,6 +12,7 @@ class MockSentimentService extends SentimentService
 
   Future SentimentRequest(String username, String password) async
   {
+    await Future.delayed(Duration(seconds: 4));
     return sentimentData();
   }
 }
