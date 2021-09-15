@@ -43,6 +43,7 @@ coverage/
 
 #database
 .env
+*.ini 
 
 #typescript
 backend/scraper/dist/
