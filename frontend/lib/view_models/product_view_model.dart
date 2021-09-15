@@ -42,7 +42,8 @@ class ProductViewModel extends ChangeNotifier
         }
         catch(e)
         {
-          ///push error screen
+          return showDialog(context: context, builder: (_)=> AlertDialog(
+              title: Text("${e.message}")),);
           print(e.message);
         }
       }
@@ -60,7 +61,8 @@ class ProductViewModel extends ChangeNotifier
         }
         catch(e)
         {
-          ///push error screen
+          return showDialog(context: context, builder: (_)=> AlertDialog(
+              title: Text("${e.message}")),);
           print(e.message);
         }
       }
