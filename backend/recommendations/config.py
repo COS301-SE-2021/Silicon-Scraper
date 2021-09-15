@@ -7,3 +7,5 @@ def config():
         user=os.getenv('DB_USER'),
         password=os.getenv('DB_PW')
     }
+
+    return db
