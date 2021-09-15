@@ -5,13 +5,12 @@ import jwtUtil from "../../utilities/jwtUtil";
 import SentimentService from "../service/sentimentService";
 
 
-
 export default class sentimentContoller{
 
     private readonly router: Router;
 
     constructor(private readonly sentimentService: SentimentService){
-        this.router = Router;
+        this.router = Router();
     }
 
     async retrieveSentiments(request: RetrieveSentimentRequest): Promise<RetrieveSentimentResponse>{

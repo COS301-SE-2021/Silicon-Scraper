@@ -1,7 +1,7 @@
 import { ReviewSentiment } from "../../entity/reviewSentiment"
 import {RetrieveSentimentRequest } from "../../types/Requests";
 import {RetrieveSentimentResponse} from "../../types/Responses";
-import { Repository } from "typeorm";
+import {Repository} from "typeorm";
 
 export default class SentimentService{
     constructor(
@@ -9,7 +9,7 @@ export default class SentimentService{
     ){}
 
     async retrieveSentiments(request: RetrieveSentimentRequest): Promise<RetrieveSentimentResponse>{
-        let sentiments: {}
+        let sentiments: any
 
         sentiments = await this.sentimentRepository.createQueryBuilder('review_sentiment')
             .where({model:request.model, brand:request.brand}).select(['characteristics'])
