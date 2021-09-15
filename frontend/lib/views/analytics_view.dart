@@ -72,7 +72,15 @@ class AnalyticsView extends StatelessWidget
                       }
                       else if (snapshot.data != null)
                       {
-                        return sentiment.sentimentList();
+                        return Container(
+                          margin:EdgeInsets.only(top:20),
+                            child: Column(
+                              children: [
+                                Text("User Sentiment related to the Product"),
+                                sentiment.sentimentList(),
+                              ],
+                            )
+                        );
                       }
                       else
                       {
