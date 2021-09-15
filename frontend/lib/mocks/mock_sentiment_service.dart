@@ -2,12 +2,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:silicon_scraper/mocks/json/sentiments.dart';
+import 'package:silicon_scraper/services/sentiment_service.dart';
 
-class SentimentService
+class MockSentimentService extends SentimentService
 {
   bool success = true;
 
-  SentimentService(this.success);
+  MockSentimentService(this.success);
 
   Future SentimentRequest(String username, String password) async
   {
