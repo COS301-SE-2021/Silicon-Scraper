@@ -79,7 +79,7 @@ class _LineChartState extends State<LineChart> {
                   animationDuration: 8000,
                   type: TrendlineType.polynomial,
                   polynomialOrder: 3,
-                  color: Colors.red,
+                  color: Colors.orange,
                   name:'trendline',
 //                  enableTooltip: true,
 //                  markerSettings: MarkerSettings(

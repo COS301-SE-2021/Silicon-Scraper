@@ -22,19 +22,18 @@ class _SentimentWidgetState extends State<SentimentWidget> {
     return Container(
       margin: EdgeInsets.only(top:20,right:25),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
         Text("${sentiment.type}: ",style:TextStyle(fontWeight: FontWeight.bold))  ,
         LinearPercentIndicator(
             width: 200,
             lineHeight: 15.0,
-            percent:(sentiment.value.toInt()/100),
+            percent:(sentiment.value),
             animation:true,animationDuration:2000,
             progressColor: sentiment.polarity? Colors.green : Colors.red,
             center: sentiment.polarity? Text("+${sentiment.value*100}%"):Text("-${sentiment.value*100}%") ,
           ),
-
-      ],
+        ],
       ),
     );
 

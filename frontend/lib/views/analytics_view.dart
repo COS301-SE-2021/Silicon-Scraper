@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silicon_scraper/models/sentiment_model.dart';
 import 'package:silicon_scraper/views/widgets/line_chart_widget.dart';
 import 'package:silicon_scraper/view_models/line_chart_view_model.dart';
 import 'package:silicon_scraper/views/widgets/sentiment_widget.dart';
@@ -71,7 +72,12 @@ class AnalyticsView extends StatelessWidget
                       }
                       else if (snapshot.data != null)
                       {
-                        return SentimentWidget();
+                        return Column(
+                          children: [
+                            SentimentWidget(Sentiment("price",true,0.4)),
+                            SentimentWidget(Sentiment("performance",false,0.7)),
+                          ],
+                        );
                       }
                       else
                       {
