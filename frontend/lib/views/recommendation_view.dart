@@ -24,8 +24,8 @@ class _RecommendationState extends State<Recommendation> {
           children: [
             /// little text
             Container(
-              height: MediaQuery.of(context).size.height / 10,
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              //height: MediaQuery.of(context).size.height / 10,
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
               child: Text(
                 "Recommendations based on items in your watchlist.",
                 textAlign: TextAlign.center,
@@ -37,11 +37,8 @@ class _RecommendationState extends State<Recommendation> {
             //
             // ),
             /// the products
-            Container(
-              child: SingleChildScrollView(
-                // child: ,
-              ),
-            ),
+            Expanded(child: recommendation.getRecommendationPageProducts(),
+            )
           ],
         ),
       ),

@@ -19,7 +19,7 @@ class RecommendationViewModel {
           products = snapshot.data;
           // check if the product array is not empty (ie no products)
           if (products.isNotEmpty) {
-              return productListView(context, products);
+              return gridProductListView(context, products);
           } else {
             return noProducts(context, "RECOMMENDATIONS");
           }

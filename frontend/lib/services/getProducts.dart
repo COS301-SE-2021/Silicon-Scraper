@@ -72,10 +72,11 @@ ListView productListView(BuildContext context,List<Product> items)
 GridView gridProductListView(BuildContext context, List<Product> items){
   return GridView.count(
     crossAxisCount: 2,
+    mainAxisSpacing: 10.0,
     scrollDirection: Axis.vertical,
     children: List.generate(items.length, (index) {
-      return
-        VerticalProductWidget( state: ProductViewModel(items[index]));
+      return Center(child: VerticalProductWidget( state: ProductViewModel(items[index]))
+      );
     }),
   );
 }
