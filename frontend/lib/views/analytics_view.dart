@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:silicon_scraper/models/sentiment_model.dart';
+import 'package:silicon_scraper/view_models/sentiment_view_model.dart';
 import 'package:silicon_scraper/views/widgets/line_chart_widget.dart';
 import 'package:silicon_scraper/view_models/line_chart_view_model.dart';
-import 'package:silicon_scraper/views/widgets/sentiment_widget.dart';
 
 class AnalyticsView extends StatelessWidget
 {
   LineChartViewModel chartData=new LineChartViewModel();
+  SentimentViewModel sentiment=new SentimentViewModel();
   @override
   Widget build(BuildContext context)
   {
@@ -60,7 +60,7 @@ class AnalyticsView extends StatelessWidget
               child: Container(
                 child: FutureBuilder
                   (
-                    future: test(),
+                    future: sentiment.getSentiment(),
                     builder: (BuildContext context, AsyncSnapshot snapshot)
                     {
                       if (snapshot.connectionState == ConnectionState.waiting)
@@ -72,12 +72,7 @@ class AnalyticsView extends StatelessWidget
                       }
                       else if (snapshot.data != null)
                       {
-                        return Column(
-                          children: [
-                            SentimentWidget(Sentiment("price",true,0.4)),
-                            SentimentWidget(Sentiment("performance",false,0.7)),
-                          ],
-                        );
+                        return sentiment.sentimentList();
                       }
                       else
                       {

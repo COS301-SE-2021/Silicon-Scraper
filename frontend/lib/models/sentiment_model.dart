@@ -9,6 +9,6 @@ class Sentiment
 
   factory Sentiment.fromJSON(Map<String,dynamic>json)
   {
-    return Sentiment(json["type"],json["polarity"],json["value"].toDouble());
+    return Sentiment(json["type"],json["polarity"],json["value"].toDouble()/100);
   }
 }
