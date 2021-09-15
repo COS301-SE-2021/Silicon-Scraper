@@ -1,19 +1,16 @@
-import { Entity, Column} from "typeorm";
+import {Entity, Column, PrimaryColumn} from "typeorm";
 
-@Entity({name: 'review_sentiment', synchronize: false})
+@Entity({name: 'reviewSentiment', synchronize: false})
 export class ReviewSentiment{
-    @Column()
+    @PrimaryColumn()
     brand!: string;
 
-    @Column()
+    @PrimaryColumn()
     model!: string;
 
-    @Column({
-        name: 'characteristics',
-        type: 'jsonb',
-        default: () => "'{}'",
-        nullable: false,
+    @Column("jsonb", {
+     array: true
     })
-    characteristics!: any;
+    characteristics!: any [];
 
 }

@@ -9,14 +9,16 @@ export default class SentimentService{
     ){}
 
     async retrieveSentiments(request: RetrieveSentimentRequest): Promise<RetrieveSentimentResponse>{
-        let sentiments: any
 
-        sentiments = await this.sentimentRepository.createQueryBuilder('review_sentiment')
-            .where({model:request.model, brand:request.brand}).select(['characteristics'])
-            .getOne();
+        console.log(request.brand,  request.model)
+
+        let sentiments = await this.sentimentRepository.createQueryBuilder("reviewSentiment")
+            .where(":model like '%' || reviewSentiment.model || '%'", {model: request.model} )
+            .andWhere("reviewSentiment.brand = :brand", {brand: request.brand})
+            .getOne()
 
         const response: RetrieveSentimentResponse = <RetrieveSentimentResponse>{};
-        response.sentiments = sentiments;
+        response.sentiments = sentiments?.characteristics || [];
         return response;
 
     }

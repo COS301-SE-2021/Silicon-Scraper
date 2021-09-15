@@ -5,7 +5,7 @@ import jwtUtil from "../../utilities/jwtUtil";
 import SentimentService from "../service/sentimentService";
 
 
-export default class sentimentContoller{
+export default class SentimentContoller{
 
     private readonly router: Router;
 
@@ -18,8 +18,13 @@ export default class sentimentContoller{
     }
 
     routes(): Router{
-        this.router.use(jwtUtil.verifyToken);
-        this.router.get('/sentiment', async (req, res, next) => res.status(200).json(await this.retrieveSentiments(<RetrieveSentimentRequest>req.body).catch(err => next(err))))
+       // this.router.use(jwtUtil.verifyToken);
+        this.router.get('/', async (req, res, next) =>  {
+            res.status(200).json(await this.retrieveSentiments(<RetrieveSentimentRequest>req.body).catch(err => next(err)))
+
+            // await this.retrieveSentiments(<RetrieveSentimentRequest>req.body)
+            // res.status(200).send();
+        })
         return this.router;
     }
 
