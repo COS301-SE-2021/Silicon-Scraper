@@ -1,12 +1,16 @@
 import os
-from dotenv import load_dotenv
+from configParser import ConfigParser
 
-def config():
-    load_dotenv()
+def config(filename='database.ini', section='postgresql'):
+    con = {}
+    host = ''
+    parser = configParser()
+    parser.read(filename)
+ 
+    if parser.has_section(section):
+        params = parser.items(section)
+        for p in params:
+            con[p[0]] = p[1]
 
-    db['host'] = os.getenv('DB_HOST')
-    db['database'] = os.getenv('DB_NAME')
-    db['user'] = os.getenv('DB_USER')
-    db['password'] = os.getenv('DB_PW')
 
-    return db
+    return con
