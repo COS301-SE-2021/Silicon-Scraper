@@ -26,7 +26,7 @@
             }
 		},
         {
-			"id": "7b05c566-be35-4829-9373-e36367e20937",
+			"id": "7b05c566-7474f-8498-4829-9373-e3636e35jdj",
             "brand": "AMD",
             "model": "Ryzen 5 5600X Processor",
             "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
@@ -51,7 +51,7 @@
             }
 		},
         {
-			"id": "7b05c566-be35-4829-9373-e36367e20937",
+			"id": "ueude566-be35-4829-7b05c-e3636648fd",
             "brand": "AMD",
             "model": "Ryzen 7 5800X Processor",
             "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
@@ -74,6 +74,18 @@
                 "Thermal Solution (PIB)": "Not included",
                 "Default TDP / TDP":"105W"
             }
+		},
+        {
+			"id": "ueude566-be35-4829-7b05c-e3636648fd",
+            "brand": "AMD",
+            "model": "Ryzen 7 5800X Processor",
+            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 11299,
+            "availability": "In Stock",
+            "retailer": "Evetech",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "type": "cpu",
+            "description": {}
 		}
 
 	]
