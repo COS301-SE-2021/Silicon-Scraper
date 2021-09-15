@@ -17,7 +17,7 @@ class _RecommendationState extends State<Recommendation> {
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,7 +28,6 @@ class _RecommendationState extends State<Recommendation> {
               margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
               child: Text(
                 "Recommendations based on items in your watchlist.",
-                textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.black, fontSize: 12),
               ),
             ),
