@@ -200,13 +200,14 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                             selector = await window.selectordes('url')
                             let href = element.querySelectorAll(selector)[0].getAttribute('href')
                             href = href != null? href: ''
-                            return await page.goto(href, {waitUntil: 'networkidle0'}).then(async () => {
+
+                            await page.goto(href, {waitUntil: 'networkidle0'}).then(async () => {
                                 console.log('heyyyyyyyyyy')
                                 page.on('console', msg => {
                                     console.log("PAGE LOG:", msg.text())
                                 })
                                 await page.screenshot({path: 'screenshot.png'})
-                                return
+                                
                             })
                             
                             const context = await page.evaluate(async (descript) => {
