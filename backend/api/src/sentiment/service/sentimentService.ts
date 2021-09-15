@@ -10,8 +10,6 @@ export default class SentimentService{
 
     async retrieveSentiments(request: RetrieveSentimentRequest): Promise<RetrieveSentimentResponse>{
 
-        console.log(request.brand,  request.model)
-
         let sentiments = await this.sentimentRepository.createQueryBuilder("reviewSentiment")
             .where(":model like '%' || reviewSentiment.model || '%'", {model: request.model} )
             .andWhere("reviewSentiment.brand = :brand", {brand: request.brand})
