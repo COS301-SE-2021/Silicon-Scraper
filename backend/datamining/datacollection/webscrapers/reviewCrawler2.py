@@ -10,7 +10,7 @@ class ReviewCrawler:
         pass
 
     def getreview(self, product):
-        URL = config["BASEURL_1"] + product
+        URL = config("BASEURL_1") + product
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, "html.parser")
         results = soup.find("article")
@@ -22,7 +22,7 @@ class ReviewCrawler:
             title = {"title": tit.text.strip() for tit in title}
             reviews = {"reviews": [result.text.strip() for result in results if result.text.strip() != '']}
             review = dict(title, **reviews)
-            URL = config["BASEURL_2"] + product
+            URL = config("BASEURL_2") + product
             page = requests.get(URL)
             soup = BeautifulSoup(page.content, "html.parser")
             results = soup.find("article")
@@ -40,7 +40,7 @@ class ReviewCrawler:
         res = []
         for i in range(9):
             page = i + 1
-            URL = config["BASEURL_3"] + str(page)
+            URL = config("BASEURL_3") + str(page)
             page = requests.get(URL)
             soup = BeautifulSoup(page.content, "html.parser")
 
@@ -61,3 +61,6 @@ class ReviewCrawler:
                 reviews.append(revi)
 
         return reviews
+
+reviewCrawler = ReviewCrawler()
+print(reviewCrawler.getreviews())
