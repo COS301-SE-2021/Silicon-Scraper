@@ -141,5 +141,6 @@ def main():
         recs.push(recommend(product))
         
     result['recommendation'] = recs
+    #add result to db
 
     con.close()
