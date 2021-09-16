@@ -14,3 +14,7 @@ export interface LoginUserResponse {
 export interface RetrieveWatchlistResponse {
     products: any[]
 }
+
+export interface RetrieveSentimentResponse {
+    sentiments: {}
+}

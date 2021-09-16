@@ -5,6 +5,7 @@ import { CPU } from './entity/cpu';
 import { GPU } from './entity/gpu';
 import { watchlistCPU } from './entity/watchlistCPU';
 import { watchlistGPU } from './entity/watchlistGPU';
+import {ReviewSentiment} from "./entity/reviewSentiment";
 
 config();
 
@@ -22,7 +23,8 @@ export const connection = async () => {
                 CPU,
                 GPU,
                 watchlistCPU,
-                watchlistGPU
+                watchlistGPU,
+                ReviewSentiment
             ],
             cli: {
                 entitiesDir: 'entity'
