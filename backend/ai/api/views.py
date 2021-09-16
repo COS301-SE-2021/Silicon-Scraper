@@ -125,6 +125,11 @@ def price_and_availability():
                }, 400
 
 
+@bp.route('/graph-data', method=["POST"])
+def graphdata():
+
+
+
 def generatetimestamp(timestamp):
     i = 7
     times = []
