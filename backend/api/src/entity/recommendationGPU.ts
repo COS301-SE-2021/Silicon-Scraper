@@ -1,13 +1,12 @@
-import { Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
-import { GPU } from "./gpu";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'recommendation_gpu', synchronize: false })
 class RecommendationGPU {
     @PrimaryColumn('uuid')
     id!: string;
 
-    @OneToMany(type => GPU, gpu => gpu.id, { eager: true })
-    products!: GPU[] ;
+    @Column('uuid', {array: true})
+    products!: string[];
 }
 
 export default RecommendationGPU;

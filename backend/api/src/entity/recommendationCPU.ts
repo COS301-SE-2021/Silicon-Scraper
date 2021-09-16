@@ -1,13 +1,12 @@
-import { Entity, OneToMany, PrimaryColumn } from "typeorm";
-import { CPU } from "./cpu";
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'recommendation_cpu', synchronize: false })
 class RecommendationCPU {
     @PrimaryColumn('uuid')
     id!: string;
 
-    @OneToMany(type => CPU, cpu => cpu.id,  { eager: true })
-    products!: CPU[] ;
+    @Column('uuid', {array: true})
+    products!: string[];
 }
 
 export default RecommendationCPU;
