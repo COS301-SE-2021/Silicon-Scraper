@@ -127,7 +127,52 @@ def price_and_availability():
 
 @bp.route('/graph-data', method=["POST"])
 def graphdata():
+    results = {'success': False}
+    params = request.json
+    if params is None:
+        return {
+                   'success': False,
+                   'message': 'missing parameter(s)'
+               }, 400
 
+    missing_params = [str(x) for x in parameters if x not in params]
+    incorrect_params = [str(x) for x in params if x not in parameters]
+
+    if len(incorrect_params) > 0:
+        return {
+                   'success': False,
+                   'message': f"invalid paramter(s): '{' , '.join(incorrect_params)}'."
+               }, 400
+
+    if len(missing_params) == 0:
+
+        data = json_normalize(params)
+        times = generatetimestamp(data['date'])
+
+        response = [
+            {
+                "price": data['price'],
+                "date": data['date']
+            }
+        ]
+
+        for date in times:
+            data['date'] = date
+            price, avail = makeprediction(data)
+            response.append({
+                "price": price,
+                "date": data['date']
+            })
+
+        results['success'] = True
+        results['data'] = response
+        return jsonify(results), 200
+
+    else:
+        return {
+                   'success': False,
+                   'message': f"missing parameter(s): '{' and '.join(missing_params)}'."
+               }, 400
 
 
 def generatetimestamp(timestamp):
