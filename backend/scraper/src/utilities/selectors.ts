@@ -233,11 +233,11 @@ export class intelSelector extends descriptionSelector{
                 break;
             }
             case 'url': {//[0].innerText()- to check if its correct node; [0].href - to get the url
-                selector = 'div > div > div > div:nth-child(2) > div > h3 > a '
+                selector = '.content-wrap > div:nth-child(2) .CoveoResultLink'
                 break;
             }
             case 'specs': {
-                selector = '#bladeInside > ul'
+                selector = '#tab-blade-1-0-1 #bladeInside > ul'
                 break;
             }
         }

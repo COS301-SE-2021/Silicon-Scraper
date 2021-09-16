@@ -180,62 +180,29 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 // await page.evaluateOnNewDocument(() => {
                 //     window.selectordes = (par: string) => selector.getDescriptions(par)
                 // })
-                await page.exposeFunction('selectordes', (par: string) => {
-                    //console.log(selector.getDescriptions(par))
-                    return selector.getDescriptions(par)
-                })
-                await page.exposeFunction('selector.getDescriptions', selector.getDescriptions)
+                // await page.exposeFunction('selectordes', (par: string) => {
+                //     //console.log(selector.getDescriptions(par))
+                //     return selector.getDescriptions(par)
+                // })
+                // await page.exposeFunction('selector.getDescriptions', selector.getDescriptions)    
                 
-                const content = await page.evaluate(async ( model) => {
+                if(brand === 'Intel'){
+                    return get_intel_description(model, selector, page)
+                }
+
+                const selectordes = selector.getDescriptions()
+                
+                const content = await page.evaluate(async (selectordes: string) => {
                     // add intel scraping
-                    let selector: string = await window.selectordes('search')
+                    //let selector: string = await window.selectordes('search')
                     //console.log(document.documentElement.querySelectorAll("#coveo-result-list2 > div").length)
-                    let children = Array.from(document.documentElement.querySelectorAll(selector)[0].children)
+                    let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
                     
-                    children.forEach(async (element, idx) => {
+                    children.forEach(async (element) => {
                        
-                        if(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim()) === true){
-                            
-                            selector = await window.selectordes('url')
-                            let href = element.querySelectorAll(selector)[0].getAttribute('href')
-                            href = href != null? href: ''
-
-                            await page.goto(href, {waitUntil: 'networkidle0'}).then(async () => {
-                                console.log('heyyyyyyyyyy')
-                                page.on('console', msg => {
-                                    console.log("PAGE LOG:", msg.text())
-                                })
-                                await page.screenshot({path: 'screenshot.png'})
-                                
-                            })
-                            
-                            const context = await page.evaluate(async (descript) => {
-                                console.log('hehyyyy')
-                                selector = await window.selectordes('specs')
-                                let child = Array.from(document.documentElement.querySelectorAll(selector)[0].children)
-
-                                descript = child.map(element => {
-                                    
-                                    const text = element.textContent?.trim().replace(/\n{2}/, '//')
-                                    console.log(text)
-                                    return text
-                                })
-
-                                return {
-                                    des: descript
-                                }
-
-                            }, descript)
-
-                            
-                            descript = (await context).des
-                            console.log(descript)
-                        }else{
-                            const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
-                            descript.push(text !== undefined? text: '')
-                        }
-                        
+                        const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
+                        descript.push(text !== undefined? text: '')
 
                     })
 
@@ -243,7 +210,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                         description: descript
                     }
 
-                }, model)
+                }, selectordes)
                 
                 let des = getDescriptions(content.description, man)
                 if(des === {}) throw "Description Error: Unable to get descriptions"
@@ -266,6 +233,71 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 }
 
 
+const get_intel_description = async (model:string, selector:descriptionSelector, page:Page) => {
+
+    const content = page.content();
+    await content.then(async (success) => {
+        const $ = await cheerio.load(success)
+        await $(selector.getDescriptions('search')).children().each(async (i: any, row:any) => {
+            let search_text = $(row).text()
+            if(model.includes(search_text.split('Processor')[0].replace('Intel', '').trim())){
+
+                let href = $(row).find(selector.getDescriptions('url')).attr('href')
+                await page.click($(row).find(selector.getDescriptions('url')))
+                //await page.goto(href, {waitUntil: 'networkidle0' }).then(async () => {
+                    console.log('heyyyyyyyyy', href)
+                    // const content_new = page.content();
+                    // await content_new.then(async (success_2) => {
+                    //     const $$ = await cheerio.load(success_2)
+                    //     console.log($$(selector.getDescriptions('specs')).text())
+                    // })
+
+               // })
+
+               return 
+
+            }
+           
+        })
+    })
+
+    // if(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim()) === true){
+                            
+    //     selector = await window.selectordes('url')
+    //     let href = element.querySelectorAll(selector)[0].getAttribute('href')
+    //     href = href != null? href: ''
+
+    //     await page.goto(href, {waitUntil: 'networkidle0'}).then(async () => {
+    //         console.log('heyyyyyyyyyy')
+    //         page.on('console', msg => {
+    //             console.log("PAGE LOG:", msg.text())
+    //         })
+    //         await page.screenshot({path: 'screenshot.png'})
+            
+    //     })
+        
+    //     const context = await page.evaluate(async (descript) => {
+    //         console.log('hehyyyy')
+    //         selector = await window.selectordes('specs')
+    //         let child = Array.from(document.documentElement.querySelectorAll(selector)[0].children)
+
+    //         descript = child.map(element => {
+                
+    //             const text = element.textContent?.trim().replace(/\n{2}/, '//')
+    //             console.log(text)
+    //             return text
+    //         })
+
+    //         return {
+    //             des: descript
+    //         }
+
+    //     }, descript)
+        
+    //     descript = (await context).des
+    //     console.log(descript)
+    // }
+}
 
 /**
  * This function loops through the url array and calls the scrape function
