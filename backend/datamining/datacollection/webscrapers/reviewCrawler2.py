@@ -62,5 +62,5 @@ class ReviewCrawler:
 
         return reviews
 
-reviewCrawler = ReviewCrawler()
-print(reviewCrawler.getreviews())
+# reviewCrawler = ReviewCrawler()
+# print(reviewCrawler.getreviews())
