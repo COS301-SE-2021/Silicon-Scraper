@@ -9,7 +9,7 @@ class ReviewCrawler:
     def __init__(self) -> None:
         pass
 
-    def getreview(self, product) -> {}:
+    def getreview(self, product):
         URL = config["BASEURL_1"] + product
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, "html.parser")
