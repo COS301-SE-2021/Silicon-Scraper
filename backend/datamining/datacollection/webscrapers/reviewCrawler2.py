@@ -20,7 +20,7 @@ class ReviewCrawler:
         title = {"title": tit.text.strip() for tit in title}
         reviews = {"reviews": [result.text.strip() for result in results if result.text.strip() != '']}
         review = dict(title, **reviews)
-        URL = config["BASEURL_1"] + product
+        URL = config["BASEURL_2"] + product
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, "html.parser")
         results = soup.find("article")
