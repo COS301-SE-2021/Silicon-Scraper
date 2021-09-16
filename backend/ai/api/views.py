@@ -125,6 +125,17 @@ def price_and_availability():
                }, 400
 
 
+def generatetimestamp(timestamp):
+    i = 7
+    times = []
+    for week in range(12):
+        w = (week + 1) * 7
+        newdate = timestamp + timedelta(w)
+        times.append(newdate)
+
+    return times
+
+
 if __name__ == '__main__':
     print("Starting web service...")
     app.run(host='0.0.0.0', debug=True, port=int(os.environ.get('PORT', 8000)))
