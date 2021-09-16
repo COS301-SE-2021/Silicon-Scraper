@@ -9,26 +9,38 @@ class ReviewCrawler:
     def __init__(self) -> None:
         pass
 
-    def getreview(self, product) -> {}:
-        URL = config["BASEURL_1"] + product
+    def getreview(self, product):
+        URL = config("BASEURL_1") + product
         page = requests.get(URL)
         soup = BeautifulSoup(page.content, "html.parser")
         results = soup.find("article")
         title = results.find_all(class_="review-title-medium")
         results = results.find(class_="pro-con")
-        results = results.find_all("li")
-        title = {"title": tit.text.strip() for tit in title}
-        reviews = {"reviews": [result.text.strip() for result in results if result.text.strip() != '']}
-        review = dict(title, **reviews)
-        URL = config["BASEURL_1"] + product
-        page = requests.get(URL)
-        soup = BeautifulSoup(page.content, "html.parser")
-        results = soup.find("article")
-        results = results.find(class_="pros-cons-block")
-        results = results.find_all("li")
-        results = [result.text.strip() for result in results if result.text.strip() != '']
-        review['reviews'] = np.append(review['reviews'], results).tolist()
+        review = {}
+
+        if results is not None:
+            results = results.find_all("li")
+            for tit in title:
+                title = self.titleparser(tit.text.strip())
+
+            reviews = {"reviews": [result.text.strip() for result in results if result.text.strip() != '']}
+            review = dict(title, **reviews)
+            URL = config("BASEURL_2") + product
+            page = requests.get(URL)
+            soup = BeautifulSoup(page.content, "html.parser")
+            results = soup.find("article")
+            results = results.find(class_="pros-cons-block")
+            results = results.find_all("li")
+            results = [result.text.strip() for result in results if result.text.strip() != '']
+            review['reviews'] = np.append(review['reviews'], results).tolist()
         return review
+
+    def titleparser(self, title):
+        titlearr = title.split(' ', 1)
+        brand = titlearr[0]
+        model = titlearr[1].rsplit(' ', 1)[0]
+
+        return {"brand": brand, "model": model}
 
     def getproduct(self, url):
         temp = url.split("/")
@@ -38,7 +50,7 @@ class ReviewCrawler:
         res = []
         for i in range(9):
             page = i + 1
-            URL = config["BASEURL_3"] + str(page)
+            URL = config("BASEURL_3") + str(page)
             page = requests.get(URL)
             soup = BeautifulSoup(page.content, "html.parser")
 
@@ -59,3 +71,7 @@ class ReviewCrawler:
                 reviews.append(revi)
 
         return reviews
+
+
+rw = ReviewCrawler()
+print(rw.getreviews())
