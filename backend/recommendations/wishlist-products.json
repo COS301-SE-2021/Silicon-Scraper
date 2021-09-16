@@ -26,32 +26,7 @@
             }
 		},
         {
-			"id": "7b05c566-7474f-8498-4829-9373-e3636e35jdj",
-            "brand": "AMD",
-            "model": "Ryzen 5 5600X Processor",
-            "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
-            "price": 11299,
-            "availability": "In Stock",
-            "retailer": "Evetech",
-            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
-            "type": "cpu",
-            "description": {
-                "# of CPU Cores": "6",
-                "# of Threads":"12",
-                "Base Clock": "3.7GHz",
-                "Max Boost Clock": "Up to 4.6GHz",
-                "Total L2 Cache":"3MB",
-                "Total L3 Cache":"32MB",
-                "Unlocked":"Yes",
-                "CMOS":"TSMC 7nm FinFET",
-                "Package":"AM4",
-                "PCI Express® Version":"PCIe 4.0",
-                "Thermal Solution (PIB)": "Wraith Stealth",
-                "Default TDP / TDP":"65W"
-            }
-		},
-        {
-			"id": "ueude566-be35-4829-7b05c-e3636648fd",
+			"id": "7b05c566-747fhf-48fjnre-u4rndi3-67e20937",
             "brand": "AMD",
             "model": "Ryzen 7 5800X Processor",
             "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
@@ -76,16 +51,29 @@
             }
 		},
         {
-			"id": "ueude566-be35-4829-7b05c-e3636648fd",
+			"id": "37345yr35-4829-9373-7b05c566-be084ue3937",
             "brand": "AMD",
-            "model": "Ryzen 7 5800X Processor",
+            "model": "Ryzen 5 5600X Processor",
             "image": "https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
             "price": 11299,
             "availability": "In Stock",
             "retailer": "Evetech",
             "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
             "type": "cpu",
-            "description": {}
+            "description": {
+                "# of CPU Cores": "6",
+                "# of Threads":"12",
+                "Base Clock": "3.7GHz",
+                "Max Boost Clock": "Up to 4.6GHz",
+                "Total L2 Cache":"3MB",
+                "Total L3 Cache":"32MB",
+                "Unlocked":"Yes",
+                "CMOS":"TSMC 7nm FinFET",
+                "Package":"AM4",
+                "PCI Express® Version":"PCIe 4.0",
+                "Thermal Solution (PIB)": "Wraith Stealth",
+                "Default TDP / TDP":"65W"
+            }
 		}
 
 	]
