@@ -3,9 +3,9 @@ import service from '../service/recommendationService';
 
 const router = express.Router();
 
-router.get('/recommendation/:id', (req: express.Request, res: express.Response) => {
+router.get('/:id', async (req: express.Request, res: express.Response) => {
     const id = req.params.id;
-    const recommendations = service.getRecommendations(id);
+    const recommendations = await service.getRecommendations(id);
     res.status(200).json({ products: recommendations });
 });
 
