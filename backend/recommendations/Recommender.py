@@ -134,13 +134,16 @@ def main():
     rec = pd.Series(all_products.index)
 
     #get recommendations for all products in wishlist 
-    result = pd.DataFrame()
-    result.set_index(wishlist_products['product_id'])
     recs = []
-    for product in wishlist_products['product_id']:
-        recs.push(recommend(product))
+    wishlist = list(wishlist_description['id'])
+    for i, product in enumerate(wishlist):
+        response = list(recommend(product).index)
+        recs.append(response)
         
-    result['recommendation'] = recs
+
+    result = pd.DataFrame(wishlist_description['id'], columns=['id','recommendations'])
+    result['recommendations'] = recs
+result.set_index('id', inplace=True)
     #add result to db
 
     con.close()
