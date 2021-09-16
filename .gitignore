@@ -41,6 +41,7 @@ coverage/
 backend/scraper/dist/
 # API related
 node_modules/
+build/
 
 # Web related
 lib/generated_plugin_registrant.dart

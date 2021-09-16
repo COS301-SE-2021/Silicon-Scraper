@@ -1,32 +1,53 @@
 import { getRepository } from "typeorm";
+import { CPU } from "../../entity/cpu";
+import { GPU } from "../../entity/gpu";
 import RecommendationCPU from "../../entity/recommendationCPU";
 import RecommendationGPU from "../../entity/recommendationGPU";
 import { watchlistCPU } from "../../entity/watchlistCPU";
 import { watchlistGPU } from "../../entity/watchlistGPU";
 
 async function getRecommendations(id: string) {
-    const [wl_cpu, wl_gpu] = await fetchUserWatchlist(id);
-    return {};
+    const recommendations = await fetchRecommendations(id);
+    return recommendations;
 }
 
-async function fetchUserWatchlist(id: string) {
+async function fetchRecommendations(id: string) {
     const wl_cpu = await fetchWatchlistCPU(id);
     const wl_gpu = await fetchWatchlistGPU(id);
-    return [wl_cpu, wl_gpu];
+    const recommendations: GPU[] | CPU[] = [];
+    for(let cpu of wl_cpu) {
+        const cpus = await fetchGPUs(cpu.products);
+        recommendations.push(...cpus);
+    }
+    for(let gpu of wl_gpu) {
+        const gpus = await fetchGPUs(gpu.products);
+        recommendations.push(...gpus);
+    }
+    return recommendations;
 }
 
 async function fetchWatchlistCPU(id: string) {
-    return await getRepository(watchlistCPU).createQueryBuilder('wl_cpu')
-    .innerJoinAndSelect(RecommendationCPU, 'recommendation', 'wl_cpu.product_id = recommendation.id')
-    .where('wl_cpu.user_id = :id', { id: id })
+    return await getRepository(RecommendationCPU).createQueryBuilder('recommendation')
+    .innerJoinAndSelect(watchlistCPU, 'wl_cpu', 'wl_cpu.product_id = recommendation.id')
+    .where('wl_cpu.user_id = :user_id', {user_id: id})
     .getMany();
 }
 
 async function fetchWatchlistGPU(id: string) {
-    return await getRepository(watchlistGPU).createQueryBuilder('wl_gpu')
-    .innerJoinAndSelect(RecommendationGPU, 'recommendation', 'wl_gpu.product_id = recommendation.id')
-    .where('wl_gpu.user_id = :id', { id: id })
+    return await getRepository(RecommendationGPU).createQueryBuilder('recommendation')
+    .innerJoinAndSelect(watchlistGPU, 'wl_gpu', 'wl_gpu.product_id = recommendation.id')
+    .where('wl_gpu.user_id = :user_id', {user_id: id})
     .getMany();
+}
+
+async function fetchGPUs(productIds: string[]) {
+    return await getRepository(GPU).createQueryBuilder('gpus')
+    .where('gpus.id IN (:...ids)', {ids: productIds}).getMany();
+}
+
+async function fetchCPUs(productIds: string[]) {
+    return await getRepository(CPU).createQueryBuilder('cpus')
+    .where('cpus.id IN (:...ids)', {ids: productIds}).getMany();
 }
 
 const service = {
