@@ -6,7 +6,7 @@ class RecommendationCPU {
     @PrimaryColumn('uuid')
     id!: string;
 
-    @OneToMany(type => CPU, cpu => cpu.id)
+    @OneToMany(type => CPU, cpu => cpu.id,  { eager: true })
     products!: CPU[] ;
 }
 

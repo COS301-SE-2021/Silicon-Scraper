@@ -6,7 +6,7 @@ class RecommendationGPU {
     @PrimaryColumn('uuid')
     id!: string;
 
-    @OneToMany(type => GPU, gpu => gpu.id)
+    @OneToMany(type => GPU, gpu => gpu.id, { eager: true })
     products!: GPU[] ;
 }
 
