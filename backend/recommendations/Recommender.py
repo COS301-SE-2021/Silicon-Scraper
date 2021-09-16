@@ -143,7 +143,7 @@ def main():
 
     result = pd.DataFrame(wishlist_description['id'], columns=['id','recommendations'])
     result['recommendations'] = recs
-result.set_index('id', inplace=True)
+    result.set_index('id', inplace=True)
     #add result to db
 
     con.close()
