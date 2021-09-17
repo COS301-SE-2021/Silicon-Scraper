@@ -9,6 +9,7 @@ class WatchListService
 
   Future<List<Product>> watchListRequest()async
   {
+    print("in watchlist request");
     SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
     String token=sharedPreferences.get('token');
         var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
@@ -32,9 +33,11 @@ class WatchListService
   Future removeRequest(Product item)async
   {
     var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    String token=sharedPreferences.get('token');
     Map <String,String> headers={
       "Content-Type":"application/json; charset=utf-8",
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ',
+      'Authorization': 'Bearer '+token,
     };
     Map vars={
       "productID":item.id,
@@ -56,9 +59,11 @@ class WatchListService
   Future addRequest(Product item)async
   {
     var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    String token=sharedPreferences.get('token');
     Map <String,String> headers={
       "Content-Type":"application/json; charset=utf-8",
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ',
+      'Authorization': 'Bearer '+token,
     };
     Map vars={
       "productID":item.id,

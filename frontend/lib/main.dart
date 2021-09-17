@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
+import 'package:silicon_scraper/injectors/sentiment_service_injector.dart';
 import 'package:silicon_scraper/view_models/notification_view_model.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/injectors/explore_service_injector.dart';
@@ -32,17 +33,20 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 void main() async{
-  WatchListInjector.configure(DependencyType.MOCK);
-  ExplorePageInjector.configure(DependencyType.MOCK);
-  SearchSortFilterInjector.configure(DependencyType.MOCK);
-  PredictionInjector.configure(DependencyType.MOCK,fail: false);
-  LoginInjector.configure(DependencyType.MOCK,success: true);
-  SignUpInjector.configure(DependencyType.MOCK,success: true);
+  WatchListInjector.configure(DependencyType.PROD);
+  ExplorePageInjector.configure(DependencyType.PROD);
+  SearchSortFilterInjector.configure(DependencyType.PROD);
+  PredictionInjector.configure(DependencyType.PROD,fail: false);
+  LoginInjector.configure(DependencyType.PROD,success: true);
+  SignUpInjector.configure(DependencyType.PROD,success: true);
   NotificationViewModel notification=new NotificationViewModel();
+  SentimentInjector.configure(DependencyType.PROD);
+
 
   /// this sets the initial products for the watch list do not remove
-  WatchListViewModelSingleton.getState().setInitialProducts();
   WidgetsFlutterBinding.ensureInitialized();
+  WatchListViewModelSingleton.getState().setInitialProducts();
+
 
   /// below this line is firebase implementations
   await Firebase.initializeApp();
