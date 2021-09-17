@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../search_view.dart';
 
-Widget appbar(BuildContext context, String page) {
+Widget appbar(BuildContext context, String page, int depth) {
 
   String title = "";
   String subtitle = "";

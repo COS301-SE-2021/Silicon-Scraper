@@ -10,7 +10,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar(context, "search"),
+      appBar: appbar(context, "search", 1),
       body: Container(
         color: Colors.white,
         margin: const EdgeInsets.all(15.0),

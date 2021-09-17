@@ -35,7 +35,7 @@ class _MainNavigatorState extends State<MainNavigator> {
   Widget build(BuildContext context) {
     LoginViewModelSingleton login = LoginViewModelSingleton.getState();
     return Scaffold(
-      appBar: appbar(context, pageListString[pageIndex]),
+      appBar: appbar(context, pageListString[pageIndex], 1),
       body: pageList[pageIndex],
       bottomNavigationBar: BottomNavigationBar(
         /// when selected
