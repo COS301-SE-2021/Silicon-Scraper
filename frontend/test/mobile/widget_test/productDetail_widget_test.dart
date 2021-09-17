@@ -29,12 +29,13 @@ void main() {
     testWidgets("finds retailer text on widget", (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget( ProductViewModel(item)))));
       await tester.pumpAndSettle();
-      final titleFinder = find.text("Retailer: "+data[0]['retailer']);
+//      state.item.retailer[0].toUpperCase()}${state.item.retailer.substring(1)
+      final titleFinder = find.text(data[0]['retailer'][0].toUpperCase()+data[0]['retailer'].substring(1));
       expect(titleFinder, findsOneWidget);
     });
     testWidgets("finds availability text on widget", (WidgetTester tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(MaterialApp( home:ProductDetailWidget(ProductViewModel(item)))));
-      final titleFinder = find.text(item.getAvailability());
+      final titleFinder = find.text('Out of Stock');
       expect(titleFinder, findsOneWidget);
     });
     testWidgets("finds price text on widget", (WidgetTester tester) async {
