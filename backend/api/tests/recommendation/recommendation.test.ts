@@ -1,9 +1,6 @@
-
 import request from 'supertest';
 import app from '../../src/app';
 import service from '../../src/recommendation/service/recommendationService';
-import controller from '../../src/recommendation/controller/recommendationController';
-import { expectCt } from 'helmet';
 
 jest.mock('../../src/config');
 jest.mock('typeorm', () => {
@@ -52,17 +49,18 @@ describe('Recommendation Service tests', () => {
     })
 
     it('get recommendations, should call fetchRecommendations and return array of products', async () => {
-        
-        expect(true).toBe(true);
+        service.fetchRecommendations = jest.fn().mockReturnValue([]);
+        const recommendations = await service.getRecommendations('user_id');
+        expect(recommendations).toEqual([]);
     })
 })
 
 describe('Recommendation Controller tests', () => {
     service.getRecommendations = jest.fn().mockReturnValue([]);
 
-    it('should call getRecommendations once', async () => {
+    it('should call getRecommendations', async () => {
         const response = await request(app).get('/recommendation/user_id');
-        expect(service.getRecommendations).toBeCalledTimes(1);
+        expect(service.getRecommendations).toBeCalled();
     })
 
     it('should return status 200 with object containing array of products', async () => {
