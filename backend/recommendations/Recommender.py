@@ -32,19 +32,30 @@ def connect():
         conn = psycopg2.connect(host=host, port=port, database=database, user=user, password=password)
 
         curr = conn.cursor()
-        
-#         query = """SELECT table_name from information_schema.tables WHERE table_schema = 'public'"""
-#         curr.execute(query)
-        
-#         rows = curr.fetchall()
 
-#         for row in rows:
-#             print(row[0])
-
-        return curr, conn
     except( Exception, psycopg2.DatabaseError) as err:
         print(err)
+    finally:
+        return curr, conn
     
+cur, con = connect()
+cur.execute('LISTEN table_modified')
+
+if select.select([conn],[],[],5) == ([],[],[]):
+    print 'Timeout'
+else:
+    con.poll()
+    while con.notifies:
+        notify = con.notifies.pop(0)
+        if notify.channel == 'table_modified':
+            #get new similarity table
+            pass
+        elif notify.channel == 'table_updated':
+            #remove product from recommendation table or add new porduct to recommendation table
+            pass
+
+
+
 
 #A function that gets the user table and returns it as a dataframe
 def get_users(curr, conn):
