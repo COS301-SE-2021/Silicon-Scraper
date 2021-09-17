@@ -15,6 +15,7 @@ const puppeteer = require('puppeteer');
 import axios from 'axios'
 import {Browser, JSHandle, JSONObject, Page} from "puppeteer";
 import { getJSDocImplementsTags } from "typescript";
+import { stringify } from "querystring";
 declare const window: any
 
 let url = require("../utilities/url");
@@ -187,7 +188,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 // await page.exposeFunction('selector.getDescriptions', selector.getDescriptions)    
                 
                 if(brand === 'Intel'){
-                    return get_intel_description(model, selector, page)
+                    return await get_intel_description(model, selector, page, browser)
                 }
 
                 const selectordes = selector.getDescriptions()
@@ -233,19 +234,25 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 }
 
 
-const get_intel_description = async (model:string, selector:descriptionSelector, page:Page) => {
+const get_intel_description = async (model:string, selector:descriptionSelector, page:Page, browser:Browser) => {
 
     const content = page.content();
     await content.then(async (success) => {
         const $ = await cheerio.load(success)
-        await $(selector.getDescriptions('search')).children().each(async (i: any, row:any) => {
+        $(selector.getDescriptions('search')).children().each(async (i: any, row:any) => {
             let search_text = $(row).text()
             if(model.includes(search_text.split('Processor')[0].replace('Intel', '').trim())){
 
                 let href = $(row).find(selector.getDescriptions('url')).attr('href')
-                await page.click($(row).find(selector.getDescriptions('url')))
-                //await page.goto(href, {waitUntil: 'networkidle0' }).then(async () => {
-                    console.log('heyyyyyyyyy', href)
+                let element = $(row).find(selector.getDescriptions('url'))
+                
+                let result = await scrape_intel(page, selector, element)
+                
+
+                // let page1 = await browser.newPage()
+                // // await page.click(element)
+                // await page1.goto(href, {waitUntil: 'domcontentloaded' })
+                //     console.log('heyyyyyyyyy', href)
                     // const content_new = page.content();
                     // await content_new.then(async (success_2) => {
                     //     const $$ = await cheerio.load(success_2)
@@ -254,13 +261,16 @@ const get_intel_description = async (model:string, selector:descriptionSelector,
 
                // })
 
-               return 
+               return false
 
             }
            
         })
     })
 
+    
+    await page.close()
+    await browser.close()    
     // if(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim()) === true){
                             
     //     selector = await window.selectordes('url')
@@ -297,6 +307,20 @@ const get_intel_description = async (model:string, selector:descriptionSelector,
     //     descript = (await context).des
     //     console.log(descript)
     // }
+}
+
+
+const scrape_intel = async (page:Page, selector:descriptionSelector, element:any ) => {
+    await page.setDefaultNavigationTimeout(0);
+    await Promise.all([
+        page.waitForNavigation(),
+        page.click(element)
+        // await page.goto(element.attr('href'), {waitUntil: ['load','networkidle0']}).then(() => {
+        //     console.log('heyyyyyy')
+        // })
+    ]) 
+    await page.screenshot({path: 'screenshot.png'})
+    
 }
 
 /**
