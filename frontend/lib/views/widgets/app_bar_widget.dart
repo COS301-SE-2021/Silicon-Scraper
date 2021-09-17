@@ -27,50 +27,57 @@ Widget appbar(BuildContext context, String page, int depth) {
   }
 
   if (depth == 2){
-    return AppBar(
-      title: Container(
-          margin: EdgeInsets.only(top: 25),
-          height: MediaQuery.of(context).size.height / 5,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment(0.0, 1.0),
-              colors: <Color>[ Color(0xff35a6ff),
-                Color(0xffffffff)],
-              tileMode: TileMode.clamp,
-            ),
-          ),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ///title
-              Container(
-                margin: EdgeInsets.only(left: 10, top: 20),
-                width: MediaQuery.of(context).size.width / 1.6,
-                child: Text(
-                  title,
-                  textAlign: TextAlign.left,
-                  maxLines: 1,
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold, letterSpacing: 2),
+    return PreferredSize(
+        preferredSize: Size.fromHeight(MediaQuery.of(context).size.height / 10),
+        child: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+            backgroundColor: Color(0xffffb359),
+            elevation: 0,
+            automaticallyImplyLeading: true,
+            flexibleSpace: Container(
+              margin: EdgeInsets.only(top: 25),
+              height: MediaQuery.of(context).size.height / 10,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment(0.0, 1.0),
+                  colors: <Color>[ Color(0xffffb359),
+                    Color(0xffffffff)],
+                  tileMode: TileMode.clamp,
                 ),
               ),
-              /// search icon
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () async {
-                  showSearch(context: context, delegate: ProductSearch());
-                },
+
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ///title
+                  Container(
+                    margin: EdgeInsets.only(left: 45, top: 10),
+                    width: MediaQuery.of(context).size.width / 1.6,
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.left,
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                      style: TextStyle(
+                          fontSize: 28,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold, letterSpacing: 2),
+                    ),
+                  ),
+                  ///search icon
+                  IconButton(
+                    padding: EdgeInsets.only(right: 20),
+                    icon: Icon(Icons.search),
+                    onPressed: () async {
+                      showSearch(context: context, delegate: ProductSearch());
+                    },
+                  ),
+                ],
               ),
-            ]
-        )
-      ),
-    );
+            )));
   }
 
 
