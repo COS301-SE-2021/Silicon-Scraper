@@ -17,3 +17,15 @@ def config(filename='database.ini', section='postgresql'):
 
 
     return con
+
+def connect():
+    try:
+        params = config()
+        conn = psycopg2.connect(**params)
+
+        curr = conn.cursor()
+
+    except( Exception, psycopg2.DatabaseError) as err:
+        print(err)
+    finally:
+        return curr, conn

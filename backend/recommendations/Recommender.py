@@ -8,48 +8,75 @@ import psycopg2.extensions
 from nltk.corpus import stopwords
 from configparser import ConfigParser
 from sklearn.feature_extraction.text import TfidfVectorizer
-from config import config 
+from config import connect
 
 stopwords = set(stopwords.words('english'))
 all_products = None
 rec = None
 similarity = None
 
-#This function facilitates the connection to the database
-def connect():
+cur, con = connect()
+all_products = get_all_products(cur, con)
+
+
+def update_gpu(gpu_recs, new_products):
+    for i, row in gpu_recs.iterrow():
+        query = ("""SELECT id FROM recommendation_gpu WHERE id = %s""")
+        cur.execute(query, (i,))
+        product = cur.fetchone()
+
+        if product is not None:
+            query = (""" UPDATE recommendation_gpu SET products = %s WHERE id = %s""")
+            cur.execute(query, (row['recommendations'], i))
+        else:
+            new_products.append((i, row))
+
+    return new_products
+
+
+
+def update_cpu(cpu_recs, new_products):
     try:
-        params = config()
+        for i, row in gpu_recs.iterrow():
+            query = ("""SELECT id FROM recommendation_cpu WHERE id = %s""")
+            cur.execute(query, (i,))
+            product = cur.fetchone()
 
-        #params = config()
-        #print(host, port, password, user, database)
-        # host=host, port=port, database=database, user=user, password=password
-        conn = psycopg2.connect(**params)
-        conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
-
-        curr = conn.cursor()
-
-    except( Exception, psycopg2.DatabaseError) as err:
+            if product is not None:
+                query = (""" UPDATE recommendation_cpu SET products = %s WHERE id = %s""")
+                cur.execute(query, (row['recommendations'], i))
+            else:
+                new_products.append((i, row))
+    except(Exception, psycopg2.DatabaseError) as err:
         print(err)
     finally:
-        return curr, conn
+        return new_products
+
+
+
+def generate_recommendations():
+    wishlist_products = get_wishlist(cur, con)
+
+    all_products.set_index('id', inplace=True)
+    all_products['all_features'] = all_products['brand'] +" "+ all_products['retailer'] +" "+ all_products['description_cl']
+    all_products['all_features'] = all_products['all_features'].apply(lambda x: x.lower())
+
+    vectorizor = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0)
+    tfidf_matrix = vectorizor.fit_transform(all_products['all_features'])
+
+    global similarity
+    similarity = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+    global rec
+    rec = pd.Series(all_products.index)
+
+    gpu_recs, cpu_recs = get_all_product_recommendations(wishlist_products)
+
+    new_products = []
+    new_products = update_gpu(gpu_recs, new_products)
+    new_products = update_cpu(cpu_recs, new_products)
+
     
-
-cur, con = connect()
-cur.execute('LISTEN table_modified')
-
-if select.select([conn],[],[],5) == ([],[],[]):
-    print 'Timeout'
-else:
-    con.poll()
-    while con.notifies:
-        notify = con.notifies.pop(0)
-        if notify.channel == 'table_modified':
-            #get new similarity table
-            pass
-        elif notify.channel == 'table_updated':
-            #remove product from recommendation table or add new porduct to recommendation table
-            pass
-
 
 
 
@@ -72,6 +99,8 @@ def get_wishlist(cur, con):
     table = cpus.append(gpus)
     #any preprocessing needing to be done
     #table = remove_columns_from_products(table)
+    wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
+
     return table 
 
 
@@ -86,7 +115,10 @@ def get_all_products(cur, con):
     table = cpus.append(gpus)
     
     # any preprocessing needed to be done
-    table = remove_columns_from_products(table)
+    all_products['descriptions_cl'] = all_products['descriptions'].apply(clean_data)
+    all_products.drop(['description'], axis=1, inplace=True)
+    all_products.dropna(inplace=True)
+
     return table
 
 
@@ -151,35 +183,19 @@ def get_all_product_recommendations(wishlist_description):
 
 def main():
 
-    cur, con = connect()
     #get all products in db and all wishlist products
-    wishlist_products = get_wishlist(cur, con)
-    wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
+    
+    
     
 
     #clean products dataframe 
     #all_products.dropna(inplace=True)
-    all_products = get_all_products(cur, con)
-    all_products['descriptions_cl'] = all_products['descriptions'].apply(clean_data)
-    all_products.drop(['description'], axis=1, inplace=True)
-    all_products.dropna(inplace=True)
+    
 
     #vectorize products and calculate similarity 
-    global all_products
-    all_products.set_index('id', inplace=True)
-    all_products['all_features'] = all_products['brand'] +" "+ all_products['retailer'] +" "+ all_products['description_cl']
-    all_products['all_features'] = all_products['all_features'].apply(lambda x: x.lower())
-
-    vectorizor = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0)
-    tfidf_matrix = vectorizor.fit_transform(all_products['all_features'])
-
-    global similarity
-    similarity = linear_kernel(tfidf_matrix, tfidf_matrix)
-
-    global rec
-    rec = pd.Series(all_products.index)
+    
     #get recommendations for all products in wishlist 
-    gpu_recs, cpu_recs = get_all_product_recommendations(wishlist_products)
+    
 
     #add result to db
 
