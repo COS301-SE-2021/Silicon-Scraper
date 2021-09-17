@@ -24,11 +24,11 @@ class SentimentService
     var body=jsonEncode(data);
     final response = await http.post(url,headers: headers,body: body);
     print(response.statusCode);
-    if(response.statusCode==201)
+    if(response.statusCode==200)
     {
       var responseData=jsonDecode(response.body);
       print(responseData);
-      return responseData;
+      return responseData["sentiments"];
     }
     else if(response.statusCode==404||response.statusCode==500)
     {

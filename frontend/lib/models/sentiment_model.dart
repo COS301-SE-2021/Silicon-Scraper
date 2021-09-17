@@ -9,6 +9,15 @@ class Sentiment
 
   factory Sentiment.fromJSON(Map<String,dynamic>json)
   {
-    return Sentiment(json["type"],json["polarity"],json["value"].toDouble()/100);
+    bool polarity;
+    if(json["polarity"]=="positive")
+      {
+        polarity=true;
+      }
+    else
+      {
+        polarity=false;
+      }
+    return Sentiment(json["type"],polarity,json["value"].toDouble()/100);
   }
 }

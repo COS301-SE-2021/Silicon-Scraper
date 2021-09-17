@@ -11,6 +11,7 @@ class SentimentViewModel
   Future getSentiment(String brand,String model)async
   {
     var json=await injector.dependency.SentimentRequest(brand, model);
+    print(json.length);
     for(int i=0;i<json.length;i++)
     {
       sentiments.add(SentimentWidget(Sentiment.fromJSON(json[i])));
