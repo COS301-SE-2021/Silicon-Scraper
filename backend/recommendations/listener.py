@@ -36,8 +36,9 @@ def listener():
             if notify.channel == 'table_modified':
                 #get new similarity table
                 generate_recommendations()
-                pass
+                
             elif notify.channel == 'table_updated':
                 #remove product from recommendation table or add new porduct to recommendation table
+                update_recommendations()
                 pass
 

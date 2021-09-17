@@ -109,13 +109,6 @@ def generate_recommendations():
             insert_cpu(df_cpu['id'], df_cpu['recs'])
 
 
-#A function that gets the user table and returns it as a dataframe
-def get_users(curr, conn):
-    query = "SELECT id FROM users"
-    table = pd.read_sql_query(query, conn)
-    table = pd.DataFrame(table)
-    return table
-
 
 def get_wishlist(cur, con):
     query = "SELECT * FROM wishilist_cpu"

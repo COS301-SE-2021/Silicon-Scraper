@@ -1,14 +1,14 @@
 import os
-from configParser import ConfigParser
+from configparser import ConfigParser
 
 def config(filename='database.ini', section='postgresql'):
     con = {}
-    parser = configParser()
+    parser = ConfigParser()
     parser.read(filename)
  
     if parser.has_section(section):
         con = {
-            "host": parser.get(sectio,'DB_HOST'),
+            "host": parser.get(section,'DB_HOST'),
             "port": parser.get(section,'DB_PORT'),
             "database": parser.get(section,'DB_NAME'),
             "user": parser.get(section,'DB_USER'),
