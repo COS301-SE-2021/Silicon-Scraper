@@ -28,30 +28,32 @@ jest.mock('typeorm', () => {
 describe('Recommendation Service tests', () => {
     it('fetch gpus, should return array of products', async () => {
         const gpus = await service.fetchGPUs([]);
-        expect(gpus).toEqual([])
+        expect(gpus).toEqual([]);
     })
 
     it('fetch cpus, should return array of products', async () => {
         const cpus = await service.fetchCPUs([]);
-        expect(cpus).toEqual([])
+        expect(cpus).toEqual([]);
     })
 
     it('fetch watchlist cpu, should return onject with array of products', async () => {
         const wl_cpu = await service.fetchWatchlistCPU('');
-        expect(wl_cpu).toEqual([])
+        expect(wl_cpu).toEqual([]);
     })
 
-    it('fetch watchlist gpu, should return onject with array of products', () => {
-        const wl_gpu = await service.fetchWatchlistGPU('');
-        expect(wl_gpu).toEqual([])
+    it('fetch watchlist gpu, should return onject with array of products', async () => {
+        const wl_gpu = await service.fetchWatchlistGPU('user_id');
+        expect(wl_gpu).toEqual([]);
     })
 
-    it('fetch recommendations, should return array of products', () => {
-        expect(true).toBe(true)
+    it('fetch recommendations, should return array of products', async () => {
+        const recommendations = await service.fetchRecommendations('user_id');
+        expect(recommendations).toEqual([]);
     })
 
-    it('get recommendationsm should call fetchRecommendations and return array of products', () => {
-        expect(true).toBe(true)
+    it('get recommendations, should call fetchRecommendations and return array of products', async () => {
+        
+        expect(true).toBe(true);
     })
 })
 
