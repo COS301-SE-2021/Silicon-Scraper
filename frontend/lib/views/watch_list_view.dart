@@ -19,18 +19,18 @@ class _WatchListState extends State<WatchList>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(35.0),
-        child: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Container(
-//              padding: EdgeInsets.only(bottom:15) ,
-              child: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)
-          ),
-          centerTitle: true,
-        ),
-      ),
+//       appBar: PreferredSize(
+//         preferredSize: Size.fromHeight(35.0),
+//         child: AppBar(
+//           // Here we take the value from the MyHomePage object that was created by
+//           // the App.build method, and use it to set our appbar title.
+//           title: Container(
+// //              padding: EdgeInsets.only(bottom:15) ,
+//               child: Text("Watch List",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)
+//           ),
+//           centerTitle: true,
+//         ),
+//       ),
     bottomNavigationBar: BottomAppBar(
 
     ),
@@ -39,7 +39,7 @@ class _WatchListState extends State<WatchList>
 //        {
 //          return w.floatingProductListView(context, w.items);
 //        },
-    body: watch.floatingProductListView(context, watch.items),
+    body: watch.horizontalProductListView(context, watch.items),
 //        child: Container(
 //        child: FutureBuilder(
 //        future: watch.setInitialProducts(),

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:silicon_scraper/theme/colors.dart';
-import 'package:silicon_scraper/views/search_view.dart';
+import 'package:silicon_scraper/views/widgets/app_bar_widget.dart';
+import 'package:silicon_scraper/view_models/login_view_model.dart';
+import 'package:silicon_scraper/views/recommendation_view.dart';
 import 'package:silicon_scraper/views/watch_list_view.dart';
-
-import 'explore_view.dart';
-
+import 'package:silicon_scraper/views/explore_view.dart';
 
 class MainNavigator extends StatefulWidget {
   MainNavigator({Key key, this.title}) : super(key: key);
@@ -26,46 +26,54 @@ class MainNavigator extends StatefulWidget {
 }
 
 class _MainNavigatorState extends State<MainNavigator> {
-  int pageIndex=2;
-  List<Widget> pageList=<Widget>[
-    SearchPage(),
-    WatchList(),
-    Explore(),
-  ];
+  int pageIndex = 0;
+
+  List<String> pageListString = ["explore", "watchlist", "discover"];
+  List<Widget> pageList = <Widget>[Explore(), WatchList(), Recommendation()];
+
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of views.widgets.
+    LoginViewModelSingleton login = LoginViewModelSingleton.getState();
     return Scaffold(
-
+      appBar: appbar(context, pageListString[pageIndex], 1),
       body: pageList[pageIndex],
       bottomNavigationBar: BottomNavigationBar(
-
+        /// when selected
         showSelectedLabels: true,
-        showUnselectedLabels: false,
+        selectedItemColor: Colors.black,
+        selectedLabelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+        selectedIconTheme: IconThemeData(color: Colors.black, opacity: 1.0),
+
+        /// when unselected grey out
+        showUnselectedLabels: true,
+        unselectedIconTheme: IconThemeData(color: Colors.black, opacity: 0.5),
+        unselectedLabelStyle: TextStyle(color: Color.fromARGB(128, 0, 0, 0), fontWeight: FontWeight.w500),
 
         currentIndex: pageIndex,
-        onTap: (value){
-          if(value == 0){
-            showSearch(context: context, delegate: ProductSearch());
+        onTap: (value) {
+          if (value == 3) {
+            value = 0;
+            login.logout(context);
           }
           setState(() {
-            pageIndex=value;
+            pageIndex = value;
           });
         },
-        backgroundColor: Colors.grey[800],
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.search),label: "Search"),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark,color: myOrange,),label: "Watch List"),
-          BottomNavigationBarItem(icon: Icon(Icons.explore,color: Colors.green[600],),label: "explore"),
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bookmarks), label: "Watchlist"),
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("assets/images/stars.png"),
+            ),
+            label: "Discover",
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.logout), label: "Logout"),
         ],
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

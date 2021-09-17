@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
+import 'package:silicon_scraper/injectors/recommendation_service_injector.dart';
 import 'package:silicon_scraper/view_models/notification_view_model.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/injectors/explore_service_injector.dart';
@@ -34,6 +35,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 void main() async{
   WatchListInjector.configure(DependencyType.MOCK);
   ExplorePageInjector.configure(DependencyType.PROD);
+  RecommendationPageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.MOCK,fail: false);
   LoginInjector.configure(DependencyType.PROD,success: true);
@@ -168,7 +170,7 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.grey[600],
         appBarTheme: AppBarTheme(
           brightness: Brightness.dark,
-              color: myLightBlue,
+              color: Color(0xffffb359),
         )
       ),
       home: /*MainNavigator()*/ LoginWrapper(),
