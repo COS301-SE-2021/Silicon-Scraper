@@ -28,6 +28,11 @@ class PredictionViewModel extends ChangeNotifier
     // todo receive response change UI
     try
     {
+      showDialog(context: context, builder: (_)=> AlertDialog(
+        title: Center(
+            child:CircularProgressIndicator()
+        ),
+      ));
       _predict=await _predictor.dependency.predictionRequest(_item, _date);
       print("it worked");
       if(_predict.price==_item.price)
@@ -47,7 +52,9 @@ class PredictionViewModel extends ChangeNotifier
     }
     catch(e)
     {
-      //todo display error message
+      Navigator.pop(context); /// remove the loading dialog before error is shown
+      return showDialog(context: context, builder: (_)=> AlertDialog(
+          title: Text("${e.message}")),);
     }
   }
 }
