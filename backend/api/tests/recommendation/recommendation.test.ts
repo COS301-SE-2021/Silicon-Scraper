@@ -48,3 +48,17 @@ describe('Recommendation Service tests', () => {
     })
 })
 
+describe('Recommendation Controller tests', () => {
+    service.getRecommendations = jest.fn().mockReturnValue([]);
+
+    it('should call getRecommendations once', async () => {
+        const response = await request(app).get('/recommendation/user_id');
+        expect(service.getRecommendations).toBeCalledTimes(1);
+    })
+
+    it('should return status 200 with object containing array of products', async () => {
+        const response = await request(app).get('/recommendation/user_id');
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual({ products: [] });
+    })
+})
