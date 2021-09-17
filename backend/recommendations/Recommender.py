@@ -19,23 +19,32 @@ cur, con = connect()
 all_products = get_all_products(cur, con)
 
 
-def update_gpu(gpu_recs, new_products):
-    for i, row in gpu_recs.iterrow():
-        query = ("""SELECT id FROM recommendation_gpu WHERE id = %s""")
-        cur.execute(query, (i,))
-        product = cur.fetchone()
+def update_gpu(gpu_recs):
+    new_products = []
+    try:
 
-        if product is not None:
-            query = (""" UPDATE recommendation_gpu SET products = %s WHERE id = %s""")
-            cur.execute(query, (row['recommendations'], i))
-        else:
-            new_products.append((i, row))
+        for i, row in gpu_recs.iterrow():
+            query = ("""SELECT id FROM recommendation_gpu WHERE id = %s""")
+            cur.execute(query, (i,))
+            product = cur.fetchone()
 
-    return new_products
+            if product is not None:
+                query = (""" UPDATE recommendation_gpu SET products = %s WHERE id = %s""")
+                cur.execute(query, (row['recommendations'], i))
+                con.commit()
+            else:
+                new_products.append((i, row))
+
+            
+    except(Exception, psycopg2.DatabaseError) as err:
+        print(err)
+    finally:
+        return new_products
 
 
 
-def update_cpu(cpu_recs, new_products):
+def update_cpu(cpu_recs):
+    new_products = []
     try:
         for i, row in gpu_recs.iterrow():
             query = ("""SELECT id FROM recommendation_cpu WHERE id = %s""")
@@ -45,12 +54,26 @@ def update_cpu(cpu_recs, new_products):
             if product is not None:
                 query = (""" UPDATE recommendation_cpu SET products = %s WHERE id = %s""")
                 cur.execute(query, (row['recommendations'], i))
+                con.commit()
             else:
                 new_products.append((i, row))
+
+            
     except(Exception, psycopg2.DatabaseError) as err:
         print(err)
     finally:
         return new_products
+
+def insert_cpu(id, cpu_arr):
+    query = ("""INSERT INTO recommendation_cpu (id, products) VALUES (%s, %s);""")
+    cur.execute(query,(id, cpu_arr))
+    con.commit()
+
+
+def insert_gpu(id, gpu_arr):
+    query = ("""INSERT INTO recommendation_gpu (id, products) VALUES (%s, %s);""")
+    cur.execute(query,(id, gpu_arr))
+    con.commit()
 
 
 
@@ -72,9 +95,8 @@ def generate_recommendations():
 
     gpu_recs, cpu_recs = get_all_product_recommendations(wishlist_products)
 
-    new_products = []
-    new_products = update_gpu(gpu_recs, new_products)
-    new_products = update_cpu(cpu_recs, new_products)
+    new_gpu = update_gpu(gpu_recs)
+    new_cpu = update_cpu(cpu_rec)
 
     
 
