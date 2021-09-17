@@ -156,7 +156,7 @@ def graphdata():
         response = [
             {
                 "price": int(drow['price']),
-                "date": str(drow['date'][:8])[:4]+'-'+str(drow['date'][:8])[4:6]+'-'+str(drow['date'][:8])[6:8]
+                "date": parseDate(str(drow['date'][:8]))
             }
         ]
 
@@ -165,7 +165,7 @@ def graphdata():
             price, avail = makeprediction(data)
             response.append({
                 "price": price,
-                "date": date[:4]+'-'+date[4:6]+'-'+date[6:8]
+                "date": parseDate(date)
             })
 
         results['success'] = True
@@ -178,6 +178,14 @@ def graphdata():
                    'success': False,
                    'message': f"missing parameter(s): '{' and '.join(missing_params)}'."
                }, 400
+
+
+def parseDate(dt):
+    year = dt[:4]
+    month = dt[4:6]
+    day = dt[6:8]
+    date = year+"-"+month+"-"+day
+    return date
 
 
 def generatetimestamp(timestamp):
