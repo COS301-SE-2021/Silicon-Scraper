@@ -9,6 +9,9 @@ from configparser import ConfigParser
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 stopwords = set(stopwords.words('english'))
+all_products = None
+rec = None
+similarity = None
 
 #This function facilitates the connection to the database
 def connect():
@@ -138,31 +141,39 @@ def get_all_product_recommendations(wishlist_description):
 
     return result_gpu, result_cpu
 
+
 def main():
 
     cur, con = connect()
     #get all products in db and all wishlist products
     wishlist_products = get_wishlist(cur, con)
     wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
-    all_products = get_all_products(cur, con)
+    
 
     #clean products dataframe 
     #all_products.dropna(inplace=True)
+    all_products = get_all_products(cur, con)
     all_products['descriptions_cl'] = all_products['descriptions'].apply(clean_data)
     all_products.drop(['description'], axis=1, inplace=True)
     all_products.dropna(inplace=True)
 
     #vectorize products and calculate similarity 
+    global all_products
     all_products.set_index('id', inplace=True)
     all_products['all_features'] = all_products['brand'] +" "+ all_products['retailer'] +" "+ all_products['description_cl']
+    all_products['all_features'] = all_products['all_features'].apply(lambda x: x.lower())
+
     vectorizor = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0)
     tfidf_matrix = vectorizor.fit_transform(all_products['all_features'])
+
+    global similarity
     similarity = linear_kernel(tfidf_matrix, tfidf_matrix)
 
+    global rec
     rec = pd.Series(all_products.index)
-
     #get recommendations for all products in wishlist 
     gpu_recs, cpu_recs = get_all_product_recommendations(wishlist_products)
+
     #add result to db
 
     con.close()
