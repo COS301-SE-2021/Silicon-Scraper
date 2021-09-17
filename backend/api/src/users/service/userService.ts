@@ -31,7 +31,9 @@ export default class UserService {
         result.hash = request.password;
         const response: CreateUserResponse = <CreateUserResponse>{};
         response.token = this.jwtUtil.generateToken(user);
-        response.user = result;
+        response.user = new User();
+        response.user.id = result.id;
+        response.user.username = result.username;
         return response;
     }
 
@@ -50,6 +52,9 @@ export default class UserService {
             throw new InvalidCredentials();
         const response: LoginUserResponse = <LoginUserResponse>{};
         response.token = this.jwtUtil.generateToken(user);
+        response.user = new User();
+        response.user.id = user.id;
+        response.user.username = user.username;
         return response;
     }
 
