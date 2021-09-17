@@ -147,12 +147,8 @@ def graphdata():
     if len(missing_params) == 0:
 
         data = json_normalize(params)
-        print("=================================")
-        print(data)
-        print("=================================")
         times = generatetimestamp(data['date'][0])
         drow = data.to_dict(orient="records")[0]
-        print(drow)
         response = [
             {
                 "price": int(drow['price']),
@@ -161,7 +157,7 @@ def graphdata():
         ]
 
         for date in times:
-            data['date'] = date 
+            data['date'] = date
             price, avail = makeprediction(data)
             response.append({
                 "price": price,
