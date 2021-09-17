@@ -59,7 +59,12 @@ async function fetchCPUs(productIds: string[]) {
 }
 
 const service = {
-    getRecommendations
+    getRecommendations,
+    fetchRecommendations,
+    fetchWatchlistCPU,
+    fetchWatchlistGPU,
+    fetchCPUs,
+    fetchGPUs
 }
 
 export default service;
