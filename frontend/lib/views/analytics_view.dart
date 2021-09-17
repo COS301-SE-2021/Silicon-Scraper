@@ -36,7 +36,7 @@ class AnalyticsView extends StatelessWidget
               child: Container(
                 child: FutureBuilder
                 (
-                  future: chartData.setData(),
+                  future: chartData.setData(p),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting)
                     {

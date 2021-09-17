@@ -9,6 +9,7 @@ import 'package:silicon_scraper/injectors/explore_service_injector.dart';
 import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.dart';
 import 'package:silicon_scraper/theme/colors.dart';
 import 'injectors/dependency_types.dart';
+import 'injectors/line_chart_service_injector.dart';
 import 'injectors/login_service_injector.dart';
 import 'injectors/watch_list_service_injector.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 void main() async{
-  WatchListInjector.configure(DependencyType.PROD);
+  WatchListInjector.configure(DependencyType.MOCK);
   ExplorePageInjector.configure(DependencyType.PROD);
   RecommendationPageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
@@ -42,7 +43,8 @@ void main() async{
   LoginInjector.configure(DependencyType.PROD,success: true);
   SignUpInjector.configure(DependencyType.PROD,success: true);
   NotificationViewModel notification=new NotificationViewModel();
-  SentimentInjector.configure(DependencyType.PROD);
+  SentimentInjector.configure(DependencyType.MOCK);
+  LineChartInjector.configure(DependencyType.PROD);
 
 
   /// this sets the initial products for the watch list do not remove

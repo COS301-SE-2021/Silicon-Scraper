@@ -1,31 +1,59 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:silicon_scraper/models/product_model.dart';
 
 class LineChartService
 {
 
-  Future LineChartRequest(String username,String password)async
+  Future LineChartRequest(Product p)async
   {
 
-    var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/users/");
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    String token=sharedPreferences.get('token');
+
+    print("here");
+    //todo change endpoint
+    var url = Uri.parse("https://silicon-scraper-ai-api.herokuapp.com/predict/graph-data");
     Map <String,String> headers=
     {
       "Content-Type":"application/json; charset=utf-8",
+      'Authorization': "Bearer "+token,
     };
 
-    Map <String,String> data={
-      "username": username,
-      "password": password
+    final DateFormat format=DateFormat('yyyMMddHHmmss');
+    DateTime t=DateTime.now();
+    final String date=format.format(t);
+    String av;
+    if(p.stockAvailability==availability.outOfStock)
+    {
+      av="Out of Stock";
+    }
+    else
+    {
+      av="In Stock";
+    }
+    Map <String,dynamic> body=
+    {
+      "brand":p.brand,
+      "model":p.model.toUpperCase(),
+      "availability":av,
+      "date":date,
+      "type":p.type,
+      "price":p.price
     };
+    var data=jsonEncode(body);
 
-    var body=jsonEncode(data);
-    final response = await http.post(url,headers: headers,body: body);
+    print(body);
+    final response = await http.post(url,headers: headers,body: data);
     print(response.statusCode);
-    if(response.statusCode==201)
+
+    if(response.statusCode==200)
     {
       var responseData=jsonDecode(response.body);
       print(responseData);
-      return responseData;
+      return responseData["data"];
     }
     else if(response.statusCode==404||response.statusCode==500)
     {
