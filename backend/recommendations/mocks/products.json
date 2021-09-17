@@ -242,7 +242,39 @@
                 "Thermal Solution (PIB)": "Not included",
                 "Default TDP / TDP":"105W"
             }
-		}
+		},{
+            "id": "36ge36-7dh7-hd382-hdh3873rh83",
+            "brand": "MSI",
+            "model": "GeForce RTX 3090 Gaming X TRIO 24GB",
+            "image": "https://www.evetech.co.za/repository/components/msi-geforce-rtx-3090-gaming-x-trio-24gb-300px-v2_sml(1).jpg",
+            "price": 43999,
+            "availability": "In Stock",
+            "link": "https://www.evetech.co.za/msi-geforce-rtx-3090-gaming-x-trio-24gb/best-deal/9685.aspx",
+            "retailer": "Dreamware",
+            "type": "gpu",
+            "description": {
+                "NVIDIA CUDA Cores": "10496",
+                "Boost Clock": "1.70 GHz",
+                "Memory size": "24 GB",
+                "Memory type": "GDDR6X"
+            }
+        },{
+            "id": "4637r-5hr84-843-j84hrf934",
+            "brand": "ASUS TUF Gaming" ,
+            "model": "GeForce RTX 3080 Ti OC 12GB Gaming",
+            "image":"https://www.evetech.co.za/repository/components/intel-core-i9-11900kf-300px-v1_sml.jpg",
+            "price": 35999,
+            "availability":"In Stock",
+            "link": "https://www.evetech.co.za/intel-core-i9-11900kf/best-deal/11945.aspx",
+            "retailer": "Dreamware",
+            "type": "gpu",
+            "description": {
+                "NVIDIA CUDA Cores": "10240",
+                "Boost Clock": "1.67 GHz",
+                "Memory size": "12 GB",
+                "Memory type": "GDDR6X"
+            }
+        }
 
 	]
 }
