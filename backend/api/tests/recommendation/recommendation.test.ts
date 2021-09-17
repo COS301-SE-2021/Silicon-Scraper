@@ -14,7 +14,12 @@ jest.mock('typeorm', () => {
             createQueryBuilder: jest.fn().mockReturnValue({
                 where: jest.fn().mockReturnValue({
                     getMany: jest.fn().mockReturnValue([])
-                })
+                }),
+                innerJoinAndSelect: jest.fn().mockReturnValue({
+                    where: jest.fn().mockReturnValue({
+                        getMany: jest.fn().mockReturnValue([])
+                    })
+                }) 
             })
         })
     }
@@ -31,12 +36,14 @@ describe('Recommendation Service tests', () => {
         expect(cpus).toEqual([])
     })
 
-    it('fetch watchlist cpu, should return onject with array of products', () => {
-        expect(true).toBe(true)
+    it('fetch watchlist cpu, should return onject with array of products', async () => {
+        const wl_cpu = await service.fetchWatchlistCPU('');
+        expect(wl_cpu).toEqual([])
     })
 
     it('fetch watchlist gpu, should return onject with array of products', () => {
-        expect(true).toBe(true)
+        const wl_gpu = await service.fetchWatchlistGPU('');
+        expect(wl_gpu).toEqual([])
     })
 
     it('fetch recommendations, should return array of products', () => {
