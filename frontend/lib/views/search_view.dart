@@ -86,19 +86,19 @@ class ProductSearch extends SearchDelegate<String> {
           }
         },
       ),
-      IconButton(
-        icon: Icon(Icons.bookmarks_rounded),
-        color: Colors.black,
-        onPressed: () async {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => WatchList()));
-        },
-      ),
-      IconButton(
-        icon: Icon(Icons.person),
-        color: Colors.black,
-        onPressed: () async {},
-      ),
+      // IconButton(
+      //   icon: Icon(Icons.bookmarks_rounded),
+      //   color: Colors.black,
+      //   onPressed: () async {
+      //     Navigator.push(
+      //         context, MaterialPageRoute(builder: (context) => WatchList()));
+      //   },
+      // ),
+      // IconButton(
+      //   icon: Icon(Icons.person),
+      //   color: Colors.black,
+      //   onPressed: () async {},
+      // ),
     ];
   }
 
