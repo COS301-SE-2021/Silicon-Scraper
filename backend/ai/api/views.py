@@ -147,25 +147,30 @@ def graphdata():
     if len(missing_params) == 0:
 
         data = json_normalize(params)
-        times = generatetimestamp(data['date'])
-
+        print("=================================")
+        print(data)
+        print("=================================")
+        times = generatetimestamp(data['date'][0])
+        drow = data.to_dict(orient="records")[0]
+        print(drow)
         response = [
             {
-                "price": data['price'],
-                "date": data['date']
+                "price": int(drow['price']),
+                "date": str(drow['date'][:8])[:4]+'-'+str(drow['date'][:8])[4:6]+'-'+str(drow['date'][:8])[6:8]
             }
         ]
 
         for date in times:
-            data['date'] = date
+            data['date'] = date 
             price, avail = makeprediction(data)
             response.append({
                 "price": price,
-                "date": data['date']
+                "date": date[:4]+'-'+date[4:6]+'-'+date[6:8]
             })
 
         results['success'] = True
         results['data'] = response
+        print(results)
         return jsonify(results), 200
 
     else:
@@ -179,10 +184,10 @@ def generatetimestamp(timestamp):
     i = 7
     times = []
     for week in range(12):
-        newdate = datetime.strptime(timestamp, '%Y%m%d') + timedelta(weeks=week+1)
+        newdate = datetime.strptime(str(timestamp), '%Y%m%d%H%M%S%f') + timedelta(weeks=week+1)
         newdate = str(newdate)
         listd = newdate.replace('-', '')
-        times.append(newdate)
+        times.append(listd)
 
     return times
 
