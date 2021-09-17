@@ -130,16 +130,20 @@ class Product {
       availabilityColor = Color.fromARGB(255, 41, 196, 41);
     }
 
+    double font = 14;
     TextAlign textAlign = TextAlign.left;
     if (widget.compareTo("horizontal") == 0) {
       textAlign = TextAlign.right;
+    }
+    if (widget.compareTo("productDetail") == 0) {
+      font = 18;
     }
 
     return Text(availabilityString,
         overflow: TextOverflow.ellipsis,
         textAlign: textAlign,
         style: TextStyle(
-            fontSize: 14,
+            fontSize: font,
             fontWeight: FontWeight.bold,
             color: availabilityColor));
   }

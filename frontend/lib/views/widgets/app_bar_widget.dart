@@ -42,7 +42,7 @@ Widget appbar(BuildContext context, String page, int depth) {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment(0.0, 1.0),
-                  colors: <Color>[ Color(0xffffb359),
+                  colors: <Color>[ Color(0xe6ffb359),
                     Color(0xffffffff)],
                   tileMode: TileMode.clamp,
                 ),
@@ -54,7 +54,7 @@ Widget appbar(BuildContext context, String page, int depth) {
                 children: [
                   ///title
                   Container(
-                    margin: EdgeInsets.only(left: 45, top: 10),
+                    margin: EdgeInsets.only(left: 45, top: 12),
                     width: MediaQuery.of(context).size.width / 1.6,
                     child: Text(
                       title,
@@ -64,7 +64,7 @@ Widget appbar(BuildContext context, String page, int depth) {
                       style: TextStyle(
                           fontSize: 28,
                           color: Colors.black,
-                          fontWeight: FontWeight.bold, letterSpacing: 2),
+                          fontWeight: FontWeight.bold, letterSpacing: 0),
                     ),
                   ),
                   ///search icon
