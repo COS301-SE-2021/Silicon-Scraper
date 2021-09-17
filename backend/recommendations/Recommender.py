@@ -98,8 +98,15 @@ def generate_recommendations():
     new_gpu = update_gpu(gpu_recs)
     new_cpu = update_cpu(cpu_rec)
 
-    
+    if new_gpu is not None:
+        df_gpu = pd.DataFrame(new_gpu, columns=['id', 'recs'])
+        for i, row in df_gpu.iterrows():
+            insert_gpu(df_gpu['id'], df_gpu['recs'])
 
+    if new_cpu is not None:
+        df_cpu = pd.DataFrame(new_cpu, columns=['id', 'recs'])
+        for i, row in df_cpu.iterrows():
+            insert_cpu(df_cpu['id'], df_cpu['recs'])
 
 
 #A function that gets the user table and returns it as a dataframe
