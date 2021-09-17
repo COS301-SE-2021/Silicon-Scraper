@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
@@ -62,15 +64,27 @@ ListView productListView(BuildContext context,List<Product> items)
     itemCount:items.length ,
       itemBuilder: (_,index){
         return
-            FloatingProductWidget( state: ProductViewModel(items[index]));
+            HorizontalProductWidget( state: ProductViewModel(items[index]));
       },
+  );
+}
+
+GridView gridProductListView(BuildContext context, List<Product> items){
+  return GridView.count(
+    crossAxisCount: 2,
+    mainAxisSpacing: 15.0,
+    scrollDirection: Axis.vertical,
+    children: List.generate(items.length, (index) {
+      return Center(child: VerticalProductWidget( state: ProductViewModel(items[index]))
+      );
+    }),
   );
 }
 
 ListView productHorizontalListView(BuildContext context,List<Product> items)
 {
   return ListView.builder(
-      itemCount:items.length ,
+      itemCount:10 ,
       scrollDirection: Axis.horizontal,
       itemBuilder: (_,index){
         return

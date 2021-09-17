@@ -14,15 +14,15 @@ class VerticalProductWidget extends StatefulWidget {
 }
 
 class _VerticalProductWidgetState extends State<VerticalProductWidget> {
+
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return ChangeNotifierProvider<ProductViewModel>(
       create: (_) => widget.state,
       child: Consumer<ProductViewModel>(
         builder:(context,ProductViewModel w,_) =>  Container(
-          width: MediaQuery.of(context).size.width / 2.75,
-          height: MediaQuery.of(context).size.height/ 4,
+          width: MediaQuery.of(context).size.width / 2.5,
+          height: MediaQuery.of(context).size.height/ 3,
           child: Card(
             //elevation: 1.0,
             shape: RoundedRectangleBorder(
@@ -40,41 +40,53 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                 children: [
                   /// image
                   Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    height: MediaQuery.of(context).size.height / 7.3,
+                    width: MediaQuery.of(context).size.width / 2.75,
+                    height: MediaQuery.of(context).size.height / 6.3,
                     child: Image.network('${widget.state.item.image}',),
                   ),
                   /// product name (brand+model)
                   Container(
-                    width: MediaQuery.of(context).size.width / 3,
+                    width: MediaQuery.of(context).size.width / 2.75,
                     //height: MediaQuery.of(context).size.height / 39,
                     margin: EdgeInsets.fromLTRB(5, 5, 0, 0),
                     child: Text("${widget.state.item.brand+" "+widget.state.item.model}", maxLines: 2, overflow: TextOverflow.ellipsis,textAlign: TextAlign.left,style: TextStyle(
-                        fontSize: 14, color: Colors.black54, fontWeight: FontWeight.bold),),
+                        fontSize: 15, color: Color.fromARGB(235, 78, 78, 78), fontWeight: FontWeight.w500),),
                   ),
-                  /// price and bookmark button
+                  /// availability, price and bookmark button
                   Container(
-                    width: MediaQuery.of(context).size.width /3,
+                    width: MediaQuery.of(context).size.width /2.75,
                     //height: MediaQuery.of(context).size.height / 29.24,
                     margin: EdgeInsets.fromLTRB(5, 0, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// price
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child:
-                          Text('R ${widget.state.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black)),
+                        /// availability and price
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ///availability
+                            Container(
+                              child: widget.state.item.getAvailabilityTextFormat("vertical"),
+                            ),
+                            ///price
+                            Container(
+                              margin: EdgeInsets.only(top: 3, bottom: 3),
+                              child:
+                              Text('R ${widget.state.item.price.toStringAsFixed(2)}', overflow: TextOverflow.ellipsis, textAlign: TextAlign.left, style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black)),
+                            ),
+                          ],
                         ),
                         /// bookmark button
                         Container(
-                            margin: EdgeInsets.only(left: 5),
-                            height: MediaQuery.of(context).size.height / 25,
-                            width: MediaQuery.of(context).size.width / 16.7,
+                            margin: EdgeInsets.only(left: 15, bottom: 5),
+                            //alignment: Alignment.centerRight,
+                            height: MediaQuery.of(context).size.height / 20,
+                            width: MediaQuery.of(context).size.width / 12.7,
                             child: FloatingActionButton(backgroundColor: Colors.white,
                               child: widget.state.save, onPressed:
                                   (){

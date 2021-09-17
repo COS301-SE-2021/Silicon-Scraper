@@ -8,6 +8,7 @@ import { GPU } from './entity/gpu';
 import { User } from './entity/user';
 import { watchlistCPU } from './entity/watchlistCPU';
 import { watchlistGPU } from './entity/watchlistGPU';
+import {ReviewSentiment} from './entity/reviewSentiment';
 
 import productRoutes from './products/productRoutes';
 import UserController from './users/controller/userController';
@@ -16,6 +17,8 @@ import jwtUtil from './utilities/jwtUtil';
 import passwordEncoder from './utilities/passwordEncoder';
 import WatchlistController from './watchlist/controller/watchlistController';
 import WatchlistService from './watchlist/service/watchlistService';
+import SentimentContoller from "./sentiment/controller/sentimentContoller";
+import SentimentService from "./sentiment/service/sentimentService";
 
 const app = express();
 
@@ -32,11 +35,17 @@ const connect = async () => {
     const watchlistService: WatchlistService = new WatchlistService(watchGPURepository, watchCPURepository, cpuRepository, gpuRepository);
     const watchlistController: WatchlistController = new WatchlistController(watchlistService);
 
+    const sentimentRepository: Repository<ReviewSentiment> = getRepository(ReviewSentiment);
+    const sentimentService: SentimentService = new SentimentService(sentimentRepository);
+    const sentimentController: SentimentContoller = new SentimentContoller(sentimentService);
+
+
     app.use(express.json({limit: '2kb'}));
     app.use(helmet());
     app.use('/products', productRoutes);
     app.use('/users', userController.routes());
     app.use('/watchlist', watchlistController.routes());
+    app.use('/sentiment', sentimentController.routes());
     app.use((req, res, next) => {
         res.status(404).json({
             status: 404,

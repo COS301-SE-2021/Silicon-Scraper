@@ -28,3 +28,8 @@ export interface RemoveProductRequest {
     productID: string,
     type: string
 }
+
+export interface RetrieveSentimentRequest{
+    brand: string,
+    model: string
+}

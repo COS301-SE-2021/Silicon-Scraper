@@ -4,17 +4,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ExplorePageService {
+class RecommendationPageService {
   static int page = 0;
   static int limit = 20;
 
   List<Product> items = [];
 
-  ExplorePageService() {
+  RecommendationPageService() {
     //setItems();
   }
 
-  Future explorePageRequest(String productType) async {
+  Future recommendationPageRequest() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.getString('token');
     String userId = sharedPreferences.getString('userId');
@@ -22,9 +22,7 @@ class ExplorePageService {
     // print(sharedPreferences.get('userId'));
 
     var url = Uri.parse(
-        "https://api-silicon-scraper.herokuapp.com/products/?type=" +
-            productType+
-            "&userId="+userId);
+        "https://api-silicon-scraper.herokuapp.com/products/?userId="+userId);
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=utf-8",
       'Authorization': 'Bearer ' + token
@@ -38,8 +36,8 @@ class ExplorePageService {
     return false;
   }
 
-  Future setItems(String productType) async {
-    items = await explorePageRequest(productType);
+  Future setItems() async {
+    items = await recommendationPageRequest();
     return items;
   }
 
@@ -48,16 +46,16 @@ class ExplorePageService {
   }
 }
 
-class ExplorePageSingleton extends ExplorePageService {
-  static ExplorePageSingleton _instance;
+class RecommendationPageSingleton extends RecommendationPageService {
+  static RecommendationPageSingleton _instance;
 
-  ExplorePageSingleton._internal() {
+  RecommendationPageSingleton._internal() {
 //
   }
 
-  static ExplorePageSingleton getState() {
+  static RecommendationPageSingleton getState() {
     if (_instance == null) {
-      _instance = ExplorePageSingleton._internal();
+      _instance = RecommendationPageSingleton._internal();
     }
     return _instance;
   }
