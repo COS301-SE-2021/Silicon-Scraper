@@ -1,21 +1,24 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SentimentService
 {
 
-  Future SentimentRequest(String username,String password)async
+  Future SentimentRequest(String brand,String model)async
   {
-
-    var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/users/");
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    String token=sharedPreferences.get('token');
+    var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/sentiment");
     Map <String,String> headers=
     {
       "Content-Type":"application/json; charset=utf-8",
+      'Authorization': "Bearer "+token,
     };
 
     Map <String,String> data={
-      "username": username,
-      "password": password
+      "brand": brand,
+      "model": model
     };
 
     var body=jsonEncode(data);

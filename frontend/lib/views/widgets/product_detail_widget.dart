@@ -152,7 +152,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                                       child:Text("Analytics"),
                                       onPressed:()
                                       {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsView()));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsView(widget.state.item)));
                                       },
 
                                   )
