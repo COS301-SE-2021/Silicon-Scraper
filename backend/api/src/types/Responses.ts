@@ -4,11 +4,12 @@ import { User } from "../entity/user";
 
 export interface CreateUserResponse {
     token: string,
-    user: User
+    user: Partial<User>
 }
 
 export interface LoginUserResponse {
-    token: string
+    token: string,
+    user: Partial<User>
 }
 
 export interface RetrieveWatchlistResponse {
