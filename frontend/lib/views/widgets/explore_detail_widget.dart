@@ -49,17 +49,17 @@ class _ExploreDetailWidgetState extends State<ExploreDetailWidget> {
                 showSearch(context: context, delegate: ProductSearch());
               },
             ),
-            IconButton(
-              icon: Icon(Icons.bookmarks_rounded),
-              onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => WatchList()));
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.person),
-              onPressed: () async {},
-            ),
+            // IconButton(
+            //   icon: Icon(Icons.bookmarks_rounded),
+            //   onPressed: () async {
+            //     Navigator.push(context, MaterialPageRoute(
+            //         builder: (context) => WatchList()));
+            //   },
+            // ),
+            // IconButton(
+            //   icon: Icon(Icons.person),
+            //   onPressed: () async {},
+            // ),
           ],
         ),
         //backgroundColor: Colors.white,
