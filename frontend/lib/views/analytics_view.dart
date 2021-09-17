@@ -80,7 +80,6 @@ class AnalyticsView extends StatelessWidget
                           margin:EdgeInsets.only(top:20),
                             child: Column(
                               children: [
-                                Text("User Sentiment related to the Product"),
                                 sentiment.sentimentList(),
                               ],
                             )
