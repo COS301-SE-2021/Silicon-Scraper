@@ -1,5 +1,5 @@
 import os
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 import numpy as np
 import json
@@ -22,9 +22,7 @@ price_model = None
 avail_model = None
 
 
-def prepare_params(params):
-    data = json_normalize(params)
-
+def prepare_params(data):
     csv_path = PATH_TO_CPU_MODEL_DATA if data['type'].item() == 'cpu' else PATH_TO_GPU_MODEL_DATA
 
     models = read_csv(csv_path)
@@ -109,6 +107,8 @@ def price_and_availability():
 
     if len(missing_params) == 0:
 
+        params = json_normalize(params)
+
         price, avail = makeprediction(params)
 
         results['predictions'] = {'price': 'price', 'availability': ''}
@@ -125,7 +125,7 @@ def price_and_availability():
                }, 400
 
 
-@bp.route('/graph-data', method=["POST"])
+@bp.route('/graph-data', methods=["POST"])
 def graphdata():
     results = {'success': False}
     params = request.json
@@ -179,8 +179,9 @@ def generatetimestamp(timestamp):
     i = 7
     times = []
     for week in range(12):
-        w = (week + 1) * 7
-        newdate = timestamp + timedelta(w)
+        newdate = datetime.strptime(timestamp, '%Y%m%d') + timedelta(weeks=week+1)
+        newdate = str(newdate)
+        listd = newdate.replace('-', '')
         times.append(newdate)
 
     return times
