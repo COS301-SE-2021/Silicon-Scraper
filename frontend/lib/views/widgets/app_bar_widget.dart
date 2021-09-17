@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../search_view.dart';
 
 Widget appbar(BuildContext context, String page, int depth) {
-
   String title = "";
   String subtitle = "";
   if(page.compareTo("explore") == 0){
@@ -17,6 +16,54 @@ Widget appbar(BuildContext context, String page, int depth) {
     title = "DISCOVER";
     subtitle = "RECOMMENDED PRODUCTS";
   }
+
+  if (depth == 2){
+    return AppBar(
+      title: Container(
+          margin: EdgeInsets.only(top: 25),
+          height: MediaQuery.of(context).size.height / 5,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment(0.0, 1.0),
+              colors: <Color>[ Color(0xff35a6ff),
+                Color(0xffffffff)],
+              tileMode: TileMode.clamp,
+            ),
+          ),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ///title
+              Container(
+                margin: EdgeInsets.only(left: 10, top: 20),
+                width: MediaQuery.of(context).size.width / 1.6,
+                child: Text(
+                  title,
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
+                  overflow: TextOverflow.fade,
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold, letterSpacing: 2),
+                ),
+              ),
+              /// search icon
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () async {
+                  showSearch(context: context, delegate: ProductSearch());
+                },
+              ),
+            ]
+        )
+      ),
+    );
+  }
+
 
   return PreferredSize(
       preferredSize: Size.fromHeight(MediaQuery.of(context).size.height / 5),
