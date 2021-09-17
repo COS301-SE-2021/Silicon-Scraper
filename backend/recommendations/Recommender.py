@@ -176,4 +176,10 @@ def main():
 
     #add result to db
 
+    # if product db is updated:
+    #     get new similarities 
+    # if wishlists are updated:
+    #     get recommendations for new product added and append to recommendation table or
+    #     if products is removed from wishlist, remove it from recommendations table 
+
     con.close()
