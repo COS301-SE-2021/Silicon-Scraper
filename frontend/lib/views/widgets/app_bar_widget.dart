@@ -4,7 +4,16 @@ import '../search_view.dart';
 Widget appbar(BuildContext context, String page, int depth) {
   String title = "";
   String subtitle = "";
-  if(page.compareTo("explore") == 0){
+  if(page.compareTo("cpu") == 0){
+    title = "CPUs";
+  }
+  else if(page.compareTo("gpu") == 0){
+    title = "GPUs";
+  }
+  else if(page.compareTo("productDetail") == 0){
+    title = "Product Detail";
+  }
+  else if(page.compareTo("explore") == 0){
     title = "EXPLORE";
     subtitle = "ALL PRODUCTS";
   }
