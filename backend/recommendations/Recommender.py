@@ -33,7 +33,7 @@ def update_gpu(gpu_recs):
                 cur.execute(query, (row['recommendations'], i))
                 con.commit()
             else:
-                new_products.append((i, row))
+                new_products.append((i, row['recommendations']))
 
             
     except(Exception, psycopg2.DatabaseError) as err:
@@ -56,7 +56,7 @@ def update_cpu(cpu_recs):
                 cur.execute(query, (row['recommendations'], i))
                 con.commit()
             else:
-                new_products.append((i, row))
+                new_products.append((i, row['recommendations']))
 
             
     except(Exception, psycopg2.DatabaseError) as err:
@@ -101,13 +101,28 @@ def generate_recommendations():
     if new_gpu is not None:
         df_gpu = pd.DataFrame(new_gpu, columns=['id', 'recs'])
         for i, row in df_gpu.iterrows():
-            insert_gpu(df_gpu['id'], df_gpu['recs'])
+            insert_gpu(row['id'], row['recs'])
 
     if new_cpu is not None:
         df_cpu = pd.DataFrame(new_cpu, columns=['id', 'recs'])
         for i, row in df_cpu.iterrows():
-            insert_cpu(df_cpu['id'], df_cpu['recs'])
+            insert_cpu(row['id'], row['recs'])
 
+
+def update_recommendations():
+    wishlist_products = get_wishlist(cur, con)
+    wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
+
+    recs = []
+    for i, row in wishlist_products.iterrows():
+        query = (""" SELECT id FROM recommendation_cpu WHERE id = %s""")
+        cur.execute(query, row['product_id'])
+        product = cur.fetchone()
+
+        if product is None:
+            #get the product type 
+            item = all_products[all_products.index == row['product_id']]
+            recs.append(recommend(i, row['product_id']))
 
 
 def get_wishlist(cur, con):
