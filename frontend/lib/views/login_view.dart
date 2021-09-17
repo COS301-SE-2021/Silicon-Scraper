@@ -62,16 +62,16 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  FlatButton(
-                    onPressed: (){
-                      //forgot password screen
-                    },
-                    textColor: Colors.blue,
-                    child: Text('Forgot Password'),
-                  ),
+//                  FlatButton(
+//                    onPressed: (){
+//                      //forgot password screen
+//                    },
+//                    textColor: Colors.blue,
+//                    child: Text('Forgot Password'),
+//                  ),
                   Container(
                       height: 50,
-                      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      padding: EdgeInsets.fromLTRB(10, 15, 10, 0),
                       child: RaisedButton(
                         textColor: Colors.white,
                         color: Colors.blue,

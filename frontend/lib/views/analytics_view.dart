@@ -77,7 +77,7 @@ class AnalyticsView extends StatelessWidget
                       else if (snapshot.data != null)
                       {
                         return Container(
-                          margin:EdgeInsets.only(top:20),
+                          margin:EdgeInsets.only(top:30),
                             child: Column(
                               children: [
                                 sentiment.sentimentList(),
