@@ -4,9 +4,11 @@ import re
 import psycopg2
 import nltk
 import nan 
+import psycopg2.extensions
 from nltk.corpus import stopwords
 from configparser import ConfigParser
 from sklearn.feature_extraction.text import TfidfVectorizer
+from config import config 
 
 stopwords = set(stopwords.words('english'))
 all_products = None
@@ -16,20 +18,13 @@ similarity = None
 #This function facilitates the connection to the database
 def connect():
     try:
-        
-        parser = ConfigParser()
-        parser.read('database.ini')
-
-        #params = config()
-        host = parser.get('postgresql','DB_HOST')
-        port = parser.get('postgresql','DB_PORT')
-        database =parser.get('postgresql','DB_NAME')
-        user = parser.get('postgresql','DB_USER')
-        password = parser.get('postgresql','DB_PW')
+        params = config()
 
         #params = config()
         #print(host, port, password, user, database)
-        conn = psycopg2.connect(host=host, port=port, database=database, user=user, password=password)
+        # host=host, port=port, database=database, user=user, password=password
+        conn = psycopg2.connect(**params)
+        conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
         curr = conn.cursor()
 
@@ -38,6 +33,7 @@ def connect():
     finally:
         return curr, conn
     
+
 cur, con = connect()
 cur.execute('LISTEN table_modified')
 
