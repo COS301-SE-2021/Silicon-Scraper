@@ -110,6 +110,34 @@ def clean_data(text):
 def similarity_func():
     pass
 
+
+def get_recommendations(df_wishlist):
+        recs = []
+        wishlist = list(df_wishlist['id'])
+        for i, product in enumerate(wishlist):
+            response = list(recommend(product).index)
+            recs.append(response)
+            
+        return recs
+
+def get_all_product_recommendations(wishlist_description):
+    wishlist_cpu = wishlist_description[wishlist_description['type'] == 'cpu']
+    wishlist_gpu = wishlist_description[wishlist_description['type'] == 'gpu']
+        
+    cpus = get_recommendations(wishlist_cpu)
+    gpus = get_recommendations(wishlist_gpu)
+
+    result_cpu = pd.DataFrame(wishlist_cpu['id'], columns=['id','recommendations'])
+    result_gpu = pd.DataFrame(wishlist_gpu['id'], columns=['id','recommendations'])
+
+    result_cpu['recommendations'] = cpus
+    result_gpu['recommendations'] = gpus
+
+    result_cpu.set_index('id', inplace=True)
+    result_gpu.set_index('id', inplace=True)
+
+    return result_gpu, result_cpu
+
 def main():
 
     cur, con = connect()
@@ -119,7 +147,7 @@ def main():
     all_products = get_all_products(cur, con)
 
     #clean products dataframe 
-    all_products.dropna(inplace=True)
+    #all_products.dropna(inplace=True)
     all_products['descriptions_cl'] = all_products['descriptions'].apply(clean_data)
     all_products.drop(['description'], axis=1, inplace=True)
     all_products.dropna(inplace=True)
@@ -134,16 +162,7 @@ def main():
     rec = pd.Series(all_products.index)
 
     #get recommendations for all products in wishlist 
-    recs = []
-    wishlist = list(wishlist_description['id'])
-    for i, product in enumerate(wishlist):
-        response = list(recommend(product).index)
-        recs.append(response)
-        
-
-    result = pd.DataFrame(wishlist_description['id'], columns=['id','recommendations'])
-    result['recommendations'] = recs
-    result.set_index('id', inplace=True)
+    gpu_recs, cpu_recs = get_all_product_recommendations(wishlist_products)
     #add result to db
 
     con.close()
