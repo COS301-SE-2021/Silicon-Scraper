@@ -76,7 +76,7 @@ def insert_gpu(id, gpu_arr):
     con.commit()
 
 
-
+#if a change was made to the products table
 def generate_recommendations():
     wishlist_products = get_wishlist(cur, con)
 
@@ -109,26 +109,25 @@ def generate_recommendations():
             insert_cpu(row['id'], row['recs'])
 
 
+#if a change was made to a users wishlist
 def update_recommendations():
     wishlist_products = get_wishlist(cur, con)
     wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
 
-    gpu_recs = []
-    cpu_rec = []
     try:
         # if perhaps a product was added to someones wishlist
         for i, row in wishlist_products.iterrows():
             item = all_products[all_products.index == row['product_id']]
-            if item['type'] == 'cpu':
+            if item['type'].item() == 'cpu':
                 query = (""" SELECT id FROM recommendation_cpu WHERE id = %s""")
-                cur.execute(query, row['product_id'])
+                cur.execute(query, (row['product_id'],))
                 product = cur.fetchone()
 
                 if product is None:
                     items = list(recommend(row['product_id']).index)
                     insert_cpu(row['product_id'], items)
 
-            elif item['type'] == 'gpu':
+            elif item['type'].item() == 'gpu':
                 query = (""" SELECT id FROM recommendation_gpu WHERE id = %s""")
                 cur.execute(query, (row['product_id'],))
                 product = cur.fetchone()
@@ -147,21 +146,22 @@ def update_recommendations():
         cpus = pd.read_sql_query(query, con)
         table = gpus.append(cpus)
 
-        items = table[table['id'].values not in wishlist_products['product_id'].values]
+        items = [i for i in str(table['id'].values) if i not in str(wishlist_products['product_id'].values)]
+        #items = table[table['id'].values not in wishlist_products['product_id'].values]
         if items is not None:
-            for i,item in items.iterrows():
-                if item['id'] is in gpus['id'].values:
+            for item in items:
+                if item in gpus['id'].values:
                     query = ("""DELETE FROM recommendation_gpu WHERE id = %s""")
-                    cur.execute(query, (item['id'],))
+                    cur.execute(query, (item,))
                 else:
                     query = ("""DELETE FROM recommendation_cpu WHERE id = %s""")
-                    cur.execute(query, (item['id'],))
+                    cur.execute(query, (item,))
             con.commit()
 
     except(Exception, psycopg2.DatabaseError) as err:
         print(err)
     finally:
-        return new_products
+        con.close()
     
 
             
