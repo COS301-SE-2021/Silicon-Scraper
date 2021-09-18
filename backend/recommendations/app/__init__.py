@@ -1,5 +1,5 @@
 import os
-from recommendations.instance import config
+from instance import config 
 from flask import Flask
 from . import listener as listen
 

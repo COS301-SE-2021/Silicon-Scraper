@@ -3,7 +3,7 @@ import os
 import select 
 from . import Recommender as rec
 import psycopg2.extensions
-from recommendations.instance import config 
+from instance import config 
 
 cwd = os.path.dirname(__file__)
 
@@ -28,21 +28,27 @@ def connect():
  
 def listener():
     cur, con = connect()
-    print(rec.get_wishlist(cur, con))
-    # cur.execute('LISTEN table_modified')
-    # print("Listening")
+    
+    cur.execute('LISTEN table_modified')
+    cur.execute('LISTEN watchlist_modified')
+    print("Listening")
 
-    # if select.select([con],[],[],5) == ([],[],[]):
-    #     print ('Timeout')
-    # else:
-    #     con.poll()
-    #     while con.notifies:
-    #         notify = con.notifies.pop(0)
-    #         if notify.channel == 'table_modified':
-    #             #get new similarity table
-    #             generate_recommendations(db, cur)
-                
-    #         elif notify.channel == 'watchlist_modified':
-    #             #remove product from recommendation table or add new porduct to recommendation table
-    #             update_recommendations(db, cur)
+    seconds_passed = 0
+    while 1:
+        con.commit()
+        if select.select([con],[],[],5) == ([],[],[]):
+            seconds_passed += 5
+            print( "{} seconds passed without a notification...".format(seconds_passed))
+
+        else:
+            con.poll()
+            while con.notifies:
+                notify = con.notifies.pop(0)
+                if notify.channel == 'table_modified':
+                    #get new similarity table
+                    generate_recommendations(db, cur)
+                    
+                elif notify.channel == 'watchlist_modified':
+                    #remove product from recommendation table or add new porduct to recommendation table
+                    update_recommendations(db, cur)
 

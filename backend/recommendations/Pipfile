@@ -9,6 +9,11 @@ psycopg2 = "*"
 python-dotenv = "*"
 configparser = "*"
 flask = "*"
+gunicorn = "*"
+waitress = "*"
+pandas = "*"
+nltk = "*"
+sklearn = "*"
 
 [dev-packages]
 

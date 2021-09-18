@@ -6,7 +6,7 @@ database = os.path.join(os.getcwd(), "database.ini")
 
 class Config():
     def __init__(self):
-        DEBUG = True
+        DEBUG = False
         TESTING = False
 
 
