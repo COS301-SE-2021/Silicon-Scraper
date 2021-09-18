@@ -3,11 +3,11 @@ import psycopg2
 from configparser import ConfigParser
 
 class Config():
-    DEBUG = False
-    TESTING = False
+    def __init__(self):
+        DEBUG = False
+        TESTING = False
 
-    @property
-    def db_config(filename='database.ini', section='postgresql'):
+    def db_config(self, filename='database.ini', section='postgresql'):
         con = {}
         parser = ConfigParser()
         parser.read(filename)
@@ -24,7 +24,6 @@ class Config():
 
         return con
 
-    @property
     def connect(self):
         try:
             params = db_config()

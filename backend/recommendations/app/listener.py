@@ -2,6 +2,7 @@ import psycopg2
 import Recommender
 import psycopg2.extensions
 from instance.config import config 
+from app import db
 
 cwd = os.path.dirname(__file__)
 
@@ -25,15 +26,15 @@ def connect():
 
  
 def listener():
-    cur, con = connect()
+    cur = db.cursor()
     cur.execute('LISTEN table_modified')
 
     if select.select([conn],[],[],5) == ([],[],[]):
         print 'Timeout'
     else:
-        con.poll()
-        while con.notifies:
-            notify = con.notifies.pop(0)
+        db.poll()
+        while db.notifies:
+            notify = db.notifies.pop(0)
             if notify.channel == 'table_modified':
                 #get new similarity table
                 generate_recommendations()
