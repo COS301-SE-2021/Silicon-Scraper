@@ -149,6 +149,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 export const scrapeDescription = async (brand: string, model: string) =>{
 
     const url_man = manufacturerUrl(brand, model)
+    console.log(url_man)
     if(url_man.url === "") return ""
 
     let man = url_man.manufacturer
@@ -170,8 +171,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
             
             let page = await browser.newPage()
             await page.setDefaultNavigationTimeout(0);
-            
-        console.log("after browser")
               
 
             const page_result = await page.goto(url, {waitUntil: 'networkidle0'}).then(async () => {
@@ -198,8 +197,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
                     })
 
-                    console.log("done ", descript)
-
                     return {
                         description: descript
                     }
@@ -207,6 +204,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 }, selectordes)
                 
                 let des = getDescriptions(content.description, man)
+
                 if(des === {}) throw "Description Error: Unable to get descriptions"
                 
                 return des
@@ -216,7 +214,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 throw "Scraping Error: " + err
             })
 
-            console.log("gotten ", url)
 
             await browser.close()
             return page_result
@@ -226,7 +223,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         return //{}
     }
 
-    console.log("donfazfafee")
 }
 
 /**
