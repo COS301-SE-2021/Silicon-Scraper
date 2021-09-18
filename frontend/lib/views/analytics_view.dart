@@ -49,13 +49,20 @@ class AnalyticsView extends StatelessWidget
                     {
                       return LineChart(chartData.data);
                     }
-                    else
+                    else if(snapshot.hasError)
                     {
                       return Container(
                           margin: EdgeInsets.only(top:50),
-                          child: CircularProgressIndicator()
+                          child: Text("No Graph data to display")
                       );
                     }
+                    else
+                      {
+                        return Container(
+                            margin: EdgeInsets.only(top:50),
+                          child: CircularProgressIndicator()
+                            );
+                      }
                   }
                 ),
               ),

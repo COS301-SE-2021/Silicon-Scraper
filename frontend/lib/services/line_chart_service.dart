@@ -60,11 +60,7 @@ class LineChartService
       var responseData=jsonDecode(response.body);
       throw Exception("${responseData["message"]}");
     }
-    else if(response.statusCode==409)
-    {
-      throw Exception('This user name is already taken');
-    }
-    throw Exception('Unable to sign up');
+    throw Exception('No graph data to display');
   }
 
 }

@@ -35,7 +35,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 void main() async{
-  WatchListInjector.configure(DependencyType.MOCK);
+  WatchListInjector.configure(DependencyType.PROD);
   ExplorePageInjector.configure(DependencyType.PROD);
   RecommendationPageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
@@ -43,7 +43,7 @@ void main() async{
   LoginInjector.configure(DependencyType.PROD,success: true);
   SignUpInjector.configure(DependencyType.PROD,success: true);
   NotificationViewModel notification=new NotificationViewModel();
-  SentimentInjector.configure(DependencyType.MOCK);
+  SentimentInjector.configure(DependencyType.PROD);
   LineChartInjector.configure(DependencyType.PROD);
 
 

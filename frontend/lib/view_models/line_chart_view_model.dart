@@ -11,13 +11,20 @@ class LineChartViewModel
 
   Future setData(Product p)async
   {
-    var json=await injector.dependency.LineChartRequest(p);
-    for(int i=0;i<json.length;i++)
+    try
+    {
+      var json=await injector.dependency.LineChartRequest(p);
+      for(int i=0;i<json.length;i++)
       {
         data.add(PredictionData.fromJSON(json[i]));
       }
 
-    return true;
+      return true;
+    }
+    catch(e)
+    {
+      throw e;
+    }
   }
 
 }
