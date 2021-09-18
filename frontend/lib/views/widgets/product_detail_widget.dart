@@ -131,7 +131,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                                 textAlign: TextAlign.left,
                               ),
                               Container(
-                                margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                width: MediaQuery.of(context).size.width - 20,
+                                margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -148,68 +149,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                         ),
 //                          Text("${widget.state.item.description}"),
                         bulletListWidget(widget.state.item.description),
-
                         ///date time picker
-                        TextButton(
-                          onPressed: () async {
-                            DateTime date = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime.now(),
-                                lastDate:
-                                    DateTime.now().add(Duration(days: 365)));
-                            if (date != null) {
-                              widget.state.predict.date = date;
-                              setState(() {});
-                              await widget.state.predict.prediction(context);
-                            }
-                          },
-                          child: Text(
-                            'Predict',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.resolveWith<Color>(
-                              (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.pressed))
-                                  return candy;
-                                return candy; // Use the component's default.
-                              },
-                            ),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            TextButton(onPressed: ()async
-                            {
-                              DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
-                              if(date!=null)
-                              {
-                                widget.state.predict.date=date;
-                                setState((){});
-                                await widget.state.predict.prediction(context);
-                              }
-                            }
-                              ,
-                              child: Text('Predict',style: TextStyle(fontSize: 18,color: Colors.black,fontWeight:FontWeight.w300),),style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                                      (Set<MaterialState> states) {
-                                    if (states.contains(MaterialState.pressed))
-                                      return white;
-                                    return white; // Use the component's default.
-                                  },
-                                ),
-                              ),),
-                            TextButton(
-                              child:Text("Analytics"),
-                              onPressed:(){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsView(widget.state.item)));
-                              },
 
-                            )
-                          ],
-                        ),
                         ChangeNotifierProvider.value(
 //                      create: (_)=> widget.state.predict,
                           value: widget.state.predict,
@@ -286,7 +227,51 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                       ],
                     )),
               ),
+              Positioned(
+                right:15,
+                bottom:buttonHeight-120,
+                child:Column(
+                  mainAxisAlignment:MainAxisAlignment.start,
+                  children: [
+                    TextButton(onPressed: ()async
+                    {
+                      DateTime date= await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.now().add(Duration(days: 365)));
+                      if(date!=null)
+                      {
+                        widget.state.predict.date=date;
+                        setState((){});
+                        await widget.state.predict.prediction(context);
+                      }
+                    }
+                      ,
+                      child: Text('Predict',style: TextStyle(fontSize: 15,color: Colors.white,fontWeight:FontWeight.bold),),style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                            if (states.contains(MaterialState.pressed))
+                              return candy;
+                            return candy; // Use the component's default.
+                          },
+                        ),
+                      ),),
+                    TextButton(
+                      child:Text("Analytics",style: TextStyle(fontSize: 15,color: Colors.white,fontWeight:FontWeight.bold),),
+                      onPressed:(){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => AnalyticsView(widget.state.item)));
+                      },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.pressed))
+                                return myLightBlue;
+                              return myLightBlue; // Use the component's default.
+                            },
+                          ),
+                        )
 
+                    )
+                  ],
+                ),
+              ),
               ///bookmark button
               Positioned(
                   right: 10,
