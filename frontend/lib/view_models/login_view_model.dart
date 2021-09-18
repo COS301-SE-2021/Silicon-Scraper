@@ -25,6 +25,7 @@ class LoginViewModel extends ChangeNotifier
              SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
              sharedPreferences.setString("token", isIn['token']);
              sharedPreferences.setBool("loggedIn",true);
+             sharedPreferences.setString("userId", isIn['user']['id']);
              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => MainNavigator()),(Route<dynamic> route)  => false);
            }
            else
