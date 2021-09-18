@@ -232,6 +232,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                 bottom:buttonHeight-100,
                 child:Column(
                   mainAxisAlignment:MainAxisAlignment.start,
+                  crossAxisAlignment:CrossAxisAlignment.end,
                   children: [
                     TextButton(onPressed: ()async
                     {
