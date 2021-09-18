@@ -57,19 +57,22 @@ dev_dependencies:
   #for state management
   provider: ^5.0.0
   #for date picker
-#  flutter_datetime_picker: ^1.5.1
+  #flutter_datetime_picker: ^1.5.1
   #for date formats
   intl: ^0.17.0
   #for push notification
   firebase_messaging: ^10.0.0
-#  firebase_core:
+  #firebase_core:
   firebase_analytics:
-# for app open notifications
+  #for app open notifications
   flutter_local_notifications:
   #for saving bearer tokens
   shared_preferences: ^2.0.5
   #for flutter charts
   syncfusion_flutter_charts: ^19.2.59
+  #for percentage indicators
+  percent_indicator: "^2.1.7+2"
+
 
 
 
