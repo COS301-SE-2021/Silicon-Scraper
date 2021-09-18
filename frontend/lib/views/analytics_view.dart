@@ -15,18 +15,48 @@ class AnalyticsView extends StatelessWidget
   Widget build(BuildContext context)
   {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(35.0),
-          child: AppBar(
-            // Here we take the value from the MyHomePage object that was created by
-            // the App.build method, and use it to set our appbar title.
-            title: Container(
-//              padding: EdgeInsets.only(bottom:15) ,
-                child: Text("Analytics",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25),)
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.green[400],
+          elevation: 0,
+          automaticallyImplyLeading: true,
+          flexibleSpace: Container(
+            margin: EdgeInsets.only(top: 25),
+            height: MediaQuery.of(context).size.height / 10,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment(0.0, 1.0),
+                colors: <Color>[  Colors.green[400],
+                  Color(0xffffffff)],
+                tileMode: TileMode.clamp,
+              ),
             ),
-            centerTitle: true,
-          ),
-        ),
+
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ///title
+                Container(
+                  margin: EdgeInsets.only(left: 45, top: 12),
+                  width: MediaQuery.of(context).size.width / 1.6,
+                  child: Text(
+                    "Analytics",
+                    textAlign: TextAlign.left,
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                    style: TextStyle(
+                        fontSize: 28,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold, letterSpacing: 0),
+                  ),
+                ),
+
+              ],
+            ),
+          ),),
       body: ListView
       (
         children: [Column(

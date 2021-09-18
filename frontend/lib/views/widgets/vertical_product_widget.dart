@@ -101,7 +101,6 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                   ],
                 ),
               ),
-            ),
 
           ),
         ),
