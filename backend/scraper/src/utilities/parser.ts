@@ -90,7 +90,7 @@ export const titleParser = (title: string) =>{
             if(pos != -1 && pos > index+1){
                 detailedTitle.splice(pos, 1)
                 detailedTitle.splice(index+1, 0, "Core")
-            }else if (pos == -1 && temp.some(x => model.includes(x))) detailedTitle.splice(index+1, 0, "Core")
+            }else if (pos == -1 && temp.some(x => model.toUpperCase().includes(x.toUpperCase()))) detailedTitle.splice(index+1, 0, "Core")
         }
     })
 
@@ -101,7 +101,7 @@ export const titleParser = (title: string) =>{
         else if(graphics.some(x => detailedTitle[i].toUpperCase().includes(x)) || cpus.some(x => detailedTitle[i].toUpperCase().includes(x) && !detailedTitle[i+1].toUpperCase().includes("RADEON")) ){
             
             for (let k = i ; k< detailedTitle.length && !detailedTitle[k].includes("..."); k++){
-                if(temp.some(x => x === detailedTitle[k])){
+                if(temp.some(x => x.toUpperCase() === detailedTitle[k].toUpperCase())){
                     model += " " + detailedTitle[k] + "-" + detailedTitle[k+1]
                     k = k+1
                 }else

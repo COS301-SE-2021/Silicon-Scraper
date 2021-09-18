@@ -149,7 +149,6 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 export const scrapeDescription = async (brand: string, model: string) =>{
 
     const url_man = manufacturerUrl(brand, model)
-    console.log(url_man)
     if(url_man.url === "") return ""
 
     let man = url_man.manufacturer
@@ -168,16 +167,11 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
         browser = await puppeteer.launch({headless: false})
 
-            
             let page = await browser.newPage()
             await page.setDefaultNavigationTimeout(0);
               
 
             const page_result = await page.goto(url, {waitUntil: 'networkidle0'}).then(async () => {
-                 
-                page.on('console', msg => {
-                    console.log("PAGE LOG:", msg.text())
-                })
 
                 if(brand === 'Intel'){
                     return {}
@@ -217,10 +211,11 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
             await browser.close()
             return page_result
+
             
     }catch(e){
         console.error(e)
-        return //{}
+        return {}//{}
     }
 
 }
@@ -245,7 +240,7 @@ export const scrape = async () => {
     return products;
 }
 
-const title = titleParser(" ASUS ROG STRIX RX570 O4G GAMING GRAPHICS")
+const title = titleParser("Intel CORE I9 10900K 10TH GEN,")
 console.log(title)
 console.log(scrapeDescription(title.brand, title.model))
 //scrape().then(r => {console.table(r)})
