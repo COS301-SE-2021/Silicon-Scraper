@@ -8,6 +8,7 @@ pytest = "*"
 psycopg2 = "*"
 python-dotenv = "*"
 configparser = "*"
+flask = "*"
 
 [dev-packages]
 
