@@ -7,7 +7,7 @@
     "start": "npm run build && node build/main/scraper_scheduler.js",
     "test": "jest --runInBand --detectOpenHandles",
     "build": "tsc -p tsconfig.json",
-    "start-dev": "cd src/main && ts-node scraper.ts"
+    "start-dev": "cd src/main && ts-node scraper_scheduler.ts"
   },
   "keywords": [],
   "author": "",
