@@ -130,7 +130,7 @@ def update_recommendations():
 
             elif item['type'] == 'gpu':
                 query = (""" SELECT id FROM recommendation_gpu WHERE id = %s""")
-                cur.execute(query, row['product_id'])
+                cur.execute(query, (row['product_id'],))
                 product = cur.fetchone()
 
                 if product is None:
@@ -149,7 +149,14 @@ def update_recommendations():
 
         items = table[table['id'].values not in wishlist_products['product_id'].values]
         if items is not None:
-            
+            for i,item in items.iterrows():
+                if item['id'] is in gpus['id'].values:
+                    query = ("""DELETE FROM recommendation_gpu WHERE id = %s""")
+                    cur.execute(query, (item['id'],))
+                else:
+                    query = ("""DELETE FROM recommendation_cpu WHERE id = %s""")
+                    cur.execute(query, (item['id'],))
+            con.commit()
 
     except(Exception, psycopg2.DatabaseError) as err:
         print(err)
