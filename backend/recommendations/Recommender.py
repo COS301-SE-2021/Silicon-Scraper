@@ -113,16 +113,51 @@ def update_recommendations():
     wishlist_products = get_wishlist(cur, con)
     wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
 
-    recs = []
-    for i, row in wishlist_products.iterrows():
-        query = (""" SELECT id FROM recommendation_cpu WHERE id = %s""")
-        cur.execute(query, row['product_id'])
-        product = cur.fetchone()
-
-        if product is None:
-            #get the product type 
+    gpu_recs = []
+    cpu_rec = []
+    try:
+        # if perhaps a product was added to someones wishlist
+        for i, row in wishlist_products.iterrows():
             item = all_products[all_products.index == row['product_id']]
-            recs.append(recommend(i, row['product_id']))
+            if item['type'] == 'cpu':
+                query = (""" SELECT id FROM recommendation_cpu WHERE id = %s""")
+                cur.execute(query, row['product_id'])
+                product = cur.fetchone()
+
+                if product is None:
+                    items = list(recommend(row['product_id']).index)
+                    insert_cpu(row['product_id'], items)
+
+            elif item['type'] == 'gpu':
+                query = (""" SELECT id FROM recommendation_gpu WHERE id = %s""")
+                cur.execute(query, row['product_id'])
+                product = cur.fetchone()
+
+                if product is None:
+                    items = list(recommend(row['product_id']).index)
+                    insert_gpu(row['product_id'], items)
+
+
+        # if a product was removed from someones wishlist 
+        query = ("""SELECT id from recommendation_gpu""")
+        gpus = pd.read_sql_query(query, con)
+        gpus = pd.DataFrame(gpus)
+
+        query = ("""SELECT id from recommendation_cpu""")
+        cpus = pd.read_sql_query(query, con)
+        table = gpus.append(cpus)
+
+        items = table[table['id'].values not in wishlist_products['product_id'].values]
+        if items is not None:
+            
+
+    except(Exception, psycopg2.DatabaseError) as err:
+        print(err)
+    finally:
+        return new_products
+    
+
+            
 
 
 def get_wishlist(cur, con):
