@@ -83,7 +83,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                         ),
                         /// bookmark button
                         Container(
-                            margin: EdgeInsets.only(left: 15, bottom: 5),
+                            margin: EdgeInsets.only(left: 8, bottom: 5),
                             //alignment: Alignment.centerRight,
                             height: MediaQuery.of(context).size.height / 20,
                             width: MediaQuery.of(context).size.width / 12.7,
