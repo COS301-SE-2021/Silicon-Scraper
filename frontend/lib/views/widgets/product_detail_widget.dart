@@ -6,7 +6,6 @@ import 'package:silicon_scraper/view_models/prediction_view_model.dart';
 import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +41,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
         centerTitle: false,
         backgroundColor: Colors.white,
       ),
+
       body: Container(
         color: Colors.grey[300],
         child: Stack(

@@ -2,17 +2,20 @@ import 'package:silicon_scraper/models/product_model.dart';
 import 'package:silicon_scraper/services/getProducts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WatchListService
 {
 
   Future<List<Product>> watchListRequest()async
   {
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    String token=sharedPreferences.get('token');
         var url = Uri.parse("https://api-silicon-scraper.herokuapp.com/watchlist");
         Map <String,String> headers=
         {
           "Content-Type":"application/json; charset=utf-8",
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ',
+          'Authorization': "Bearer "+token,
         };
         final response = await http.get(url,headers: headers);
         print(response.statusCode);

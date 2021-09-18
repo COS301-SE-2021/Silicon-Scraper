@@ -33,7 +33,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 void main() async{
-  WatchListInjector.configure(DependencyType.PROD);
+  WatchListInjector.configure(DependencyType.MOCK);
   ExplorePageInjector.configure(DependencyType.PROD);
   RecommendationPageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);

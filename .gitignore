@@ -48,6 +48,7 @@ backend/scraper/dist/
 
 # API related
 node_modules/
+build/
 
 # Notification related
 backend/notification/build
