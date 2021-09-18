@@ -240,7 +240,4 @@ export const scrape = async () => {
     return products;
 }
 
-const title = titleParser("Intel CORE I9 10900K 10TH GEN,")
-console.log(title)
-console.log(scrapeDescription(title.brand, title.model))
 //scrape().then(r => {console.table(r)})
