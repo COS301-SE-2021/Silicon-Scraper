@@ -27,7 +27,7 @@ export const connection = async () => {
                 watchlistCPU,
                 watchlistGPU,
                 RecommendationCPU,
-                RecommendationGPU
+                RecommendationGPU,
                 ReviewSentiment
             ],
             cli: {
