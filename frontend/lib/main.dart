@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:silicon_scraper/injectors/prediction_service_injector.dart';
+import 'package:silicon_scraper/injectors/sentiment_service_injector.dart';
 import 'package:silicon_scraper/injectors/recommendation_service_injector.dart';
 import 'package:silicon_scraper/view_models/notification_view_model.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
@@ -8,6 +9,7 @@ import 'package:silicon_scraper/injectors/explore_service_injector.dart';
 import 'package:silicon_scraper/injectors/search_sort_filter_service_injector.dart';
 import 'package:silicon_scraper/theme/colors.dart';
 import 'injectors/dependency_types.dart';
+import 'injectors/line_chart_service_injector.dart';
 import 'injectors/login_service_injector.dart';
 import 'injectors/watch_list_service_injector.dart';
 import 'package:provider/provider.dart';
@@ -33,18 +35,22 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 void main() async{
-  WatchListInjector.configure(DependencyType.MOCK);
+  WatchListInjector.configure(DependencyType.PROD);
   ExplorePageInjector.configure(DependencyType.PROD);
   RecommendationPageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
-  PredictionInjector.configure(DependencyType.MOCK,fail: false);
+  PredictionInjector.configure(DependencyType.PROD,fail: false);
   LoginInjector.configure(DependencyType.PROD,success: true);
   SignUpInjector.configure(DependencyType.PROD,success: true);
   NotificationViewModel notification=new NotificationViewModel();
+  SentimentInjector.configure(DependencyType.PROD);
+  LineChartInjector.configure(DependencyType.PROD);
+
 
   /// this sets the initial products for the watch list do not remove
-  WatchListViewModelSingleton.getState().setInitialProducts();
   WidgetsFlutterBinding.ensureInitialized();
+  WatchListViewModelSingleton.getState().setInitialProducts();
+
 
   /// below this line is firebase implementations
   await Firebase.initializeApp();
