@@ -86,7 +86,7 @@ Widget appbar(BuildContext context, String page, int depth) {
       child: AppBar(
         elevation: 0,
           flexibleSpace: Container(
-        margin: EdgeInsets.only(top: 25),
+        margin: EdgeInsets.only(top: kToolbarHeight),
         height: MediaQuery.of(context).size.height / 5,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
