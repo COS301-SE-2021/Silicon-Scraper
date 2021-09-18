@@ -180,15 +180,6 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                     console.log("PAGE LOG:", msg.text())
                 })
 
-                // await page.evaluateOnNewDocument(() => {
-                //     window.selectordes = (par: string) => selector.getDescriptions(par)
-                // })
-                // await page.exposeFunction('selectordes', (par: string) => {
-                //     //console.log(selector.getDescriptions(par))
-                //     return selector.getDescriptions(par)
-                // })
-                // await page.exposeFunction('selector.getDescriptions', selector.getDescriptions)    
-                
                 if(brand === 'Intel'){
                     return {}
                 }
@@ -196,9 +187,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 const selectordes = selector.getDescriptions()
                 
                 const content = await page.evaluate(async (selectordes: string) => {
-                    // add intel scraping
-                    //let selector: string = await window.selectordes('search')
-                    //console.log(document.documentElement.querySelectorAll("#coveo-result-list2 > div").length)
+                   
                     let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
                     
@@ -260,4 +249,7 @@ export const scrape = async () => {
     return products;
 }
 
-scrape().then(r => {console.table(r)})
+const title = titleParser(" ASUS ROG STRIX RX570 O4G GAMING GRAPHICS")
+console.log(title)
+console.log(scrapeDescription(title.brand, title.model))
+//scrape().then(r => {console.table(r)})

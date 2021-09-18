@@ -98,7 +98,7 @@ export const titleParser = (title: string) =>{
     for (let i = 0; i < detailedTitle.length; i++) {
         if(detailedTitle[i].toUpperCase() === "AMD" && (cpus.some(x => detailedTitle[i+1].toUpperCase().includes(x)) || graphics.some(x => x === detailedTitle[i+1].toUpperCase())))
             brand += detailedTitle[i] + " "
-        else if(graphics.some(x => x === detailedTitle[i].toUpperCase()) || cpus.some(x => detailedTitle[i].toUpperCase().includes(x) && !detailedTitle[i+1].toUpperCase().includes("RADEON")) ){
+        else if(graphics.some(x => detailedTitle[i].toUpperCase().includes(x)) || cpus.some(x => detailedTitle[i].toUpperCase().includes(x) && !detailedTitle[i+1].toUpperCase().includes("RADEON")) ){
             
             for (let k = i ; k< detailedTitle.length && !detailedTitle[k].includes("..."); k++){
                 if(temp.some(x => x === detailedTitle[k])){
@@ -118,9 +118,10 @@ export const titleParser = (title: string) =>{
 
     for(let x in graphics){
         if(mod.includes(graphics[x]) && mod[graphics[x].length] != " "){
-            mod = mod.replace(graphics[x], " ")
+            //mod = mod.replace(graphics[x], " ")
+            mod = model.slice(model.indexOf(graphics[x]), graphics[x].length+1 ) + " " + model.slice(graphics[x].length+1)
+            break;
         }
-
     }
 
     if(brand === "") brand = "Gigabyte "
