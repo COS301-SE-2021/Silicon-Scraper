@@ -1,6 +1,7 @@
 import os
 from recommendations.instance import config
 from flask import Flask
+from . import listener as listen
 
 config = config.Config()
 db = config.connect()
@@ -22,4 +23,9 @@ def create_app(test_config = None):
     except OSError:
         pass
 
+    @app.route('/')
+    def hello():
+        listen.listener()
+
+   
     return app

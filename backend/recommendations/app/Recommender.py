@@ -3,35 +3,34 @@ import json
 import re
 import psycopg2
 import nltk
-import nan 
+import math
 import psycopg2.extensions
 from nltk.corpus import stopwords
 from configparser import ConfigParser
 from sklearn.feature_extraction.text import TfidfVectorizer
-from instance.config import connect
 
 stopwords = set(stopwords.words('english'))
 all_products = None
 rec = None
 similarity = None
 
-cur, con = connect()
-all_products = get_all_products(cur, con)
+cur = None
+con = None
 
 
 
 def get_wishlist(cur, con):
-    query = "SELECT * FROM wishilist_cpu"
+    query = "SELECT * FROM watchlist_cpu"
     cpus = pd.read_sql_query(query, con)
     cpus = pd.DataFrame(cpus)
     
-    query = "SELECT * FROM wishilist_gpu"
+    query = "SELECT * FROM watchlist_gpu"
     gpus = pd.read_sql_query(query, con)
     
     table = cpus.append(gpus)
     #any preprocessing needing to be done
     #table = remove_columns_from_products(table)
-    wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
+    table.drop_duplicates(subset='product_id', keep=False, inplace=True)
 
     return table 
 
@@ -41,17 +40,19 @@ def get_all_products(cur, con):
     cpus = pd.read_sql_query(query, con)
     cpus = pd.DataFrame(cpus)
     
-    query = "SELECT id, brand, type, description FROM gpu"
+    query = "SELECT id, brand, type, description FROM gpus"
     gpus = pd.read_sql_query(query, con)
     
     table = cpus.append(gpus)
     
     # any preprocessing needed to be done
-    all_products['descriptions_cl'] = all_products['descriptions'].apply(clean_data)
+    all_products['description_cl'] = all_products['description'].apply(clean_data)
     all_products.drop(['description'], axis=1, inplace=True)
     all_products.dropna(inplace=True)
 
     return table
+
+# all_products = 
 
 
 def recommend(idx, cosine = similarity):
@@ -131,7 +132,7 @@ def update_gpu(gpu_recs):
                 new_products.append((i, row['recommendations']))
 
             
-    except(Exception, psycopg2.DatabaseError) as err:
+    except(psycopg2.DatabaseError) as err:
         print(err)
     finally:
         return new_products
@@ -154,7 +155,7 @@ def update_cpu(cpu_recs):
                 new_products.append((i, row['recommendations']))
 
             
-    except(Exception, psycopg2.DatabaseError) as err:
+    except(psycopg2.DatabaseError) as err:
         print(err)
     finally:
         return new_products
@@ -172,8 +173,16 @@ def insert_gpu(id, gpu_arr):
 
 
 #if a change was made to the products table
-def generate_recommendations():
+def generate_recommendations(curr, conn):
+    global con
+    con = conn
+
+    global cur
+    cur = curr
     wishlist_products = get_wishlist(cur, con)
+
+    global all_products
+    all_products = get_all_products(cur, con)
 
     all_products.set_index('id', inplace=True)
     all_products['all_features'] = all_products['brand'] +" "+ all_products['retailer'] +" "+ all_products['description_cl']
@@ -206,7 +215,17 @@ def generate_recommendations():
 
 
 #if a change was made to a users wishlist
-def update_recommendations():
+def update_recommendations(curr, conn ):
+
+    global con
+    con = conn
+
+    global cur
+    cur = curr
+
+    global all_products
+    all_products = get_all_products(cur, con)
+
     wishlist_products = get_wishlist(cur, con)
     wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
 
@@ -254,7 +273,7 @@ def update_recommendations():
                     cur.execute(query, (item,))
             con.commit()
 
-    except(Exception, psycopg2.DatabaseError) as err:
+    except(psycopg2.DatabaseError) as err:
         print(err)
     finally:
         con.close()

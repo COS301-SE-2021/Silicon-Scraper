@@ -1,15 +1,17 @@
 import psycopg2
-import Recommender
+import os
+import select 
+from . import Recommender as rec
 import psycopg2.extensions
-from instance.config import config 
-from app import db
+from recommendations.instance import config 
 
 cwd = os.path.dirname(__file__)
 
 #This function facilitates the connection to the database
 def connect():
     try:
-        params = config()
+        dbcon = config.Config()
+        params = dbcon.db_config()
 
         #params = config()
         #print(host, port, password, user, database)
@@ -18,28 +20,29 @@ def connect():
         conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
         curr = conn.cursor()
-
-    except( Exception, psycopg2.DatabaseError) as err:
-        print(err)
-    finally:
         return curr, conn
+    except(psycopg2.DatabaseError) as err:
+        print(err)
+        
 
  
 def listener():
-    cur = db.cursor()
-    cur.execute('LISTEN table_modified')
+    cur, con = connect()
+    print(rec.get_wishlist(cur, con))
+    # cur.execute('LISTEN table_modified')
+    # print("Listening")
 
-    if select.select([conn],[],[],5) == ([],[],[]):
-        print 'Timeout'
-    else:
-        db.poll()
-        while db.notifies:
-            notify = db.notifies.pop(0)
-            if notify.channel == 'table_modified':
-                #get new similarity table
-                generate_recommendations()
+    # if select.select([con],[],[],5) == ([],[],[]):
+    #     print ('Timeout')
+    # else:
+    #     con.poll()
+    #     while con.notifies:
+    #         notify = con.notifies.pop(0)
+    #         if notify.channel == 'table_modified':
+    #             #get new similarity table
+    #             generate_recommendations(db, cur)
                 
-            elif notify.channel == 'watchlist_modified':
-                #remove product from recommendation table or add new porduct to recommendation table
-                update_recommendations()
+    #         elif notify.channel == 'watchlist_modified':
+    #             #remove product from recommendation table or add new porduct to recommendation table
+    #             update_recommendations(db, cur)
 
