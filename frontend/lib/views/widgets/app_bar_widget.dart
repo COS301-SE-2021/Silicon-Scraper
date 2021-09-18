@@ -26,6 +26,9 @@ Widget appbar(BuildContext context, String page, int depth) {
     subtitle = "RECOMMENDED PRODUCTS";
   }
 
+  // String heightPadding = Size.fromHeight(MediaQuery.of(context).size.height / 10).toString();
+  // double topMarginForTitle = double.parse(heightPadding);
+  // print(topMarginForTitle);
   if (depth == 2){
     return PreferredSize(
         preferredSize: Size.fromHeight(MediaQuery.of(context).size.height / 10),
@@ -35,7 +38,7 @@ Widget appbar(BuildContext context, String page, int depth) {
             elevation: 0,
             automaticallyImplyLeading: true,
             flexibleSpace: Container(
-              margin: EdgeInsets.only(top: 25),
+                margin: EdgeInsets.only(top: kToolbarHeight),
               height: MediaQuery.of(context).size.height / 10,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -54,8 +57,9 @@ Widget appbar(BuildContext context, String page, int depth) {
                 children: [
                   ///title
                   Container(
-                    margin: EdgeInsets.only(left: 45, top: 12),
+                    margin: EdgeInsets.only(left: 45, bottom: kToolbarHeight/2),
                     width: MediaQuery.of(context).size.width / 1.6,
+                    alignment: Alignment.centerLeft,
                     child: Text(
                       title,
                       textAlign: TextAlign.left,
