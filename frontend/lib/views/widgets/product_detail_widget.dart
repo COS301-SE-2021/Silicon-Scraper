@@ -229,7 +229,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
               ),
               Positioned(
                 right:15,
-                bottom:buttonHeight-120,
+                bottom:buttonHeight-100,
                 child:Column(
                   mainAxisAlignment:MainAxisAlignment.start,
                   children: [
