@@ -44,7 +44,7 @@ class _WatchListState extends State<WatchList>
         child: FutureBuilder(
         future: watch.setInitialProducts(),
         builder: (BuildContext context,AsyncSnapshot snapshot){
-          if(snapshot.connectionState==ConnectionState.none)
+          if(snapshot.connectionState==ConnectionState.waiting)
           {
           return Center(child: CircularProgressIndicator());
           }
