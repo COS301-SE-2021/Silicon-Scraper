@@ -164,7 +164,6 @@ describe('UserController signup route integration tests>', () => {
         expect(response.token).toEqual('token');
         expect(response.user).not.toBeNull();
         expect(response.user.username).toEqual(request.username);
-        expect(response.user.hash).toEqual(request.password);
     });
 
 });
