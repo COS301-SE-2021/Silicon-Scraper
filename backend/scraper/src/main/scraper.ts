@@ -149,7 +149,6 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 export const scrapeDescription = async (brand: string, model: string) =>{
 
     const url_man = manufacturerUrl(brand, model)
-    console.log(url_man.url)
     if(url_man.url === "") return ""
 
     let man = url_man.manufacturer
@@ -167,11 +166,14 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     try {
 
         browser = await puppeteer.launch({headless: false})
+
             
             let page = await browser.newPage()
             await page.setDefaultNavigationTimeout(0);
             
+        console.log("after browser")
               
+
             const page_result = await page.goto(url, {waitUntil: 'networkidle0'}).then(async () => {
                  
                 page.on('console', msg => {
@@ -188,7 +190,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 // await page.exposeFunction('selector.getDescriptions', selector.getDescriptions)    
                 
                 if(brand === 'Intel'){
-                    return await get_intel_description(model, selector, page, browser)
+                    return {}
                 }
 
                 const selectordes = selector.getDescriptions()
@@ -207,6 +209,8 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
                     })
 
+                    console.log("done ", descript)
+
                     return {
                         description: descript
                     }
@@ -223,6 +227,8 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 throw "Scraping Error: " + err
             })
 
+            console.log("gotten ", url)
+
             await browser.close()
             return page_result
             
@@ -231,96 +237,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
         return //{}
     }
 
-}
-
-
-const get_intel_description = async (model:string, selector:descriptionSelector, page:Page, browser:Browser) => {
-
-    const content = page.content();
-    await content.then(async (success) => {
-        const $ = await cheerio.load(success)
-        $(selector.getDescriptions('search')).children().each(async (i: any, row:any) => {
-            let search_text = $(row).text()
-            if(model.includes(search_text.split('Processor')[0].replace('Intel', '').trim())){
-
-                let href = $(row).find(selector.getDescriptions('url')).attr('href')
-                let element = $(row).find(selector.getDescriptions('url'))
-                
-                let result = await scrape_intel(page, selector, element)
-                
-
-                // let page1 = await browser.newPage()
-                // // await page.click(element)
-                // await page1.goto(href, {waitUntil: 'domcontentloaded' })
-                //     console.log('heyyyyyyyyy', href)
-                    // const content_new = page.content();
-                    // await content_new.then(async (success_2) => {
-                    //     const $$ = await cheerio.load(success_2)
-                    //     console.log($$(selector.getDescriptions('specs')).text())
-                    // })
-
-               // })
-
-               return false
-
-            }
-           
-        })
-    })
-
-    
-    await page.close()
-    await browser.close()    
-    // if(model.includes(element.textContent?.split('Processor')[0].replace('Intel', '').trim()) === true){
-                            
-    //     selector = await window.selectordes('url')
-    //     let href = element.querySelectorAll(selector)[0].getAttribute('href')
-    //     href = href != null? href: ''
-
-    //     await page.goto(href, {waitUntil: 'networkidle0'}).then(async () => {
-    //         console.log('heyyyyyyyyyy')
-    //         page.on('console', msg => {
-    //             console.log("PAGE LOG:", msg.text())
-    //         })
-    //         await page.screenshot({path: 'screenshot.png'})
-            
-    //     })
-        
-    //     const context = await page.evaluate(async (descript) => {
-    //         console.log('hehyyyy')
-    //         selector = await window.selectordes('specs')
-    //         let child = Array.from(document.documentElement.querySelectorAll(selector)[0].children)
-
-    //         descript = child.map(element => {
-                
-    //             const text = element.textContent?.trim().replace(/\n{2}/, '//')
-    //             console.log(text)
-    //             return text
-    //         })
-
-    //         return {
-    //             des: descript
-    //         }
-
-    //     }, descript)
-        
-    //     descript = (await context).des
-    //     console.log(descript)
-    // }
-}
-
-
-const scrape_intel = async (page:Page, selector:descriptionSelector, element:any ) => {
-    await page.setDefaultNavigationTimeout(0);
-    await Promise.all([
-        page.waitForNavigation(),
-        page.click(element)
-        // await page.goto(element.attr('href'), {waitUntil: ['load','networkidle0']}).then(() => {
-        //     console.log('heyyyyyy')
-        // })
-    ]) 
-    await page.screenshot({path: 'screenshot.png'})
-    
+    console.log("donfazfafee")
 }
 
 /**
@@ -343,6 +260,4 @@ export const scrape = async () => {
     return products;
 }
 
-//scrape().then(r => {console.log(r)})
-scrapeDescription("Intel", "Core i911900 11th Gen Processor").then( r=> {console.log('results', r)})
-
+scrape().then(r => {console.table(r)})

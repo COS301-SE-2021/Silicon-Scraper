@@ -114,11 +114,20 @@ export const titleParser = (title: string) =>{
 
     }
 
+    let mod = model.substring(1)
+
+    for(let x in graphics){
+        if(mod.includes(graphics[x]) && mod[graphics[x].length] != " "){
+            mod = mod.replace(graphics[x], " ")
+        }
+
+    }
+
     if(brand === "") brand = "Gigabyte "
 
     let detailedTitleObj = {
         'brand' : brand.slice(0,-1), //detailedTitle[0],
-        'model' : model.substring(1)
+        'model' : mod
     }
     return detailedTitleObj
 }
