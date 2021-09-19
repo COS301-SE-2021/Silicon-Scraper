@@ -120,6 +120,7 @@ export const titleParser = (title: string) =>{
         if(mod.includes(graphics[x]) && mod[graphics[x].length] != " "){
             //mod = mod.replace(graphics[x], " ")
             mod = model.slice(model.indexOf(graphics[x]), graphics[x].length+1 ) + " " + model.slice(graphics[x].length+1)
+            model = mod
             break;
         }
     }
@@ -128,7 +129,7 @@ export const titleParser = (title: string) =>{
 
     let detailedTitleObj = {
         'brand' : brand.slice(0,-1), //detailedTitle[0],
-        'model' : mod
+        'model' : model
     }
     return detailedTitleObj
 }
@@ -158,6 +159,8 @@ export const date = (d:string)=>{
 */
 
 export const manufacturerUrl: any = (brand: string, model: string) => {
+    model = model.trim()
+    brand = brand.trim()
     if (brand == "Sapphire"){
         return getUrlObject(sapphireUrl(model), 'sapphire')
 

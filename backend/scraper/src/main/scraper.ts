@@ -161,16 +161,18 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
 
+    const browserFetcher = puppeteer.createBrowserFetcher();
+    const revisionInfo = await browserFetcher.download('901912');
     
-    let browser: Browser;
-    try {
-
-        browser = await puppeteer.launch({headless: false})
+    let browser: Browser = await puppeteer.launch({headless: true, args: ['--no-sandbox'], executablePath: revisionInfo.executablePath});
+   // try {
 
             let page = await browser.newPage()
             await page.setDefaultNavigationTimeout(0);
-              
+            console.log('hyehhhhhhs')
+            
 
+            //await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36')
             const page_result = await page.goto(url, {waitUntil: 'networkidle0'}).then(async () => {
 
                 if(brand === 'Intel'){
@@ -178,9 +180,21 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                 }
 
                 const selectordes = selector.getDescriptions()
+                // const content = page.content()
+                // let text = ""
+                // console.log('heyyyyyyyy')
+                // await content.then(async (success) => {
+                //     const $ = await cheerio.load(success)
+                //     // console.log(success)
+                //     $(selectordes).children().each(async (i:any, row:any) =>{
+                //         text = $(row).text().trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
+                //     })
+                //     console.log(text)
                 
+                // })
+                console.log('hryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
                 const content = await page.evaluate(async (selectordes: string) => {
-                   
+                    console.log(document.documentElement.querySelectorAll(selectordes)[0])
                     let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
                     
@@ -196,16 +210,17 @@ export const scrapeDescription = async (brand: string, model: string) =>{
                     }
 
                 }, selectordes)
+                console.log(content.description)
+                //let des = getDescriptions(content.description, man)
+                let des = {}
                 
-                let des = getDescriptions(content.description, man)
-
-                if(des === {}) throw "Description Error: Unable to get descriptions"
-                
+                //await browser.close()
                 return des
 
             }).catch(async (err: any) => {
+                console.error("Scraping Error: " + err)
                 await browser.close()
-                throw "Scraping Error: " + err
+                
             })
 
 
@@ -213,10 +228,12 @@ export const scrapeDescription = async (brand: string, model: string) =>{
             return page_result
 
             
-    }catch(e){
-        console.error(e)
-        return {}//{}
-    }
+    // }catch(e){
+    //     console.error(e)
+    //     return {}//{}
+    // }finally{
+    //     await browser.close()
+    // }
 
 }
 
@@ -239,5 +256,6 @@ export const scrape = async () => {
 
     return products;
 }
-
+console.log(titleParser("AMD Ryzen 9 5950X Processor"))
+//console.log(scrapeDescription("ASUS ROG STRIX", "RX 570 O4G GAMING GRAPHICS"))
 //scrape().then(r => {console.table(r)})
