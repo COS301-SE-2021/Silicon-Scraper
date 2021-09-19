@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/product_detail_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:like_button/like_button.dart';
 
 class VerticalProductWidget extends StatefulWidget {
 //  final Product item;
@@ -87,13 +88,21 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                               //alignment: Alignment.centerRight,
                               height: MediaQuery.of(context).size.height / 20,
                               width: MediaQuery.of(context).size.width / 12.7,
-                              child: FloatingActionButton(backgroundColor: Colors.white,
-                                child: widget.state.save, onPressed:
-                                    (){
-                                  setState(() {
-                                    widget.state.changeState(context);
-                                  });
-                                },)
+
+                                child: LikeButton(
+                                        size:30,
+                                        circleSize: 30,
+                                        likeBuilder: (bool isLiked) {
+//                                        return   FloatingActionButton(backgroundColor: Colors.white,
+//                                                child:widget.state.save,
+//                                            onPressed:(){}
+//                                        );
+                                        return widget.state.save;
+                                        },
+                                        onTap: like,
+                                        ),
+
+
                           )
                         ],
                       ),
@@ -107,5 +116,18 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
       ),
     );
   }
+  Future<bool> like (bool isLiked) async{
+    /// send your request here
+    // final bool success= await sendRequest();
+    print("works");
+    /// if failed, you can do nothing
+    // return success? !isLiked:isLiked;
+    setState((){
+       widget.state.changeState(context);
+    });
+    return true;
+  }
 }
+
+
 

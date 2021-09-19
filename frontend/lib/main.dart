@@ -35,8 +35,8 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 );
 
 void main() async{
-  WatchListInjector.configure(DependencyType.PROD);
-  ExplorePageInjector.configure(DependencyType.PROD);
+  WatchListInjector.configure(DependencyType.MOCK);
+  ExplorePageInjector.configure(DependencyType.MOCK);
   RecommendationPageInjector.configure(DependencyType.MOCK);
   SearchSortFilterInjector.configure(DependencyType.PROD);
   PredictionInjector.configure(DependencyType.PROD,fail: false);

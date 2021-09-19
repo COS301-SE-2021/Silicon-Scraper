@@ -72,6 +72,8 @@ dev_dependencies:
   syncfusion_flutter_charts: ^19.2.59
   #for percentage indicators
   percent_indicator: "^2.1.7+2"
+  #for animated bookmark button
+  like_button: ^2.0.3
 
 
 

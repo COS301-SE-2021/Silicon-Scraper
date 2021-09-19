@@ -26,7 +26,7 @@ class ProductViewModel extends ChangeNotifier
     }
   }
 
-  Future changeState(context)async
+  Future<bool> changeState(context)async
   {
     if(_item.watching)
       {
@@ -38,7 +38,7 @@ class ProductViewModel extends ChangeNotifier
           _item.watch=false;
           save=Icon(Icons.bookmark_outline,color: Colors.black ,);
           notifyListeners();
-          return;
+          return true;
         }
         catch(e)
         {
@@ -57,7 +57,7 @@ class ProductViewModel extends ChangeNotifier
           _item.watch=true;
           save=Icon(Icons.bookmark,color: theOrange,);
           notifyListeners();
-          return;
+          return true;
         }
         catch(e)
         {
