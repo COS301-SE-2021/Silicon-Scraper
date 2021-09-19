@@ -26,7 +26,7 @@ class ProductViewModel extends ChangeNotifier
     }
   }
 
-  Future<bool> changeState(context)async
+  Future changeState(context)async
   {
     if(_item.watching)
       {
