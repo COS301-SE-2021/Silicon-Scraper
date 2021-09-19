@@ -37,7 +37,7 @@ class ProductViewModel extends ChangeNotifier
           await watch.removeProduct(_item);
           _item.watch=false;
           save=Icon(Icons.bookmark_outline,color: Colors.black ,);
-          notifyListeners();
+          try{notifyListeners();}catch(e){}
           return true;
         }
         catch(e)
@@ -56,7 +56,7 @@ class ProductViewModel extends ChangeNotifier
           await watch.addProduct(_item);
           _item.watch=true;
           save=Icon(Icons.bookmark,color: theOrange,);
-          notifyListeners();
+          try{notifyListeners();}catch(e){}
           return true;
         }
         catch(e)
