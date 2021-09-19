@@ -207,8 +207,16 @@ export class amdSelector extends descriptionSelector{
 * Iterate through the table, use the td pairs to collect the label : item pair
 */
 export class nvidiaSelector extends descriptionSelector{
-    getDescriptions(): string {
-        return "table > tbody";
+    getDescriptions(type:string): string {
+        let selector: string = '#sectionenhanced_9676286944c5f9e61_ff6b_4e5c_b775_6d4b7cc4ed58 > div > div.container > div > div.rawHtml.section > div > div.scroll-wrapper-spec > div > table > tbody'
+        switch(type){
+            case "ti": {
+                selector = "#SeriesChart > table > tbody"
+                break;
+            }
+            
+        }
+        return selector;
     }
 
 }

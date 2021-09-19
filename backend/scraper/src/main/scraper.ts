@@ -16,7 +16,7 @@ import axios from 'axios'
 import {Browser, JSHandle, JSONObject, Page} from "puppeteer";
 import { getJSDocImplementsTags } from "typescript";
 import { stringify } from "querystring";
-declare const window: any
+import bluebird from "bluebird"
 
 let url = require("../utilities/url");
 let selectors = require("../utilities/selectors").selectorsArray;
@@ -243,9 +243,8 @@ const getDesUrl = async (brand: string, model: string) =>{
 
     const url_man = await manufacturerUrl(brand, model)
 
-    console.log(url_man)
 
-    if(url_man.url === "") {
+    if(url_man.url === "" || url_man.manufacturer == "intel" || url_man.manufacturer == "nvidia") {
         return {
             "url":"",
             "selector":""
@@ -261,15 +260,70 @@ const getDesUrl = async (brand: string, model: string) =>{
     const keys = Object.keys(manufacturesSelectorsArray)
     const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
-
+    
+    
     let urlPair = {
         "url":url,
-        "selector":selector
+        "selector":selector.getDescriptions()
     }
-
+    console.log(urlPair)
 
     return urlPair
 }
+
+const scrape_description = async () => {
+    console.log("scraping descriptions")
+    const browserFetcher = puppeteer.createBrowserFetcher();
+    const revisionInfo = await browserFetcher.download('901912');
+    
+    let browser: Browser = await puppeteer.launch({headless: false, args: ['--no-sandbox'], executablePath: revisionInfo.executablePath});
+
+    const qty = 5
+    const all_products = products.cpu.concat(products.gpu)
+
+    const prods = (await Promise.allSettled(
+        urls = await bluebird.map(all_products, async (prod) => {
+            const page = await browser.newPage()
+            const url = prod.decriptionUrl.url
+            let result: string | void = ""
+            if(url != ""){
+                const selector = prod.decriptionUrl.selector
+                
+                result = await page.goto(url, {waitUntil: 'networkidle0'}).then(() => {
+                    return page.$eval(selector, async (element) => {
+                        const children = Array.from(element.children)
+                        let text
+                        let descript = []
+                        children.forEach(el => {
+                            text = el.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
+                            descript.push(text !== undefined? text: '')
+        
+                        });
+                        console.log(text)
+                        await page.close()
+                       
+                    })
+
+                }).catch(async (err: any) =>{
+                    //console.error(err)
+                    await page.close()
+                    //await browser.close()
+                })
+            }
+            
+            
+            
+        }, {concurrency: 10})
+    )).filter(e => e.status === "fulfilled")
+    .map(e => e)
+
+    
+    
+    console.log("Products")
+    //console.log(prods)
+    await browser.close()
+}
+
 
 /**
  * This function loops through the url array and calls the scrape function
@@ -287,10 +341,10 @@ export const scrape = async () => {
             }
         }
     }
-
+    scrape_description()
     return products;
 }
 
- scrape().then(r => { console.log(r) })
+ scrape().then(r => { console.log("done") }).catch(async (err) => {console.error(err)})
 
 //getDesUrl("AMD", "Ryzen 7 1800X Octa-Core 3.6GHz (4.0GHz Turbo) AM4 Socket Desktop CPU").then ( r => {console.log(r)} )

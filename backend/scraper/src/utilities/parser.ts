@@ -113,10 +113,18 @@ export const titleParser = (title: string) =>{
     let mod = model.substring(1)
 
     for(let x in graphics){
-        if(mod.includes(graphics[x]) && mod[graphics[x].length] != " "){
+        console.log(mod[graphics[x].length])
+        if(mod.includes(graphics[x]) && mod[graphics[x].length+1] != " "){
             //mod = mod.replace(graphics[x], " ")
-            mod = model.slice(model.indexOf(graphics[x]), graphics[x].length+1 ) + " " + model.slice(graphics[x].length+1)
-            model = mod
+            let str_before = mod.substring(0, mod.indexOf(graphics[x]) + graphics[x].length).trim()
+            
+            let str_after = mod.substring(mod.indexOf(graphics[x]) + graphics[x].length).trim()
+            let str = str_before + " " + str_after
+            console.log(str_before, "-", str_after)
+            console.log(str)
+            model = str
+            // mod = model.slice(model.indexOf(graphics[x]), graphics[x].length+1 ) + " " + model.slice(graphics[x].length+1)
+            // model = mod
             break;
         }
     }
@@ -125,7 +133,7 @@ export const titleParser = (title: string) =>{
 
     let detailedTitleObj = {
         'brand' : brand.slice(0,-1), //detailedTitle[0],
-        'model' : model
+        'model' : model.trim()
     }
     return detailedTitleObj
 }
@@ -408,3 +416,7 @@ export const getDescriptions = (descriptions: string [], manufacturer:string) =>
 
     return descriptionObj
 }
+
+// const title = titleParser('eadtek WinFast RTX 3060 Ti HURRICANE 8GB')
+// console.log(title)
+// console.log(manufacturerUrl(title.brand, title.model))
