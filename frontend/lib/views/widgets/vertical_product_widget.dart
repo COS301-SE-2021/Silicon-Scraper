@@ -89,19 +89,27 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                               height: MediaQuery.of(context).size.height / 20,
                               width: MediaQuery.of(context).size.width / 12.7,
 
-                                child: LikeButton(
-                                        size:30,
-                                        circleSize: 30,
-                                        likeBuilder: (bool isLiked) {
-//                                        return   FloatingActionButton(backgroundColor: Colors.white,
-//                                                child:widget.state.save,
-//                                            onPressed:(){}
-//                                        );
-                                        return widget.state.save;
-                                        },
-                                        onTap: like,
-                                        ),
-
+//                                child: LikeButton(
+//                                        size:30,
+//                                        circleSize: 30,
+//                                        likeBuilder: (bool isLiked) {
+////                                        return   FloatingActionButton(backgroundColor: Colors.white,
+////                                                child:widget.state.save,
+////                                            onPressed:(){}
+////                                        );
+//                                        return widget.state.save;
+//                                        },
+//                                        onTap: like,
+//                                        ),
+                          child:FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            child: widget.state.save,
+                            onPressed:(){
+                              setState(() {
+                                widget.state.changeState(context);
+                              });
+                            },
+                          )
 
                           )
                         ],
