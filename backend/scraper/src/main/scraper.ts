@@ -98,8 +98,8 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
 
     let brand = title.brand;
     let model = title.model
-    let des = await scrapeDescription(brand, model)
-    await new Promise(resolve => setTimeout(resolve, 100000));
+    let des = {}
+    let deurl = await getDesUrl(brand, model)
 
 
     let productsArray = {
@@ -127,7 +127,8 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
         /*
             Pass in the title to the descriptions array and scrape the manufactures
         */
-        description: des
+        description: des,
+        decriptionUrl:deurl
     }
     
     if (type === "gpu") {
@@ -167,35 +168,36 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     
     let browser: Browser = await puppeteer.launch({headless: false, args: ['--no-sandbox'], executablePath: revisionInfo.executablePath});
    // try {
+    //let browser: Browser;
+    try {
 
-            let page = await browser.newPage()
-            await page.setDefaultNavigationTimeout(0);
-            console.log('hyehhhhhhs')
+       // browser = await puppeteer.launch({headless: false})
+
             
+            let page = await browser.newPage()
+            page.setDefaultNavigationTimeout(0);
+            page.setDefaultTimeout(0);
+            
+        console.log("after browser")
+              
 
-            //await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36')
-            const page_result = await page.goto(url, {waitUntil: 'networkidle0'}).then(async () => {
+            const page_result = await page.goto(url, {waitUntil: 'load', timeout: 0}).then(async () => {
+                 
+                page.on('console', msg => {
+                    console.log("PAGE LOG:", msg.text())
+                })
+
 
                 if(brand === 'Intel'){
                     return {}
                 }
 
                 const selectordes = selector.getDescriptions()
-                // const content = page.content()
-                // let text = ""
-                // console.log('heyyyyyyyy')
-                // await content.then(async (success) => {
-                //     const $ = await cheerio.load(success)
-                //     // console.log(success)
-                //     $(selectordes).children().each(async (i:any, row:any) =>{
-                //         text = $(row).text().trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
-                //     })
-                //     console.log(text)
                 
-                // })
-                console.log('hryyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
                 const content = await page.evaluate(async (selectordes: string) => {
-                    console.log(document.documentElement.querySelectorAll(selectordes)[0])
+                    // add intel scraping
+                    //let selector: string = await window.selectordes('search')
+                    //console.log(document.documentElement.querySelectorAll("#coveo-result-list2 > div").length)
                     let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
                     let descript :string[] = [];
                     
@@ -206,36 +208,67 @@ export const scrapeDescription = async (brand: string, model: string) =>{
 
                     })
 
+                    console.log("done ", descript)
+
                     return {
                         description: descript
                     }
 
                 }, selectordes)
-                console.log(content.description)
-                //let des = getDescriptions(content.description, man)
-                let des = {}
                 
-                //await browser.close()
+                let des = getDescriptions(content.description, man)
+                if(des === {}) throw "Description Error: Unable to get descriptions"
+                
                 return des
 
             }).catch(async (err: any) => {
-                console.error("Scraping Error: " + err)
                 await browser.close()
-                
+                throw "Scraping Error: " + err
             })
 
+            console.log("gotten ", url)
 
             await browser.close()
             return page_result
-
             
-    // }catch(e){
-    //     console.error(e)
-    //     return {}//{}
-    // }finally{
-    //     await browser.close()
-    // }
+    }catch(e){
+        console.error(e)
+        return //{}
+    }
 
+    console.log("donfazfafee")
+}
+
+const getDesUrl = async (brand: string, model: string) =>{
+
+    const url_man = await manufacturerUrl(brand, model)
+
+    console.log(url_man)
+
+    if(url_man.url === "") {
+        return {
+            "url":"",
+            "selector":""
+        }
+    }
+
+    let man = url_man.manufacturer
+    if(model.toUpperCase().includes("TI ")){
+        man = man+" "+"ti"
+    }
+
+    const url = url_man.url
+    const keys = Object.keys(manufacturesSelectorsArray)
+    const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
+    const selector = Object.values(manufacturesSelectorsArray)[index]
+
+    let urlPair = {
+        "url":url,
+        "selector":selector
+    }
+
+
+    return urlPair
 }
 
 /**
@@ -258,29 +291,6 @@ export const scrape = async () => {
     return products;
 }
 
-let titles = [
-    {
-        brand: "ASUS ROG STRIX",
-        model: "RX 570 O4G GAMING GRAPHICS"
-    },    {
-        brand: "Asus Rog Poseidon Platinum",
-        model: "Geforce GTX 1080 Ti 11GB Graphics Card"
-    },    {
-        brand: "MSI",
-        model: "GeForce RTX 3090 Gaming X TRIO 24GB"
-    },    {
-        brand: "MSI",
-        model: "Radeon RX 6900 XT GAMING Z TRIO 16GB"
-    },    {
-        brand: "AMD",
-        model: "Ryzen 9 5950X Processor"
-    }
+ scrape().then(r => { console.log(r) })
 
-]
-
-// for(let x in titles){
-//     console.log(scrapeDescription(titles[x].brand, titles[x].model))
-// }
-
-//console.log(scrapeDescription("ASUS ROG STRIX", "RX 570 O4G GAMING GRAPHICS"))
-scrape().then(r => {console.log(r)})
+//getDesUrl("AMD", "Ryzen 7 1800X Octa-Core 3.6GHz (4.0GHz Turbo) AM4 Socket Desktop CPU").then ( r => {console.log(r)} )
