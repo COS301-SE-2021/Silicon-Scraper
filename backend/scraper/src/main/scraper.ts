@@ -99,6 +99,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
     let brand = title.brand;
     let model = title.model
     let des = await scrapeDescription(brand, model)
+    await new Promise(resolve => setTimeout(resolve, 100000));
 
 
     let productsArray = {
@@ -164,7 +165,7 @@ export const scrapeDescription = async (brand: string, model: string) =>{
     const browserFetcher = puppeteer.createBrowserFetcher();
     const revisionInfo = await browserFetcher.download('901912');
     
-    let browser: Browser = await puppeteer.launch({headless: true, args: ['--no-sandbox'], executablePath: revisionInfo.executablePath});
+    let browser: Browser = await puppeteer.launch({headless: false, args: ['--no-sandbox'], executablePath: revisionInfo.executablePath});
    // try {
 
             let page = await browser.newPage()
@@ -256,6 +257,30 @@ export const scrape = async () => {
 
     return products;
 }
-console.log(titleParser("AMD Ryzen 9 5950X Processor"))
+
+let titles = [
+    {
+        brand: "ASUS ROG STRIX",
+        model: "RX 570 O4G GAMING GRAPHICS"
+    },    {
+        brand: "Asus Rog Poseidon Platinum",
+        model: "Geforce GTX 1080 Ti 11GB Graphics Card"
+    },    {
+        brand: "MSI",
+        model: "GeForce RTX 3090 Gaming X TRIO 24GB"
+    },    {
+        brand: "MSI",
+        model: "Radeon RX 6900 XT GAMING Z TRIO 16GB"
+    },    {
+        brand: "AMD",
+        model: "Ryzen 9 5950X Processor"
+    }
+
+]
+
+// for(let x in titles){
+//     console.log(scrapeDescription(titles[x].brand, titles[x].model))
+// }
+
 //console.log(scrapeDescription("ASUS ROG STRIX", "RX 570 O4G GAMING GRAPHICS"))
-//scrape().then(r => {console.table(r)})
+scrape().then(r => {console.log(r)})

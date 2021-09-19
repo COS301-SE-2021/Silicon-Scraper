@@ -9,9 +9,7 @@ let url = require("../utilities/url");
  * @returns {string}
  */
 export const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
-    console.log('concaturl')
     if(urlRES !== undefined) {
-        console.log(urlRES)
         let base = urlRES.split('../')[1]
 
         if(base !== undefined) {
@@ -29,7 +27,6 @@ export const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
 
         return urlRES;
     }else{
-        console.log('else', urlRES)
         return url.getEveTecUrl()
     }
 
@@ -45,7 +42,6 @@ export const concatUrl = (urlRES: string | undefined, baseUrl: string) =>{
 export const trimPrice = (price: string) =>{
 
     let price_ = price.split('\n')[0].split('R')[1];
-    console.log(price_)
     if(price_ !== undefined ){
         return parseFloat(price.split('\n')[0].split('R')[1].replace(",", ""));
     }else{
