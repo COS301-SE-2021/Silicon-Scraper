@@ -8,6 +8,7 @@ import psycopg2.extensions
 from nltk.corpus import stopwords
 from configparser import ConfigParser
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
 
 stopwords = set(stopwords.words('english'))
 all_products = None
@@ -16,8 +17,6 @@ similarity = None
 
 cur = None
 con = None
-
-
 
 def get_wishlist(cur, con):
     query = "SELECT * FROM watchlist_cpu"
@@ -46,9 +45,9 @@ def get_all_products(cur, con):
     table = cpus.append(gpus)
     
     # any preprocessing needed to be done
-    all_products['description_cl'] = all_products['description'].apply(clean_data)
-    all_products.drop(['description'], axis=1, inplace=True)
-    all_products.dropna(inplace=True)
+    table['description_cl'] = table['description'].apply(clean_data)
+    table.drop(['description'], axis=1, inplace=True)
+    table.dropna(inplace=True)
 
     return table
 
@@ -142,7 +141,7 @@ def update_gpu(gpu_recs):
 def update_cpu(cpu_recs):
     new_products = []
     try:
-        for i, row in gpu_recs.iterrow():
+        for i, row in cpu_recs.iterrow():
             query = ("""SELECT id FROM recommendation_cpu WHERE id = %s""")
             cur.execute(query, (i,))
             product = cur.fetchone()
@@ -184,6 +183,7 @@ def generate_recommendations(curr, conn):
     global all_products
     all_products = get_all_products(cur, con)
 
+
     all_products.set_index('id', inplace=True)
     all_products['all_features'] = all_products['brand'] +" "+ all_products['retailer'] +" "+ all_products['description_cl']
     all_products['all_features'] = all_products['all_features'].apply(lambda x: x.lower())
@@ -196,11 +196,11 @@ def generate_recommendations(curr, conn):
 
     global rec
     rec = pd.Series(all_products.index)
-
+    
     gpu_recs, cpu_recs = get_all_product_recommendations(wishlist_products)
-
+    
     new_gpu = update_gpu(gpu_recs)
-    new_cpu = update_cpu(cpu_rec)
+    new_cpu = update_cpu(cpu_recs)
 
     if new_gpu is not None:
         df_gpu = pd.DataFrame(new_gpu, columns=['id', 'recs'])

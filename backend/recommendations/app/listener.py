@@ -32,7 +32,7 @@ def listener():
     cur.execute('LISTEN table_modified')
     cur.execute('LISTEN watchlist_modified')
     print("Listening")
-
+    
     seconds_passed = 0
     while 1:
         con.commit()
@@ -46,9 +46,9 @@ def listener():
                 notify = con.notifies.pop(0)
                 if notify.channel == 'table_modified':
                     #get new similarity table
-                    generate_recommendations(db, cur)
+                    rec.generate_recommendations(cur, con)
                     
                 elif notify.channel == 'watchlist_modified':
                     #remove product from recommendation table or add new porduct to recommendation table
-                    update_recommendations(db, cur)
+                    rec.update_recommendations(cur, con)
 
