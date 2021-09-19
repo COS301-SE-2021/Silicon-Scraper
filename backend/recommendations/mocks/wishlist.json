@@ -1,0 +1,22 @@
+{
+	"products": [ 
+		{
+			"id": "hifuvovuosaci",
+			"type": "CPU",
+			"brand": "AMD",
+			"model": " Ryzen 9 5950X Processor"
+		},
+		{
+			"id": "hifuvovuosaci",
+			"type": "CPU",
+			"brand": "AMD",
+			"model": "Ryzen 5 5600X Processor"
+		},
+		{
+			"id": "hifuvovuosaci",
+			"type": "CPU",
+			"brand": "AMD",
+			"model": "Ryzen 7 5800X Processor"
+		}
+	]
+}

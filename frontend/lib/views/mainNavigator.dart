@@ -69,7 +69,7 @@ class _MainNavigatorState extends State<MainNavigator> {
             icon: ImageIcon(
               AssetImage("assets/images/stars.png"),
             ),
-            label: "Discover",
+            label: "Recommended",
           ),
           BottomNavigationBarItem(icon: Icon(Icons.logout), label: "Logout"),
         ],

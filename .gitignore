@@ -14,6 +14,7 @@ venv/
 */__pycache__
 */venv
 */api_logs
+*.ipynb_checkpoints
 
 # IntelliJ related
 *.iml
@@ -42,12 +43,14 @@ coverage/
 
 #database
 .env
+*.ini 
 
 #typescript
 backend/scraper/dist/
 
 # API related
 node_modules/
+build/
 
 # Notification related
 backend/notification/build

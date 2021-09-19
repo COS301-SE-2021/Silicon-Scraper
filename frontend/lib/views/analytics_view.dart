@@ -15,48 +15,50 @@ class AnalyticsView extends StatelessWidget
   Widget build(BuildContext context)
   {
     return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
-          backgroundColor: Colors.green[400],
-          elevation: 0,
-          automaticallyImplyLeading: true,
-          flexibleSpace: Container(
-            margin: EdgeInsets.only(top: 25),
-            height: MediaQuery.of(context).size.height / 10,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment(0.0, 1.0),
-                colors: <Color>[  Colors.green[400],
-                  Color(0xffffffff)],
-                tileMode: TileMode.clamp,
-              ),
-            ),
-
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///title
-                Container(
-                  margin: EdgeInsets.only(left: 45, top: 12),
-                  width: MediaQuery.of(context).size.width / 1.6,
-                  child: Text(
-                    "Analytics",
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
-                    style: TextStyle(
-                        fontSize: 28,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold, letterSpacing: 0),
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(MediaQuery.of(context).size.height / 10),
+            child: AppBar(
+                iconTheme: IconThemeData(color: Colors.black),
+                backgroundColor: Colors.green[400],
+                elevation: 0,
+                automaticallyImplyLeading: true,
+                flexibleSpace: Container(
+                  margin: EdgeInsets.only(top: kToolbarHeight),
+                  height: MediaQuery.of(context).size.height / 10,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment(0.0, 1.0),
+                      colors: <Color>[ Colors.green[400],
+                        Color(0xffffffff)],
+                      tileMode: TileMode.clamp,
+                    ),
                   ),
-                ),
 
-              ],
-            ),
-          ),),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ///title
+                      Container(
+                        margin: EdgeInsets.only(left: 45, bottom: kToolbarHeight/2),
+                        width: MediaQuery.of(context).size.width / 1.6,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Analytics",
+                          textAlign: TextAlign.left,
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                              fontSize: 28,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold, letterSpacing: 0),
+                        ),
+                      ),
+                    ],
+                  ),
+                ))),
       body: ListView
       (
         children: [Column(
