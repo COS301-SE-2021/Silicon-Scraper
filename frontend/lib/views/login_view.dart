@@ -47,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
                       controller: nameController,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Email',
+                        labelText: 'Username',
                       ),
                     ),
                   ),

@@ -411,16 +411,16 @@ Widget predictionWidget(PredictionViewModel p, BuildContext context) {
   );
 }
 
-Widget bulletListWidget(String l) {
-  List listItems = l.split('/');
-  listItems.removeAt(0);
+Widget bulletListWidget(List<String> l) {
+//  List listItems = l.split('/');
+//  listItems.removeAt(0);
 
   return ListView.builder(
     physics: NeverScrollableScrollPhysics(), // <-- this will disable scroll
     shrinkWrap: true,
-    itemCount: listItems.length,
+    itemCount: l.length,
     itemBuilder: (_, index) {
-      return bulletListItem(listItems[index]);
+      return bulletListItem(l[index]);
     },
   );
 }

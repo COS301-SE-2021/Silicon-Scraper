@@ -7,7 +7,7 @@ class Product {
   final String model;
   final double price;
   final String retailer;
-  final String description;
+  final List<String> description;
 
   final String url;
   final String image; //image

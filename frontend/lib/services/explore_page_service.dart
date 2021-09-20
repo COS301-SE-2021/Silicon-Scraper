@@ -32,6 +32,7 @@ class ExplorePageService {
 
     final response = await http.get(url, headers: headers);
     var responseData = json.decode(response.body);
+    print(responseData);
     if (response.statusCode == 200) {
       return addProducts(responseData["products"]);
     }
