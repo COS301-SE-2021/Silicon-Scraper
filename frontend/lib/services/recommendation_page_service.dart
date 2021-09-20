@@ -22,7 +22,7 @@ class RecommendationPageService {
     // print(sharedPreferences.get('userId'));
 
     var url = Uri.parse(
-        "https://api-silicon-scraper.herokuapp.com/products/?userId="+userId);
+        "https://api-silicon-scraper.herokuapp.com/recommendation/"+userId);
     Map<String, String> headers = {
       "Content-Type": "application/json; charset=utf-8",
       'Authorization': 'Bearer ' + token
@@ -30,6 +30,8 @@ class RecommendationPageService {
 
     final response = await http.get(url, headers: headers);
     var responseData = json.decode(response.body);
+    print(responseData);
+    print("userId"+userId);
     if (response.statusCode == 200) {
       return addProducts(responseData["products"]);
     }
