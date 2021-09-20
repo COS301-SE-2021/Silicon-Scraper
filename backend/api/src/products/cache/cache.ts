@@ -1,10 +1,11 @@
 import { CPU } from "../../entity/cpu";
 import { GPU } from "../../entity/gpu";
 
-const cache = {};
+let cache = {};
 
 export function addCache(request: string, products: CPU[] | GPU[]) {
-    cache['hello'] = {message: 'there'};
+    cache[request] = products;
+    setTimeout(() => { cache = {}; }, 60000)
 }
 
 export function fetchCache(request: string) {
