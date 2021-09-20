@@ -208,10 +208,18 @@ export class amdSelector extends descriptionSelector{
 */
 export class nvidiaSelector extends descriptionSelector{
     getDescriptions(type:string): string {
-        let selector: string = '#sectionenhanced_9676286944c5f9e61_ff6b_4e5c_b775_6d4b7cc4ed58 > div > div.container > div > div.rawHtml.section > div > div.scroll-wrapper-spec > div > table > tbody'
+        let selector: string = ''
         switch(type){
-            case "ti": {
-                selector = "#SeriesChart > table > tbody"
+            case "301620ti": {
+                selector = '#specs div.container div.rawHtml.section > div > div> table> tbody'
+                break;
+            }
+            case "general":{
+                selector = '#specs div.container div.rawHtml.section > div > div > div > table > tbody'
+                break;
+            }
+            case "quadroa": {
+                selector = '#specifications > div > div > div > div >  div.rawHtml.section > div > div > table > tbody'
                 break;
             }
             

@@ -99,7 +99,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
     let brand = title.brand;
     let model = title.model
     let des = {}
-    let deurl = await getDesUrl(brand, model)
+   // let deurl = await getDesUrl(brand, model)
 
 
     let productsArray = {
@@ -128,7 +128,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
             Pass in the title to the descriptions array and scrape the manufactures
         */
         description: des,
-        decriptionUrl:deurl
+        // decriptionUrl:deurl
     }
     
     if (type === "gpu") {
@@ -140,6 +140,93 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
     }
 }
 
+
+const getDesUrl = (brand: string, model: string) =>{
+
+    const url_man =  manufacturerUrl(brand, model)
+
+
+    if(url_man.url === "" || url_man.manufacturer == "intel") {
+        return {
+            "url":"",
+            "selector":"",
+            "manufacturer": ""
+        }
+    }
+    let select_type = 'general'
+    let man = url_man.manufacturer
+    if(model.toUpperCase().includes("TI ")){
+        man = man+" "+"ti"
+        select_type = '301620ti'
+    }
+
+    const url = url_man.url
+    const keys = Object.keys(manufacturesSelectorsArray)
+    const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
+    const selector = Object.values(manufacturesSelectorsArray)[index]
+    
+    if(url.includes('20') || url.includes('ti') || url.includes('16') || url.includes('quadro')){
+        select_type = '301620ti'
+    }else if(url.includes('rtx-a') || url.includes){
+        select_type = 'quadroa'
+    }
+
+    let urlPair = {
+        "url":url,
+        "selector":selector.getDescriptions(select_type),
+        "manufacturer": man
+    }
+
+    return urlPair
+}
+
+let titles = {
+    "cpu": [
+        getDesUrl('Sapphire','NITRO+ Radeon RX 6900 XT SE 16GB GDDR6 PCIE 4.0 AMD Graphics Card'),
+        getDesUrl("MSI","Radeon RX 6600 XT GAMING X 8GB GDDR6"),
+        getDesUrl('ASUS ROG Strix LC', 'RX 6900 XT 16GB Top Gaming'),
+        getDesUrl("ASUS"," GeForce RTX 3060 Ti V2 LHR OC Dual 8GB GDDR6")
+    ],
+    "gpu": [
+        getDesUrl("ASUS Dual ","GeForce RTX 2060 OC EVO 6GB GDDR6"),
+        getDesUrl("ASUS TUF Gaming"," GeForce GTX 1660 Ti OC EVO 6GB"),
+        getDesUrl("NVIDIA","Quadro P1000 4GB GDDR5 Workstation Graphics"),
+        getDesUrl("MSI","GTX 1650 VENTUS XS 4GB OC"),
+        getDesUrl("Gigabyte","GT 1030 Low Profile 2GB DDR4 Graphics Card")
+    ]
+    
+
+}
+
+
+
+
+const withBrowser = async (fn: (arg0: Browser) => any) => {
+    const browserFetcher = puppeteer.createBrowserFetcher();
+    const revisionInfo = await browserFetcher.download('901912');
+    
+    let browser: Browser = await puppeteer.launch({headless: false, args: ['--no-sandbox'], executablePath: revisionInfo.executablePath});
+    
+    try{
+        return await fn(browser)
+    }finally{
+        await browser.close()
+    }
+}
+
+const withPage = (browser: Browser) => async (fn: any) => {
+    const page = await browser.newPage()
+    await (await page).setDefaultNavigationTimeout(0);
+    await (await page).setDefaultTimeout(0);
+
+    try {
+        return await fn(page)
+    }finally{
+        (await page).close()
+    }
+}   
+
+
 /**
  * This is a Description scraper which collects product descriptions of the given product passed in via model and brand thus returning
  * an object with all the desired descriptions
@@ -147,183 +234,90 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
  * @param model
  * @return {description} type: {[key:string] : any}
  */
-
-export const scrapeDescription = async (brand: string, model: string) =>{
-
-    const url_man = manufacturerUrl(brand, model)
-    if(url_man.url === "") return ""
-
-    let man = url_man.manufacturer
-    if(model.toUpperCase().includes("TI ")){
-        man = man+" "+"ti"
-    }
-
-    const url = url_man.url
-    const keys = Object.keys(manufacturesSelectorsArray)
-    const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
-    const selector = Object.values(manufacturesSelectorsArray)[index]
-
-    const browserFetcher = puppeteer.createBrowserFetcher();
-    const revisionInfo = await browserFetcher.download('901912');
-    
-    let browser: Browser = await puppeteer.launch({headless: false, args: ['--no-sandbox'], executablePath: revisionInfo.executablePath});
-   // try {
-    //let browser: Browser;
-    try {
-
-       // browser = await puppeteer.launch({headless: false})
-
-            
-            let page = await browser.newPage()
-            page.setDefaultNavigationTimeout(0);
-            page.setDefaultTimeout(0);
-            
-        console.log("after browser")
-              
-
-            const page_result = await page.goto(url, {waitUntil: 'load', timeout: 0}).then(async () => {
-                 
-                page.on('console', msg => {
-                    console.log("PAGE LOG:", msg.text())
-                })
-
-
-                if(brand === 'Intel'){
-                    return {}
-                }
-
-                const selectordes = selector.getDescriptions()
-                
-                const content = await page.evaluate(async (selectordes: string) => {
-                    // add intel scraping
-                    //let selector: string = await window.selectordes('search')
-                    //console.log(document.documentElement.querySelectorAll("#coveo-result-list2 > div").length)
-                    let children = Array.from(document.documentElement.querySelectorAll(selectordes)[0].children)
-                    let descript :string[] = [];
-                    
-                    children.forEach(async (element) => {
-                       
-                        const text = element.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
-                        descript.push(text !== undefined? text: '')
-
-                    })
-
-                    console.log("done ", descript)
-
-                    return {
-                        description: descript
-                    }
-
-                }, selectordes)
-                
-                let des = getDescriptions(content.description, man)
-                if(des === {}) throw "Description Error: Unable to get descriptions"
-                
-                return des
-
-            }).catch(async (err: any) => {
-                await browser.close()
-                throw "Scraping Error: " + err
-            })
-
-            console.log("gotten ", url)
-
-            await browser.close()
-            return page_result
-            
-    }catch(e){
-        console.error(e)
-        return //{}
-    }
-
-    console.log("donfazfafee")
-}
-
-const getDesUrl = async (brand: string, model: string) =>{
-
-    const url_man = await manufacturerUrl(brand, model)
-
-
-    if(url_man.url === "" || url_man.manufacturer == "intel" || url_man.manufacturer == "nvidia") {
-        return {
-            "url":"",
-            "selector":""
-        }
-    }
-
-    let man = url_man.manufacturer
-    if(model.toUpperCase().includes("TI ")){
-        man = man+" "+"ti"
-    }
-
-    const url = url_man.url
-    const keys = Object.keys(manufacturesSelectorsArray)
-    const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
-    const selector = Object.values(manufacturesSelectorsArray)[index]
-    
-    
-    let urlPair = {
-        "url":url,
-        "selector":selector.getDescriptions()
-    }
-    console.log(urlPair)
-
-    return urlPair
-}
-
 const scrape_description = async () => {
     console.log("scraping descriptions")
-    const browserFetcher = puppeteer.createBrowserFetcher();
-    const revisionInfo = await browserFetcher.download('901912');
     
-    let browser: Browser = await puppeteer.launch({headless: false, args: ['--no-sandbox'], executablePath: revisionInfo.executablePath});
+    const cpus = titles.cpu//products.cpu
+    const gpus = titles.gpu//products.gpu
+    
+    //let descriptions: ({ [x: string]: any; } | undefined)[] = []
 
-    const qty = 5
-    const all_products = products.cpu.concat(products.gpu)
+    titles.cpu = await withBrowser(async (browser) => {
+        return products_descriptions(cpus, browser)
 
-    const prods = (await Promise.allSettled(
-        urls = await bluebird.map(all_products, async (prod) => {
-            const page = await browser.newPage()
-            const url = prod.decriptionUrl.url
-            let result: string | void = ""
-            if(url != ""){
-                const selector = prod.decriptionUrl.selector
-                
-                result = await page.goto(url, {waitUntil: 'networkidle0'}).then(() => {
-                    return page.$eval(selector, async (element) => {
-                        const children = Array.from(element.children)
-                        let text
-                        let descript = []
-                        children.forEach(el => {
-                            text = el.textContent?.trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
-                            descript.push(text !== undefined? text: '')
         
-                        });
-                        console.log(text)
-                        await page.close()
-                       
-                    })
+    })
 
-                }).catch(async (err: any) =>{
-                    //console.error(err)
-                    await page.close()
-                    //await browser.close()
-                })
-            }
-            
-            
-            
-        }, {concurrency: 10})
-    )).filter(e => e.status === "fulfilled")
-    .map(e => e)
+    titles.gpu = await withBrowser(async (browser) => {
+        return products_descriptions(gpus, browser)
+    })
 
+    
     
     
     console.log("Products")
     //console.log(prods)
-    await browser.close()
+    //console.log("res", res)
+    return titles
+    
 }
 
+
+const products_descriptions = async (type_product: any[], browser: Browser) => {
+ 
+    return await bluebird.map(type_product, async (prod) => {
+        const url = prod.url//prod.decriptionUrl.url
+        let result: {[k:string]: any} |void
+
+        return withPage(browser)(async (page: Page) => {
+            
+            if(url != ""){
+                const selector = prod.selector//prod.decriptionUrl.selector
+                
+                result = await page.goto(url, {waitUntil: 'networkidle0'}).then(async () => {
+                    let descript:string[] = []
+                    console.log('before eval')
+                    const content = page.content()
+                    await content.then(async (success) => {
+                        const $ = await cheerio.load(success)
+                        let text 
+                        $(selector).children().each((i:any, row:any) => {
+                            text = $(row).text().trim().replace('GPU:','').replace(/\s{2,} |:/g, '//')
+                            descript.push(text !== undefined? text: '')
+                        })
+                        //console.log(descript)
+                    })
+                    const des = getDescriptions(descript, prod.manufacturer)//prod.decriptionUrl.manufacturer)
+                    return des
+        
+    
+                }).catch(async (err: any) =>{
+                    console.error(err)
+                    await page.close()
+                    prod.description = {}
+                    return prod
+                    
+                    //await browser.close()
+                })
+                //await page.close()
+                prod.description = result
+                return prod
+    
+            }else {
+                prod.description = {}
+                //await page.close()
+                return prod
+            }
+
+        })
+        
+        
+        
+        
+    }, {concurrency: 10})
+
+
+}
 
 /**
  * This function loops through the url array and calls the scrape function
@@ -341,10 +335,13 @@ export const scrape = async () => {
             }
         }
     }
-    scrape_description()
-    return products;
+    let all_products 
+    return scrape_description()
+    //return all_products;
 }
 
- scrape().then(r => { console.log("done") }).catch(async (err) => {console.error(err)})
 
+
+ //scrape().then(r => { console.log("done") }).catch(async (err) => {})
+scrape_description().then(r => console.log(r))
 //getDesUrl("AMD", "Ryzen 7 1800X Octa-Core 3.6GHz (4.0GHz Turbo) AM4 Socket Desktop CPU").then ( r => {console.log(r)} )

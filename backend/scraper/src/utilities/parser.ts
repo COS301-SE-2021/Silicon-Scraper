@@ -113,15 +113,12 @@ export const titleParser = (title: string) =>{
     let mod = model.substring(1)
 
     for(let x in graphics){
-        console.log(mod[graphics[x].length])
         if(mod.includes(graphics[x]) && mod[graphics[x].length+1] != " "){
             //mod = mod.replace(graphics[x], " ")
             let str_before = mod.substring(0, mod.indexOf(graphics[x]) + graphics[x].length).trim()
             
             let str_after = mod.substring(mod.indexOf(graphics[x]) + graphics[x].length).trim()
             let str = str_before + " " + str_after
-            console.log(str_before, "-", str_after)
-            console.log(str)
             model = str
             // mod = model.slice(model.indexOf(graphics[x]), graphics[x].length+1 ) + " " + model.slice(graphics[x].length+1)
             // model = mod
@@ -299,8 +296,8 @@ const nvidiaUrl = (model: string) => {
     let addDouble = false
 
     if(model.includes("GTX 10")){
-        return getNvidia().urls[3]
-    }else if(model.includes("GT 7")){
+        return ""//getNvidia().urls[3]
+    }else if(model.includes("GT 7") || model.includes("GT 10")){
         return ""
     }
     if(model.includes("RTX 30")){
@@ -312,7 +309,7 @@ const nvidiaUrl = (model: string) => {
         url = !model.includes("RTX A")? url+  "quadro/": url 
     }else if (workstation.some(x => model.toUpperCase().includes(x))){
         url = getNvidia().urls[2]
-        return url
+        return ""
     }
 
     if(modelSplit[0].toUpperCase() == "GEFORCE"){
@@ -417,6 +414,6 @@ export const getDescriptions = (descriptions: string [], manufacturer:string) =>
     return descriptionObj
 }
 
-// const title = titleParser('eadtek WinFast RTX 3060 Ti HURRICANE 8GB')
+// const title = titleParser('MSI Radeon RX 580 Gaming X 8GB')
 // console.log(title)
 // console.log(manufacturerUrl(title.brand, title.model))
