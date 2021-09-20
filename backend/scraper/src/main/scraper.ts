@@ -100,7 +100,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
     let brand = title.brand;
     let model = title.model
     let des = {}
-   // let deurl = await getDesUrl(brand, model)
+    let deurl = await getDesUrl(brand, model)
 
 
     let productsArray = {
@@ -129,7 +129,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
             Pass in the title to the descriptions array and scrape the manufactures
         */
         description: des,
-        // decriptionUrl:deurl
+        decriptionUrl:deurl
     }
     
     if (type === "gpu") {
@@ -244,14 +244,14 @@ const withPage = (browser: Browser) => async (fn: any) => {
 const scrape_description = async () => {
     console.log("scraping descriptions")
     
-    const cpus = titles.cpu//products.cpu
-    const gpus = titles.gpu//products.gpu
+    const cpus = products.cpu
+    const gpus = products.gpu
     
     //let descriptions: ({ [x: string]: any; } | undefined)[] = []
 
     await withBrowser(async (browser) => {
-        titles.cpu = await products_descriptions(cpus, browser)
-        titles.gpu = await products_descriptions(gpus, browser)
+        products.cpu = await products_descriptions(cpus, browser)
+        products.gpu = await products_descriptions(gpus, browser)
         
     })
 
@@ -259,7 +259,7 @@ const scrape_description = async () => {
     console.log("Products")
     //console.log(prods)
     //console.log("res", res)
-    return titles
+    return products
     
 }
 
@@ -267,14 +267,14 @@ const scrape_description = async () => {
 const products_descriptions = async (type_product: any[], browser: Browser) => {
  
     return await bluebird.map(type_product, async (prod) => {
-        const url = prod.url//prod.decriptionUrl.url
+        const url = prod.decriptionUrl.url
         let result: {[k:string]: any} |void
 
         return withPage(browser)(async (page: Page) => {
             
             if(url != ""){
-                const selector = prod.selector//prod.decriptionUrl.selector
-                
+                const selector = prod.decriptionUrl.selector
+                console.log(url)
                 result = await page.goto(url, {waitUntil: 'networkidle0'})//.then(async () => {
                     let descript:string[] = []
                     
@@ -288,19 +288,9 @@ const products_descriptions = async (type_product: any[], browser: Browser) => {
                         })
                         //console.log(descript)
                     })
-                    const des = getDescriptions(descript, prod.manufacturer)//prod.decriptionUrl.manufacturer)
+                    const des = getDescriptions(descript, prod.decriptionUrl.manufacturer)
                     //return des
         
-    
-                // }).catch(async (err: any) =>{
-                //     console.error(err)
-                //     await page.close()
-                //     prod.description = {}
-                //     return prod
-                    
-                //     //await browser.close()
-                // })
-                //await page.close()
                 prod.description = des//result
                 return prod
     
@@ -343,6 +333,6 @@ export const scrape = async () => {
 
 
 
- //scrape().then(r => { console.log("done") }).catch(async (err) => {})
-scrape_description().then(r => console.log(r.cpu[0].description))
+scrape().then(r => { console.log(r.gpu) }).catch(async (err) => {})
+//scrape_description().then(r => console.log(r.gpu))
 //getDesUrl("AMD", "Ryzen 7 1800X Octa-Core 3.6GHz (4.0GHz Turbo) AM4 Socket Desktop CPU").then ( r => {console.log(r)} )

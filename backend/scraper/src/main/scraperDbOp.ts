@@ -247,5 +247,5 @@ export const dataOps = (db:any =db_) => {
     }
 }
 
-//dataOps()
+dataOps()
 console.log("Run scraper")
