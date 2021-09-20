@@ -50,7 +50,7 @@ class _WatchListState extends State<WatchList>
           }
           else if(watch.items.isNotEmpty)
           {
-           return watch.floatingProductListView(context, watch.items);
+           return watch.horizontalProductListView(context, watch.items);
           }
           else
           {
