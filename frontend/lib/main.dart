@@ -101,6 +101,11 @@ void main() async{
         statusBarColor: Colors.transparent,
       )
   );
+  SystemChrome.setPreferredOrientations([
+
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]).then((_) {
   runApp(
       MultiProvider(
           providers: [
@@ -111,7 +116,7 @@ void main() async{
           ],
           child: MyApp()
       )
-  );
+  );});
 }
 
 class MyApp extends StatefulWidget {
