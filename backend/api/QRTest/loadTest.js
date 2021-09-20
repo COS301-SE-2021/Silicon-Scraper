@@ -1,9 +1,10 @@
 import http from 'k6/http';
+import { sleep } from 'k6';
 
 export let options = {
     stages: [
         { duration: '1m', target: 1000 },
-        { duration: '1m', target: 1000 },
+        { duration: '2m', target: 1000 },
         { duration: '1m', target: 0 }
     ]
 }
@@ -19,6 +20,7 @@ function fetchProductsTest() {
     };
 
     http.get(url, params);
+    sleep(1);
 }
 
 export default function () {
