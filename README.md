@@ -18,11 +18,11 @@ add it to a watch list to be notified of any changes in price or availability et
 [![GitHub Flutter Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Dart?label=Flutter%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Dart?label=Flutter%20Build)
 [![GitHub API Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=API%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/API%20CI?label=API%20Build)
 [![GitHub Scraper Build](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Scraper%20CI/master?label=Scraper%20Build)](https://img.shields.io/github/workflow/status/COS301-SE-2021/Silicon-Scraper/Scraper%20CI/master?label=Scraper%20Build)
-[![Coverage Status](https://coveralls.io/repos/github/COS301-SE-2021/Silicon-Scraper/badge.svg?branch=master&style=for-the-badge)](https://coveralls.io/github/COS301-SE-2021/Silicon-Scraper?branch=master)
 ## Contents 
 - [Demo 1](#demo-1)
 - [Demo 2](#demo-2)
 - [Demo 3](#demo-3)
+- [Demo 4](#demo-4)
 - [Project Management Tools](#project-management-tools)
 - [Team Members](#team-members)
 - [Branching Strategy](#branching-strategy)
@@ -44,10 +44,18 @@ add it to a watch list to be notified of any changes in price or availability et
 - [Coding Standards](https://drive.google.com/file/d/1ZG9F7WaoOJ9lPKeS6td8gKStyioGfnfl/view?usp=sharing)
 - [Technical Installation Manual](https://drive.google.com/file/d/1AEo0fnDLCiIu_o1pdQOQe4JUxy3_JP15/view?usp=sharing)
 
+## Demo 4
+- [Bug Busters Inc-Demo 4](https://drive.google.com/file/d/1zXDjU9HtLJUrLK-AUDNFLNJfPL6F3k0f/view?usp=sharing)
+- [SRS document](https://drive.google.com/file/d/1uGSQ-ucA1EQxXasA2tdddoU_SmqxSWtk/view?usp=sharing)
+- [User manual](https://drive.google.com/file/d/1F8EySb7g9jE7kUNRus4_tkgf9so89DbL/view?usp=sharing)
+- [Coding Standards](https://drive.google.com/file/d/1ZG9F7WaoOJ9lPKeS6td8gKStyioGfnfl/view?usp=sharing)
+- [Technical Installation Manual](https://drive.google.com/file/d/1AEo0fnDLCiIu_o1pdQOQe4JUxy3_JP15/view?usp=sharing)
+
 ## Project Management Tools
 - [Discord (Communication tools)](https://discord.gg/xpsn3YRn)
 - [Github Project Board](https://github.com/COS301-SE-2021/Silicon-Scraper/projects/1)
 - [Github Discussion Board](https://github.com/orgs/COS301-SE-2021/teams/bug-busters-inc)
+
 ## Team Members
 This is Bug Busters Inc. meet our team:
 
@@ -85,7 +93,7 @@ _Team Leader_\
 
 **Tanatswa Dendere**\
 <img src="https://bit.ly/2SUdylW" alt="Tanatswa Dendere" width="250" height="250">
-- [LinkedIn](www.linkedin.com/in/tanatswadendere)
+- [LinkedIn](https://www.linkedin.com/in/tanatswadendere)
 - [Github](https://github.com/tanadendere)
 > I am most passionate about innovation. I like to be a part of finding new ideas and creating new methods of doing things efficiently. And in my spare time I enjoy writing short stories.
 
