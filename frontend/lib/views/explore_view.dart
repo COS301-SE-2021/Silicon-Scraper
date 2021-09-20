@@ -66,7 +66,7 @@ class _ExploreState extends State<Explore> {
               Container(
                   width: MediaQuery.of(context).size.width,
                   //height: MediaQuery.of(context).size.height / 39,
-                  margin: EdgeInsets.fromLTRB(10, 20, 20, 0),
+                  margin: EdgeInsets.fromLTRB(10, 7, 20, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

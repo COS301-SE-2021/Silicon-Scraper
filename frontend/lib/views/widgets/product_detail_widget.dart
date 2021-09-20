@@ -151,79 +151,79 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
                         bulletListWidget(widget.state.item.description),
                         ///date time picker
 
-                        ChangeNotifierProvider.value(
-//                      create: (_)=> widget.state.predict,
-                          value: widget.state.predict,
-                          child: Consumer<PredictionViewModel>(builder:
-                              (context, PredictionViewModel p, Widget child) {
-                            return Container(
-                              decoration: BoxDecoration(
-//                                borderRadius: BorderRadiusGeometry.only()
-                                  ),
-//                              color: Colors.blueGrey,
-                              child: p.predict != null
-                                  ? Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text("${f.format(p.date)}",
-                                                style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                ))
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            Text(
-                                              'Prediction',
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.grey),
-                                            )
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Container(
-                                              child: p.arrow,
-                                            ),
-                                            Container(
-                                              child: Text(
-                                                  'R ${p.predict.price.toStringAsFixed(2)}',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                      fontSize: 17)),
-                                            ),
-                                            Container(
-                                              child: p.predict.availability
-                                                  ? Text('Available',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.green))
-                                                  : Text('Out of Stock',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.red)),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  : Container(
-//                      child: CircularProgressIndicator(),
-                                      ),
-                            );
-                          }),
-                        ),
+//                        ChangeNotifierProvider.value(
+////                      create: (_)=> widget.state.predict,
+//                          value: widget.state.predict,
+//                          child: Consumer<PredictionViewModel>(builder:
+//                              (context, PredictionViewModel p, Widget child) {
+//                            return Container(
+//                              decoration: BoxDecoration(
+////                                borderRadius: BorderRadiusGeometry.only()
+//                                  ),
+////                              color: Colors.blueGrey,
+//                              child: p.predict != null
+//                                  ? Column(
+//                                      children: [
+//                                        Row(
+//                                          mainAxisAlignment:
+//                                              MainAxisAlignment.center,
+//                                          children: [
+//                                            Text("${f.format(p.date)}",
+//                                                style: TextStyle(
+//                                                  fontSize: 17,
+//                                                  fontWeight: FontWeight.bold,
+//                                                ))
+//                                          ],
+//                                        ),
+//                                        Column(
+//                                          children: [
+//                                            Text(
+//                                              'Prediction',
+//                                              style: TextStyle(
+//                                                  fontSize: 17,
+//                                                  fontWeight: FontWeight.bold,
+//                                                  color: Colors.grey),
+//                                            )
+//                                          ],
+//                                        ),
+//                                        Row(
+//                                          mainAxisAlignment:
+//                                              MainAxisAlignment.spaceEvenly,
+//                                          children: [
+//                                            Container(
+//                                              child: p.arrow,
+//                                            ),
+//                                            Container(
+//                                              child: Text(
+//                                                  'R ${p.predict.price.toStringAsFixed(2)}',
+//                                                  style: TextStyle(
+//                                                      fontWeight:
+//                                                          FontWeight.normal,
+//                                                      fontSize: 17)),
+//                                            ),
+//                                            Container(
+//                                              child: p.predict.availability
+//                                                  ? Text('Available',
+//                                                      style: TextStyle(
+//                                                          fontWeight:
+//                                                              FontWeight.bold,
+//                                                          color: Colors.green))
+//                                                  : Text('Out of Stock',
+//                                                      style: TextStyle(
+//                                                          fontWeight:
+//                                                              FontWeight.bold,
+//                                                          color: Colors.red)),
+//                                            ),
+//                                          ],
+//                                        ),
+//                                      ],
+//                                    )
+//                                  : Container(
+////                      child: CircularProgressIndicator(),
+//                                      ),
+//                            );
+//                          }),
+//                        ),
                       ],
                     )),
               ),

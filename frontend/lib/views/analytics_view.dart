@@ -23,7 +23,7 @@ class AnalyticsView extends StatelessWidget
                 elevation: 0,
                 automaticallyImplyLeading: true,
                 flexibleSpace: Container(
-                  margin: EdgeInsets.only(top: kToolbarHeight),
+                  margin: EdgeInsets.only(top: kToolbarHeight/2),
                   height: MediaQuery.of(context).size.height / 10,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(

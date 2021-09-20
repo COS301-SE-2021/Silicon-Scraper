@@ -1,15 +1,18 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService
 {
   Future register(String id,String token)async
   {
     var url = Uri.parse("https://notification-silicon-scraper.herokuapp.com/subscribe");
+    SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
+    String token=sharedPreferences.get('token');
     Map <String,String> headers=
     {
       "Content-Type":"application/json; charset=utf-8",
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYzhhOTNmMzAtZmUxYi00Y2VhLWE3ZTItNDljMzdlOTA4MTMzIiwiaWF0IjoxNjI5MDM4OTkyLCJleHAiOjE2NjA1NzQ5OTJ9.EunDH2NFzq66c-NKdm_I-Wld5HtUrGAkZVyStixQKHQ',
+      'Authorization': 'Bearer '+token,
     };
 
     Map <String,String> data={

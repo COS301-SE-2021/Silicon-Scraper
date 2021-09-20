@@ -39,27 +39,27 @@ class _WatchListState extends State<WatchList>
 //        {
 //          return w.floatingProductListView(context, w.items);
 //        },
-    body: watch.horizontalProductListView(context, watch.items),
-//        child: Container(
-//        child: FutureBuilder(
-//        future: watch.setInitialProducts(),
-//        builder: (BuildContext context,AsyncSnapshot snapshot){
-//          if(snapshot.connectionState==ConnectionState.none)
-//          {
-//          return Center(child: CircularProgressIndicator());
-//          }
-//          else if(watch.items.isNotEmpty)
-//          {
-//           return watch.floatingProductListView(context, watch.items);
-//          }
-//          else
-//          {
-//            return Center(child: CircularProgressIndicator());
-//          }
-//    },
-//        ),
-//        ),
-//      ),
+//    body: watch.horizontalProductListView(context, watch.items),
+        body: Container(
+        child: FutureBuilder(
+        future: watch.setInitialProducts(),
+        builder: (BuildContext context,AsyncSnapshot snapshot){
+          if(snapshot.connectionState==ConnectionState.waiting)
+          {
+          return Center(child: CircularProgressIndicator());
+          }
+          else if(watch.items.isNotEmpty)
+          {
+           return watch.horizontalProductListView(context, watch.items);
+          }
+          else
+          {
+            return Container();
+          }
+    },
+        ),
+        ),
     );
   }
 }
+

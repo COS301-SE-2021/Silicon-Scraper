@@ -4,10 +4,13 @@ import 'package:silicon_scraper/views/login_view.dart';
 import 'package:silicon_scraper/views/mainNavigator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:silicon_scraper/views/sign_up_view.dart';
+import 'package:provider/provider.dart';
+import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 
 class LoginViewModel extends ChangeNotifier
 {
-    LoginInjector logIn= LoginInjector();
+  WatchListViewModelSingleton watch= WatchListViewModelSingleton.getState();
+  LoginInjector logIn= LoginInjector();
 
     Future login(String username,String pw,context)async
     {
@@ -25,6 +28,7 @@ class LoginViewModel extends ChangeNotifier
              SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
              sharedPreferences.setString("token", isIn['token']);
              sharedPreferences.setBool("loggedIn",true);
+             sharedPreferences.setString("userId", isIn['user']['id']);
              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => MainNavigator()),(Route<dynamic> route)  => false);
            }
            else
@@ -56,6 +60,7 @@ class LoginViewModel extends ChangeNotifier
       SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
       sharedPreferences.setBool("loggedIn",false);
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginView()),(Route<dynamic> route)  => false);
+      watch.items=[];
     }
 }
 
