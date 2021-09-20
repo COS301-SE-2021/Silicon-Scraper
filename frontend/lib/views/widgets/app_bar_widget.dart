@@ -113,7 +113,7 @@ Widget appbar(BuildContext context, String page, int depth) {
               children: [
                 ///title
                 Container(
-                  margin: EdgeInsets.only(left: 10, top: 20),
+                  margin: EdgeInsets.only(left: 10, top: 0),
                   width: MediaQuery.of(context).size.width / 1.6,
                   child: Text(
                     title,
