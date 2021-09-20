@@ -25,12 +25,15 @@ class Product {
   }
 
   factory Product.fromJson(Map<String, dynamic> json) {
+    Map<String,dynamic> des=json['description'];
+    List<String> description=[];
+    des.forEach((k,v) => description.add("$k"+"$v") );
     return Product(
       json['brand'],
       json['model'],
       json['price'].toDouble(),
       json['retailer'],
-      json['description'],
+      description,
       json['url'],
       json['image'],
       json['availability'],
