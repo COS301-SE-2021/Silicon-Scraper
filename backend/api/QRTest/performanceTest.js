@@ -8,21 +8,17 @@ export let options = {
 }
 
 function fetchProductsTest() {
-    var url = 'https://api-silicon-scraper.herokuapp.com/products/search?key=ryzen';
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiMzI0OThmY2UtNGM0My00YzcxLThlMDAtMzhlNDBhNDRiMjg0IiwiaWF0IjoxNjMxOTgyMTk3LCJleHAiOjE2NjM1MTgxOTd9.YxAiAT0QSEIs6O1W7fnR6_EndEPQrfFTsnY4auP2KuM';
-  
-    var params = {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    };
+    var url = 'https://api-silicon-scraper.herokuapp.com/products';
 
-    http.get(url, params);
+    http.get(url);
     sleep(1);
 }
 
 function searchTest() {
-    
+    var url = 'https://api-silicon-scraper.herokuapp.com/products/search?key=ryzen';
+
+    http.get(url);
+    sleep(1);
 }
 
 export default function () {

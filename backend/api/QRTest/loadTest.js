@@ -1,26 +1,23 @@
 import http from 'k6/http';
-import { sleep } from 'k6';
 
 export let options = {
     stages: [
+        { duration: '30s', target: 1000 },
         { duration: '1m', target: 1000 },
-        { duration: '2m', target: 1000 },
-        { duration: '1m', target: 0 }
+        { duration: '30s', target: 0 }
     ]
 }
 
 function fetchProductsTest() {
     var url = 'https://api-silicon-scraper.herokuapp.com/products';
-    var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiMzI0OThmY2UtNGM0My00YzcxLThlMDAtMzhlNDBhNDRiMjg0IiwiaWF0IjoxNjMxOTgyMTk3LCJleHAiOjE2NjM1MTgxOTd9.YxAiAT0QSEIs6O1W7fnR6_EndEPQrfFTsnY4auP2KuM';
-  
-    var params = {
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
-    };
 
-    http.get(url, params);
-    sleep(1);
+    http.get(url);
+}
+
+function searchTest() {
+    var url = 'https://api-silicon-scraper.herokuapp.com/products/search?key=ryzen';
+
+    http.get(url);
 }
 
 export default function () {
