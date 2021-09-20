@@ -21,7 +21,9 @@ List<Product> addProducts(List json)
           String model=json[i]['model'];
           double price=json[i]['price'].toDouble();
           String retailer=json[i]['retailer'];
-          String description=json[i]['description'];
+          Map<String,dynamic> des=json[i]['description'];
+          List<String> description=[];
+          des.forEach((k,v) => description.add("$k"+"$v") );
           String url=json[i]['url'];
           String photo=json[i]['image'];
           String sAvailability=json[i]['availability'];
