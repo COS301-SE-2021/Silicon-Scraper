@@ -327,12 +327,12 @@ export const scrape = async () => {
         }
     }
     let all_products 
-    return scrape_description()
+    return await scrape_description()
     //return all_products;
 }
 
 
 
-scrape().then(r => { console.log(r.gpu) }).catch(async (err) => {})
+//scrape().then(r => { console.log("done") }).catch(async (err) => {})
 //scrape_description().then(r => console.log(r.gpu))
 //getDesUrl("AMD", "Ryzen 7 1800X Octa-Core 3.6GHz (4.0GHz Turbo) AM4 Socket Desktop CPU").then ( r => {console.log(r)} )

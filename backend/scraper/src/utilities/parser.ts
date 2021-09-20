@@ -237,7 +237,7 @@ const amdUrl = (model: string) => {
     let modelSplit = model.split(' ')
     let add = false
     let rad = false
-    let url = ""
+    let url = getAmd().urls[2]
 
 
     modelSplit.forEach((item, index) => {
