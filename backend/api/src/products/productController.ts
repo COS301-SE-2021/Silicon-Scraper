@@ -2,6 +2,7 @@ import express from "express";
 import { getRepository } from "typeorm";
 import { CPU } from "../entity/cpu";
 import { GPU } from "../entity/gpu";
+import { addCache, fetchCache } from "./cache/cache";
 import fetchData from "./repo";
 
 interface Response {
@@ -92,14 +93,18 @@ const getProducts = async (req: express.Request, res: express.Response) => {
     const query = req.query;
     const values = ['gpus', 1, 20];
 
+    let cacheKey = 'products';
+
     let response: Response = {products: []};
     let table = '(select * from gpus union all select * from cpus)';
     if(query.type) {
         switch(query.type.toString().toLowerCase()) {
             case 'gpu':
+                cacheKey = 'gpu';
                 table = '(select * from gpus)';
                 break;
             case 'cpu':
+                cacheKey = 'cpu';
                 table = '(select * from cpus)';
                 break;
             default:
@@ -119,9 +124,16 @@ const getProducts = async (req: express.Request, res: express.Response) => {
         response.products = data;
     }
     else {
-        const data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description from 
-        ${table} as tbl`);
-        response.products = data;
+        const cache = fetchCache(cacheKey);
+        if(cache) {
+            response.products = cache;
+        }
+        else {
+            const data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description from 
+            ${table} as tbl`);            
+            response.products = data;
+            addCache(cacheKey, data);
+        }
     }
     res.status(200).json(response);
 }
