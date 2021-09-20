@@ -16,6 +16,7 @@ def connect():
         #params = config()
         #print(host, port, password, user, database)
         # host=host, port=port, database=database, user=user, password=password
+       
         conn = psycopg2.connect(**params)
         conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
@@ -32,23 +33,23 @@ def listener():
     cur.execute('LISTEN table_modified')
     cur.execute('LISTEN watchlist_modified')
     print("Listening")
-    
+    rec.generate_recommendations(cur, con)
     seconds_passed = 0
-    while 1:
-        con.commit()
-        if select.select([con],[],[],5) == ([],[],[]):
-            seconds_passed += 5
-            print( "{} seconds passed without a notification...".format(seconds_passed))
+    # while 1:
+    #     con.commit()
+    #     if select.select([con],[],[],5) == ([],[],[]):
+    #         seconds_passed += 5
+    #         print( "{} seconds passed without a notification...".format(seconds_passed))
 
-        else:
-            con.poll()
-            while con.notifies:
-                notify = con.notifies.pop(0)
-                if notify.channel == 'table_modified':
-                    #get new similarity table
-                    rec.generate_recommendations(cur, con)
+    #     else:
+    #         con.poll()
+    #         while con.notifies:
+    #             notify = con.notifies.pop(0)
+    #             if notify.channel == 'table_modified':
+    #                 #get new similarity table
+    #                 rec.generate_recommendations(cur, con)
                     
-                elif notify.channel == 'watchlist_modified':
-                    #remove product from recommendation table or add new porduct to recommendation table
-                    rec.update_recommendations(cur, con)
+    #             elif notify.channel == 'watchlist_modified':
+    #                 #remove product from recommendation table or add new porduct to recommendation table
+    #                 rec.update_recommendations(cur, con)
 
