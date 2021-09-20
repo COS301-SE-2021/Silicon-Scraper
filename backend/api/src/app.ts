@@ -8,8 +8,8 @@ import { GPU } from './entity/gpu';
 import { User } from './entity/user';
 import { watchlistCPU } from './entity/watchlistCPU';
 import { watchlistGPU } from './entity/watchlistGPU';
+import recommendationController from './recommendation/controller/recommendationController';
 import {ReviewSentiment} from './entity/reviewSentiment';
-
 import productRoutes from './products/productRoutes';
 import UserController from './users/controller/userController';
 import UserService from './users/service/userService';
@@ -45,6 +45,7 @@ const connect = async () => {
     app.use('/products', productRoutes);
     app.use('/users', userController.routes());
     app.use('/watchlist', watchlistController.routes());
+    app.use('/recommendation', recommendationController);
     app.use('/sentiment', sentimentController.routes());
     app.use((req, res, next) => {
         res.status(404).json({

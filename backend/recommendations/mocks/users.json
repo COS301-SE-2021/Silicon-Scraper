@@ -1,0 +1,19 @@
+{
+    "users": [
+        {
+            "id": "dhgfuvwifboe",
+		    "username": "valley",
+		    "password": "safe"
+        },
+        {
+            "id": "dhfbkuhkvfhkoe",
+		    "username": "silicon",
+		    "password": "safe"
+        },
+        {
+            "id": "dfyuhiobgjvgxw",
+		    "username": "silicon",
+		    "password": "safe"
+        }
+    ]
+}

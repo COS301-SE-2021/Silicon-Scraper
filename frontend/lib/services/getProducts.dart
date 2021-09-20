@@ -70,6 +70,16 @@ ListView productListView(BuildContext context,List<Product> items)
 }
 
 GridView gridProductListView(BuildContext context, List<Product> items){
+  // return GridView.builder(
+  //   //crossAxisCount: 2,
+  //   mainAxisSpacing: 15.0,
+  //   scrollDirection: Axis.vertical,
+  //   children: List.generate(items.length, (index) {
+  //     return Center(child: VerticalProductWidget( state: ProductViewModel(items[index]))
+  //     );
+  //   }),
+  // );
+
   return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
