@@ -8,5 +8,5 @@ export function addCache(request: string, products: CPU[] | GPU[]) {
 }
 
 export function fetchCache(request: string) {
-
+    return cache[request];
 }

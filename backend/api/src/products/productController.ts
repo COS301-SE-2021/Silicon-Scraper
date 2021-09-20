@@ -2,6 +2,7 @@ import express from "express";
 import { getRepository } from "typeorm";
 import { CPU } from "../entity/cpu";
 import { GPU } from "../entity/gpu";
+import { fetchCache } from "./cache/cache";
 import fetchData from "./repo";
 
 interface Response {
@@ -34,8 +35,14 @@ const getProductByID = async (req: express.Request, res: express.Response) => {
         response.products = data;
     }
     else {
-        let data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description from (select * from gpus union all select * FROM cpus) AS tbl WHERE id = '${id}'`);
-        response.products = data;
+        const cache = fetchCache('products');
+        if(cache) {
+            response.products = cache;
+        }
+        else {
+            let data = await fetchData(`select id, brand, model, image, price, availability, retailer, link, type, description from (select * from gpus union all select * FROM cpus) AS tbl WHERE id = '${id}'`);
+            response.products = data;
+        }
     }
     res.status(200).json(response);
 }
