@@ -17,6 +17,7 @@ import {Browser, JSHandle, JSONObject, Page} from "puppeteer";
 import { getJSDocImplementsTags } from "typescript";
 import { stringify } from "querystring";
 import bluebird from "bluebird"
+import { title } from "process";
 
 let url = require("../utilities/url");
 let selectors = require("../utilities/selectors").selectorsArray;
@@ -150,7 +151,8 @@ const getDesUrl = (brand: string, model: string) =>{
         return {
             "url":"",
             "selector":"",
-            "manufacturer": ""
+            "manufacturer": "",
+            "description": {}
         }
     }
     let select_type = 'general'
@@ -165,8 +167,12 @@ const getDesUrl = (brand: string, model: string) =>{
     const index = keys.findIndex((key) => { return man.includes(key)}) //Finds matching selector index using the keys
     const selector = Object.values(manufacturesSelectorsArray)[index]
     
-    if(url.includes('20') || url.includes('ti') || url.includes('16') || url.includes('quadro')){
-        select_type = '301620ti'
+    if(url.includes("super") ){
+        select_type = 'super'
+    }else if( url.includes('ti') || url.includes('16') || url.includes('quadro')){
+        if(!url.includes('20')) {
+            select_type = '3016ti'
+        }
     }else if(url.includes('rtx-a') || url.includes){
         select_type = 'quadroa'
     }
@@ -174,7 +180,8 @@ const getDesUrl = (brand: string, model: string) =>{
     let urlPair = {
         "url":url,
         "selector":selector.getDescriptions(select_type),
-        "manufacturer": man
+        "manufacturer": man,
+        "description": {}
     }
 
     return urlPair
@@ -222,7 +229,7 @@ const withPage = (browser: Browser) => async (fn: any) => {
     try {
         return await fn(page)
     }finally{
-        (await page).close()
+        await (await page).close()
     }
 }   
 
@@ -242,18 +249,12 @@ const scrape_description = async () => {
     
     //let descriptions: ({ [x: string]: any; } | undefined)[] = []
 
-    titles.cpu = await withBrowser(async (browser) => {
-        return products_descriptions(cpus, browser)
-
+    await withBrowser(async (browser) => {
+        titles.cpu = await products_descriptions(cpus, browser)
+        titles.gpu = await products_descriptions(gpus, browser)
         
     })
 
-    titles.gpu = await withBrowser(async (browser) => {
-        return products_descriptions(gpus, browser)
-    })
-
-    
-    
     
     console.log("Products")
     //console.log(prods)
@@ -274,9 +275,9 @@ const products_descriptions = async (type_product: any[], browser: Browser) => {
             if(url != ""){
                 const selector = prod.selector//prod.decriptionUrl.selector
                 
-                result = await page.goto(url, {waitUntil: 'networkidle0'}).then(async () => {
+                result = await page.goto(url, {waitUntil: 'networkidle0'})//.then(async () => {
                     let descript:string[] = []
-                    console.log('before eval')
+                    
                     const content = page.content()
                     await content.then(async (success) => {
                         const $ = await cheerio.load(success)
@@ -288,19 +289,19 @@ const products_descriptions = async (type_product: any[], browser: Browser) => {
                         //console.log(descript)
                     })
                     const des = getDescriptions(descript, prod.manufacturer)//prod.decriptionUrl.manufacturer)
-                    return des
+                    //return des
         
     
-                }).catch(async (err: any) =>{
-                    console.error(err)
-                    await page.close()
-                    prod.description = {}
-                    return prod
+                // }).catch(async (err: any) =>{
+                //     console.error(err)
+                //     await page.close()
+                //     prod.description = {}
+                //     return prod
                     
-                    //await browser.close()
-                })
+                //     //await browser.close()
+                // })
                 //await page.close()
-                prod.description = result
+                prod.description = des//result
                 return prod
     
             }else {
@@ -309,7 +310,7 @@ const products_descriptions = async (type_product: any[], browser: Browser) => {
                 return prod
             }
 
-        })
+        }).then((r) => {return r},(e) => (console.warn(e) ) );
         
         
         
@@ -343,5 +344,5 @@ export const scrape = async () => {
 
 
  //scrape().then(r => { console.log("done") }).catch(async (err) => {})
-scrape_description().then(r => console.log(r))
+scrape_description().then(r => console.log(r.cpu[0].description))
 //getDesUrl("AMD", "Ryzen 7 1800X Octa-Core 3.6GHz (4.0GHz Turbo) AM4 Socket Desktop CPU").then ( r => {console.log(r)} )

@@ -210,7 +210,7 @@ export class nvidiaSelector extends descriptionSelector{
     getDescriptions(type:string): string {
         let selector: string = ''
         switch(type){
-            case "301620ti": {
+            case "3016ti": {
                 selector = '#specs div.container div.rawHtml.section > div > div> table> tbody'
                 break;
             }
@@ -221,6 +221,9 @@ export class nvidiaSelector extends descriptionSelector{
             case "quadroa": {
                 selector = '#specifications > div > div > div > div >  div.rawHtml.section > div > div > table > tbody'
                 break;
+            }
+            case "super": {
+                selector = '#specs-content div.container div.rawHtml.section > div > div > div > table > tbody'
             }
             
         }
