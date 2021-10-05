@@ -16,6 +16,7 @@ def connect():
         #params = config()
         #print(host, port, password, user, database)
         # host=host, port=port, database=database, user=user, password=password
+       
         conn = psycopg2.connect(**params)
         conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 
