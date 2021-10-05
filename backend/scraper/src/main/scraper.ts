@@ -13,11 +13,8 @@ const cheerio = require("cheerio");
 const puppeteer = require('puppeteer');
 //import cheerio from 'cheerio'
 import axios from 'axios'
-import {Browser, JSHandle, JSONObject, Page} from "puppeteer";
-import { getJSDocImplementsTags } from "typescript";
-import { stringify } from "querystring";
+import {Browser, Page} from "puppeteer";
 import bluebird from "bluebird"
-import { title } from "process";
 
 let url = require("../utilities/url");
 let selectors = require("../utilities/selectors").selectorsArray;
@@ -266,7 +263,7 @@ const scrape_description = async () => {
 
 const products_descriptions = async (type_product: any[], browser: Browser) => {
  
-    return await bluebird.map(type_product, async (prod) => {
+    return await bluebird.map(type_product, async (prod: Product) => {
         const url = prod.decriptionUrl.url
         let result: {[k:string]: any} |void
 
