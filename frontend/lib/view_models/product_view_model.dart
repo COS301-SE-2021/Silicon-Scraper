@@ -38,7 +38,7 @@ class ProductViewModel extends ChangeNotifier
           _item.watch=false;
           save=Icon(Icons.bookmark_outline,color: Colors.black ,);
           try{notifyListeners();}catch(e){}
-          return true;
+          return false;
         }
         catch(e)
         {
