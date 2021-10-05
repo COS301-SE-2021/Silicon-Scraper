@@ -112,6 +112,21 @@ describe("scraperTest()", () => {
         expect(product?.gpu).not.toBeNull();
        
     })
+
+    describe("scrapeDescription()", () => {
+        
+        test("should return empty string", () => {
+
+        })
+
+        test("Should return product description", () => {
+
+        })
+
+        test("Should return empty object and throw error", () => {
+
+        })
+    })
 })
 
 

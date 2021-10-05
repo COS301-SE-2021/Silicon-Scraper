@@ -8,6 +8,7 @@ export interface Product {
     retailer: string;
     details: { productDetails: { datetime: string; price: number; availability: string; }[]; };
     type:string;
-    description:string;
+    description:{[key:string] : any};
+    decriptionUrl:{[key:string] : any};
 }
 
