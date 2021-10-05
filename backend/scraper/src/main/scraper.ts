@@ -126,7 +126,7 @@ export const addToProducts = async (index: number, $: (arg0: any) => any[], sele
             Pass in the title to the descriptions array and scrape the manufactures
         */
         description: des,
-        decriptionUrl:deurl
+        descriptionUrl:deurl
     }
     
     if (type === "gpu") {
@@ -264,13 +264,13 @@ const scrape_description = async () => {
 const products_descriptions = async (type_product: any[], browser: Browser) => {
  
     return await bluebird.map(type_product, async (prod: Product) => {
-        const url = prod.decriptionUrl.url
+        const url = prod.descriptionUrl.url
         let result: {[k:string]: any} |void
 
         return withPage(browser)(async (page: Page) => {
             
             if(url != ""){
-                const selector = prod.decriptionUrl.selector
+                const selector = prod.descriptionUrl.selector
                 console.log(url)
                 result = await page.goto(url, {waitUntil: 'networkidle0'})//.then(async () => {
                     let descript:string[] = []
@@ -285,7 +285,7 @@ const products_descriptions = async (type_product: any[], browser: Browser) => {
                         })
                         //console.log(descript)
                     })
-                    const des = getDescriptions(descript, prod.decriptionUrl.manufacturer)
+                    const des = getDescriptions(descript, prod.descriptionUrl.manufacturer)
                     //return des
         
                 prod.description = des//result
