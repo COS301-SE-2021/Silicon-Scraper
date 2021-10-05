@@ -1,5 +1,6 @@
 import {dataOps} from "../../../src/main/scraperDbOp";
 import * as scraper from "../../../src/main/scraper"
+import {stubBrowser, stubPage, stubPuppeteer} from '../../../__mocks__/puppeteerMocks'
 // Mock axios
 
 jest.mock("axios", () => {
@@ -27,6 +28,12 @@ jest.mock('cheerio', () => {
 })
 import cheerio from 'cheerio'
 
+jest.mock('puppeteer', () => ({
+    launch() {
+        return stubBrowser;
+    }
+}));
+//import puppeteer from 'puppeteer'
 
 //const mockAxios = axios as jest.Mocked<typeof axios>;
 
@@ -52,6 +59,8 @@ describe("scraper database operations", () =>{
     beforeAll(() => {
         mockAxios = jest.spyOn(axios, 'get')
         jest.spyOn(cheerio, 'load')
+        jest.spyOn(stubPuppeteer, 'launch')
+        
     })
     beforeEach(() => {
         jest.resetModules();
@@ -61,8 +70,8 @@ describe("scraper database operations", () =>{
      test("Testing the intergration between scraper and scraperDataOperations", async () => {
         jest.setTimeout(30000);
         const response = await (await dataOps(db)).getProducts()
-        //expect(response).toEqual("successful update")
-        //expect(mockAxios).toBeCalled()
+        expect(response).toEqual("successful update")
+        expect(mockAxios).toBeCalled()
      })
 
 

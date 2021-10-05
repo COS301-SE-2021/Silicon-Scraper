@@ -236,7 +236,7 @@ const withPage = (browser: Browser) => async (fn: any) => {
  * an object with all the desired descriptions
  * @param brand
  * @param model
- * @return {description} type: {[key:string] : any}
+ * @return product array with descriptions
  */
 const scrape_description = async () => {
     console.log("scraping descriptions")
