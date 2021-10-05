@@ -1,12 +1,15 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Entity, JoinColumn, ManyToOne } from "typeorm";
+import { CPU } from "./cpu";
 
 @Entity({ name: 'recommendation_cpu', synchronize: false })
 class RecommendationCPU {
-    @PrimaryColumn('uuid')
-    id!: string;
+    @ManyToOne(type => CPU, cpu => cpu.id, { primary: true, eager: true })
+    @JoinColumn({ name: 'product_id' })
+    cpu!: CPU
 
-    @Column('uuid', {array: true})
-    products!: string[];
+    @ManyToOne(type => CPU, cpu => cpu.id, { primary: true, eager: true })
+    @JoinColumn({ name: 'recommended_id' })
+    recommended!: CPU;
 }
 
 export default RecommendationCPU;
