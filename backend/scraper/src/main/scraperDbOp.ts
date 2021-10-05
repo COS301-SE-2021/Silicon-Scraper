@@ -46,12 +46,12 @@ export const dataOps = (db:any =db_) => {
                     
                 }
 
-        }).catch((e) => { console.log(e)})
+        }).catch(async (e) => {})
          return "successful update"
     }
 
-    getProducts().then( () => {
-        console.log("Successful")
+    getProducts().then( async () => {
+        await console.log("Successful")
     }).catch((e) => {})
 
     /**

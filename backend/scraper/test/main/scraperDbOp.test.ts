@@ -57,7 +57,10 @@ const gpus: Product[] = [{
         ]
     },
     type: "gpu",
-    description: "gpuDescr"
+    description: {
+        'des': 'gpuDes'
+    }, 
+    descriptionUrl: {}
 }]
 
 const cpus: Product[] = [{
@@ -78,7 +81,10 @@ const cpus: Product[] = [{
         ]
     },
     type: "cpu",
-    description: ""
+    description: {
+        'des': 'cpuDes'
+    }, 
+    descriptionUrl: {}
 }]
 
 jest.mock("../../src/main/scraper.ts")

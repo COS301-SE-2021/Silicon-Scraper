@@ -59,7 +59,8 @@ describe("scraper database operations", () =>{
     });
 
      test("Testing the intergration between scraper and scraperDataOperations", async () => {
-        const response = await dataOps(db).getProducts()
+        jest.setTimeout(30000);
+        const response = await (await dataOps(db)).getProducts()
         //expect(response).toEqual("successful update")
         //expect(mockAxios).toBeCalled()
      })

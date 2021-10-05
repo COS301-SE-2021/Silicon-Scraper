@@ -1,8 +1,7 @@
-import { Url } from "url";
 import { getAmd, getSapphire, getNvidia, getIntel } from "./url";
-
+import * as url from "../utilities/url"
 var j = "/web/";
-let url = require("../utilities/url");
+
 /**
  * This function concatenates the given url to the base url of the specific Website
  * @param urlRES
@@ -221,7 +220,7 @@ const sapphireUrl = (model: string) => {
         modelSplit = removeWord("RADEON", modelSplit)
     }
 
-    url = getSapphire().urls + modelSplit.join('-').toLowerCase()
+    let url = getSapphire().urls + modelSplit.join('-').toLowerCase()
 
     return url
 }
