@@ -3,6 +3,8 @@ import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/view_models/watch_list_view_model.dart';
 import 'package:silicon_scraper/views/widgets/product_detail_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:like_button/like_button.dart';
+import 'package:silicon_scraper/theme/colors.dart';
 
 class HorizontalProductWidget extends StatelessWidget {
   const HorizontalProductWidget({Key key, this.state}) : super(key: key);
@@ -91,8 +93,8 @@ class HorizontalProductWidget extends StatelessWidget {
                                   Container(
                                     margin: EdgeInsets.only(left: 0, top: 10),
                                     height: MediaQuery.of(context).size.height / 20,
-                                    width: MediaQuery.of(context).size.width / 12.7,
-                                    child: FloatingActionButton(
+                                    width: MediaQuery.of(context).size.width / 12.0,
+                                    child: /*FloatingActionButton(
                                       // elevation: 0,
                                       heroTag: state.item.id,
                                       backgroundColor: Colors.white,
@@ -101,7 +103,52 @@ class HorizontalProductWidget extends StatelessWidget {
                                         print('widget: ${state.item.id}');
                                         state.changeState(context);
                                       },
-                                    ),
+                                    ),*/
+                                    LikeButton(
+                                        size: 30,
+                                        isLiked:state.item.watching,
+                                        likeBuilder:(isLiked)
+                                        {
+                                          if(isLiked)
+                                          {
+                                            return Container(
+                                                decoration: BoxDecoration(
+                                                  color:Colors.white,
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey,
+                                                      blurRadius: 6.0,
+                                                      spreadRadius: 0.0,
+                                                      offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                                    )
+                                                  ],
+                                                ),
+                                                child: Icon(Icons.bookmark,color: theOrange,)
+                                            );
+                                          }
+                                          else
+                                          {
+                                            return Container(
+                                                decoration: BoxDecoration(
+                                                  color:Colors.white,
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey,
+                                                      blurRadius: 6.0,
+                                                      spreadRadius: 0.0,
+                                                      offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                                    )
+                                                  ],),
+                                                child: Icon(Icons.bookmark_outline,color: Colors.black ,));
+                                          }
+                                        },
+                                        onTap:(isLiked) async
+                                        {
+                                          return await state.changeState(context);
+                                        }
+                                    )
                                   ),
 
                                   /// availability and price
