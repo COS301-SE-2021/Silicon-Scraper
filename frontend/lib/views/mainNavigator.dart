@@ -62,14 +62,14 @@ class _MainNavigatorState extends State<MainNavigator> {
         backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
+          BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.bookmarks), label: "Watchlist"),
           BottomNavigationBarItem(
             icon: ImageIcon(
               AssetImage("assets/images/stars.png"),
             ),
-            label: "Recommended",
+            label: "Discover",
           ),
           BottomNavigationBarItem(icon: Icon(Icons.logout), label: "Logout"),
         ],
