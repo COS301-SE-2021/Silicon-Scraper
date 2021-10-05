@@ -4,7 +4,6 @@
  */
 
 import request from 'supertest';
-import typeorm from 'typeorm';
 import { app } from '../src/app';
 
 // mock Listener class
@@ -16,6 +15,11 @@ jest.mock('typeorm', () => {
     return {
         ...actual,
         getRepository: jest.fn().mockReturnValue({
+            createQueryBuilder: jest.fn().mockImplementation(() => ({
+                where: jest.fn().mockImplementation(() => ({
+                    getOne: jest.fn().mockReturnValue(false)
+                })),
+            })),
             save: jest.fn().mockImplementation(() => {})
         }),
     }
