@@ -1,5 +1,5 @@
 
-export const getMockData =  () => {
+export const getMockData =  (): string => {
 
     return "<table id=\"ctl00_ContentPlaceHolder1_Component_List_V2_IDs1_dl_products\" cellspacing=\"0\" border=\"0\" style=\"border-collapse:collapse;\">\n" +
         "    <tbody><tr>\n" +

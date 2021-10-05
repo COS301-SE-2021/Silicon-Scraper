@@ -70,3 +70,36 @@ export const getDreamwareCpuUrl = () =>{
     }
 
 }
+
+/*
+Urls for the manufactures
+ */
+export const getAmd = () => {
+    return {
+        urls:["https://www.amd.com/en/products/graphics/", 
+        "https://www.amd.com/en/products/cpu/", 
+        "https://www.amd.com/en/products/professional-graphics/",
+        "https://www.amd.com/en/products/apu/"]
+    }
+}
+
+export const getNvidia = () => {
+    return {
+        urls: ["https://www.nvidia.com/en-us/geforce/graphics-cards/", 
+        "https://www.nvidia.com/en-us/design-visualization/",
+        "https://www.nvidia.com/en-us/design-visualization/desktop-graphics/",
+        "https://www.nvidia.com/en-us/geforce/10-series/"]
+    }
+}
+
+export const getSapphire = () => {
+    return {
+        urls: ["https://www.sapphiretech.com/en/consumer/"]
+    }
+}
+
+export const getIntel = () => {
+    return {
+        urls:["https://www.intel.com/content/www/us/en/search.html?ws=text#q=Intel%20"]
+    }
+}

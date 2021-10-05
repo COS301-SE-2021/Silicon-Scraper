@@ -108,9 +108,24 @@ describe("scraperTest()", () => {
         
         expect(product).toEqual(expect.arrayContaining([]))
         expect(product).not.toBeNull();
-        // expect(product?.cpu).not.toBeNull();
-        // expect(product?.gpu).not.toBeNull();
+        expect(product?.cpu).not.toBeNull();
+        expect(product?.gpu).not.toBeNull();
        
+    })
+
+    describe("scrapeDescription()", () => {
+        
+        test("should return empty string", () => {
+
+        })
+
+        test("Should return product description", () => {
+
+        })
+
+        test("Should return empty object and throw error", () => {
+
+        })
     })
 })
 

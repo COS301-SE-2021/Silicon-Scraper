@@ -168,7 +168,7 @@ class DreamwareSelectors extends Selectors {
     }
 
     getTitleSelector(index?: number):any {
-        return ".product-box-name";
+        return ".product-image img";
     }
 
     getTableSelector = () => {// not a table - its a div - iterate through each child 
@@ -184,8 +184,105 @@ class DreamwareSelectors extends Selectors {
     }
 }
 
+
+/*
+* Selectors for the description
+*/
+export abstract class descriptionSelector {
+    abstract getDescriptions(type?: string) : string
+}
+
+/*
+* Iterate through the child divs, and use the field_label->div and field_items->div to get label item pair
+*/
+export class amdSelector extends descriptionSelector{
+    getDescriptions(): string {
+        return '#product-specs > div > fieldset:nth-child(3) > div';
+    }
+
+    //fieldset > div
+}
+
+/*
+* Iterate through the table, use the td pairs to collect the label : item pair
+*/
+export class nvidiaSelector extends descriptionSelector{
+    getDescriptions(type:string): string {
+        let selector: string = ''
+        switch(type){
+            case "3016ti": {
+                selector = '#specs div.container div.rawHtml.section > div > div> table> tbody'
+                break;
+            }
+            case "general":{
+                selector = '#specs div.container div.rawHtml.section > div > div > div > table > tbody'
+                break;
+            }
+            case "quadroa": {
+                selector = '#specifications > div > div > div > div >  div.rawHtml.section > div > div > table > tbody'
+                break;
+            }
+            case "super": {
+                selector = '#specs-content div.container div.rawHtml.section > div > div > div > table > tbody'
+            }
+            
+        }
+        return selector;
+    }
+
+}
+
+/*
+* Iterate through the unordered list, use the li.innerText to collect the label : item pair *rough
+*/
+export class sapphireSelector extends descriptionSelector{
+    getDescriptions(): string {
+        return "div.desc > ul";
+    }
+
+}
+
+
+export class intelSelector extends descriptionSelector{
+    getDescriptions(type: string): string {
+        let selector: string = ''
+        switch(type){
+            case 'search': { 
+                selector = "#coveo-result-list2 > div"
+                break;
+            }
+            case 'url': {//[0].innerText()- to check if its correct node; [0].href - to get the url
+                selector = '.content-wrap > div:nth-child(2) .CoveoResultLink'
+                break;
+            }
+            case 'specs': {
+                selector = '#tab-blade-1-0-1 #bladeInside > ul'
+                break;
+            }
+        }
+        return selector ;
+    }
+}
+
+
+
+
 const evetechSelector: Selectors = new EvetechSelectors("Evetech")
 const amptekSelector: Selectors = new AmpTekSelectors("Amptek")
 const dreamwareSelector: Selectors = new DreamwareSelectors("Dreamware")
 const siliconwebSelector: Selectors = new SiliconwebSelectors("Siliconweb")
-export const selectorsArray: Selectors[] = [siliconwebSelector, evetechSelector, amptekSelector,dreamwareSelector ]
+
+export const selectorsArray: Selectors[] = [evetechSelector, amptekSelector,dreamwareSelector ]
+
+const amd: descriptionSelector = new amdSelector()
+const nvidia: descriptionSelector = new nvidiaSelector()
+const sapphire: descriptionSelector = new sapphireSelector()
+const intel: descriptionSelector = new intelSelector()
+
+
+export const manufacturesSelectorsArray = {
+    "amd":amd,
+    "nvidia":nvidia,
+    "sapphire":sapphire,
+    "intel":intel
+}
