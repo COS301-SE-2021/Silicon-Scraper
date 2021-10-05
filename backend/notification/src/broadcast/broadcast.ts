@@ -77,6 +77,14 @@ export default class Broadcast {
     public send(messages: admin.messaging.TokenMessage[]) {
         admin.messaging().sendAll(messages)
         .then((response) => {
+            response.responses.forEach((res) => {
+                if(res.success == false) {
+                    console.log(res.error);
+                }
+                else {
+                    console.log(res.messageId);
+                }
+            })
             console.log(response);
         })
         .catch((error) => {

@@ -12,11 +12,18 @@ router.post('/subscribe', async (req: express.Request, res: express.Response) =>
     else {
         try {
             const tokens = getRepository(deviceToken);
-            const device = new deviceToken();
-            device.token = req.body.token;
-            device.user = new User();
-            device.user.id = req.body.userId;
-            await tokens.save(device);
+            const exists = await tokens.createQueryBuilder('device_tokens').where('user_id = :id', {id: req.body.userId}).getOne();
+            if(exists) {
+                tokens.createQueryBuilder('device_tokens').update(deviceToken).set({ token: req.body.token })
+                .where('user_id = :id', {id: req.body.userId}).execute();
+            }
+            else {
+                const device = new deviceToken();
+                device.token = req.body.token;
+                device.user = new User();
+                device.user.id = req.body.userId;
+                await tokens.save(device);
+            }
             res.json({status: 200});
         } catch(error) {
             console.error(error);
