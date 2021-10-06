@@ -76,31 +76,31 @@ describe("scraper database operations", () =>{
 
 
 
-    test.skip("Get products should call scrape only once", async (done) => {
+    test.skip("Get products should call scrape only once", async () => {
         const scraper_ = jest.spyOn(scraper,'scrape')
         const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
         await dataOps(db).getProducts()
         expect(scraper_).toHaveBeenCalled()
-        done()
+
     })
 
-    test.skip("Scrape should return the correct data when called by getProducts", async (done) => {
+    test.skip("Scrape should return the correct data when called by getProducts", async () => {
 
         const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
         const scraper_ = jest.spyOn(scraper,'scrape')
         await dataOps(db).getProducts().then(async () => {
             await expect(scraper_).toHaveBeenCalledTimes(3)
-            done()
+
         })
 
    })
 
-    test.skip("If the scrape return data when called by the get products", async (done) =>{
+    test.skip("If the scrape return data when called by the get products", async () =>{
         const getProducts_ = jest.spyOn(dataOps(db), 'getProducts')
         const scraper_ = jest.spyOn(scraper,'scrape')
         await dataOps(db).getProducts().then(async () => {
             expect(scraper_).toHaveReturned()
-            done()
+
         })
     })
 
