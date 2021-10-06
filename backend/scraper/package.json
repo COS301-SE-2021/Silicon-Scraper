@@ -29,6 +29,7 @@
     "@types/shelljs": "^0.8.9",
     "axios": "^0.21.1",
     "babel-jest": "^27.0.2",
+    "bluebird": "^3.7.2",
     "cheerio": "^1.0.0-rc.9",
     "cron": "^1.8.2",
     "dotenv": "^10.0.0",
