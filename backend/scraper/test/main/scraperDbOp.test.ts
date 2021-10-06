@@ -87,7 +87,7 @@ const cpus: Product[] = [{
     descriptionUrl: {}
 }]
 
-jest.mock("../../src/main/scraper.ts")
+jest.mock("../../src/main/scraper")
 
 const mockScrape = scrape as jest.MockedFunction<typeof scrape>
 const mockScrapeSilon = scrapeSilon as jest.MockedFunction<typeof scrapeSilon>
