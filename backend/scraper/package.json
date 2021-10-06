@@ -21,13 +21,12 @@
     "@types/cheerio": "^0.22.30",
     "@types/cron": "^1.7.3",
     "@types/newrelic": "^7.0.2",
+    "@types/node": "^15.14.9",
     "@types/pg-promise": "^5.4.3",
     "@types/promise.allsettled": "^1.0.3",
     "@types/puppeteer": "^5.4.4",
     "@types/puppeteer-core": "^5.4.0",
     "@types/shelljs": "^0.8.9",
-    "@types/node": "^15.14.9",
-    "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.21.4",
     "babel-jest": "^27.2.4",
     "bluebird": "^3.7.2",
@@ -42,7 +41,8 @@
     "puppeteer-core": "^10.2.0",
     "shelljs": "^0.8.4",
     "source-map-loader": "^3.0.0",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.3",
+    "webpack": "^5.0.0"
   },
   "devDependencies": {
     "@types/cron": "^1.7.3",
@@ -53,6 +53,7 @@
     "jest": "^27.2.4",
     "jest-puppeteer": "^6.0.0",
     "ts-jest": "^27.0.5",
+    "ts-loader": "^9.2.6",
     "ts-node": "^10.2.1",
     "tslib": "^2.3.1"
   }

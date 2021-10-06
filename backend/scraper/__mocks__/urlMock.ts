@@ -1,4 +1,4 @@
-const url = require("../src/utilities/url")
+import * as url from "../src/utilities/url"
 import { getEveTecGpuUrl } from "../src/utilities/url"
 import { mockFunction } from "./JestHelpers"
 

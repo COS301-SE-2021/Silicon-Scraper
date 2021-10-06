@@ -1,6 +1,7 @@
 import {dataOps} from "../../../src/main/scraperDbOp";
 import * as scraper from "../../../src/main/scraper"
 import {stubBrowser, stubPage, stubPuppeteer} from '../../../__mocks__/puppeteerMocks'
+import '@types/jest';
 // Mock axios
 
 jest.mock("axios", () => {
