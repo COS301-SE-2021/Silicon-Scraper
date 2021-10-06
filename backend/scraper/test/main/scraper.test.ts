@@ -103,7 +103,7 @@ describe("scraperTest()", () => {
         
         expect(mockAxios.get).toHaveBeenCalled();
         for(let i = 0; i<urls.length; i++){
-            expect(mockAxios.get).toHaveBeenCalledWith(urls[i]());
+            await expect(mockAxios.get).toHaveBeenCalledWith(urls[i]());
         }
         
         expect(product).toEqual(expect.arrayContaining([]))
