@@ -1,7 +1,7 @@
 {
-  "name": "scraper",
+  "name": "temp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Come cav new",
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node build/main/scraper_scheduler.js",
@@ -10,7 +10,7 @@
     "start-dev": "cd src/main && ts-node scraper_scheduler.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Thato but not Thato",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.14.5",
@@ -27,7 +27,6 @@
     "@types/puppeteer": "^5.4.4",
     "@types/puppeteer-core": "^5.4.0",
     "@types/shelljs": "^0.8.9",
-    "awesome-typescript-loader": "^5.2.1",
     "axios": "^0.21.1",
     "babel-jest": "^27.0.2",
     "cheerio": "^1.0.0-rc.9",
@@ -40,7 +39,9 @@
     "puppeteer": "^10.2.0",
     "puppeteer-core": "^10.2.0",
     "shelljs": "^0.8.4",
-    "source-map-loader": "^3.0.0"
+    "source-map-loader": "^3.0.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.3"
   },
   "devDependencies": {
     "@types/cron": "^1.7.3",
@@ -54,7 +55,9 @@
     "jest-puppeteer": "^6.0.0",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.0.0",
-    "tslib": "^2.3.0",
-    "typescript": "^3.9.10"
+    "tslib": "^2.3.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }
