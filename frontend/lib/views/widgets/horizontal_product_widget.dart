@@ -39,8 +39,11 @@ class HorizontalProductWidget extends StatelessWidget {
                         margin: EdgeInsets.only(top: 5),
                         height: MediaQuery.of(context).size.height / 6,
                         width: MediaQuery.of(context).size.width /2.2,
-                        child: Image.network(
-                          '${state.item.image}',
+                        child: Hero(
+                          tag: state.item.image,
+                          child: Image.network(
+                            '${state.item.image}',
+                          ),
                         ),
                       ),
 
