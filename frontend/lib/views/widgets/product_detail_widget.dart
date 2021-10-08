@@ -66,8 +66,11 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
               alignment: Alignment.topCenter,
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(
-                '${widget.state.item.image}',
+              child: Hero(
+               tag: widget.state.item.image,
+                child: Image.network(
+                  '${widget.state.item.image}',
+                ),
               ),
             ),
 

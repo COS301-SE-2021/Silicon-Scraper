@@ -26,7 +26,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
           width: MediaQuery.of(context).size.width / 2.5,
           height: MediaQuery.of(context).size.height/ 3,
           child: Card(
-            //elevation: 1.0,
+//            elevation: 5.0,
             shape: RoundedRectangleBorder(
               side: BorderSide(color: Colors.black12, width: 1),
             ),
@@ -44,7 +44,9 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                     Container(
                       width: MediaQuery.of(context).size.width / 2.75,
                       height: MediaQuery.of(context).size.height /6.3,
-                      child: Image.network('${widget.state.item.image}',),
+                      child: Hero(
+                          tag:widget.state.item.image,
+                          child: Image.network('${widget.state.item.image}',)),
                     ),
                     /// product name (brand+model)
                     Container(
