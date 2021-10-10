@@ -23,16 +23,6 @@ jest.mock('typeorm', () => {
 });
 
 describe('Recommendation Service tests', () => {
-    it('fetch gpus, should return array of products', async () => {
-        const gpus = await service.fetchGPUs([]);
-        expect(gpus).toEqual([]);
-    })
-
-    it('fetch cpus, should return array of products', async () => {
-        const cpus = await service.fetchCPUs([]);
-        expect(cpus).toEqual([]);
-    })
-
     it('fetch watchlist cpu, should return onject with array of products', async () => {
         const wl_cpu = await service.fetchWatchlistCPU('');
         expect(wl_cpu).toEqual([]);
