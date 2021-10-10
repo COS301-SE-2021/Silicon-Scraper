@@ -148,9 +148,10 @@ def update_gpu(gpu_recs):
             product = cur.fetchone()
             
             if product is not None:
-                query = (""" UPDATE recommendation_gpu SET products = %s WHERE id = %s""")
-                cur.execute(query, (row['recommendations'], i))
-                con.commit()
+                 for recs in row['recommendations']:
+                    query = (""" UPDATE recommendation_gpu SET recommended_id = %s WHERE product_id = %s""")
+                    cur.execute(query, (recs, uuid.UUID(i)))
+                    con.commit()
             else:
                 new_products.append((i, row['recommendations']))
                 
@@ -166,14 +167,15 @@ def update_cpu(cpu_recs):
     new_products = []
     try:
         for i, row in cpu_recs.iterrows():
-            query = ("""SELECT id FROM recommendation_cpu WHERE id = %s""")
+            query = ("""SELECT product_id FROM recommendation_cpu WHERE product_id = %s""")
             cur.execute(query, (i,))
             product = cur.fetchone()
 
             if product is not None:
-                query = (""" UPDATE recommendation_cpu SET products = %s WHERE id = %s""")
-                cur.execute(query, (row['recommendations'], i))
-                con.commit()
+                for recs in row['recommendations']:
+                    query = (""" UPDATE recommendation_cpu SET recommended_id = %s WHERE product_id = %s""")
+                    cur.execute(query, (recs, uuid.UUID(i)))
+                    con.commit()
             else:
                 new_products.append((i, row['recommendations']))
 
@@ -185,16 +187,18 @@ def update_cpu(cpu_recs):
 
 def insert_cpu(id, cpu_arr):
     psycopg2.extras.register_uuid()
-    query = ("""INSERT INTO recommendation_cpu (id, products) VALUES (%s, %s);""")
-    cur.execute(query,(id, cpu_arr))
-    con.commit()
+    for cpu in cpu_arr:
+        query = ("""INSERT INTO recommendation_cpu (product_id, recommended_id) VALUES (%s, %s);""")
+        cur.execute(query,(id, cpu))
+        con.commit()
 
 
 def insert_gpu(id, gpu_arr):
     psycopg2.extras.register_uuid()
-    query = ("""INSERT INTO recommendation_gpu (id, products) VALUES (%s, %s);""")
-    cur.execute(query,(id, gpu_arr))
-    con.commit()
+    for gpu in gpu_arr:
+        query = ("""INSERT INTO recommendation_gpu (product_id, recommended_id) VALUES (%s, %s);""")
+        cur.execute(query,(id, gpu))
+        con.commit()
 
 
 #if a change was made to the products table
@@ -263,7 +267,7 @@ def update_recommendations(curr, conn ):
         for i, row in wishlist_products.iterrows():
             item = all_products[all_products.index == row['product_id']]
             if item['type'].item() == 'cpu':
-                query = (""" SELECT id FROM recommendation_cpu WHERE id = %s""")
+                query = (""" SELECT id FROM recommendation_cpu WHERE product_id = %s""")
                 cur.execute(query, (row['product_id'],))
                 product = cur.fetchone()
 
@@ -272,7 +276,7 @@ def update_recommendations(curr, conn ):
                     insert_cpu(row['product_id'], items)
 
             elif item['type'].item() == 'gpu':
-                query = (""" SELECT id FROM recommendation_gpu WHERE id = %s""")
+                query = (""" SELECT id FROM recommendation_gpu WHERE product_id = %s""")
                 cur.execute(query, (row['product_id'],))
                 product = cur.fetchone()
 
@@ -282,11 +286,11 @@ def update_recommendations(curr, conn ):
 
 
         # if a product was removed from someones wishlist 
-        query = ("""SELECT id from recommendation_gpu""")
+        query = ("""SELECT product_id from recommendation_gpu""")
         gpus = pd.read_sql_query(query, con)
         gpus = pd.DataFrame(gpus)
 
-        query = ("""SELECT id from recommendation_cpu""")
+        query = ("""SELECT product_id from recommendation_cpu""")
         cpus = pd.read_sql_query(query, con)
         table = gpus.append(cpus)
 
@@ -295,10 +299,10 @@ def update_recommendations(curr, conn ):
         if items is not None:
             for item in items:
                 if item in gpus['id'].values:
-                    query = ("""DELETE FROM recommendation_gpu WHERE id = %s""")
+                    query = ("""DELETE FROM recommendation_gpu WHERE product_id = %s""")
                     cur.execute(query, (item,))
                 else:
-                    query = ("""DELETE FROM recommendation_cpu WHERE id = %s""")
+                    query = ("""DELETE FROM recommendation_cpu WHERE product_id = %s""")
                     cur.execute(query, (item,))
             con.commit()
 
