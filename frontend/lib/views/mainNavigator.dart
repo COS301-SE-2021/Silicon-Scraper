@@ -27,6 +27,18 @@ class MainNavigator extends StatefulWidget {
 
 class _MainNavigatorState extends State<MainNavigator> {
   int pageIndex = 0;
+  PageController pageController;
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   List<String> pageListString = ["explore", "watchlist", "discover"];
   List<Widget> pageList = <Widget>[Explore(), WatchList(), Recommendation()];
@@ -36,7 +48,16 @@ class _MainNavigatorState extends State<MainNavigator> {
     LoginViewModelSingleton login = LoginViewModelSingleton.getState();
     return Scaffold(
       appBar: appbar(context, pageListString[pageIndex], 1),
-      body: pageList[pageIndex],
+      // body: pageList[pageIndex],
+      body: SizedBox.expand(
+        child: PageView(
+          controller: pageController,
+          onPageChanged: (index) {
+            setState(() => pageIndex = index);
+          },
+          children: <Widget>[Explore(), WatchList(), Recommendation()],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         /// when selected
         showSelectedLabels: true,
@@ -57,6 +78,7 @@ class _MainNavigatorState extends State<MainNavigator> {
           }
           setState(() {
             pageIndex = value;
+            pageController.animateToPage(pageIndex, duration: Duration(milliseconds: 500), curve: Curves.easeOut);
           });
         },
         backgroundColor: Colors.white,
