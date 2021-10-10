@@ -40,6 +40,15 @@ class LoginViewModel extends ChangeNotifier
         {
           print(e);
           Navigator.pop(context); /// remove the loading dialog before error is shown
+          if(e.message.contains("Failed"))
+            {
+              return showDialog(context: context, builder: (_)=> AlertDialog(
+                  title: Text("Please check your internet connection")),);
+            }else if(e.message.contains("character"))
+              {
+                return showDialog(context: context, builder: (_)=> AlertDialog(
+                    title: Text("unknown error occurred on our server we're on it right away")),);
+              }
           return showDialog(context: context, builder: (_)=> AlertDialog(
               title: Text("${e.message}")),);
         }
