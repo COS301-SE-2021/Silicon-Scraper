@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService
 {
-  Future register(String id,String token)async
+  Future register(String id,String FBtoken)async
   {
     var url = Uri.parse("https://notification-silicon-scraper.herokuapp.com/subscribe");
     SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
@@ -17,7 +17,7 @@ class NotificationService
 
     Map <String,String> data={
       "userId": id,
-      "token": token
+      "token": FBtoken
     };
     print("here");
     var body=jsonEncode(data);
