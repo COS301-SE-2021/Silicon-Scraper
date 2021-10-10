@@ -15,14 +15,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xffffb359), Colors.white])
-        ),
-        child: Scaffold(
+    return Scaffold(
           backgroundColor: Colors.white,
           body: Center(
               child: Padding(
@@ -97,7 +90,7 @@ class _LoginViewState extends State<LoginView> {
               ],
             ),
           )),
-        ));
+        );
 //       return Scaffold(
 //          appBar: PreferredSize(
 //            preferredSize: Size.fromHeight(10),
