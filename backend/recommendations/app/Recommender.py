@@ -217,7 +217,7 @@ def generate_recommendations(curr, conn):
 
 
 #if a change was made to a users wishlist
-def update_recommendations(curr, conn ):
+def update_recommendations(curr, conn, payload):
 
     global con
     con = conn
@@ -226,54 +226,94 @@ def update_recommendations(curr, conn ):
     cur = curr
 
     global all_products
-    all_products = get_all_products(cur, con)
+    all_products = get_all_products(cur, con, 'cpu')
+    all_products.append(get_all_products(cur, con, 'gpu'))
 
-    wishlist_products = get_wishlist(cur, con)
+    wishlist_products = get_wishlist(cur, con, 'cpu')
+    wishlist_products.append(get_wishlist(cur, con, 'gpu'))
     wishlist_products.drop_duplicates(subset='product_id', keep=False, inplace=True)
 
     try:
-        # if perhaps a product was added to someones wishlist
-        for i, row in wishlist_products.iterrows():
-            item = all_products[all_products.index == row['product_id']]
-            if item['type'].item() == 'cpu':
-                query = (""" SELECT id FROM recommendation_cpu WHERE product_id = %s""")
-                cur.execute(query, (row['product_id'],))
-                product = cur.fetchone()
+        delete = True
+        #find the type
+        all_products.set_index('product_id', inplace=True)
+        for i, pro in all_products.iterrows():
+            if i == payload['product_id']:
+                payload['type'] = pro['type']
 
-                if product is None:
-                    items = list(recommend(row['product_id']))
-                    insert_cpu(row['product_id'], items)
+        if payload['type'] == 'cpu':
+            table_name = 'recommendation_cpu'
+        else:
+            table_name = "recommendation_gpu"
 
-            elif item['type'].item() == 'gpu':
-                query = (""" SELECT id FROM recommendation_gpu WHERE product_id = %s""")
-                cur.execute(query, (row['product_id'],))
-                product = cur.fetchone()
-
-                if product is None:
-                    items = list(recommend(row['product_id']))
-                    insert_gpu(row['product_id'], items)
+        #if an item was removed from watchlist
+        #check if its in the wishlist
+        wishlist_products.reset_index()
+        for j, wish in wishlist_products.iterrows():
+            if payload['product_id'] == wish['product_id']:
+                delete = False
 
 
-        # if a product was removed from someones wishlist 
-        query = ("""SELECT product_id from recommendation_gpu""")
-        gpus = pd.read_sql_query(query, con)
-        gpus = pd.DataFrame(gpus)
-
-        query = ("""SELECT product_id from recommendation_cpu""")
-        cpus = pd.read_sql_query(query, con)
-        table = gpus.append(cpus)
-
-        items = [i for i in str(table['id'].values) if i not in str(wishlist_products['product_id'].values)]
-        #items = table[table['id'].values not in wishlist_products['product_id'].values]
-        if items is not None:
-            for item in items:
-                if item in gpus['id'].values:
-                    query = ("""DELETE FROM recommendation_gpu WHERE product_id = %s""")
-                    cur.execute(query, (item,))
-                else:
-                    query = ("""DELETE FROM recommendation_cpu WHERE product_id = %s""")
-                    cur.execute(query, (item,))
+        if delete == True:
+            query = sql.SQL("DELETE FROM {} WHERE product_id = %s").format(sql.Identifier(table_name))
+            cur.execute(query, (payload['product_id'],))
+            rows_deleted = cur.rowcount
             con.commit()
+                
+        # if perhaps a product was added to someones wishlist
+        query = sql.SQL("SELECT * FROM {} WHERE product_id = %s").format(sql.Identifier(table_name))
+        cur.execute(query, (payload['product_id']))
+        res = fetchall()
+        product = pd.DataFrame(res)
+
+        if res is None:
+            items = list(recommend(payload['product_id']))
+            insert_into_table(payload['product_id'], items, payload['type'])
+
+
+
+
+        # for i, row in wishlist_products.iterrows():
+        #     item = all_products[all_products.index == row['product_id']]
+        #     if item['type'].item() == 'cpu':
+        #         query = (""" SELECT id FROM recommendation_cpu WHERE product_id = %s""")
+        #         cur.execute(query, (row['product_id'],))
+        #         product = cur.fetchone()
+
+        #         if product is None:
+        #             items = list(recommend(row['product_id']))
+        #             insert_cpu(row['product_id'], items)
+
+        #     elif item['type'].item() == 'gpu':
+        #         query = (""" SELECT id FROM recommendation_gpu WHERE product_id = %s""")
+        #         cur.execute(query, (row['product_id'],))
+        #         product = cur.fetchone()
+
+        #         if product is None:
+        #             items = list(recommend(row['product_id']))
+        #             insert_gpu(row['product_id'], items, payload['type'])
+
+
+        # # if a product was removed from someones wishlist 
+        # query = ("""SELECT product_id from recommendation_gpu""")
+        # gpus = pd.read_sql_query(query, con)
+        # gpus = pd.DataFrame(gpus)
+
+        # query = ("""SELECT product_id from recommendation_cpu""")
+        # cpus = pd.read_sql_query(query, con)
+        # table = gpus.append(cpus)
+
+        # items = [i for i in str(table['id'].values) if i not in str(wishlist_products['product_id'].values)]
+        # #items = table[table['id'].values not in wishlist_products['product_id'].values]
+        # if items is not None:
+        #     for item in items:
+        #         if item in gpus['id'].values:
+        #             query = ("""DELETE FROM recommendation_gpu WHERE product_id = %s""")
+        #             cur.execute(query, (item,))
+        #         else:
+        #             query = ("""DELETE FROM recommendation_cpu WHERE product_id = %s""")
+        #             cur.execute(query, (item,))
+        #     con.commit()
 
     except(psycopg2.DatabaseError) as err:
         print(err)

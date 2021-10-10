@@ -51,5 +51,5 @@ def listener():
                     
                 elif notify.channel == 'watchlist_modified':
                     #remove product from recommendation table or add new porduct to recommendation table
-                    rec.update_recommendations(cur, con)
+                    rec.update_recommendations(cur, con, notify.payload)
 
