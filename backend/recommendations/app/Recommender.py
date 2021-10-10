@@ -112,37 +112,6 @@ def get_recommendations(df_wishlist):
        
         return recs
 
-def get_all_product_recommendations(wishlist_description):
-    temp = []
-    global all_products
-    all_products.set_index('product_id', inplace=True)
-    wishlist_description.reset_index()
-    for i, pro in all_products.iterrows():
-        for j, wish in wishlist_description.iterrows():
-            if i == wish['product_id']:
-                temp.append((wish['product_id'], pro['type']))
-                
-    
-  
-    types = pd.DataFrame(temp, columns = ['product_id', 'type'])
-    wishlist_cpu = types[types['type'] == 'cpu']#wishlist_description[wishlist_description['product_id'] == types['product_id'].item() & types['type'].item() == 'cpu']
-    wishlist_gpu = types[types['type'] == 'gpu']#wishlist_description[wishlist_description['type'] == 'gpu']
-   
-    cpus = get_recommendations(wishlist_cpu)
-    gpus = get_recommendations(wishlist_gpu)
-    
-    result_cpu = pd.DataFrame(wishlist_cpu['product_id'], columns=['id','recommendations'])
-    result_gpu = pd.DataFrame(wishlist_gpu['product_id'], columns=['id','recommendations'])
-    
-    wishlist_gpu['recommendations'] = gpus
-    wishlist_cpu['recommendations'] = cpus
-    
-    wishlist_cpu.set_index('product_id', inplace=True)
-    wishlist_gpu.set_index('product_id', inplace=True)
-
-    return wishlist_gpu, wishlist_cpu
-
-
 
 def update_rec_table(recs, types):
     new_products = []
@@ -154,19 +123,23 @@ def update_rec_table(recs, types):
     try:
 
         for i, row in recs.iterrows():
-            query = sql.SQL("SELECT product_id FROM {} WHERE product_id = %s")
-                    .format(sql.Identifier(table_name))
+            query = sql.SQL("SELECT product_id FROM {} WHERE product_id = %s").format(sql.Identifier(table_name))
                      
             # query = ("""SELECT product_id FROM recommendation_gpu WHERE product_id = %s""")
             cur.execute(query, (i,))
-            product = cur.fetchone()
+             product = cur.fetchall()
             
             if product is not None:
-                 for recs in row['recommendations']:
-                    query = sql.SQL(" UPDATE {} SET recommended_id = %s WHERE product_id = %s")
-                                .format(sql.Identifier(table_name))
-                    cur.execute(query, (recs, i))
-                    con.commit()
+                psycopg2.extras.register_uuid()
+                print('NotNone')
+                for recs in row['recommendations']:
+                    check = [prod[1] for prod in product]
+                    
+                    if recs not in check:
+                        print('im in')
+                        query = sql.SQL(" UPDATE {} SET recommended_id = %s WHERE product_id = %s").format(sql.Identifier(table_name))
+                        cur.execute(query, (recs, i))
+                        con.commit()
             else:
                 new_products.append((i, row['recommendations']))
                 
@@ -177,37 +150,6 @@ def update_rec_table(recs, types):
         return new_products
 
 
-
-def update_cpu(cpu_recs):
-    new_products = []
-    try:
-        for i, row in cpu_recs.iterrows():
-            query = ("""SELECT product_id FROM recommendation_cpu WHERE product_id = %s""")
-            cur.execute(query, (i,))
-            product = cur.fetchone()
-
-            if product is not None:
-                for recs in row['recommendations']:
-                    query = (""" UPDATE recommendation_cpu SET recommended_id = %s WHERE product_id = %s""")
-                    cur.execute(query, (recs, i))
-                    con.commit()
-            else:
-                new_products.append((i, row['recommendations']))
-
-            
-    except(psycopg2.DatabaseError) as err:
-        print(err)
-    finally:
-        return new_products
-
-def insert_cpu(id, cpu_arr):
-    psycopg2.extras.register_uuid()
-    for cpu in cpu_arr:
-        query = ("""INSERT INTO recommendation_cpu (product_id, recommended_id) VALUES (%s, %s);""")
-        cur.execute(query,(id, cpu))
-        con.commit()
-
-
 def insert_into_table(id, recs_arr, types):
     if types == 'cpu':
         table_name = 'recommendation_cpu'
@@ -216,8 +158,7 @@ def insert_into_table(id, recs_arr, types):
 
     psycopg2.extras.register_uuid()
     for rec in recs_arr:
-        query = sql.SQL("INSERT INTO {} (product_id, recommended_id) VALUES (%s, %s);")
-                    .format(sql.Identifier(table_name))
+        query = sql.SQL("INSERT INTO {} (product_id, recommended_id) VALUES (%s, %s);").format(sql.Identifier(table_name))
         cur.execute(query,(id, rec))
         con.commit()
 
@@ -272,37 +213,7 @@ def generate_recommendations(curr, conn):
     
     generate_recs(cur, con, 'cpu')
     generate_recs(cur, con, 'gpu')
-    # #all_products.set_index('id', inplace=True)
-    # all_products.rename(columns={'id': 'product_id'}, inplace=True)
-    # all_products['all_features'] = all_products['brand'] +" "+ all_products['retailer'] +" "+ all_products['description_cl']
-    # all_products['all_features'] = all_products['all_features'].apply(lambda x: x.lower())
-    
-    # vectorizor = TfidfVectorizer(analyzer='word', ngram_range=(1, 3), min_df=0)
-    # tfidf_matrix = vectorizor.fit_transform(all_products['all_features'])
 
-    # global similarity
-    # similarity = linear_kernel(tfidf_matrix, tfidf_matrix)
-    
-    # global rec
-    # rec = pd.Series(all_products['product_id'])
-    
-    # gpu_recs, cpu_recs = get_all_product_recommendations(wishlist_products)
-    
-    
-    # new_gpu = update_gpu(gpu_recs)
-    # new_cpu = update_cpu(cpu_recs)
-
-    # if new_gpu is not None:
-    #     df_gpu = pd.DataFrame(new_gpu, columns=['id', 'recs'])
-        
-    #     for i, row in df_gpu.iterrows():
-    #         insert_gpu(row['id'], row['recs'])
-
-    # if new_cpu is not None:
-    #     df_cpu = pd.DataFrame(new_cpu, columns=['id', 'recs'])
-    #     for i, row in df_cpu.iterrows():
-    #         insert_cpu(row['id'], row['recs'])
-    # con.close()
 
 
 #if a change was made to a users wishlist
