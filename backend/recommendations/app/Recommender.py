@@ -83,8 +83,8 @@ def recommend(idx, cosine = similarity):
     prods = all_products.iloc[index]
     resul = []
     for i, row in prods.iterrows():
-        
-        resul.append(uuid.UUID(i))
+         if i != idx:
+            resul.append(uuid.UUID(i))
     
     return resul
 
@@ -165,7 +165,7 @@ def update_rec_table(recs, types):
                  for recs in row['recommendations']:
                     query = sql.SQL(" UPDATE {} SET recommended_id = %s WHERE product_id = %s")
                                 .format(sql.Identifier(table_name))
-                    cur.execute(query, (recs, uuid.UUID(i)))
+                    cur.execute(query, (recs, i))
                     con.commit()
             else:
                 new_products.append((i, row['recommendations']))
@@ -189,7 +189,7 @@ def update_cpu(cpu_recs):
             if product is not None:
                 for recs in row['recommendations']:
                     query = (""" UPDATE recommendation_cpu SET recommended_id = %s WHERE product_id = %s""")
-                    cur.execute(query, (recs, uuid.UUID(i)))
+                    cur.execute(query, (recs, i))
                     con.commit()
             else:
                 new_products.append((i, row['recommendations']))
