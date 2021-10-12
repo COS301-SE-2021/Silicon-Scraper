@@ -131,7 +131,7 @@ def update_rec_table(recs, types):
             
             if product is not None:
                 psycopg2.extras.register_uuid()
-                print('NotNone')
+                # print('NotNone')
                 for recs in row['recommendations']:
                     check = [prod[1] for prod in product]
                     
