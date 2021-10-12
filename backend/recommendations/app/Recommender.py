@@ -127,7 +127,7 @@ def update_rec_table(recs, types):
                      
             # query = ("""SELECT product_id FROM recommendation_gpu WHERE product_id = %s""")
             cur.execute(query, (i,))
-             product = cur.fetchall()
+            product = cur.fetchall()
             
             if product is not None:
                 psycopg2.extras.register_uuid()
