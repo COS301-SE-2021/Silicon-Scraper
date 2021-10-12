@@ -90,8 +90,14 @@ class PredictionViewModel extends ChangeNotifier
     catch(e)
     {
       Navigator.pop(context); /// remove the loading dialog before error is shown
+      if(e.message.contains("Failed"))
+      {
+        return showDialog(context: context, builder: (_)=> AlertDialog(
+            title: Text("Please check your internet connection")),);
+      }
       return showDialog(context: context, builder: (_)=> AlertDialog(
-          title: Text("${e.message}")),);
+          title: Text("unknown error occurred on our server we're on it right away")),);
+
     }
   }
 }

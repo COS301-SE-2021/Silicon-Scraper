@@ -44,13 +44,10 @@ class LoginViewModel extends ChangeNotifier
             {
               return showDialog(context: context, builder: (_)=> AlertDialog(
                   title: Text("Please check your internet connection")),);
-            }else if(e.message.contains("character"))
-              {
+            }
                 return showDialog(context: context, builder: (_)=> AlertDialog(
                     title: Text("unknown error occurred on our server we're on it right away")),);
-              }
-          return showDialog(context: context, builder: (_)=> AlertDialog(
-              title: Text("${e.message}")),);
+
         }
     }
 
