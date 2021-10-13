@@ -46,7 +46,7 @@ class LoginViewModel extends ChangeNotifier
                   title: Text("Please check your internet connection")),);
             }
                 return showDialog(context: context, builder: (_)=> AlertDialog(
-                    title: Text("unknown error occurred on our server we're on it right away")),);
+                    title: Text("${e.message}")),);
 
         }
     }
