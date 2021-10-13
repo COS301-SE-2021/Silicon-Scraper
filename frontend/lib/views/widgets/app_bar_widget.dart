@@ -141,7 +141,7 @@ Widget appbar(BuildContext context, String page, int depth) {
                 ///clickable search container
                 Container(
                   width: MediaQuery.of(context).size.width / 1.8,
-                  height: MediaQuery.of(context).size.height/ 15,
+                  height: MediaQuery.of(context).size.height/ 18,
                   margin: EdgeInsets.only(left: 10, bottom: 10),
                   decoration: BoxDecoration(
                     color: Color.fromARGB(57, 255, 255, 255),
@@ -179,7 +179,7 @@ Widget appbar(BuildContext context, String page, int depth) {
             Container(
               child: Image.asset(
                 'assets/images/transparent_logo.png',
-                width: MediaQuery.of(context).size.width / 3,
+                width: MediaQuery.of(context).size.width / 3.5,
                 fit: BoxFit.cover,
               ),
             )

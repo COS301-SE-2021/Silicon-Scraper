@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 //import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:like_button/like_button.dart';
 import '../analytics_view.dart';
 
 
@@ -66,8 +66,11 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
               alignment: Alignment.topCenter,
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
-              child: Image.network(
-                '${widget.state.item.image}',
+              child: Hero(
+               tag: widget.state.item.image,
+                child: Image.network(
+                  '${widget.state.item.image}',
+                ),
               ),
             ),
 
@@ -277,14 +280,61 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
               Positioned(
                   right: 10,
                   bottom: buttonHeight,
-                  child: FloatingActionButton(
+                  child: /*FloatingActionButton(
                     backgroundColor: Colors.white,
                     child: state.save,
                     onPressed: () async {
                       await state.changeState(context); // first complete future
                       setState(() {}); // then set state
                     },
-                  )),
+                  )*/
+                  LikeButton(
+                      size:50,
+                      isLiked:widget.state.item.watching,
+                      likeBuilder:(isLiked)
+                      {
+                        if(isLiked)
+                        {
+                          return Container(
+                              decoration: BoxDecoration(
+                                color:Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 6.0,
+                                    spreadRadius: 0.0,
+                                    offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                  )
+                                ],
+                              ),
+                              child: Icon(Icons.bookmark,color: theOrange,)
+                          );
+                        }
+                        else
+                        {
+                          return Container(
+                              decoration: BoxDecoration(
+                                color:Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    blurRadius: 6.0,
+                                    spreadRadius: 0.0,
+                                    offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                  )
+                                ],),
+                              child: Icon(Icons.bookmark_outline,color: Colors.black ,));
+                        }
+                      },
+                      onTap:(isLiked) async
+                      {
+                        return await widget.state.changeState(context);
+                      }
+
+                  )
+              ),
 
               /// bottom bar
               Positioned(

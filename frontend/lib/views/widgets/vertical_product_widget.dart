@@ -4,6 +4,7 @@ import 'package:silicon_scraper/view_models/product_view_model.dart';
 import 'package:silicon_scraper/views/widgets/product_detail_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:like_button/like_button.dart';
+import 'package:silicon_scraper/theme/colors.dart';
 
 class VerticalProductWidget extends StatefulWidget {
 //  final Product item;
@@ -25,7 +26,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
           width: MediaQuery.of(context).size.width / 2.5,
           height: MediaQuery.of(context).size.height/ 3,
           child: Card(
-            //elevation: 1.0,
+//            elevation: 5.0,
             shape: RoundedRectangleBorder(
               side: BorderSide(color: Colors.black12, width: 1),
             ),
@@ -43,7 +44,9 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                     Container(
                       width: MediaQuery.of(context).size.width / 2.75,
                       height: MediaQuery.of(context).size.height /6.3,
-                      child: Image.network('${widget.state.item.image}',),
+                      child: Hero(
+                          tag:widget.state.item.image,
+                          child: Image.network('${widget.state.item.image}',)),
                     ),
                     /// product name (brand+model)
                     Container(
@@ -87,7 +90,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                               margin: EdgeInsets.only(left: 8, bottom: 5),
                               //alignment: Alignment.centerRight,
                               height: MediaQuery.of(context).size.height / 20,
-                              width: MediaQuery.of(context).size.width / 12.7,
+                              width: MediaQuery.of(context).size.width /10,
 
 //                                child: LikeButton(
 //                                        size:30,
@@ -101,7 +104,7 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
 //                                        },
 //                                        onTap: like,
 //                                        ),
-                          child:FloatingActionButton(
+                          child:/*FloatingActionButton(
                             backgroundColor: Colors.white,
                             child: widget.state.save,
                             onPressed:(){
@@ -109,7 +112,53 @@ class _VerticalProductWidgetState extends State<VerticalProductWidget> {
                                 widget.state.changeState(context);
                               });
                             },
-                          )
+                          )*/
+                            LikeButton(
+                              size: 30,
+                              isLiked:widget.state.item.watching,
+                              likeBuilder:(isLiked)
+                              {
+                                  if(isLiked)
+                                  {
+                                   return Container(
+                                       decoration: BoxDecoration(
+                                         color:Colors.white,
+                                         shape: BoxShape.circle,
+                                         boxShadow: [
+                                           BoxShadow(
+                                             color: Colors.grey,
+                                             blurRadius: 6.0,
+                                             spreadRadius: 0.0,
+                                             offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                           )
+                                         ],
+                                       ),
+                                       child: Icon(Icons.bookmark,color: theOrange,)
+                                   );
+                                  }
+                                  else
+                                    {
+                                      return Container(
+                                          decoration: BoxDecoration(
+                                          color:Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                          BoxShadow(
+                                          color: Colors.grey,
+                                          blurRadius: 6.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                                        )
+                                        ],),
+                                        child: Icon(Icons.bookmark_outline,color: Colors.black ,));
+                                    }
+                              },
+                              onTap:(isLiked) async
+                              {
+                                return await widget.state.changeState(context);
+                              }
+
+                            )
 
                           )
                         ],
