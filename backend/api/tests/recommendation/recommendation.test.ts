@@ -14,7 +14,7 @@ jest.mock('typeorm', () => {
                 }),
                 innerJoinAndSelect: jest.fn().mockReturnValue({
                     where: jest.fn().mockReturnValue({
-                        getMany: jest.fn().mockReturnValue([])
+                        getRawMany: jest.fn().mockReturnValue([])
                     })
                 }) 
             })
