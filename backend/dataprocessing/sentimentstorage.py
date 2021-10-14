@@ -3,8 +3,8 @@ import sqlalchemy as db
 from decouple import config
 from sentiment import sentiment
 
-sys.path.append('..')
-from sent.datacollection.webscrapers.reviewCrawler import ReviewCrawler
+sys.path.append('../')
+from dataprocessing.datacollection.webscrapers.reviewCrawler import ReviewCrawler
 
 db_con = config('DB_CONNECTION')
 
@@ -29,19 +29,21 @@ class sentimentStorage:
         Result = self.connection.execute(query, listofsentiments)
         return Result
 
-reviewCrawler = ReviewCrawler()
-reviews = reviewCrawler.getreviews()
-print(reviews)
 
-sentiments = []
+if __name__ == "__main__":
+    reviewCrawler = ReviewCrawler()
+    reviews = reviewCrawler.getreviews()
+    print(reviews)
 
-for review in reviews:
-    data = {
-        "brand": review["brand"],
-        "model": review["model"]
-    }
-    data["characteristics"] = sentiment(review["reviews"])
-    sentiments.append(data)
+    sentiments = []
 
-ss = sentimentStorage(db_con)
-ss.insertSentiments(sentiments)
+    for review in reviews:
+        data = {
+            "brand": review["brand"],
+            "model": review["model"]
+        }
+        data["characteristics"] = sentiment(review["reviews"])
+        sentiments.append(data)
+
+    ss = sentimentStorage(db_con)
+    ss.insertSentiments(sentiments)
