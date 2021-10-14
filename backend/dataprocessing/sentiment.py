@@ -105,5 +105,6 @@ def sentiment(sentences: List[str]) -> List[dict]:
             polarity = 'positive'
             if total_scores < 0:
                 polarity = 'negative'
-            data.append({'type': category, 'polarity': polarity, 'value': abs(total_scores*100)/scores_length})
+            if total_scores != 0:
+                data.append({'type': category, 'polarity': polarity, 'value': abs(total_scores*100)/scores_length})
     return data
