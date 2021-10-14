@@ -1,4 +1,5 @@
 from logging import disable
+from typing import List
 from nltk.stem.porter import PorterStemmer
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -10,7 +11,7 @@ from textblob.blob import TextBlob
 
 nlp = spacy.load('en_core_web_sm')
 
-def findNouns(sentence: str):
+def findNouns(sentence: str) -> List[str]:
     nouns = []
     word_list = word_tokenize(sentence)
     tag_list = pos_tag(word_list)
@@ -20,7 +21,7 @@ def findNouns(sentence: str):
             nouns.append(tags[0])
     return nouns
 
-def extract(sentences):
+def extract(sentences: List[str]) -> List[dict]:
     aspects = []
     for sentence in sentences:
         nouns = findNouns(sentence)
@@ -49,7 +50,7 @@ match_categories = {
     "noise": ["noise"]
 }
 
-def match_cat(aspect):
+def match_cat(aspect: str):
     aspect = WordNetLemmatizer().lemmatize(aspect)
     try:
         wn_term = wn.synsets(aspect)[0]
@@ -75,7 +76,7 @@ def match_cat(aspect):
     else:
         return None
 
-def sentiment(sentences):
+def sentiment(sentences: List[str]) -> List[dict]:
     aspect_terms: list[dict] = extract(sentences)
     aspect_cat_sents = {
         'price': [],
