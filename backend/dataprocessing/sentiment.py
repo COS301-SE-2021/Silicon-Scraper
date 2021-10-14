@@ -23,11 +23,11 @@ def findNouns(sentence: str) -> List[str]:
 
 def extract(sentences: List[str]) -> List[dict]:
     aspects = []
-    dic = dict()
     for sentence in sentences:
         nouns = findNouns(sentence)
         doc = nlp(sentence)
         for noun in nouns:
+            dic = dict()
             for token in doc:
                 if noun == token.text:  
                     if token.pos_ != 'ADJ':
